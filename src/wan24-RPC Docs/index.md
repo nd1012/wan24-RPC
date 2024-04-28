@@ -10,30 +10,27 @@ bi-directional RPC stream on the fly. It supports
 - API versioning
 - Compression
 - Server AND client RPC (bi-directional)
+- Authorization
 
 I try to keep the API of this library as abstract as possible, but giving a 
-fully working environment. This doesn't work for an RPC service, 'cause for 
-this the underlaying transport architecture must be known and implemented. 
-Since there are too may possibilities, I've decided to concentrate on streams, 
-which seem to be the best center for an abstraction logic, which opens the 
-most possibilities.
+fully working environment. I've decided to concentrate on streams, which seem 
+to be the best center for an abstraction logic.
 
-While the RPC stream is the central element, all other things (processor, 
-service, SDK) are optional and just suggestions that are built on each other 
-to let you make the decision how far you want or need to go, finally, and to 
-offer everything to go for rapid app development.
+While the RPC stream is the central element, all other things (processor, SDK) 
+are optional and just suggestions that are built on each other to let you make 
+the decision how far you want or need to go, finally, and to offer everything 
+to go for rapid app development.
 
 **NOTE**: This library requires a .NET server AND client. No other languages 
 are supported at present.
 
+**NOTE**: The server side implementation requires components which are not 
+part of this library.
+
 ## How to get it
 
-There are two NuGet packages which you might want to use:
-
-| Package | Description |
-| ------- | ----------- |
-| [`wan24-RPC`](https://www.nuget.org/packages/wan24-RPC/) | Core RPC functionality (client and server) |
-| [`wan24-RPC-Service`](https://www.nuget.org/packages/wan24-RPC-Service/) | RPC service functionality (server only) |
+This library is available as 
+[NuGet package](https://www.nuget.org/packages/wan24-RPC/).
 
 ## Usage
 
@@ -48,6 +45,8 @@ that you may want to use:
 | ------ | ----------- |
 | `RpcApiBase` | RPC API base type |
 | `DisposableRpcApiBase` | Disposable RPC API base type |
+| `RpcAuthorizationAttributeBase` | Base type for an authorization attribute for APIs or methods |
+| `RpcAuthorizedAttribute` | Attribute for single API methods which don't require an authorization (if the API itself requires it) |
 | `RpcAliasAttribute` | Attribute for APIs or methods which should be exported using a different name |
 | `NoRpcAttribute` | Attribute for public methods or parameters which shouldn't be accessed from the peer |
 | `NoRpcDisposeAttribute` | Attribute for RPC methods which return a disposable value which should NOT be disposed after sending it to the peer, or for API classes which should NOT be disposed, if disconnected |
@@ -75,11 +74,11 @@ await stream.WriteRpcMessageAsync(message);
 
 `RpcMessageBase` is just a base type, which is being used by 
 
-- `RpcRequestBase` which is a remote RPC call
-- `RpcResponseBase` which is a remote RPC call response
-- `RpcEventMessageBase` (which is a request which doesn't want a response)
+- `RpcRequestBase`
+- `RpcResponseBase`
+- `RpcEventMessageBase`
 - `RpcErrorResponseMessage`
-- `RpcCancellationMessage` (which is a request which doesn't want a response)
+- `RpcCancellationMessage`
 
 Those base types are used by
 
@@ -126,43 +125,6 @@ await using(processor)
 **WARNING**: The number of processing evaluations is limited (using the RPC 
 processor options). Any limit exceeding call will cause an exception at the 
 peer!
-
-### Using the RPC service
-
-You may use the `RpcServiceBase` as base class for your RPC service. The 
-`RpcServiceBase` is a hosted service, which you can use with an app host:
-
-```cs
-builder.Services.AddHostedService<YourRpcService>();
-```
-
-Example RPC service implementation:
-
-```cs
-public class YourRpcService : RpcServiceBase
-{
-	protected override async Task WaitForPeersAsync()
-	{
-		while(true)
-		{
-			// Wait for a connecting peer
-			AddProcessorConnection(new WrapperStream(rpcStream), rpcProcessor);
-		}
-	}
-}
-```
-
-**NOTE**: `RpcServiceBase` is included in the 
-[`wan24-RPC-Service` NuGet package](https://www.nuget.org/packages/wan24-RPC-Service/).
-
-**NOTE**: `rpcStream` must be an `IStream` which is being disposed when the 
-connection was closed! You can use `WrapperStream` to adopt any stream to the 
-`IStream` interface without any hussle.
-
-**NOTE**: Exceptions thrown during evaluation will cause an error response, 
-which will cause a `RpcException` at the waiting peer.
-
-Many methods can be overridden to customize the RPC service for your needs.
 
 ### Using the RPC SDK
 
@@ -360,3 +322,44 @@ An API version increment is required on any incompatibility:
 
 For any other change incrementing a version number is optional and depends on 
 the context of the change, and if the change is downward compatible.
+
+### Authorization
+
+Use the `RpcAuthorizationAttributeBase` type for implementing authorization 
+for your RPC APIs and methods:
+
+```cs
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class YourAuthorizationAttribute : RpcAuthorizationAttributeBase
+{
+	public override async Task<bool> IsAuthorizedAsync(RpcContext context)
+	{
+		// Determine if the context is authorized and return TRUE to continue, 
+		// or FALSE to disconnect the peer
+	}
+}
+```
+
+This attribute can be applied to RPC API classes and methods and will be 
+evaluated by the RPC processor before executing any API method. Any 
+unauthorized access will disconnect the peer:
+
+```cs
+[YourAuthorization]// Optional for all API methods
+public class YourRpcApi : RpcApiBase
+{
+	[YourAuthorization]// Optional at the API method level
+	public async Task YourApiMethod()
+	{
+		...
+	}
+	...
+}
+```
+
+Using the `RpcAuthorizedAttribute` you can disable authorization for single 
+methods of an API which requires authorization for all exported API methods.
+
+**CAUTION**: If you mix `RpcAuthorizedAttribute` with any 
+`RpcAuthorizationAttributeBase` attributes, no authorization will be required, 
+finally!

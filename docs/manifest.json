@@ -125,10 +125,40 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.RpcAuthorizationAttributeBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.RpcAuthorizationAttributeBase.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.RpcAuthorizedAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.RpcAuthorizedAttribute.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.RpcCancellationMessage.yml",
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.RpcCancellationMessage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.RpcContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.RpcContext.html"
         }
       },
       "version": ""
@@ -205,20 +235,20 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.RpcVersionAttribute.yml",
+      "source_relative_path": "api/wan24.RPC.RpcStreamExtensions.yml",
       "output": {
         ".html": {
-          "relative_path": "api/wan24.RPC.RpcVersionAttribute.html"
+          "relative_path": "api/wan24.RPC.RpcStreamExtensions.html"
         }
       },
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.StreamExtensions.yml",
+      "source_relative_path": "api/wan24.RPC.RpcVersionAttribute.yml",
       "output": {
         ".html": {
-          "relative_path": "api/wan24.RPC.StreamExtensions.html"
+          "relative_path": "api/wan24.RPC.RpcVersionAttribute.html"
         }
       },
       "version": ""
