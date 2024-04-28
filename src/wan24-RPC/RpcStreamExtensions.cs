@@ -6,7 +6,7 @@ namespace wan24.RPC
     /// <summary>
     /// Stream extensions
     /// </summary>
-    public static class StreamExtensions
+    public static class RpcStreamExtensions
     {
         /// <summary>
         /// Read a RPC message
