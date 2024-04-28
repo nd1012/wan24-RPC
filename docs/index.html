@@ -101,6 +101,8 @@ bi-directional RPC stream on the fly. It supports</p>
 <li>Stream channels</li>
 <li>Enumeration channels</li>
 <li>Events</li>
+<li>Cancellation</li>
+<li>API versioning</li>
 <li>Compression</li>
 <li>Server AND client RPC (bi-directional)</li>
 </ul>
@@ -180,7 +182,7 @@ that you may want to use:</p>
 </tr>
 <tr>
 <td><code>RpcVersionAttribute</code></td>
-<td>Attribute for API or SDK methods which does restrict the supported API version (evaluated by the RPC processor)</td>
+<td>Attribute for API or SDK methods which restrict the supported peer API version (evaluated by the RPC processor)</td>
 </tr>
 </tbody>
 </table>
@@ -200,21 +202,22 @@ await stream.WriteRpcMessageAsync(message);
 <ul>
 <li><code>RpcRequestBase</code> which is a remote RPC call</li>
 <li><code>RpcResponseBase</code> which is a remote RPC call response</li>
+<li><code>RpcEventMessageBase</code> (which is a request which doesn't want a response)</li>
+<li><code>RpcErrorResponseMessage</code></li>
+<li><code>RpcCancellationMessage</code> (which is a request which doesn't want a response)</li>
 </ul>
 <p>Those base types are used by</p>
 <ul>
-<li><code>SerializedRpc(Request/Response)Message</code> which use
+<li><code>SerializedRpc*(Request/Response)Message</code> which use
 <a href="https://github.com/nd1012/Stream-Serializer-Extensions"><code>Stream-Serializer-Extensions</code></a>
 for binary serialization</li>
-<li><code>JsonRpc(Request/Response)Message</code> which use <code>wan24.Core.JsonHelper</code> for
+<li><code>JsonRpc*(Request/Response)Message</code> which use <code>wan24.Core.JsonHelper</code> for
 JSON serialization</li>
-<li><code>RpcErrorResponseMessage</code></li>
-<li><code>RpcEventMessage</code> (which is a request which doesn't want a response)</li>
 </ul>
 <p>and must be used as base type for your own implementations. Each RPC message
 type has an ID, which may be sent to the peer before the serialized message
 body. Your custom RPC message type needs to be registered:</p>
-<pre><code class="lang-cs">RpcMessageTypes.Register&lt;YourRpcMessage&gt;(1 &lt;&lt; 8, yourSerializer, yourDeserializer);
+<pre><code class="lang-cs">RpcMessageTypes.Register&lt;YourRpcMessage&gt;(1 &lt;&lt; 8);
 </code></pre>
 <p><strong>NOTE</strong>: The first 8 bit of the message type ID are reserved, so your custom
 message type ID must start from <code>256+</code>.</p>
@@ -333,7 +336,7 @@ processor options). Any limit exceeding call will cause an exception at the
 peer!</p>
 <h3 id="events">Events</h3>
 <p>A <code>RpcProcessor</code> and a <code>RpcSdkBase</code> offer a simple solution for events using
-<code>RpcEventMessage</code> and <code>RpcEvent</code>.</p>
+<code>*RpcEventMessage</code> and <code>RpcEvent</code>.</p>
 <p>In a processor or SDK you can register receivable events like this:</p>
 <pre><code class="lang-cs">RegisterEvent(new(nameof(YourEvent), typeof(YourEventData), RaiseYourEvent));
 </code></pre>
@@ -365,6 +368,10 @@ instance in the RPC processor options.</p>
 <p><strong>WARNING</strong>: You should remove event listeners in order to enable the GC to
 clan up the object reference, if a processor or a SDK instance isn't in use
 anymore!</p>
+<h3 id="cancellation">Cancellation</h3>
+<p>If a SDK method timed out, the SDK will send a <code>RpcCancellationMessage</code> to the
+peer, which will then cancel the RPC method execution, if possible. For this
+the RPC API method needs to have a <code>CancellationToken</code> type parameter.</p>
 <h3 id="api-versioning">API versioning</h3>
 <p>You need to implement a version check into your SDK by yourself. It's
 required to use an unsigned integer number as version number. Using the

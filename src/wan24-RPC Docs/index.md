@@ -6,6 +6,8 @@ bi-directional RPC stream on the fly. It supports
 - Stream channels
 - Enumeration channels
 - Events
+- Cancellation
+- API versioning
 - Compression
 - Server AND client RPC (bi-directional)
 
@@ -51,7 +53,7 @@ that you may want to use:
 | `NoRpcDisposeAttribute` | Attribute for RPC methods which return a disposable value which should NOT be disposed after sending it to the peer, or for API classes which should NOT be disposed, if disconnected |
 | `NoRpcEnumerableAttribute` | Attribute for RPC method return value or parameters which are enumerables, but shouldn't be handled as enumerables during RPC call processing |
 | `NoRpcCompressionAttribute` | Attribute for RPC method stream return value or parameters which shouldn't use compression ('cause they may be compressed already) |
-| `RpcVersionAttribute` | Attribute for API or SDK methods which does restrict the supported API version (evaluated by the RPC processor) |
+| `RpcVersionAttribute` | Attribute for API or SDK methods which restrict the supported peer API version (evaluated by the RPC processor) |
 
 Per default the API class and method names are used for addressing a RPC call. 
 However, it's possible to add API classes and methods using customized names.
@@ -75,23 +77,24 @@ await stream.WriteRpcMessageAsync(message);
 
 - `RpcRequestBase` which is a remote RPC call
 - `RpcResponseBase` which is a remote RPC call response
+- `RpcEventMessageBase` (which is a request which doesn't want a response)
+- `RpcErrorResponseMessage`
+- `RpcCancellationMessage` (which is a request which doesn't want a response)
 
 Those base types are used by
 
-- `SerializedRpc(Request/Response)Message` which use 
+- `SerializedRpc*(Request/Response)Message` which use 
 [`Stream-Serializer-Extensions`](https://github.com/nd1012/Stream-Serializer-Extensions) 
 for binary serialization
-- `JsonRpc(Request/Response)Message` which use `wan24.Core.JsonHelper` for 
+- `JsonRpc*(Request/Response)Message` which use `wan24.Core.JsonHelper` for 
 JSON serialization
-- `RpcErrorResponseMessage`
-- `RpcEventMessage` (which is a request which doesn't want a response)
 
 and must be used as base type for your own implementations. Each RPC message 
 type has an ID, which may be sent to the peer before the serialized message 
 body. Your custom RPC message type needs to be registered:
 
 ```cs
-RpcMessageTypes.Register<YourRpcMessage>(1 << 8, yourSerializer, yourDeserializer);
+RpcMessageTypes.Register<YourRpcMessage>(1 << 8);
 ```
 
 **NOTE**: The first 8 bit of the message type ID are reserved, so your custom 
@@ -248,7 +251,7 @@ peer!
 ### Events
 
 A `RpcProcessor` and a `RpcSdkBase` offer a simple solution for events using 
-`RpcEventMessage` and `RpcEvent`.
+`*RpcEventMessage` and `RpcEvent`.
 
 In a processor or SDK you can register receivable events like this:
 
@@ -294,6 +297,12 @@ instance in the RPC processor options.
 **WARNING**: You should remove event listeners in order to enable the GC to 
 clan up the object reference, if a processor or a SDK instance isn't in use 
 anymore!
+
+### Cancellation
+
+If a SDK method timed out, the SDK will send a `RpcCancellationMessage` to the 
+peer, which will then cancel the RPC method execution, if possible. For this 
+the RPC API method needs to have a `CancellationToken` type parameter.
 
 ### API versioning
 
