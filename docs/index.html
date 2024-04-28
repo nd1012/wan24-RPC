@@ -102,7 +102,20 @@ bi-directional RPC stream on the fly. It supports</p>
 <li>Enumeration channels</li>
 <li>Events</li>
 <li>Compression</li>
+<li>Server AND client RPC (bi-directional)</li>
 </ul>
+<p>I try to keep the API of this library as abstract as possible, but giving a
+fully working environment. This doesn't work for an RPC service, 'cause for
+this the underlaying transport architecture must be known and implemented.
+Since there are too may possibilities, I've decided to concentrate on streams,
+which seem to be the best center for an abstraction logic, which opens the
+most possibilities.</p>
+<p>While the RPC stream is the central element, all other things (processor,
+service, SDK) are optional and just suggestions that are built on each other
+to let you make the decision how far you want or need to go, finally, and to
+offer everything to go for rapid app development.</p>
+<p><strong>NOTE</strong>: This library requires a .NET server AND client. No other languages
+are supported at present.</p>
 <h2 id="how-to-get-it">How to get it</h2>
 <p>There are two NuGet packages which you might want to use:</p>
 <table>
@@ -115,11 +128,11 @@ bi-directional RPC stream on the fly. It supports</p>
 <tbody>
 <tr>
 <td><a href="https://www.nuget.org/packages/wan24-RPC/"><code>wan24-RPC</code></a></td>
-<td>Core RPC functionality</td>
+<td>Core RPC functionality (client and server)</td>
 </tr>
 <tr>
 <td><a href="https://www.nuget.org/packages/wan24-RPC-Service/"><code>wan24-RPC-Service</code></a></td>
-<td>RPC service functionality</td>
+<td>RPC service functionality (server only)</td>
 </tr>
 </tbody>
 </table>
@@ -165,6 +178,10 @@ that you may want to use:</p>
 <td><code>NoRpcCompressionAttribute</code></td>
 <td>Attribute for RPC method stream return value or parameters which shouldn't use compression ('cause they may be compressed already)</td>
 </tr>
+<tr>
+<td><code>RpcVersionAttribute</code></td>
+<td>Attribute for API or SDK methods which does restrict the supported API version (evaluated by the RPC processor)</td>
+</tr>
 </tbody>
 </table>
 <p>Per default the API class and method names are used for addressing a RPC call.
@@ -177,7 +194,7 @@ used for dependency injection, so you may use keyed services also.</p>
 RpcMessageBase message = await stream.ReadRpcMessageAsync();
 
 // Writing any RPC message
-await stream.WriteAnyRpcMessageAsync(message);
+await stream.WriteRpcMessageAsync(message);
 </code></pre>
 <p><code>RpcMessageBase</code> is just a base type, which is being used by</p>
 <ul>
@@ -240,8 +257,8 @@ peer!</p>
 	}
 }
 </code></pre>
-<p><strong>NOTE</strong>: <code>RpcServiceBase</code> is included in the <code>wan24-RPC-Service</code> NuGet
-package.</p>
+<p><strong>NOTE</strong>: <code>RpcServiceBase</code> is included in the
+<a href="https://www.nuget.org/packages/wan24-RPC-Service/"><code>wan24-RPC-Service</code> NuGet package</a>.</p>
 <p><strong>NOTE</strong>: <code>rpcStream</code> must be an <code>IStream</code> which is being disposed when the
 connection was closed! You can use <code>WrapperStream</code> to adopt any stream to the
 <code>IStream</code> interface without any hussle.</p>
@@ -258,19 +275,16 @@ which will cause a <code>RpcException</code> at the waiting peer.</p>
 	{
 		// Connect to the RPC server
 		...
-		// Then set the RPC stream (must be an IStream!)
-		RPC = new WrapperStream(rpcStream);
+		// Then set the RPC stream
+		RPC = rpcStream;
 	}
 
 	public Task&lt;AnyType&gt; YourApiMethodAsync(AnyType2 parameter, CancellationToken ct = default)
 		=&gt; SendRpcCallAsync&lt;AnyType&gt;(nameof(YourApiMethodAsync), ct, parameter);
 }
 </code></pre>
-<p><strong>NOTE</strong>: <code>rpcStream</code> must be a <code>IStream</code> which is being disposed when the
-connection was closed! You can use <code>WrapperStream</code> to adopt any stream to the
-<code>IStream</code> interface without any hussle.</p>
 <p>The SDK will manage a RPC processor, if clientside RPC calls are enabled.</p>
-<p>API usage:</p>
+<p>SDK usage:</p>
 <pre><code class="lang-cs">YourSdk sdk = new();
 await using(sdk)
 {
@@ -320,31 +334,86 @@ peer!</p>
 <h3 id="events">Events</h3>
 <p>A <code>RpcProcessor</code> and a <code>RpcSdkBase</code> offer a simple solution for events using
 <code>RpcEventMessage</code> and <code>RpcEvent</code>.</p>
-<p>In a processor or SDK you can register events like this:</p>
+<p>In a processor or SDK you can register receivable events like this:</p>
 <pre><code class="lang-cs">RegisterEvent(new(nameof(YourEvent), typeof(YourEventData), RaiseYourEvent));
 </code></pre>
-<p>Example event definition:</p>
+<p>Example receivable event definition:</p>
 <pre><code class="lang-cs">public delegate void YourEvent_Delegate(object sender, YourEventData e);
 public event YourEvent_Delegate? YourEvent;
 private async void RaiseYourEvent(RpcEvent rpcEvent, object? e)
 {
 	await Task.Yield();
-	YourEvent?.Invoke(this, (YourEventData)e!);
+	if(e is not YourEventData data)
+		// Exception will be handled by the processor or SDK
+		throw new InvalidProgramException(&quot;Missing/invalid event data&quot;);
+	YourEvent?.Invoke(this, data);
 }
 </code></pre>
 <p><strong>NOTE</strong>: Since event handling is a synchronous operation, it's not possible
-to write something back to the event data and respond it to the RPC peer.</p>
+to write something back to the event data and respond it to the RPC peers
+event sending context.</p>
 <p>To send any event to the peer:</p>
 <pre><code class="lang-cs">anyObject.AnyEvent += (sender, e)
 	=&gt;  SendEvent(nameof(AnyObjectType.AnyEvent), new AnyEventData(sender, e));
 </code></pre>
+<p>The event message processing will be handled by the RPC processor automatic.</p>
 <p><strong>NOTE</strong>: The <code>SendEvent</code> method doesn't return a task, but will send the
 event asynchronous in background. It's part of the processor and the SDK base
-typed and may be called in any other context, also.</p>
+types and may be called in any other context, also.</p>
+<p><strong>TIP</strong>: You can enable event throttling by defining an event throttler
+instance in the RPC processor options.</p>
 <p><strong>WARNING</strong>: You should remove event listeners in order to enable the GC to
 clan up the object reference, if a processor or a SDK instance isn't in use
 anymore!</p>
-<p>The event message processing will be handled by the RPC processor automatic.</p>
+<h3 id="api-versioning">API versioning</h3>
+<p>You need to implement a version check into your SDK by yourself. It's
+required to use an unsigned integer number as version number. Using the
+<code>RpcVersionAttribute</code> you can restrict the supported API version and also
+forward a RPC processor to another API method for the used SDK version:</p>
+<pre><code class="lang-cs">public async Task&lt;int&gt; ApiVersionAsync(RpcProcessor processor, int peerSdkVersion, CancellationToken ct)
+{
+	// Check the version number
+	...
+	// Then use it
+	processor.CurrentApiVersion = peerSdkVersion;
+	// Maybe return the latest API version to signal an available optional update
+	return YourApi.VERSION;
+}
+
+[RpcVersion(fromVersion: 1, toVersion: 3, newerMethodName: &quot;YourApiMethodV2Async&quot;)]
+public async Task YourApiMethodAsync(AnyType parameter, CancellationToken ct)
+{
+	// Used with peer versions 1, 2 and 3
+}
+
+[RpcVersion(4)]
+public async Task&lt;ReturnType&gt; YourApiMethodV2Async(AnyType parameter, OtherType other, CancellationToken ct)
+{
+	// Used from peer versions 4+
+}
+</code></pre>
+<p>To enable API version restrictions your API needs to set the
+<code>CurrentApiVersion</code> value to the RPC processor which manages the connection.
+Any RPC call to an API method which has a <code>RpcVersionAttribute</code> before the
+<code>CurrentApiVersion</code> value was set will cause an error at the client side.</p>
+<p>Since communicated objects are being serialized, and they may be changed, too,
+you could use the serializer versioning for <code>IStreamSerializer</code>
+implementations (see the documentation of the <code>Stream-Serializer-Extensions</code>
+NuGet package). The serializer versioning is fully independent from the API
+versioning. Anyway, if the serializer version of a communicated type
+increases, you should also increase the API version number to be safe, if the
+updated serialization requires a peer software update (which is the case when
+the new serialization doesn't support the previous object structure).</p>
+<p>A serializer version increment is required, if the new type revision is
+incompatible with the previous type revision.</p>
+<p>An API version increment is required on any incompatibility:</p>
+<ul>
+<li>Incompatible types</li>
+<li>Method signature changes</li>
+<li>Method removals</li>
+</ul>
+<p>For any other change incrementing a version number is optional and depends on
+the context of the change, and if the change is downward compatible.</p>
 
 </article>
                 </div>

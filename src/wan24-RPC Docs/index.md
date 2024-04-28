@@ -7,6 +7,22 @@ bi-directional RPC stream on the fly. It supports
 - Enumeration channels
 - Events
 - Compression
+- Server AND client RPC (bi-directional)
+
+I try to keep the API of this library as abstract as possible, but giving a 
+fully working environment. This doesn't work for an RPC service, 'cause for 
+this the underlaying transport architecture must be known and implemented. 
+Since there are too may possibilities, I've decided to concentrate on streams, 
+which seem to be the best center for an abstraction logic, which opens the 
+most possibilities.
+
+While the RPC stream is the central element, all other things (processor, 
+service, SDK) are optional and just suggestions that are built on each other 
+to let you make the decision how far you want or need to go, finally, and to 
+offer everything to go for rapid app development.
+
+**NOTE**: This library requires a .NET server AND client. No other languages 
+are supported at present.
 
 ## How to get it
 
@@ -14,8 +30,8 @@ There are two NuGet packages which you might want to use:
 
 | Package | Description |
 | ------- | ----------- |
-| [`wan24-RPC`](https://www.nuget.org/packages/wan24-RPC/) | Core RPC functionality |
-| [`wan24-RPC-Service`](https://www.nuget.org/packages/wan24-RPC-Service/) | RPC service functionality |
+| [`wan24-RPC`](https://www.nuget.org/packages/wan24-RPC/) | Core RPC functionality (client and server) |
+| [`wan24-RPC-Service`](https://www.nuget.org/packages/wan24-RPC-Service/) | RPC service functionality (server only) |
 
 ## Usage
 
@@ -35,6 +51,7 @@ that you may want to use:
 | `NoRpcDisposeAttribute` | Attribute for RPC methods which return a disposable value which should NOT be disposed after sending it to the peer, or for API classes which should NOT be disposed, if disconnected |
 | `NoRpcEnumerableAttribute` | Attribute for RPC method return value or parameters which are enumerables, but shouldn't be handled as enumerables during RPC call processing |
 | `NoRpcCompressionAttribute` | Attribute for RPC method stream return value or parameters which shouldn't use compression ('cause they may be compressed already) |
+| `RpcVersionAttribute` | Attribute for API or SDK methods which does restrict the supported API version (evaluated by the RPC processor) |
 
 Per default the API class and method names are used for addressing a RPC call. 
 However, it's possible to add API classes and methods using customized names.
@@ -51,7 +68,7 @@ Any blocking bi-directional stream can be used as RPC communication stream:
 RpcMessageBase message = await stream.ReadRpcMessageAsync();
 
 // Writing any RPC message
-await stream.WriteAnyRpcMessageAsync(message);
+await stream.WriteRpcMessageAsync(message);
 ```
 
 `RpcMessageBase` is just a base type, which is being used by 
@@ -132,8 +149,8 @@ public class YourRpcService : RpcServiceBase
 }
 ```
 
-**NOTE**: `RpcServiceBase` is included in the `wan24-RPC-Service` NuGet 
-package.
+**NOTE**: `RpcServiceBase` is included in the 
+[`wan24-RPC-Service` NuGet package](https://www.nuget.org/packages/wan24-RPC-Service/).
 
 **NOTE**: `rpcStream` must be an `IStream` which is being disposed when the 
 connection was closed! You can use `WrapperStream` to adopt any stream to the 
@@ -157,8 +174,8 @@ public class YourSdk : RpcSdkBase
 	{
 		// Connect to the RPC server
 		...
-		// Then set the RPC stream (must be an IStream!)
-		RPC = new WrapperStream(rpcStream);
+		// Then set the RPC stream
+		RPC = rpcStream;
 	}
 
 	public Task<AnyType> YourApiMethodAsync(AnyType2 parameter, CancellationToken ct = default)
@@ -166,13 +183,9 @@ public class YourSdk : RpcSdkBase
 }
 ```
 
-**NOTE**: `rpcStream` must be a `IStream` which is being disposed when the 
-connection was closed! You can use `WrapperStream` to adopt any stream to the 
-`IStream` interface without any hussle.
-
 The SDK will manage a RPC processor, if clientside RPC calls are enabled.
 
-API usage:
+SDK usage:
 
 ```cs
 YourSdk sdk = new();
@@ -237,13 +250,13 @@ peer!
 A `RpcProcessor` and a `RpcSdkBase` offer a simple solution for events using 
 `RpcEventMessage` and `RpcEvent`.
 
-In a processor or SDK you can register events like this:
+In a processor or SDK you can register receivable events like this:
 
 ```cs
 RegisterEvent(new(nameof(YourEvent), typeof(YourEventData), RaiseYourEvent));
 ```
 
-Example event definition:
+Example receivable event definition:
 
 ```cs
 public delegate void YourEvent_Delegate(object sender, YourEventData e);
@@ -251,12 +264,16 @@ public event YourEvent_Delegate? YourEvent;
 private async void RaiseYourEvent(RpcEvent rpcEvent, object? e)
 {
 	await Task.Yield();
-	YourEvent?.Invoke(this, (YourEventData)e!);
+	if(e is not YourEventData data)
+		// Exception will be handled by the processor or SDK
+		throw new InvalidProgramException("Missing/invalid event data");
+	YourEvent?.Invoke(this, data);
 }
 ```
 
 **NOTE**: Since event handling is a synchronous operation, it's not possible 
-to write something back to the event data and respond it to the RPC peer.
+to write something back to the event data and respond it to the RPC peers 
+event sending context.
 
 To send any event to the peer:
 
@@ -265,12 +282,72 @@ anyObject.AnyEvent += (sender, e)
 	=>  SendEvent(nameof(AnyObjectType.AnyEvent), new AnyEventData(sender, e));
 ```
 
+The event message processing will be handled by the RPC processor automatic.
+
 **NOTE**: The `SendEvent` method doesn't return a task, but will send the 
 event asynchronous in background. It's part of the processor and the SDK base 
-typed and may be called in any other context, also.
+types and may be called in any other context, also.
+
+**TIP**: You can enable event throttling by defining an event throttler 
+instance in the RPC processor options.
 
 **WARNING**: You should remove event listeners in order to enable the GC to 
 clan up the object reference, if a processor or a SDK instance isn't in use 
 anymore!
 
-The event message processing will be handled by the RPC processor automatic.
+### API versioning
+
+You need to implement a version check into your SDK by yourself. It's 
+required to use an unsigned integer number as version number. Using the 
+`RpcVersionAttribute` you can restrict the supported API version and also 
+forward a RPC processor to another API method for the used SDK version:
+
+```cs
+public async Task<int> ApiVersionAsync(RpcProcessor processor, int peerSdkVersion, CancellationToken ct)
+{
+	// Check the version number
+	...
+	// Then use it
+	processor.CurrentApiVersion = peerSdkVersion;
+	// Maybe return the latest API version to signal an available optional update
+	return YourApi.VERSION;
+}
+
+[RpcVersion(fromVersion: 1, toVersion: 3, newerMethodName: "YourApiMethodV2Async")]
+public async Task YourApiMethodAsync(AnyType parameter, CancellationToken ct)
+{
+	// Used with peer versions 1, 2 and 3
+}
+
+[RpcVersion(4)]
+public async Task<ReturnType> YourApiMethodV2Async(AnyType parameter, OtherType other, CancellationToken ct)
+{
+	// Used from peer versions 4+
+}
+```
+
+To enable API version restrictions your API needs to set the 
+`CurrentApiVersion` value to the RPC processor which manages the connection. 
+Any RPC call to an API method which has a `RpcVersionAttribute` before the 
+`CurrentApiVersion` value was set will cause an error at the client side.
+
+Since communicated objects are being serialized, and they may be changed, too, 
+you could use the serializer versioning for `IStreamSerializer` 
+implementations (see the documentation of the `Stream-Serializer-Extensions` 
+NuGet package). The serializer versioning is fully independent from the API 
+versioning. Anyway, if the serializer version of a communicated type 
+increases, you should also increase the API version number to be safe, if the 
+updated serialization requires a peer software update (which is the case when 
+the new serialization doesn't support the previous object structure).
+
+A serializer version increment is required, if the new type revision is 
+incompatible with the previous type revision.
+
+An API version increment is required on any incompatibility:
+
+- Incompatible types
+- Method signature changes
+- Method removals
+
+For any other change incrementing a version number is optional and depends on 
+the context of the change, and if the change is downward compatible.
