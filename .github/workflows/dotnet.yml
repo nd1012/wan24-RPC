@@ -22,10 +22,8 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore ./src/wan24-RPC.sln --ignore-failed-sources
-    - name: Build lib wan24-RPC
+    - name: Build lib
       run: dotnet build ./src/wan24-RPC/wan24-RPC.csproj --no-restore
-    - name: Build lib wan24-RPC-Service
-      run: dotnet build ./src/wan24-RPC-Service/wan24-RPC-Service.csproj --no-restore
     - name: Build tests
       run: dotnet build "./src/wan24-RPC Tests/wan24-RPC Tests.csproj" --no-restore
     - name: Test
