@@ -1,0 +1,32 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore ./src/wan24-RPC.sln --ignore-failed-sources
+    - name: Build lib wan24-RPC
+      run: dotnet build ./src/wan24-RPC/wan24-RPC.csproj --no-restore
+    - name: Build lib wan24-RPC-Service
+      run: dotnet build ./src/wan24-RPC-Service/wan24-RPC-Service.csproj --no-restore
+    - name: Build tests
+      run: dotnet build "./src/wan24-RPC Tests/wan24-RPC Tests.csproj" --no-restore
+    - name: Test
+      run: dotnet test ./src/wan24-RPC.sln --no-build --verbosity normal

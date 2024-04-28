@@ -1,0 +1,68 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34818.151
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wan24-RPC", "wan24-RPC\wan24-RPC.csproj", "{8944BB1C-4A73-46B4-A858-210057AD51F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObjectValidation", "..\..\ObjectValidation\src\ObjectValidation\ObjectValidation.csproj", "{CFCD9CC2-800F-4591-967D-266B9FB7F662}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stream-Serializer-Extensions", "..\..\Stream-Serializer-Extensions\src\Stream-Serializer-Extensions\Stream-Serializer-Extensions.csproj", "{26B39B1F-BB50-42B0-9D97-A638D8120BF5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wan24-Core", "..\..\wan24-Core\src\Wan24-Core\Wan24-Core.csproj", "{FF0D9EBD-BAF1-45D0-B9AA-A5756F7FE07D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wan24-Compression", "..\..\wan24-Compression\src\wan24-Compression\wan24-Compression.csproj", "{13B7A53C-0F28-45C0-A3A6-F1F340C7204A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wan24-RPC Tests", "wan24-RPC Tests\wan24-RPC Tests.csproj", "{706EEC73-6F23-4D79-9BD9-023586F2712B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wan24-RPC-Service", "wan24-RPC-Service\wan24-RPC-Service.csproj", "{CB458E20-C0E3-43FB-BE0A-1DA3659CB9DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Trunk|Any CPU = Trunk|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8944BB1C-4A73-46B4-A858-210057AD51F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8944BB1C-4A73-46B4-A858-210057AD51F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8944BB1C-4A73-46B4-A858-210057AD51F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8944BB1C-4A73-46B4-A858-210057AD51F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8944BB1C-4A73-46B4-A858-210057AD51F4}.Trunk|Any CPU.ActiveCfg = Trunk|Any CPU
+		{8944BB1C-4A73-46B4-A858-210057AD51F4}.Trunk|Any CPU.Build.0 = Trunk|Any CPU
+		{CFCD9CC2-800F-4591-967D-266B9FB7F662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFCD9CC2-800F-4591-967D-266B9FB7F662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFCD9CC2-800F-4591-967D-266B9FB7F662}.Trunk|Any CPU.ActiveCfg = Trunk|Any CPU
+		{CFCD9CC2-800F-4591-967D-266B9FB7F662}.Trunk|Any CPU.Build.0 = Trunk|Any CPU
+		{26B39B1F-BB50-42B0-9D97-A638D8120BF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26B39B1F-BB50-42B0-9D97-A638D8120BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26B39B1F-BB50-42B0-9D97-A638D8120BF5}.Trunk|Any CPU.ActiveCfg = Trunk|Any CPU
+		{26B39B1F-BB50-42B0-9D97-A638D8120BF5}.Trunk|Any CPU.Build.0 = Trunk|Any CPU
+		{FF0D9EBD-BAF1-45D0-B9AA-A5756F7FE07D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF0D9EBD-BAF1-45D0-B9AA-A5756F7FE07D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF0D9EBD-BAF1-45D0-B9AA-A5756F7FE07D}.Trunk|Any CPU.ActiveCfg = Trunk|Any CPU
+		{FF0D9EBD-BAF1-45D0-B9AA-A5756F7FE07D}.Trunk|Any CPU.Build.0 = Trunk|Any CPU
+		{13B7A53C-0F28-45C0-A3A6-F1F340C7204A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13B7A53C-0F28-45C0-A3A6-F1F340C7204A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13B7A53C-0F28-45C0-A3A6-F1F340C7204A}.Trunk|Any CPU.ActiveCfg = Trunk|Any CPU
+		{13B7A53C-0F28-45C0-A3A6-F1F340C7204A}.Trunk|Any CPU.Build.0 = Trunk|Any CPU
+		{706EEC73-6F23-4D79-9BD9-023586F2712B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{706EEC73-6F23-4D79-9BD9-023586F2712B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{706EEC73-6F23-4D79-9BD9-023586F2712B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{706EEC73-6F23-4D79-9BD9-023586F2712B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{706EEC73-6F23-4D79-9BD9-023586F2712B}.Trunk|Any CPU.ActiveCfg = Debug|Any CPU
+		{706EEC73-6F23-4D79-9BD9-023586F2712B}.Trunk|Any CPU.Build.0 = Debug|Any CPU
+		{CB458E20-C0E3-43FB-BE0A-1DA3659CB9DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB458E20-C0E3-43FB-BE0A-1DA3659CB9DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB458E20-C0E3-43FB-BE0A-1DA3659CB9DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB458E20-C0E3-43FB-BE0A-1DA3659CB9DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB458E20-C0E3-43FB-BE0A-1DA3659CB9DB}.Trunk|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB458E20-C0E3-43FB-BE0A-1DA3659CB9DB}.Trunk|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {199D331D-231C-41AD-8769-BA254598BB98}
+	EndGlobalSection
+EndGlobal
