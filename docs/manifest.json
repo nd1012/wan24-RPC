@@ -45,6 +45,26 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.IRpcRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.IRpcRequest.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.IRpcResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.IRpcResponse.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.NoRpcAttribute.yml",
       "output": {
         ".html": {
