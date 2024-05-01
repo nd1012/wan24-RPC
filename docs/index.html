@@ -102,6 +102,7 @@ bi-directional RPC stream on the fly. It supports</p>
 <li>Enumeration channels</li>
 <li>Events</li>
 <li>Cancellation</li>
+<li>Binary and JSON serialization</li>
 <li>API versioning</li>
 <li>Compression</li>
 <li>Server AND client RPC (bi-directional)</li>
@@ -191,31 +192,93 @@ await stream.WriteRpcMessageAsync(message);
 </code></pre>
 <p><code>RpcMessageBase</code> is just a base type, which is being used by</p>
 <ul>
-<li><code>RpcRequestBase</code></li>
-<li><code>RpcResponseBase</code></li>
-<li><code>RpcEventMessageBase</code></li>
-<li><code>RpcErrorResponseMessage</code></li>
-<li><code>RpcCancellationMessage</code></li>
+<li><code>SerializerRpcMessageBase</code> (supports variable serializer)</li>
 </ul>
 <p>Those base types are used by</p>
-<ul>
-<li><code>SerializedRpc*(Request/Response)Message</code> which use
-<a href="https://github.com/nd1012/Stream-Serializer-Extensions"><code>Stream-Serializer-Extensions</code></a>
-for binary serialization</li>
-<li><code>JsonRpc*(Request/Response)Message</code> which use <code>wan24.Core.JsonHelper</code> for
-JSON serialization</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td><code>RequestMessage</code></td>
+<td>RPC request</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td><code>ResponseMessage</code></td>
+<td>RPC response</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><code>ErrorResponseMessage</code></td>
+<td>RPC error response</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td><code>CancellationMessage</code></td>
+<td>RPC cancellation</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td><code>EventMessage</code></td>
+<td>RPC event</td>
+</tr>
+</tbody>
+</table>
 <p>and must be used as base type for your own implementations. Each RPC message
 type has an ID, which may be sent to the peer before the serialized message
 body. Your custom RPC message type needs to be registered:</p>
-<pre><code class="lang-cs">RpcMessageTypes.Register&lt;YourRpcMessage&gt;(1 &lt;&lt; 8);
+<pre><code class="lang-cs">RpcMessages.Register&lt;YourRpcMessage&gt;(1 &lt;&lt; 8);
 </code></pre>
 <p><strong>NOTE</strong>: The first 8 bit of the message type ID are reserved, so your custom
 message type ID must start from <code>256+</code>.</p>
+<h3 id="rpc-message-serialization">RPC message serialization</h3>
+<p>These are the built in RPC message serializers:</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td><code>BinarySerializer</code></td>
+<td>Binary serialization using <a href="https://github.com/nd1012/Stream-Serializer-Extensions"><code>Stream-Serializer-Extensions</code></a></td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td><code>JsonSerializer</code></td>
+<td>JSON serialization using <code>wan24.Core.JsonHelper</code></td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><code>MixedSerializer</code></td>
+<td>Variable serializer which chooses between binary and JSON serialization per object (prefers binary)</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>MixedSerializer</code> is the default. Binary serialization will produce less
+overhead, but each object needs to implement the <code>IStreamSerializer</code> interface.</p>
+<p>To register a custom serializer:</p>
+<pre><code class="lang-cs">RpcSerializer.Register(1 &lt;&lt; 8, yourSerializer);
+</code></pre>
+<p><strong>NOTE</strong>: The first 8 bits of the serializer ID are reserved, so your custom
+serializer ID must start from <code>256+</code>.</p>
+<p>You can set the default RPC message serializer to use in the static
+<code>SerializerRpcMessageBase.DefaultSerializer</code> property.</p>
 <h3 id="using-the-rpc-processor">Using the RPC processor</h3>
 <p>The RPC processor is used to evaluate a RPC call to registered RPC API classes
 and methods:</p>
-<pre><code class="lang-cs">RpcProcessor processor = new(new(){ ApiTypes = [typeof(YourRpcApi)] });
+<pre><code class="lang-cs">RpcProcessor processor = new(new(typeof(YourRpcApi)));
 await using(processor)
 {
 	await processor.StartAsync();
@@ -266,7 +329,7 @@ await using(sdk)
 	{
 		result = await sdk.YourApiMethodAsync(value);
 	}
-	catch(RpcException ex)
+	catch(RpcRemoteException ex)
 	{
 		// Handle the remote execution error
 		// (InnerException has the remote exception type, if possible)
@@ -301,14 +364,14 @@ processor options). Any limit exceeding call will cause an exception at the
 peer!</p>
 <h3 id="events">Events</h3>
 <p>A <code>RpcProcessor</code> and a <code>RpcSdkBase</code> offer a simple solution for events using
-<code>*RpcEventMessage</code> and <code>RpcEvent</code>.</p>
+<code>EventMessage</code> and <code>RpcEvent</code>.</p>
 <p>In a processor or SDK you can register receivable events like this:</p>
-<pre><code class="lang-cs">RegisterEvent(new(nameof(YourEvent), typeof(YourEventData), RaiseYourEvent));
+<pre><code class="lang-cs">RegisterEvent(new(nameof(YourEvent), typeof(YourEventData), RaiseYourEventAsync));
 </code></pre>
 <p>Example receivable event definition:</p>
 <pre><code class="lang-cs">public delegate void YourEvent_Delegate(object sender, YourEventData e);
 public event YourEvent_Delegate? YourEvent;
-private async void RaiseYourEvent(RpcEvent rpcEvent, object? e)
+private async Task RaiseYourEventAsync(RpcEvent rpcEvent, EventData? e)
 {
 	await Task.Yield();
 	if(e is not YourEventData data)

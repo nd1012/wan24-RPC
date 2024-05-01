@@ -1,0 +1,570 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class RpcSerializer | wan24-RPC </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class RpcSerializer | wan24-RPC ">
+      <meta name="generator" content="docfx ">
+  
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" integrity="sha384-EvBWSlnoFgZlXJvpzS+MAUEjvN7+gcCwH+qh7GRFOGgZO0PuwOFro7qPOJnLfe7l" crossorigin="anonymous">
+      <link rel="stylesheet" href="../styles/config.css">
+      <link rel="stylesheet" href="../styles/singulink.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+    </head>
+    <body>
+        <!-- Header required for docfx anchor scroll to work -->
+        <header id="head"></header>
+        <div class="top-navbar">
+            <a class="burger-icon" onclick="toggleMenu()">
+                <svg name="Hamburger" style="vertical-align: middle;" width="34" height="34" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M20 6H4V9H20V6ZM4 10.999H20V13.999H4V10.999ZM4 15.999H20V18.999H4V15.999Z"></path></svg>
+            </a>
+
+
+            <a class="brand" href="../index.html">
+              <img src="../logo.svg" alt="" class="logomark">
+              <span class="brand-title"></span>
+            </a>        </div>
+
+        <div class="body-content">
+            <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
+
+            <nav id="sidebar" role="navigation">
+                <div class="sidebar">
+
+                    <div>
+                      <div class="mobile-hide">
+
+                        <a class="brand" href="../index.html">
+                          <img src="../logo.svg" alt="" class="logomark">
+                          <span class="brand-title"></span>
+                        </a>                      </div>
+
+                      <div class="sidesearch">
+                        <form id="search" role="search" class="search">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="search-query" placeholder="Search" autocomplete="off">
+                        </form>
+                      </div>
+
+                      <div id="navbar">
+                      </div>
+                    </div>                    <div class="sidebar-item-separator"></div>
+
+                        <div id="sidetoggle">
+                          <div id="sidetoc"></div>
+                        </div>
+                </div>
+                <div class="footer">
+  (c) 2024 Andreas Zimmermann, wan24.de
+  
+                </div>            </nav>
+
+            <main class="main-panel">
+
+                <div id="search-results" style="display: none;">
+                  <h1 class="search-list">Search Results for <span></span></h1>
+                  <div class="sr-items">
+                    <p><i class="bi bi-hourglass-split index-loading"></i></p>
+                  </div>
+                  <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+                </div>
+ 
+
+                <div role="main" class="hide-when-search">
+
+                        <div class="subnav navbar navbar-default">
+                          <div class="container hide-when-search" id="breadcrumb">
+                            <ul class="breadcrumb">
+                              <li></li>
+                            </ul>
+                          </div>
+                        </div>
+
+                         <div id="contribution">
+                               <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                         </div>
+
+                    <article class="content wrap" id="_content" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer">
+
+
+
+  <h1 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer" class="text-break">Class RpcSerializer</h1>
+  <div class="markdown level0 summary"><p>RPC serializer</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><span class="xref">RpcSerializer</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.html">RpcSerializer</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="wan24.html">wan24</a>.<a class="xref" href="wan24.RPC.html">RPC</a>.<a class="xref" href="wan24.RPC.Api.html">Api</a>.<a class="xref" href="wan24.RPC.Api.Messages.html">Messages</a>.<a class="xref" href="wan24.RPC.Api.Messages.Serialization.html">Serialization</a></h6>
+  <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
+  <h5 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed record RpcSerializer : IEquatable&lt;RpcSerializer&gt;</code></pre>
+  </div>
+  <h5 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Constructor</p>
+</div>
+  <h3 id="constructors">Constructors
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer__ctor.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L9">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer__ctor_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.#ctor*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer__ctor" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.#ctor">RpcSerializer()</h4>
+  <div class="markdown level1 summary"><p>RPC serializer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RpcSerializer()</code></pre>
+  </div>
+  <h5 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer__ctor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Constructor</p>
+</div>
+  <h3 id="properties">Properties
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer_CanSerialize.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.CanSerialize%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L55">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_CanSerialize_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.CanSerialize*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_CanSerialize" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.CanSerialize">CanSerialize</h4>
+  <div class="markdown level1 summary"><p>Determine if a type can be serialized</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public required RpcSerializer.CanSerialize_Delegate CanSerialize { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.html">RpcSerializer</a>.<a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.CanSerialize_Delegate.html">CanSerialize_Delegate</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer_DefaultOptIn.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.DefaultOptIn%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L45">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_DefaultOptIn_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.DefaultOptIn*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_DefaultOptIn" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.DefaultOptIn">DefaultOptIn</h4>
+  <div class="markdown level1 summary"><p>Opt-in deserializable types?</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool DefaultOptIn { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectDeserializer.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectDeserializer%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L70">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectDeserializer_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectDeserializer*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectDeserializer" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectDeserializer">ObjectDeserializer</h4>
+  <div class="markdown level1 summary"><p>Object deserializer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public required RpcSerializer.ObjectDeserializer_Delegate ObjectDeserializer { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.html">RpcSerializer</a>.<a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectDeserializer_Delegate.html">ObjectDeserializer_Delegate</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectListDeserializer.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectListDeserializer%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L75">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectListDeserializer_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectListDeserializer*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectListDeserializer" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectListDeserializer">ObjectListDeserializer</h4>
+  <div class="markdown level1 summary"><p>Object list deserializer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public required RpcSerializer.ObjectListDeserializer_Delegate ObjectListDeserializer { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.html">RpcSerializer</a>.<a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectListDeserializer_Delegate.html">ObjectListDeserializer_Delegate</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectListSerializer.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectListSerializer%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L65">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectListSerializer_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectListSerializer*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectListSerializer" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectListSerializer">ObjectListSerializer</h4>
+  <div class="markdown level1 summary"><p>Object list serializer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public required RpcSerializer.ObjectListSerializer_Delegate ObjectListSerializer { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.html">RpcSerializer</a>.<a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectListSerializer_Delegate.html">ObjectListSerializer_Delegate</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectSerializer.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectSerializer%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L60">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectSerializer_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectSerializer*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_ObjectSerializer" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectSerializer">ObjectSerializer</h4>
+  <div class="markdown level1 summary"><p>Object serializer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public required RpcSerializer.ObjectSerializer_Delegate ObjectSerializer { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.html">RpcSerializer</a>.<a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.ObjectSerializer_Delegate.html">ObjectSerializer_Delegate</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer_OptIn.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.OptIn%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L50">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_OptIn_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.OptIn*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_OptIn" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.OptIn">OptIn</h4>
+  <div class="markdown level1 summary"><p>Opt-in deserializable types?</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool? OptIn { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>?</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer_Get_System_Int32__.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.Get(System.Int32%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L134">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_Get_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.Get*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_Get_System_Int32__" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.Get(System.Int32@)">Get(in int)</h4>
+  <div class="markdown level1 summary"><p>Get a serializer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RpcSerializer? Get(in int id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>ID</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.html">RpcSerializer</a></td>
+        <td><p>Serializer</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer_GetIsOptIn.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.GetIsOptIn%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L81">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_GetIsOptIn_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.GetIsOptIn*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_GetIsOptIn" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.GetIsOptIn">GetIsOptIn()</h4>
+  <div class="markdown level1 summary"><p>Get if opt-in is required for deserializable types</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool GetIsOptIn()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p>If opt-in is required</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer_Register_System_Int32__wan24_RPC_Api_Messages_Serialization_RpcSerializer__.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.Register(System.Int32%40%2Cwan24.RPC.Api.Messages.Serialization.RpcSerializer%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L127">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_Register_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.Register*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_Register_System_Int32__wan24_RPC_Api_Messages_Serialization_RpcSerializer__" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.Register(System.Int32@,wan24.RPC.Api.Messages.Serialization.RpcSerializer@)">Register(in int, in RpcSerializer)</h4>
+  <div class="markdown level1 summary"><p>Register a serializer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Register(in int id, in RpcSerializer serializer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>ID</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Api.Messages.Serialization.RpcSerializer.html">RpcSerializer</a></td>
+        <td><span class="parametername">serializer</span></td>
+        <td><p>Serializer</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Messages_Serialization_RpcSerializer_Remove_System_Int32__.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Messages.Serialization.RpcSerializer.Remove(System.Int32%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Messages/Serialization/RpcSerializer.cs/#L140">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_Remove_" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.Remove*"></a>
+  <h4 id="wan24_RPC_Api_Messages_Serialization_RpcSerializer_Remove_System_Int32__" data-uid="wan24.RPC.Api.Messages.Serialization.RpcSerializer.Remove(System.Int32@)">Remove(in int)</h4>
+  <div class="markdown level1 summary"><p>Remove a serializer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Remove(in int id)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>ID</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable&lt;T&gt;</a>
+  </div>
+
+</article>
+                </div>
+
+                <div class="copyright-footer">
+                    <span>(c) 2024 Andreas Zimmermann, wan24.de</span>
+                </div>
+            </main>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script type="text/javascript" src="../styles/jquery.twbsPagination.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"></script>
+        <script type="text/javascript" src="../styles/url.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script>
+        <script type="text/javascript" src="../styles/docfx.js"></script>
+        <script type="text/javascript" src="../styles/main.js"></script>
+        <script type="text/javascript" src="../styles/singulink.js"></script>    </body>
+</html>
