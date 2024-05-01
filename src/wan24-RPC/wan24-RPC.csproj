@@ -109,4 +109,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Api\Messages\Enumeration\" />
+    <Folder Include="Api\Messages\Streaming\" />
+  </ItemGroup>
+
 </Project>

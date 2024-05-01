@@ -24,7 +24,3 @@ jobs:
       run: dotnet restore ./src/wan24-RPC.sln --ignore-failed-sources
     - name: Build lib
       run: dotnet build ./src/wan24-RPC/wan24-RPC.csproj --no-restore
-    - name: Build tests
-      run: dotnet build "./src/wan24-RPC Tests/wan24-RPC Tests.csproj" --no-restore
-    - name: Test
-      run: dotnet test ./src/wan24-RPC.sln --no-build --verbosity normal

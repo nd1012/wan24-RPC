@@ -7,6 +7,7 @@ bi-directional RPC stream on the fly. It supports
 - Enumeration channels
 - Events
 - Cancellation
+- Binary and JSON serialization
 - API versioning
 - Compression
 - Server AND client RPC (bi-directional)
@@ -74,30 +75,53 @@ await stream.WriteRpcMessageAsync(message);
 
 `RpcMessageBase` is just a base type, which is being used by 
 
-- `RpcRequestBase`
-- `RpcResponseBase`
-- `RpcEventMessageBase`
-- `RpcErrorResponseMessage`
-- `RpcCancellationMessage`
+- `SerializerRpcMessageBase` (supports variable serializer)
 
 Those base types are used by
 
-- `SerializedRpc*(Request/Response)Message` which use 
-[`Stream-Serializer-Extensions`](https://github.com/nd1012/Stream-Serializer-Extensions) 
-for binary serialization
-- `JsonRpc*(Request/Response)Message` which use `wan24.Core.JsonHelper` for 
-JSON serialization
+| ID | Type | Description |
+| -- | ---- | ----------- |
+| `0` | `RequestMessage` | RPC request |
+| `1` | `ResponseMessage` | RPC response |
+| `2` | `ErrorResponseMessage` | RPC error response |
+| `3` | `CancellationMessage` | RPC cancellation |
+| `4` | `EventMessage` | RPC event |
 
 and must be used as base type for your own implementations. Each RPC message 
 type has an ID, which may be sent to the peer before the serialized message 
 body. Your custom RPC message type needs to be registered:
 
 ```cs
-RpcMessageTypes.Register<YourRpcMessage>(1 << 8);
+RpcMessages.Register<YourRpcMessage>(1 << 8);
 ```
 
 **NOTE**: The first 8 bit of the message type ID are reserved, so your custom 
 message type ID must start from `256+`.
+
+### RPC message serialization
+
+These are the built in RPC message serializers:
+
+| ID | Type | Description |
+| -- | ---- | ----------- |
+| `0` | `BinarySerializer` | Binary serialization using [`Stream-Serializer-Extensions`](https://github.com/nd1012/Stream-Serializer-Extensions) |
+| `1` | `JsonSerializer` | JSON serialization using `wan24.Core.JsonHelper` |
+| `2` | `MixedSerializer` | Variable serializer which chooses between binary and JSON serialization per object (prefers binary) |
+
+The `MixedSerializer` is the default. Binary serialization will produce less 
+overhead, but each object needs to implement the `IStreamSerializer` interface.
+
+To register a custom serializer:
+
+```cs
+RpcSerializer.Register(1 << 8, yourSerializer);
+```
+
+**NOTE**: The first 8 bits of the serializer ID are reserved, so your custom 
+serializer ID must start from `256+`.
+
+You can set the default RPC message serializer to use in the static 
+`SerializerRpcMessageBase.DefaultSerializer` property.
 
 ### Using the RPC processor
 
@@ -105,7 +129,7 @@ The RPC processor is used to evaluate a RPC call to registered RPC API classes
 and methods:
 
 ```cs
-RpcProcessor processor = new(new(){ ApiTypes = [typeof(YourRpcApi)] });
+RpcProcessor processor = new(new(typeof(YourRpcApi)));
 await using(processor)
 {
 	await processor.StartAsync();
@@ -166,7 +190,7 @@ await using(sdk)
 	{
 		result = await sdk.YourApiMethodAsync(value);
 	}
-	catch(RpcException ex)
+	catch(RpcRemoteException ex)
 	{
 		// Handle the remote execution error
 		// (InnerException has the remote exception type, if possible)
@@ -213,12 +237,12 @@ peer!
 ### Events
 
 A `RpcProcessor` and a `RpcSdkBase` offer a simple solution for events using 
-`*RpcEventMessage` and `RpcEvent`.
+`EventMessage` and `RpcEvent`.
 
 In a processor or SDK you can register receivable events like this:
 
 ```cs
-RegisterEvent(new(nameof(YourEvent), typeof(YourEventData), RaiseYourEvent));
+RegisterEvent(new(nameof(YourEvent), typeof(YourEventData), RaiseYourEventAsync));
 ```
 
 Example receivable event definition:
@@ -226,7 +250,7 @@ Example receivable event definition:
 ```cs
 public delegate void YourEvent_Delegate(object sender, YourEventData e);
 public event YourEvent_Delegate? YourEvent;
-private async void RaiseYourEvent(RpcEvent rpcEvent, object? e)
+private async Task RaiseYourEventAsync(RpcEvent rpcEvent, EventData? e)
 {
 	await Task.Yield();
 	if(e is not YourEventData data)
