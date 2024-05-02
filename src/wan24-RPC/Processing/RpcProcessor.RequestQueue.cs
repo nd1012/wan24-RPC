@@ -20,15 +20,19 @@ namespace wan24.RPC.Processing
             /// <inheritdoc/>
             protected override async Task ProcessItem(Request item, CancellationToken cancellationToken)
             {
+                await Task.Yield();
                 if (item.RequestCompletion.Task.IsCompleted)
                     return;
                 if (item.Message is not RequestMessage request)
-                    throw new InvalidDataException($"Request message expected (got {item.Message.GetType()} instead)");
+                {
+                    item.RequestCompletion.TrySetException(new InvalidDataException($"Request message expected (got {item.Message.GetType()} instead)"));
+                    return;
+                }
                 using Cancellations cancellation = new(cancellationToken, item.ProcessorCancellation, item.RequestCancellation);
                 // Send the RPC request
                 try
                 {
-                    await SendMessageAsync(request, cancellation).DynamicContext();
+                    await Processor.SendMessageAsync(request, cancellation).DynamicContext();
                     if (!request.WantsResponse)
                     {
                         item.Processed = true;
@@ -52,7 +56,7 @@ namespace wan24.RPC.Processing
                 }
                 catch (OperationCanceledException ex) when (ex.CancellationToken == item.RequestCancellation)
                 {
-                    //TODO Send cancellation
+                    await Processor.CancelRequestAsync(request).DynamicContext();
                     item.SetDone();
                     item.RequestCompletion.TrySetException(ex);
                     return;
@@ -66,7 +70,7 @@ namespace wan24.RPC.Processing
                 // Handle the response
                 try
                 {
-                    //TODO
+                    //TODO Stream and enumeration
                     item.SetDone();
                     item.RequestCompletion.TrySetResult(returnValue);
                 }
@@ -78,20 +82,6 @@ namespace wan24.RPC.Processing
                     item.RequestCompletion.TrySetException(ex);
                 }
             }
-
-            /// <summary>
-            /// Send a RPC message to the peer
-            /// </summary>
-            /// <param name="request">RPC request message</param>
-            /// <param name="cancellationToken">Cancellation token</param>
-            protected Task SendMessageAsync(RequestMessage request, CancellationToken cancellationToken)
-                => Processor.SendMessageAsync(request, cancellationToken);
-
-            /// <summary>
-            /// Cancel a RPC request
-            /// </summary>
-            /// <param name="request">RPC request message</param>
-            protected Task CancelRequestAsync(RequestMessage request) => Processor.CancelRequestAsync(request);
         }
     }
 }

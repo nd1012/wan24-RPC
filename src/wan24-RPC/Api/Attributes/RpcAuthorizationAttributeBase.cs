@@ -15,6 +15,6 @@ namespace wan24.RPC.Api.Attributes
         /// </summary>
         /// <param name="context">Context</param>
         /// <returns>If authorized (if <see langword="false"/>, the peer will be disconnected)</returns>
-        public abstract Task<bool> IsAuthorizedAsync(RpcContext context);
+        public abstract Task<bool> IsContextAuthorizedAsync(RpcContext context);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace wan24.RPC.Api.Attributes
+﻿using wan24.RPC.Api.Reflection;
+
+namespace wan24.RPC.Api.Attributes
 {
     /// <summary>
     /// Attribute for an API version restricted RPC API method
@@ -36,7 +38,7 @@
         public int? ToVersion { get; }
 
         /// <summary>
-        /// Newer RPC API method name
+        /// Newer RPC API method name to use
         /// </summary>
         public string? NewerMethodName { get; }
 
@@ -56,9 +58,13 @@
         /// Get the newer RPC API method name to use, if incompatible
         /// </summary>
         /// <param name="version">API version</param>
-        /// <param name="currentMethodName">Current RPC API method name used</param>
+        /// <param name="currentMethod">Current RPC API method used</param>
         /// <returns>The current or newer RPC API method name to use, or <see langword="null"/>, if the method can't be served with the peers API version</returns>
-        public virtual string? GetNewerMethodName(in int version, in string currentMethodName)
-            => IsCompatibleWithApiVersion(version) ? currentMethodName : NewerMethodName;
+        public virtual string? GetNewerMethodName(in int version, in RpcApiMethodInfo currentMethod)
+            => IsCompatibleWithApiVersion(version) ? currentMethod.Name : NewerMethodName;
+
+        /// <inheritdoc/>
+        public override string ToString()
+            => $"#{FromVersion} to #{ToVersion?.ToString() ?? "n"}{(NewerMethodName is null ? string.Empty : $", otherwise \"{NewerMethodName}\"")}";
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace wan24.RPC.Api.Messages.Interfaces
 {
     /// <summary>
-    /// Interface fora RPC message
+    /// Interface for a RPC message
     /// </summary>
     public interface IRpcMessage
     {

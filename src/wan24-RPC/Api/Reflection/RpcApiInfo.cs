@@ -26,6 +26,7 @@ namespace wan24.RPC.Api.Reflection
             Instance = api;
             Alias = Type.GetCustomAttributeCached<RpcAliasAttribute>();
             Authorization = Type.GetCustomAttributesCached<RpcAuthorizationAttributeBase>().ToFrozenSet();
+            Authorize = Type.GetCustomAttribute<RpcAuthorizedAttribute>() is not null;
             Version = Type.GetCustomAttributeCached<RpcVersionAttribute>();
             DisposeInstance = Type.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
             Methods = new Dictionary<string, RpcApiMethodInfo>(
@@ -74,6 +75,11 @@ namespace wan24.RPC.Api.Reflection
         public FrozenSet<RpcAuthorizationAttributeBase> Authorization { get; protected set; } = null!;
 
         /// <summary>
+        /// If authorized for every context
+        /// </summary>
+        public bool Authorize { get; protected set; }
+
+        /// <summary>
         /// Version
         /// </summary>
         public RpcVersionAttribute? Version { get; protected set; }
@@ -111,5 +117,8 @@ namespace wan24.RPC.Api.Reflection
             if (DisposeInstance)
                 await Instance.TryDisposeAsync().DynamicContext();
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => $"{Name} ({Type.GetType()})";
     }
 }

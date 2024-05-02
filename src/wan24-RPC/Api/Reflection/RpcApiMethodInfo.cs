@@ -24,16 +24,18 @@ namespace wan24.RPC.Api.Reflection
             Method = method;
             Alias = method.GetCustomAttributeCached<RpcAliasAttribute>();
             Authorization = method.GetCustomAttributesCached<RpcAuthorizationAttributeBase>().ToFrozenSet();
+            Authorize = method.GetCustomAttribute<RpcAuthorizedAttribute>() is not null;
             EnumerateReturnValue = method.ReturnType.IsEnumerable() && method.GetCustomAttributeCached<NoRpcEnumerableAttribute>() is null;
             Stream = method.GetCustomAttributeCached<RpcStreamAttribute>();
             Version = method.GetCustomAttributeCached<RpcVersionAttribute>();
             DisposeReturnValue = method.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
             int index = -1;
+            NullabilityInfoContext nic = new();
             Parameters = new Dictionary<string, RpcApiMethodParameterInfo>(
                 from pi in method.GetParametersCached()
                 select new KeyValuePair<string, RpcApiMethodParameterInfo>(
                     pi.Name ?? throw new InvalidProgramException($"Missing parameter name (method \"{api.Type.Name}.{method.Name}\" at index #{++index})"), 
-                    new(this, pi, ++index)
+                    new(this, pi, ++index, nic)
                     )
                 )
                 .ToFrozenDictionary();
@@ -71,6 +73,11 @@ namespace wan24.RPC.Api.Reflection
         public FrozenSet<RpcAuthorizationAttributeBase> Authorization { get; protected set; } = null!;
 
         /// <summary>
+        /// If authorized for every context
+        /// </summary>
+        public bool Authorize { get; protected set; }
+
+        /// <summary>
         /// If to enumerate the return value, if applicable
         /// </summary>
         public bool EnumerateReturnValue { get; protected set; } = true;
@@ -99,5 +106,8 @@ namespace wan24.RPC.Api.Reflection
         /// RPC parameters
         /// </summary>
         public FrozenSet<RpcApiMethodParameterInfo> RpcParameters { get; protected set; } = null!;
+
+        /// <inheritdoc/>
+        public override string ToString() => $"{API.Name}->{Name} ({API.Type.GetType()}.{Method.Name})";
     }
 }

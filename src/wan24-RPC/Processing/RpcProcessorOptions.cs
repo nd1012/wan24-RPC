@@ -1,5 +1,4 @@
-﻿using System.Collections.Frozen;
-using wan24.Core;
+﻿using wan24.Core;
 using wan24.RPC.Api.Reflection;
 using wan24.StreamSerializerExtensions;
 
@@ -21,14 +20,13 @@ namespace wan24.RPC.Processing
         {
             if (apis.Length < 1)
                 throw new ArgumentOutOfRangeException(nameof(apis));
-            Dictionary<string, RpcApiInfo> dict = new(apis.Length);
+            API = new(apis.Length);
             RpcApiInfo info;
             foreach(object api in apis)
             {
                 info = new(api);
-                dict[info.Type.Name] = info;
+                API[info.Type.Name] = info;
             }
-            API = dict.ToFrozenDictionary();
         }
 
         /// <summary>
@@ -39,14 +37,13 @@ namespace wan24.RPC.Processing
         {
             if (apis.Length < 1)
                 throw new ArgumentOutOfRangeException(nameof(apis));
-            Dictionary<string, RpcApiInfo> dict = new(apis.Length);
+            API = new(apis.Length);
             RpcApiInfo info;
             foreach (Type api in apis)
             {
                 info = new(api);
-                dict[info.Type.Name] = info;
+                API[info.Type.Name] = info;
             }
-            API = dict.ToFrozenDictionary();
         }
 
         /// <summary>
@@ -60,9 +57,14 @@ namespace wan24.RPC.Processing
         public int SerializerVersion { get; init; } = StreamSerializer.Version;
 
         /// <summary>
+        /// Peer API version
+        /// </summary>
+        public int ApiVersion { get; set; } = 1;
+
+        /// <summary>
         /// API (infos will be disposed)
         /// </summary>
-        public required FrozenDictionary<string, RpcApiInfo> API { get; init; }
+        public required Dictionary<string, RpcApiInfo> API { get; init; }
 
         /// <summary>
         /// Default context for an incoming RPC call (will be disposed)
@@ -70,7 +72,7 @@ namespace wan24.RPC.Processing
         public RpcContext? DefaultContext { get; init; }
 
         /// <summary>
-        /// Max. number of queued RPC requests
+        /// Max. number of queued RPC requests (RPC requests from the peer; should at last fit the peers <see cref="RequestThreads"/>)
         /// </summary>
         public int CallQueueSize { get; init; }
 
@@ -90,12 +92,12 @@ namespace wan24.RPC.Processing
         public bool DisconnectOnApiError { get; init; }
 
         /// <summary>
-        /// Max. number of queued RPC calls
+        /// Max. number of queued RPC calls (RPC requests to the peer)
         /// </summary>
         public int RequestQueueSize { get; init; }
 
         /// <summary>
-        /// Max. number of RPC call processing threads
+        /// Max. number of RPC call processing threads (should not exceed the peers <see cref="CallQueueSize"/>)
         /// </summary>
         public int RequestThreads { get; set; }
 

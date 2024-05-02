@@ -16,12 +16,14 @@ namespace wan24.RPC.Api.Reflection
         /// <param name="method">Method</param>
         /// <param name="pi">Parameter</param>
         /// <param name="index">Index</param>
-        public RpcApiMethodParameterInfo(in RpcApiMethodInfo method, in ParameterInfo pi, in int index)
+        /// <param name="nic">Nullability info context</param>
+        public RpcApiMethodParameterInfo(in RpcApiMethodInfo method, in ParameterInfo pi, in int index, in NullabilityInfoContext nic)
         {
             Method = method;
             Parameter = pi;
             Index = index;
             RPC = pi.GetCustomAttributeCached<NoRpcAttribute>() is null;
+            Nullable = pi.IsNullable(nic);
             Enumerable = pi.ParameterType.IsEnumerable(strict: true, asyncOnly: true);
             Stream = pi.GetCustomAttributeCached<RpcStreamAttribute>();
             DisposeParameterValue = pi.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
@@ -56,6 +58,11 @@ namespace wan24.RPC.Api.Reflection
         /// If the parameter is available via RPC
         /// </summary>
         public bool RPC { get; protected set; } = true;
+
+        /// <summary>
+        /// If the parameter value is nullable
+        /// </summary>
+        public bool Nullable { get; protected set; }
 
         /// <summary>
         /// If the parameter value may be transported as RPC enumerable
