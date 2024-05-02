@@ -246,7 +246,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions__ctor.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L14">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L13">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions__ctor_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.#ctor*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions__ctor" data-uid="wan24.RPC.Processing.RpcProcessorOptions.#ctor">RpcProcessorOptions()</h4>
@@ -265,7 +265,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions__ctor_System_Object___.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.%23ctor(System.Object%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L20">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L19">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions__ctor_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.#ctor*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions__ctor_System_Object___" data-uid="wan24.RPC.Processing.RpcProcessorOptions.#ctor(System.Object[])">RpcProcessorOptions(params object[])</h4>
@@ -299,7 +299,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions__ctor_System_Type___.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.%23ctor(System.Type%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L38">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L36">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions__ctor_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.#ctor*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions__ctor_System_Type___" data-uid="wan24.RPC.Processing.RpcProcessorOptions.#ctor(System.Type[])">RpcProcessorOptions(params Type[])</h4>
@@ -335,7 +335,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_API.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.API%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L65">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L67">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_API_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.API*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_API" data-uid="wan24.RPC.Processing.RpcProcessorOptions.API">API</h4>
@@ -344,7 +344,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public required FrozenDictionary&lt;string, RpcApiInfo&gt; API { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">public required Dictionary&lt;string, RpcApiInfo&gt; API { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -356,7 +356,38 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.frozen.frozendictionary-2">FrozenDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="wan24.RPC.Api.Reflection.RpcApiInfo.html">RpcApiInfo</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="wan24.RPC.Api.Reflection.RpcApiInfo.html">RpcApiInfo</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_ApiVersion.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.ApiVersion%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L62">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessorOptions_ApiVersion_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.ApiVersion*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessorOptions_ApiVersion" data-uid="wan24.RPC.Processing.RpcProcessorOptions.ApiVersion">ApiVersion</h4>
+  <div class="markdown level1 summary"><p>Peer API version</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ApiVersion { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -366,11 +397,11 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_CallQueueSize.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.CallQueueSize%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L75">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L77">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_CallQueueSize_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.CallQueueSize*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_CallQueueSize" data-uid="wan24.RPC.Processing.RpcProcessorOptions.CallQueueSize">CallQueueSize</h4>
-  <div class="markdown level1 summary"><p>Max. number of queued RPC requests</p>
+  <div class="markdown level1 summary"><p>Max. number of queued RPC requests (RPC requests from the peer; should at last fit the peers <a class="xref" href="wan24.RPC.Processing.RpcProcessorOptions.html#wan24_RPC_Processing_RpcProcessorOptions_RequestThreads">RequestThreads</a>)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -397,7 +428,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_CallThreads.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.CallThreads%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L80">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L82">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_CallThreads_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.CallThreads*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_CallThreads" data-uid="wan24.RPC.Processing.RpcProcessorOptions.CallThreads">CallThreads</h4>
@@ -428,7 +459,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_DefaultContext.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.DefaultContext%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L70">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L72">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_DefaultContext_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.DefaultContext*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_DefaultContext" data-uid="wan24.RPC.Processing.RpcProcessorOptions.DefaultContext">DefaultContext</h4>
@@ -459,7 +490,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_DefaultServices.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.DefaultServices%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L85">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L87">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_DefaultServices_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.DefaultServices*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_DefaultServices" data-uid="wan24.RPC.Processing.RpcProcessorOptions.DefaultServices">DefaultServices</h4>
@@ -490,7 +521,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_DisconnectOnApiError.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.DisconnectOnApiError%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L90">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L92">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_DisconnectOnApiError_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.DisconnectOnApiError*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_DisconnectOnApiError" data-uid="wan24.RPC.Processing.RpcProcessorOptions.DisconnectOnApiError">DisconnectOnApiError</h4>
@@ -521,11 +552,11 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_RequestQueueSize.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.RequestQueueSize%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L95">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L97">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_RequestQueueSize_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.RequestQueueSize*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_RequestQueueSize" data-uid="wan24.RPC.Processing.RpcProcessorOptions.RequestQueueSize">RequestQueueSize</h4>
-  <div class="markdown level1 summary"><p>Max. number of queued RPC calls</p>
+  <div class="markdown level1 summary"><p>Max. number of queued RPC calls (RPC requests to the peer)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -552,11 +583,11 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_RequestThreads.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.RequestThreads%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L100">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L102">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_RequestThreads_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.RequestThreads*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_RequestThreads" data-uid="wan24.RPC.Processing.RpcProcessorOptions.RequestThreads">RequestThreads</h4>
-  <div class="markdown level1 summary"><p>Max. number of RPC call processing threads</p>
+  <div class="markdown level1 summary"><p>Max. number of RPC call processing threads (should not exceed the peers <a class="xref" href="wan24.RPC.Processing.RpcProcessorOptions.html#wan24_RPC_Processing_RpcProcessorOptions_CallQueueSize">CallQueueSize</a>)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -583,7 +614,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_SerializerVersion.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.SerializerVersion%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L60">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L57">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_SerializerVersion_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.SerializerVersion*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_SerializerVersion" data-uid="wan24.RPC.Processing.RpcProcessorOptions.SerializerVersion">SerializerVersion</h4>
@@ -614,7 +645,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_Stream.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.Stream%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L55">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L52">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_Stream_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.Stream*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_Stream" data-uid="wan24.RPC.Processing.RpcProcessorOptions.Stream">Stream</h4>
@@ -647,7 +678,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.Dispose(System.Boolean)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L103">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L105">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_Dispose_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.Dispose*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_Dispose_System_Boolean_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.Dispose(System.Boolean)">Dispose(bool)</h4>
@@ -683,7 +714,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessorOptions_DisposeCore.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessorOptions.DisposeCore%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L112">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessorOptions.cs/#L114">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessorOptions_DisposeCore_" data-uid="wan24.RPC.Processing.RpcProcessorOptions.DisposeCore*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessorOptions_DisposeCore" data-uid="wan24.RPC.Processing.RpcProcessorOptions.DisposeCore">DisposeCore()</h4>
