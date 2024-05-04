@@ -1,4 +1,5 @@
-﻿using wan24.Core;
+﻿using Microsoft.Extensions.Logging;
+using wan24.Core;
 using wan24.RPC.Api.Attributes;
 using wan24.RPC.Api.Messages;
 using wan24.RPC.Api.Reflection;
@@ -28,8 +29,12 @@ namespace wan24.RPC.Processing
             protected override async Task ProcessItem(Call item, CancellationToken cancellationToken)
             {
                 await Task.Yield();
+                Processor.Options.Logger?.Log(LogLevel.Debug, "{this} processing call #{id}", this, item.Message.Id);
                 if (item.Completion.Task.IsCompleted)
+                {
+                    Processor.Options.Logger?.Log(LogLevel.Debug, "{this} call #{id} processed already", this, item.Message.Id);
                     return;
+                }
                 if (item.Message is not RequestMessage request)
                 {
                     item.Completion.TrySetException(new InvalidDataException($"Request message expected (got {item.Message.GetType()} instead)"));
@@ -43,8 +48,7 @@ namespace wan24.RPC.Processing
                     method = await FindApiMethodAsync(item, request).DynamicContext();
                     if (method is null)
                     {
-                        if (!item.Completion.Task.IsCompleted)
-                            item.Completion.TrySetException(new InvalidDataException("API or method not found"));
+                        item.Completion.TrySetException(new InvalidDataException("API or method not found"));
                         return;
                     }
                     // Create a context
@@ -53,16 +57,15 @@ namespace wan24.RPC.Processing
                     await using (context.DynamicContext())
                     {
                         // Authorize
-                        if (!await AuthorizeAsync(item, request, method, context).DynamicContext())
+                        if (!await AuthorizeContextAsync(item, request, method, context).DynamicContext())
                         {
-                            if (!item.Completion.Task.IsCompleted)
-                                item.Completion.TrySetException(new UnauthorizedAccessException("Not authorized"));
+                            item.Completion.TrySetException(new UnauthorizedAccessException("Not authorized"));
                             return;
                         }
-                        // Prepare the method call
+                        // Prepare DI
                         item.Context = context;
-                        context.Services.AddDiObject(context);
                         context.Services.AddDiObject(Processor);
+                        context.Services.AddDiObject(context);
                         _ = context.Services.AddDiObject(cancellation.Cancellation);
                         // Prepare parameters
                         int index = 0;
@@ -75,9 +78,7 @@ namespace wan24.RPC.Processing
                         }
                         // Call the method
                         item.Processed = true;
-                        returnValue = typeof(Task).IsAssignableFrom(method.Method.ReturnType)
-                            ? await method.Method.InvokeAutoAsync(method.Method.IsStatic ? null : method.API.Instance, parameters).DynamicContext()
-                            : method.Method.InvokeAuto(method.Method.IsStatic ? null : method.API.Instance, parameters);
+                        returnValue = method.Method.Invoke(method.Method.IsStatic ? null : method.API.Instance, [.. parameters]);
                         while (returnValue is Task task)
                         {
                             await task.DynamicContext();
@@ -87,7 +88,11 @@ namespace wan24.RPC.Processing
                         }
                         // Handle the response
                         item.SetDone();
-                        item.Completion.TrySetResult(await GetReturnValueAsync(item, request, context, method, returnValue).DynamicContext());
+                        item.Completion.TrySetResult(
+                            request.WantsReturnValue
+                                ? await GetFinalReturnValueAsync(item, request, context, method, returnValue).DynamicContext()
+                                : null
+                                );
                     }
                 }
                 catch (Exception ex)
@@ -96,6 +101,10 @@ namespace wan24.RPC.Processing
                         await returnValue.TryDisposeAsync().DynamicContext();
                     item.Completion.TrySetException(ex);
                     return;
+                }
+                finally
+                {
+                    item.SetDone();
                 }
             }
 
@@ -112,6 +121,7 @@ namespace wan24.RPC.Processing
                     : Processor.Options.API.FindApiMethod(request.Method);
                 if (res is null)
                 {
+                    Processor.Options.Logger?.Log(LogLevel.Warning, "{this} call #{id} API \"{api}\" method \"{method}\" not found", this, item.Message.Id, request.Api, request.Method);
                     item.Completion.TrySetException(new InvalidDataException("API or method not found"));
                     return Task.FromResult(res);
                 }
@@ -137,6 +147,7 @@ namespace wan24.RPC.Processing
                                 );
                             return Task.FromResult<RpcApiMethodInfo?>(null);
                         }
+                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{currentMethod}\" forwards to \"{name}\"", this, item.Message.Id, currentMethod, newerMethodName);
                         res = res.API.FindMethod(newerMethodName);
                         if (res is null)
                         {
@@ -162,7 +173,7 @@ namespace wan24.RPC.Processing
                         item.Completion.TrySetException(ex);
                         return Task.FromResult<RpcApiMethodInfo?>(null);
                     }
-                if (request.Parameters is not null && request.Parameters.Length > res.Parameters.Count)
+                if (request.Parameters is not null && request.Parameters.Length > res.RpcParameters.Count)
                 {
                     item.Completion.TrySetException(new ArgumentException("API method parameter count mismatch"));
                     return Task.FromResult<RpcApiMethodInfo?>(null);
@@ -178,10 +189,14 @@ namespace wan24.RPC.Processing
             /// <param name="method">RPC API method</param>
             /// <param name="context">Context</param>
             /// <returns>If authorized</returns>
-            protected virtual async Task<bool> AuthorizeAsync(Call item, RequestMessage request, RpcApiMethodInfo method, RpcContext context)
+            protected virtual async Task<bool> AuthorizeContextAsync(Call item, RequestMessage request, RpcApiMethodInfo method, RpcContext context)
             {
+                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} authorizing call #{id} API method \"{method}\" for the current context", this, item.Message.Id, method);
                 if (method.API.Authorize || method.Authorize)
+                {
+                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API or method \"{method}\" authorizes all", this, item.Message.Id, method);
                     return true;
+                }
                 try
                 {
                     foreach (RpcAuthorizationAttributeBase authZ in method.API.Authorization.Concat(method.Authorization))
@@ -191,6 +206,10 @@ namespace wan24.RPC.Processing
                                 new UnauthorizedAccessException($"{authZ} denied API method \"{method}\" authorization for the current context")
                                 );
                             return false;
+                        }
+                        else
+                        {
+                            Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API or method \"{method}\" authorized by {authZ}", this, item.Message.Id, method, authZ);
                         }
                 }
                 catch (Exception ex)
@@ -211,24 +230,88 @@ namespace wan24.RPC.Processing
             /// <param name="index">Zero based index of the RPC call parameter (or <c>-1</c>, if it's not a RPC servable parameter)</param>
             /// <returns>Parameter value to use</returns>
             protected virtual async Task<object?> GetParameterValueAsync(
-                Call item, 
-                RequestMessage request, 
-                RpcContext context, 
-                RpcApiMethodParameterInfo parameter, 
+                Call item,
+                RequestMessage request,
+                RpcContext context,
+                RpcApiMethodParameterInfo parameter,
                 int index
                 )
             {
-                //TODO Streams and enumerations
+                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value", this, item.Message.Id, parameter.Method, parameter.Parameter.Name);
+                object? res = null;
                 if (parameter.RPC && request.Parameters is not null && index < request.Parameters.Length)
-                    return request.Parameters[index];
-                ITryAsyncResult result = await context.Services.GetDiObjectAsync(parameter.Parameter.ParameterType, cancellationToken: context.Cancellation).DynamicContext();
-                if (result.Succeed)
-                    return result.Result;
-                if (parameter.Parameter.HasDefaultValue)
-                    return parameter.Parameter.DefaultValue;
-                if (parameter.Nullable)
-                    return null;
-                throw new ArgumentException("Can't get required parameter value", parameter.Parameter.Name);
+                {
+                    if (request.Parameters[index] is null)
+                    {
+                        if (!parameter.Nullable)
+                            throw new ArgumentException($"RPC parameter must not be NULL", parameter.Parameter.Name);
+                    }
+                    else if (!parameter.Parameter.ParameterType.IsAssignableFrom(request.Parameters[index]!.GetType()))
+                    {
+                        throw new ArgumentException($"RPC parameter type is {request.Parameters[index]!.GetType()} - {parameter.Parameter.ParameterType} expected", parameter.Parameter.Name);
+                    }
+                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value from RPC request parameter #{index} ({type})", this, item.Message.Id, parameter.Method, parameter.Parameter.Name, index, request.Parameters[index]?.GetType().ToString() ?? "NULL");
+                    res = request.Parameters[index];
+                }
+                else
+                {
+                    ITryAsyncResult result = await context.Services.GetDiObjectAsync(parameter.Parameter.ParameterType, cancellationToken: context.Cancellation).DynamicContext();
+                    if (result.Succeed)
+                    {
+                        if (result.Result is null)
+                        {
+                            if (!parameter.Nullable)
+                                throw new ArgumentException($"DI resolved non-nullable parameter to NULL", parameter.Parameter.Name);
+                        }
+                        else if (!parameter.Parameter.ParameterType.IsAssignableFrom(result.Result!.GetType()))
+                        {
+                            throw new ArgumentException($"DI resolved to {result.Result!.GetType()} - {parameter.Parameter.ParameterType} expected", parameter.Parameter.Name);
+                        }
+                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value from DI ({type})", this, item.Message.Id, parameter.Method, parameter.Parameter.Name, result.Result?.GetType().ToString() ?? "NULL");
+                        res = result.Result;
+                    }
+                    else if (parameter.Parameter.HasDefaultValue)
+                    {
+                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value from default ({type})", this, item.Message.Id, parameter.Method, parameter.Parameter.Name, parameter.Parameter.DefaultValue?.GetType().ToString() ?? "NULL");
+                        res = parameter.Parameter.DefaultValue;
+                    }
+                    else if (parameter.Nullable)
+                    {
+                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" nullable value to NULL", this, item.Message.Id, parameter.Method, parameter.Parameter.Name);
+                    }
+                    else
+                    {
+                        throw new ArgumentException($"Can't get required parameter value \"{parameter.Method} -> {parameter.Parameter.Name}\" ({parameter.Parameter.ParameterType})", parameter.Parameter.Name);
+                    }
+                }
+                return await GetFinalParameterValueAsync(item, request, context, parameter, index, res).DynamicContext();
+            }
+
+            /// <summary>
+            /// Get the final parameter value for the API method call
+            /// </summary>
+            /// <param name="item">RPC call</param>
+            /// <param name="request">RPC request message</param>
+            /// <param name="context">Context</param>
+            /// <param name="parameter">API method parameter</param>
+            /// <param name="index">Zero based index of the RPC call parameter (or <c>-1</c>, if it's not a RPC servable parameter)</param>
+            /// <param name="value">Current parameter value</param>
+            /// <returns>Parameter value to use</returns>
+            protected virtual Task<object?> GetFinalParameterValueAsync(
+                Call item,
+                RequestMessage request,
+                RpcContext context,
+                RpcApiMethodParameterInfo parameter,
+                int index,
+                object? value
+                )
+            {
+                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving final call #{id} API method \"{method}\" parameter \"{name}\" value type {type}", this, item.Message.Id, parameter.Method, parameter.Parameter.Name, value?.GetType().ToString() ?? "NULL");
+                if (value is null)
+                    return Task.FromResult(value);
+                //TODO Streams and enumerations
+                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{method}\" parameter \"{name}\" value type is now {type} after finalizing", this, item.Message.Id, parameter.Method, parameter.Parameter.Name, value?.GetType().ToString() ?? "NULL");
+                return Task.FromResult(value);
             }
 
             /// <summary>
@@ -240,18 +323,20 @@ namespace wan24.RPC.Processing
             /// <param name="method">API method</param>
             /// <param name="returnValue">Return value</param>
             /// <returns>Final return value</returns>
-            protected virtual Task<object?> GetReturnValueAsync(
-                Call item, 
-                RequestMessage request, 
-                RpcContext context, 
-                RpcApiMethodInfo method, 
+            protected virtual Task<object?> GetFinalReturnValueAsync(
+                Call item,
+                RequestMessage request,
+                RpcContext context,
+                RpcApiMethodInfo method,
                 object? returnValue
                 )
             {
+                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} finalizing call #{id} API method \"{method}\" return value type {type}", this, item.Message.Id, method, returnValue?.GetType().ToString() ?? "NULL");
                 if (returnValue is null)
                     return Task.FromResult(returnValue);
                 //TODO Stream and enumeration
-                return Task.FromResult<object?>(returnValue);
+                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{method}\" return value type is now {type} after finalizing", this, item.Message.Id, method, returnValue?.GetType().ToString() ?? "NULL");
+                return Task.FromResult(returnValue);
             }
         }
     }

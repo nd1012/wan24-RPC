@@ -19,7 +19,7 @@ namespace wan24.RPC.Api.Messages.Serialization
         /// </summary>
         /// <param name="type">Type</param>
         /// <returns>If the type can be serialized</returns>
-        public static bool CanSerialize(Type? type) => type is null || typeof(IStreamSerializer).IsAssignableFrom(type);
+        public static bool CanSerialize(Type? type) => type is not null && typeof(IStreamSerializer).IsAssignableFrom(type);
 
         /// <summary>
         /// Object serializer
@@ -63,13 +63,14 @@ namespace wan24.RPC.Api.Messages.Serialization
             if (await stream.ReadStringNullableAsync(cancellationToken: cancellationToken).DynamicContext() is not string typeName)
                 return null;
             Type type = TypeHelper.Instance.GetType(typeName, throwOnError: true)!;
-            if (type.GetCustomAttributesCached<NoRpcAttribute>() is not null)
-                throw new InvalidDataException($"{type} isn't allowed for deserialization");
+            if (type.GetCustomAttributeCached<NoRpcAttribute>() is not null)
+                throw new InvalidDataException($"{type} was denied for RPC deserialization");
             if (
                 (RpcSerializer.Get(SERIALIZER)?.GetIsOptIn() ?? throw new InvalidProgramException("Failed to get opt-in behavior")) &&
-                type.GetCustomAttributeCached<RpcAttribute>() is null
+                type.GetCustomAttributeCached<RpcAttribute>() is null && 
+                !StreamSerializer.IsTypeAllowed(type)
                 )
-                throw new InvalidDataException($"Opt-in is required for deserializing {type}");
+                throw new InvalidDataException($"Opt-in is required for binary deserializing {type} using RpcAttribute or by registering an allowed type to StreamSerializer");
             return await stream.ReadSerializedObjectAsync(type, cancellationToken: cancellationToken).DynamicContext();
         }
 

@@ -21,13 +21,13 @@ namespace wan24.RPC.Api.Messages
         public const int TYPE_ID = 0;
 
         /// <summary>
+        /// An object for thread synchronization
+        /// </summary>
+        protected readonly object SyncObject = new();
+        /// <summary>
         /// If the parameters are disposed
         /// </summary>
         protected bool ParametersDisposed = false;
-        /// <summary>
-        /// If a response is being awaited (if <see langword="true"/>, a return value and/or an exception response will be awaited and processed)
-        /// </summary>
-        protected bool _WantsResponse = false;
 
         /// <inheritdoc/>
         public override int Type => TYPE_ID;
@@ -36,16 +36,7 @@ namespace wan24.RPC.Api.Messages
         public sealed override bool RequireId => true;
 
         /// <summary>
-        /// If a response is being awaited (if <see langword="true"/>, a return value and/or an exception response will be awaited and processed)
-        /// </summary>
-        public virtual bool WantsResponse
-        {
-            get => _WantsResponse || WantsReturnValue;
-            set => _WantsResponse = value;
-        }
-
-        /// <summary>
-        /// If a return value is expected (<see cref="WantsResponse"/> must be <see langword="true"/> for this)
+        /// If a return value is expected
         /// </summary>
         public virtual bool WantsReturnValue { get; set; } = true;
 
@@ -73,9 +64,12 @@ namespace wan24.RPC.Api.Messages
         /// <param name="method">Method</param>
         public virtual async Task DisposeParametersAsync(RpcApiMethodInfo? method = null)
         {
-            if (Parameters is null || ParametersDisposed)
-                return;
-            ParametersDisposed = true;
+            lock (SyncObject)
+            {
+                if (Parameters is null || ParametersDisposed)
+                    return;
+                ParametersDisposed = true;
+            }
             if (method is null)
             {
                 foreach (object? obj in Parameters)
@@ -102,7 +96,6 @@ namespace wan24.RPC.Api.Messages
         protected override async Task SerializeAsync(Stream stream, CancellationToken cancellationToken)
         {
             await base.SerializeAsync(stream, cancellationToken).DynamicContext();
-            await stream.WriteAsync(WantsResponse, cancellationToken).DynamicContext();
             await stream.WriteAsync(WantsReturnValue, cancellationToken).DynamicContext();
             await stream.WriteStringNullableAsync(Api, cancellationToken).DynamicContext();
             await stream.WriteStringAsync(Method, cancellationToken).DynamicContext();
@@ -113,9 +106,6 @@ namespace wan24.RPC.Api.Messages
         protected override async Task DeserializeAsync(Stream stream, int version, CancellationToken cancellationToken)
         {
             await base.DeserializeAsync(stream, version, cancellationToken).DynamicContext();
-            WantsResponse = await stream.ReadBoolAsync(version, cancellationToken: cancellationToken).DynamicContext();
-            if (WantsResponse && !Id.HasValue)
-                throw new InvalidDataException($"{GetType()} want's reponse but doesn't have an ID");
             WantsReturnValue = await stream.ReadBoolAsync(version, cancellationToken: cancellationToken).DynamicContext();
             Api = await stream.ReadStringNullableAsync(version, minLen: 1, maxLen: byte.MaxValue, cancellationToken: cancellationToken).DynamicContext();
             Method = await stream.ReadStringAsync(version, minLen: 1, maxLen: byte.MaxValue, cancellationToken: cancellationToken).DynamicContext();

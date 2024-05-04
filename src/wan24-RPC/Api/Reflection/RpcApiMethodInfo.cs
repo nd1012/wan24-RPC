@@ -108,6 +108,6 @@ namespace wan24.RPC.Api.Reflection
         public FrozenSet<RpcApiMethodParameterInfo> RpcParameters { get; protected set; } = null!;
 
         /// <inheritdoc/>
-        public override string ToString() => $"{API.Name}->{Name} ({API.Type.GetType()}.{Method.Name})";
+        public override string ToString() => $"{API.Name}->{Name} ({API.Type}.{Method.Name})";
     }
 }

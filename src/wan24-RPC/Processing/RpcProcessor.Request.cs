@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using Microsoft.Extensions.Logging;
+using System.Collections.Concurrent;
 using wan24.Core;
 using wan24.RPC.Api.Messages;
 using wan24.RPC.Api.Messages.Interfaces;
@@ -23,8 +24,10 @@ namespace wan24.RPC.Processing
         /// <param name="message">Message</param>
         protected virtual async Task HandleResponseAsync(ResponseMessage message)
         {
+            Options.Logger?.Log(LogLevel.Debug, "{this} handling response for #{id}", this, message.Id);
             if (!EnsureUndisposed(throwException: false) || !PendingRequests.TryGetValue(message.Id!.Value, out Request? request))
             {
+                Options.Logger?.Log(LogLevel.Warning, "{this} can't handle response for #{id} (disposing or no pending request)", this, message.Id);
                 await message.DisposeReturnValueAsync().DynamicContext();
                 return;
             }
@@ -50,6 +53,7 @@ namespace wan24.RPC.Processing
         /// <param name="message">Message</param>
         protected virtual Task HandleErrorAsync(ErrorResponseMessage message)
         {
+            Options.Logger?.Log(LogLevel.Debug, "{this} handling error response for #{id}", this, message.Id);
             if (EnsureUndisposed(throwException: false) && PendingRequests.TryGetValue(message.Id!.Value, out Request? request))
                 request.ProcessorCompletion.TrySetException(message.Error);
             return Task.CompletedTask;
@@ -61,7 +65,8 @@ namespace wan24.RPC.Processing
         /// <param name="request">RPC request message</param>
         protected virtual async Task CancelRequestAsync(RequestMessage request)
         {
-            if (!EnsureUndisposed(throwException: false) || !request.Id.HasValue)
+            Options.Logger?.Log(LogLevel.Debug, "{this} canceling request #{id}", this, request.Id);
+            if (!EnsureUndisposed(throwException: false))
                 return;
             try
             {
@@ -75,7 +80,7 @@ namespace wan24.RPC.Processing
             }
             catch (Exception ex)
             {
-                //TODO Handle error
+                Options.Logger?.Log(LogLevel.Debug, "{this} failed canceling request #{id}: {ex}", this, request.Id, ex);
             }
 
         }
@@ -113,14 +118,12 @@ namespace wan24.RPC.Processing
             /// <summary>
             /// Processor completion
             /// </summary>
-            public TaskCompletionSource<object?> ProcessorCompletion { get; }
-                = new(TaskCreationOptions.RunContinuationsAsynchronously | TaskCreationOptions.LongRunning);
+            public TaskCompletionSource<object?> ProcessorCompletion { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
             /// <summary>
             /// Request completion
             /// </summary>
-            public TaskCompletionSource<object?> RequestCompletion { get; }
-                = new(TaskCreationOptions.RunContinuationsAsynchronously | TaskCreationOptions.LongRunning);
+            public TaskCompletionSource<object?> RequestCompletion { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
             /// <summary>
             /// If the request was processed
@@ -139,10 +142,12 @@ namespace wan24.RPC.Processing
             /// <inheritdoc/>
             protected override void Dispose(bool disposing)
             {
+                SetDone();
+                if (RequestCompletion.Task.IsCompleted && ProcessorCompletion.Task.IsCompleted)
+                    return;
                 ObjectDisposedException exception = new(GetType().ToString());
                 RequestCompletion.TrySetException(exception);
                 ProcessorCompletion.TrySetException(exception);
-                SetDone();
             }
         }
     }

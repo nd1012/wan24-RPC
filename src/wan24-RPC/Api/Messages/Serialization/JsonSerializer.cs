@@ -69,22 +69,23 @@ namespace wan24.RPC.Api.Messages.Serialization
                 return null;
             if (typeNameLen > short.MaxValue)
                 throw new InvalidDataException($"Object type name invalid length {typeNameLen} bytes (max. {short.MaxValue})");
-            using RentedArrayStructSimple<byte> buffer = new(typeNameLen, clean: false);
-            await stream.ReadExactlyAsync(buffer.Memory, cancellationToken).DynamicContext();
-            int len = await stream.ReadIntAsync(cancellationToken: cancellationToken).DynamicContext();
-            using LimitedLengthStream limited = new(stream, len, leaveOpen: true)
+            Type type;
+            using (RentedArrayStructSimple<byte> buffer = new(typeNameLen, clean: false))
             {
-                ThrowOnReadOverflow = true
-            };
-            Type type = TypeHelper.Instance.GetType(buffer.Span.ToUtf8String(), throwOnError: true)!;
-            if (type.GetCustomAttributesCached<NoRpcAttribute>() is not null)
-                throw new InvalidDataException($"{type} isn't allowed for deserialization");
+                await stream.ReadExactlyAsync(buffer.Memory, cancellationToken).DynamicContext();
+                type = TypeHelper.Instance.GetType(buffer.Span.ToUtf8String(), throwOnError: true)!;
+            }
+            if (type.GetCustomAttributeCached<NoRpcAttribute>() is not null)
+                throw new InvalidDataException($"{type} was denied for RPC deserialization");
             if (
-                (RpcSerializer.Get(SERIALIZER)?.GetIsOptIn() ?? throw new InvalidProgramException("Failed to get opt-in behavior")) &&
-                type.GetCustomAttributeCached<RpcAttribute>() is null
+                (RpcSerializer.Get(SERIALIZER)?.GetIsOptIn() ?? throw new InvalidProgramException("Failed to get JSON serializer")) &&
+                type.GetCustomAttributeCached<RpcAttribute>() is null &&
+                !StreamSerializer.IsTypeAllowed(type)
                 )
-                throw new InvalidDataException($"Opt-in is required for deserializing {type}");
-            return JsonHelper.DecodeObjectAsync(type, limited, cancellationToken).DynamicContext();
+                throw new InvalidDataException($"Opt-in is required for JSON deserializing {type} using RpcAttribute or by registering an allowed type to StreamSerializer");
+            int len = await stream.ReadIntAsync(cancellationToken: cancellationToken).DynamicContext();
+            using NonSeekablePartialStream partialStream = new(stream, len, leaveOpen: true);
+            return await JsonHelper.DecodeObjectAsync(type, partialStream, cancellationToken).DynamicContext();
         }
 
         /// <summary>

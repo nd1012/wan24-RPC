@@ -1,4 +1,5 @@
-﻿using wan24.Core;
+﻿using Microsoft.Extensions.Logging;
+using wan24.Core;
 using wan24.RPC.Api.Reflection;
 using wan24.StreamSerializerExtensions;
 
@@ -7,10 +8,7 @@ namespace wan24.RPC.Processing
     /// <summary>
     /// RPC processor options
     /// </summary>
-    /// <remarks>
-    /// Constructor
-    /// </remarks>
-    public record class RpcProcessorOptions() : DisposableRecordBase()
+    public record class RpcProcessorOptions : DisposableRecordBase
     {
         /// <summary>
         /// Constructor
@@ -47,9 +45,24 @@ namespace wan24.RPC.Processing
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        protected RpcProcessorOptions() : base() { }
+
+        /// <summary>
+        /// Logger
+        /// </summary>
+        public ILogger? Logger { get; init; }
+
+        /// <summary>
         /// Bi-directional RPC stream (will be disposed)
         /// </summary>
         public required Stream Stream { get; init; }
+
+        /// <summary>
+        /// Flush the <see cref="Stream"/> after sending a message?
+        /// </summary>
+        public bool FlushStream { get; init; } = true;
 
         /// <summary>
         /// Stream serializer version
@@ -64,7 +77,7 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// API (infos will be disposed)
         /// </summary>
-        public required Dictionary<string, RpcApiInfo> API { get; init; }
+        public Dictionary<string, RpcApiInfo> API { get; init; } = null!;
 
         /// <summary>
         /// Default context for an incoming RPC call (will be disposed)
@@ -74,12 +87,12 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Max. number of queued RPC requests (RPC requests from the peer; should at last fit the peers <see cref="RequestThreads"/>)
         /// </summary>
-        public int CallQueueSize { get; init; }
+        public required int CallQueueSize { get; init; }
 
         /// <summary>
         /// Max. number of RPC request processing threads
         /// </summary>
-        public int CallThreads { get; set; }
+        public required int CallThreads { get; init; }
 
         /// <summary>
         /// Default service provider for an incoming RPC call (will be disposed)
@@ -94,12 +107,12 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Max. number of queued RPC calls (RPC requests to the peer)
         /// </summary>
-        public int RequestQueueSize { get; init; }
+        public required int RequestQueueSize { get; init; }
 
         /// <summary>
         /// Max. number of RPC call processing threads (should not exceed the peers <see cref="CallQueueSize"/>)
         /// </summary>
-        public int RequestThreads { get; set; }
+        public required int RequestThreads { get; init; }
 
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
@@ -108,6 +121,7 @@ namespace wan24.RPC.Processing
             DefaultContext?.Dispose();
             DefaultServices?.TryDispose();
             API.Values.DisposeAll();
+            API.Clear();
         }
 
         /// <inheritdoc/>
@@ -119,6 +133,7 @@ namespace wan24.RPC.Processing
             if (DefaultServices is not null)
                 await DefaultServices.TryDisposeAsync().DynamicContext();
             await API.Values.DisposeAllAsync().DynamicContext();
+            API.Clear();
         }
     }
 }

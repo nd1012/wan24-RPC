@@ -1,4 +1,5 @@
-﻿using wan24.Core;
+﻿using Microsoft.Extensions.Logging;
+using wan24.Core;
 using wan24.RPC.Api.Messages;
 
 namespace wan24.RPC.Processing
@@ -12,6 +13,7 @@ namespace wan24.RPC.Processing
         /// <param name="message">Message</param>
         protected virtual async Task HandleMessageAsync(RpcMessageBase message)
         {
+            Options.Logger?.Log(LogLevel.Debug, "{this} handling message type {type}", this, message.Type);
             try
             {
                 switch (message)

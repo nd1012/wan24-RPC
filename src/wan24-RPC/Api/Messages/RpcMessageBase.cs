@@ -59,7 +59,6 @@ namespace wan24.RPC.Api.Messages
         /// <inheritdoc/>
         protected override async Task SerializeAsync(Stream stream, CancellationToken cancellationToken)
         {
-            await base.SerializeAsync(stream, cancellationToken).DynamicContext();
             await stream.WriteNumberAsync(HlObjectVersion, cancellationToken).DynamicContext();
             if (Id.HasValue)
                 await stream.WriteNumberAsync(Id.Value, cancellationToken).DynamicContext();
@@ -68,7 +67,6 @@ namespace wan24.RPC.Api.Messages
         /// <inheritdoc/>
         protected override async Task DeserializeAsync(Stream stream, int version, CancellationToken cancellationToken)
         {
-            await base.DeserializeAsync(stream, version, cancellationToken).DynamicContext();
             if (!SerializedObjectVersion.HasValue)
                 throw new InvalidDataException($"{GetType()} is missing the serialized object version");
             if (SerializedObjectVersion.Value < 1 || SerializedObjectVersion.Value > VERSION)

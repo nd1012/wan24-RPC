@@ -1,4 +1,5 @@
-﻿using wan24.Core;
+﻿using Microsoft.Extensions.Logging;
+using wan24.Core;
 using wan24.RPC.Api.Messages;
 
 namespace wan24.RPC.Processing
@@ -21,8 +22,12 @@ namespace wan24.RPC.Processing
             protected override async Task ProcessItem(Request item, CancellationToken cancellationToken)
             {
                 await Task.Yield();
+                Processor.Options.Logger?.Log(LogLevel.Debug, "{this} processing request #{id}", this, item.Message.Id);
                 if (item.RequestCompletion.Task.IsCompleted)
+                {
+                    Processor.Options.Logger?.Log(LogLevel.Debug, "{this} request #{id} processed already", this, item.Message.Id);
                     return;
+                }
                 if (item.Message is not RequestMessage request)
                 {
                     item.RequestCompletion.TrySetException(new InvalidDataException($"Request message expected (got {item.Message.GetType()} instead)"));
@@ -33,13 +38,6 @@ namespace wan24.RPC.Processing
                 try
                 {
                     await Processor.SendMessageAsync(request, cancellation).DynamicContext();
-                    if (!request.WantsResponse)
-                    {
-                        item.Processed = true;
-                        item.SetDone();
-                        item.RequestCompletion.TrySetResult(result: null);
-                        return;
-                    }
                 }
                 catch(Exception ex)
                 {

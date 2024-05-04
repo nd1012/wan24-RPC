@@ -78,7 +78,7 @@
         /// Get if opt-in is required for deserializable types
         /// </summary>
         /// <returns>If opt-in is required</returns>
-        public bool GetIsOptIn() => OptIn.HasValue ? OptIn.Value : DefaultOptIn;
+        public bool GetIsOptIn() => OptIn ?? DefaultOptIn;
 
         /// <summary>
         /// Delegate for a RPC serializer method to determine if a type can be serialized

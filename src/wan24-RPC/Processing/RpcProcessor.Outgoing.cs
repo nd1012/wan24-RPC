@@ -1,4 +1,5 @@
-﻿using wan24.Core;
+﻿using Microsoft.Extensions.Logging;
+using wan24.Core;
 using wan24.RPC.Api.Messages;
 using wan24.RPC.Api.Messages.Serialization.Extensions;
 
@@ -10,7 +11,10 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Stream writing thread synchronization
         /// </summary>
-        protected readonly SemaphoreSync WriteSync = new();
+        protected readonly SemaphoreSync WriteSync = new()
+        {
+            Name = "RPC write synchronization"
+        };
         /// <summary>
         /// Message ID
         /// </summary>
@@ -25,9 +29,10 @@ namespace wan24.RPC.Processing
         /// <param name="cancellationToken">Cancellation token</param>
         /// <param name="parameters">Parameters</param>
         /// <returns>Return value</returns>
-        public virtual async Task<T> CallAsync<T>(string? api, string method, CancellationToken cancellationToken = default, params object?[] parameters)
+        public virtual async Task<T> CallValueAsync<T>(string? api, string method, CancellationToken cancellationToken = default, params object?[] parameters)
         {
             EnsureUndisposed();
+            Options.Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" method \"{method}\" at the peer ({count} parameters)", this, api, method, parameters.Length);
             Request request = new()
             {
                 Message = new RequestMessage()
@@ -37,14 +42,14 @@ namespace wan24.RPC.Processing
                     Method = method,
                     Parameters = parameters.Length == 0 
                         ? null 
-                        : parameters,
-                    WantsResponse = true
+                        : parameters
                 },
                 ProcessorCancellation = CancelToken,
                 RequestCancellation = cancellationToken
             };
             await using (request.DynamicContext())
             {
+                //TODO Stream and enumeration parameters
                 PendingRequests[request.Message.Id!.Value] = request;
                 try
                 {
@@ -70,6 +75,7 @@ namespace wan24.RPC.Processing
         public virtual async Task<T?> CallNullableAsync<T>(string? api, string method, CancellationToken cancellationToken = default, params object?[] parameters)
         {
             EnsureUndisposed();
+            Options.Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" nullable method \"{method}\" at the peer ({count} parameters)", this, api, method, parameters.Length);
             Request request = new()
             {
                 Message = new RequestMessage()
@@ -79,14 +85,14 @@ namespace wan24.RPC.Processing
                     Method = method,
                     Parameters = parameters.Length == 0
                         ? null
-                        : parameters,
-                    WantsResponse = true
+                        : parameters
                 },
                 ProcessorCancellation = CancelToken,
                 RequestCancellation = cancellationToken
             };
             await using (request.DynamicContext())
             {
+                //TODO Stream and enumeration parameters
                 PendingRequests[request.Message.Id!.Value] = request;
                 try
                 {
@@ -111,6 +117,7 @@ namespace wan24.RPC.Processing
         public virtual async Task CallVoidAsync(string? api, string method, CancellationToken cancellationToken = default, params object?[] parameters)
         {
             EnsureUndisposed();
+            Options.Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" void method \"{method}\" at the peer ({count} parameters)", this, api, method, parameters.Length);
             Request request = new()
             {
                 Message = new RequestMessage()
@@ -121,7 +128,6 @@ namespace wan24.RPC.Processing
                     Parameters = parameters.Length == 0
                         ? null
                         : parameters,
-                    WantsResponse = true,
                     WantsReturnValue = false
                 },
                 ProcessorCancellation = CancelToken,
@@ -129,46 +135,7 @@ namespace wan24.RPC.Processing
             };
             await using (request.DynamicContext())
             {
-                PendingRequests[request.Message.Id!.Value] = request;
-                try
-                {
-                    await Requests.EnqueueAsync(request, cancellationToken).DynamicContext();
-                    await request.RequestCompletion.Task.DynamicContext();
-                }
-                finally
-                {
-                    PendingRequests.TryRemove(request.Message.Id!.Value, out _);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Call a RPC API method at the peer and wait for the request being sent
-        /// </summary>
-        /// <param name="api">API name</param>
-        /// <param name="method">API method name</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <param name="parameters">Parameters</param>
-        public virtual async Task CallAsync(string? api, string method, CancellationToken cancellationToken = default, params object?[] parameters)
-        {
-            EnsureUndisposed();
-            Request request = new()
-            {
-                Message = new RequestMessage()
-                {
-                    Api = api,
-                    Method = method,
-                    Parameters = parameters.Length == 0
-                        ? null
-                        : parameters,
-                    WantsResponse = false,
-                    WantsReturnValue = false
-                },
-                ProcessorCancellation = CancelToken,
-                RequestCancellation = cancellationToken
-            };
-            await using (request.DynamicContext())
-            {
+                //TODO Stream and enumeration parameters
                 PendingRequests[request.Message.Id!.Value] = request;
                 try
                 {
@@ -194,7 +161,10 @@ namespace wan24.RPC.Processing
             using SemaphoreSyncContext ssc = await WriteSync.SyncContextAsync(cancellationToken).DynamicContext();
             if (message.RequireId && !message.Id.HasValue)
                 message.Id = Interlocked.Increment(ref MessageId);
+            Options.Logger?.Log(LogLevel.Trace, "{this} sending message type {type} ({clrType}) as #{id}", this, message.Type, message.GetType(), message.Id);
             await Options.Stream.WriteRpcMessageAsync(message, CancelToken).DynamicContext();
+            if (Options.FlushStream)
+                await Options.Stream.FlushAsync(CancelToken).DynamicContext();
         }
     }
 }

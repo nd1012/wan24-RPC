@@ -22,7 +22,7 @@ namespace wan24.RPC.Api.Messages
         public override int Type => TYPE_ID;
 
         /// <inheritdoc/>
-        public sealed override bool RequireId => false;
+        public sealed override bool RequireId => Waiting;
 
         /// <summary>
         /// Event name
@@ -34,6 +34,11 @@ namespace wan24.RPC.Api.Messages
         /// Event arguments
         /// </summary>
         public EventArgs? Arguments { get; set; }
+
+        /// <summary>
+        /// If the sender is waiting for the event hndlers to finish
+        /// </summary>
+        public bool Waiting { get; set; }
 
         /// <summary>
         /// Dispose the arguments
@@ -50,6 +55,7 @@ namespace wan24.RPC.Api.Messages
             await base.SerializeAsync(stream, cancellationToken).DynamicContext();
             await stream.WriteStringAsync(Name, cancellationToken).DynamicContext();
             await SerializeObjectAsync(stream, Arguments, cancellationToken).DynamicContext();
+            await stream.WriteAsync(Waiting, cancellationToken).DynamicContext();
         }
 
         /// <inheritdoc/>
@@ -60,6 +66,7 @@ namespace wan24.RPC.Api.Messages
             object? arguments = await DeserializeObjectAsync(stream, cancellationToken).DynamicContext();
             if (arguments is not null)
                 Arguments = arguments as EventArgs ?? throw new InvalidDataException($"Invalid event arguments {arguments.GetType()}");
+            Waiting = await stream.ReadBoolAsync(version, cancellationToken: cancellationToken).DynamicContext();
         }
     }
 }
