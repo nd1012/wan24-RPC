@@ -101,7 +101,7 @@
 
 
   <h1 id="wan24_RPC_Api_Messages_Values_RpcStreamValue" data-uid="wan24.RPC.Api.Messages.Values.RpcStreamValue" class="text-break">Class RpcStreamValue</h1>
-  <div class="markdown level0 summary"><p>RPC stream parameter</p>
+  <div class="markdown level0 summary"><p>RPC stream parameter/return value</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -193,7 +193,7 @@ public record RpcStreamValue : StreamSerializerRecordBase, IObjectValidatable, I
   </span>
   <a id="wan24_RPC_Api_Messages_Values_RpcStreamValue__ctor_" data-uid="wan24.RPC.Api.Messages.Values.RpcStreamValue.#ctor*"></a>
   <h4 id="wan24_RPC_Api_Messages_Values_RpcStreamValue__ctor" data-uid="wan24.RPC.Api.Messages.Values.RpcStreamValue.#ctor">RpcStreamValue()</h4>
-  <div class="markdown level1 summary"><p>RPC stream parameter</p>
+  <div class="markdown level1 summary"><p>RPC stream parameter/return value</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -249,6 +249,7 @@ public record RpcStreamValue : StreamSerializerRecordBase, IObjectValidatable, I
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[RequiredIf(&quot;Id&quot;, new object?[] { }, RequiredIfNull = true)]
+[RuntimeCountLimit(&quot;wan24.RPC.Api.Messages.Values.RpcStreamValue.MaxContentLength&quot;, null)]
 public byte[]? Content { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>

@@ -265,6 +265,7 @@ public record RpcEnumerableValue&lt;T&gt; : StreamSerializerRecordBase, IObjectV
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[RequiredIf(&quot;Id&quot;, new object?[] { }, RequiredIfNull = true)]
+[RuntimeCountLimit(&quot;wan24.RPC.Api.Messages.Values.RpcEnumerableValue.MaxItemCount&quot;, null)]
 public IEnumerable&lt;T&gt;? Enumerable { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
