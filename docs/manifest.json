@@ -405,6 +405,56 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Api.Messages.Streaming.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Api.Messages.Streaming.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Api.Messages.Values.RpcEnumerableValue-1.yml",
       "output": {
         ".html": {
@@ -569,6 +619,16 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.RpcProcessor.CallQueue.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html"
         }
       },
       "version": ""
