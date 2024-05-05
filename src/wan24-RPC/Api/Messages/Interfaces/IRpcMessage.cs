@@ -1,9 +1,11 @@
-﻿namespace wan24.RPC.Api.Messages.Interfaces
+﻿using wan24.StreamSerializerExtensions;
+
+namespace wan24.RPC.Api.Messages.Interfaces
 {
     /// <summary>
     /// Interface for a RPC message
     /// </summary>
-    public interface IRpcMessage
+    public interface IRpcMessage : IStreamSerializer
     {
         /// <summary>
         /// Message Type ID

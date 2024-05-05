@@ -1,8 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using wan24.Core;
 using wan24.RPC.Api.Messages;
+using wan24.RPC.Api.Messages.Interfaces;
 using wan24.RPC.Api.Messages.Serialization.Extensions;
 using wan24.RPC.Api.Reflection;
+using wan24.StreamSerializerExtensions;
 
 namespace wan24.RPC.Processing
 {
@@ -83,34 +86,44 @@ namespace wan24.RPC.Processing
         /// <inheritdoc/>
         protected override async Task WorkerAsync()
         {
-            Options.Logger?.Log(LogLevel.Debug, "{this} worker", this);
-            await BeginWorkAsync().DynamicContext();
             try
             {
+                Options.Logger?.Log(LogLevel.Debug, "{this} worker", this);
+                await BeginWorkAsync().DynamicContext();
                 if (Options.API.Count > 0 && Options.Stream.CanRead)
                 {
+                    IRpcMessage? message;
                     while (!CancelToken.IsCancellationRequested)
                     {
-                        Options.Logger?.Log(LogLevel.Trace, "{this} waiting for incoming RPC messages", this);
-                        _ = HandleMessageAsync(await Options.Stream.ReadRpcMessageAsync(Options.SerializerVersion, cancellationToken: CancelToken).DynamicContext());
-                        Options.Logger?.Log(LogLevel.Trace, "{this} handling incoming RPC message", this);
+                        Options.Logger?.Log(LogLevel.Trace, "{this} worker waiting for incoming RPC messages", this);
+                        message = await Options.Stream.ReadRpcMessageAsync(Options.SerializerVersion, cancellationToken: CancelToken).DynamicContext();
+                        Options.Logger?.Log(LogLevel.Trace, "{this} worker handling incoming RPC message", this);
+                        _ = HandleMessageAsync(message);
+                        message = null;
                     }
                 }
                 else
                 {
-                    Options.Logger?.Log(LogLevel.Trace, "{this} waiting for cancellation", this);
+                    Options.Logger?.Log(LogLevel.Trace, "{this} worker waiting for cancellation", this);
                     await CancelToken.WaitHandle.WaitAsync().DynamicContext();
                 }
+                Options.Logger?.Log(LogLevel.Debug, "{this} worker done", this);
             }
-            catch(ObjectDisposedException) when (IsDisposing)
+            catch (ObjectDisposedException) when (IsDisposing)
             {
+                Options.Logger?.Log(LogLevel.Trace, "{this} worker canceled for disposing", this);
             }
-            catch(OperationCanceledException ex) when (ex.CancellationToken == CancelToken)
+            catch (SerializerException ex) when (ex.InnerException is OperationCanceledException && CancelToken.IsCancellationRequested)
             {
+                Options.Logger?.Log(LogLevel.Trace, "{this} worker canceled during deserialization", this);
             }
-            catch(Exception ex)
+            catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {
-                Options.Logger?.Log(LogLevel.Error, "{this} worker catched exception - disposing: {ex}", this, ex);
+                Options.Logger?.Log(LogLevel.Trace, "{this} worker canceled", this);
+            }
+            catch (Exception ex)
+            {
+                Options.Logger?.Log(LogLevel.Error, "{this} worker catched exception: {ex}", this, ex);
                 _ = DisposeAsync().AsTask();
                 throw;
             }
@@ -139,7 +152,7 @@ namespace wan24.RPC.Processing
             Options.Logger?.Log(LogLevel.Error, "{this} stop exceptional: {ex}", this, ex);
             if (StoppedExceptional || LastException is not null)
             {
-                Options.Logger?.Log(LogLevel.Warning, "{this} already had an exception", this);
+                Options.Logger?.Log(LogLevel.Warning, "{this} had an exception already", this);
                 return;
             }
             StoppedExceptional = true;
@@ -160,8 +173,8 @@ namespace wan24.RPC.Processing
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
             Options.Logger?.Log(LogLevel.Trace, "{this} sync disposing", this);
+            base.Dispose(disposing);
             WriteSync.Dispose();
             Requests.Dispose();
             PendingRequests.Values.DisposeAll();
@@ -177,8 +190,8 @@ namespace wan24.RPC.Processing
         /// <inheritdoc/>
         protected override async Task DisposeCore()
         {
-            await base.DisposeCore().DynamicContext();
             Options.Logger?.Log(LogLevel.Trace, "{this} async disposing", this);
+            await base.DisposeCore().DynamicContext();
             await WriteSync.DisposeAsync().DynamicContext();
             await Requests.DisposeAsync().DynamicContext();
             await PendingRequests.Values.DisposeAllAsync().DynamicContext();

@@ -60,8 +60,7 @@ namespace wan24.RPC.Api.Messages
         protected override async Task SerializeAsync(Stream stream, CancellationToken cancellationToken)
         {
             await stream.WriteNumberAsync(HlObjectVersion, cancellationToken).DynamicContext();
-            if (Id.HasValue)
-                await stream.WriteNumberAsync(Id.Value, cancellationToken).DynamicContext();
+            await stream.WriteNumberNullableAsync(Id, cancellationToken).DynamicContext();
         }
 
         /// <inheritdoc/>
@@ -74,8 +73,7 @@ namespace wan24.RPC.Api.Messages
             SerializedHlObjectVersion = await stream.ReadNumberAsync<int>(version, cancellationToken: cancellationToken).DynamicContext();
             if (SerializedHlObjectVersion < (MinHlObjectVersion ?? 1) || SerializedHlObjectVersion > HlObjectVersion)
                 throw new InvalidDataException($"Unsupported {GetType()} higher level object version #{SerializedHlObjectVersion}");
-            if (RequireId)
-                Id = await stream.ReadNumberAsync<long>(version, cancellationToken: cancellationToken).DynamicContext();
+            Id = await stream.ReadNumberNullableAsync<long>(version, cancellationToken: cancellationToken).DynamicContext();
         }
     }
 }

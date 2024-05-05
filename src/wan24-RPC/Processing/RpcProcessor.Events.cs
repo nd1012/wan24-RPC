@@ -65,6 +65,7 @@ namespace wan24.RPC.Processing
             {
                 Request request = new()
                 {
+                    Processor = this,
                     Message = new EventMessage()
                     {
                         Id = Interlocked.Increment(ref MessageId),
@@ -77,12 +78,13 @@ namespace wan24.RPC.Processing
                 };
                 await using (request.DynamicContext())
                 {
+                    Options.Logger?.Log(LogLevel.Trace, "{this} storing event \"{name}\" request as #{id}", this, name, request.Message.Id);
                     if (!PendingRequests.TryAdd(request.Message.Id!.Value, request))
-                        throw new InvalidProgramException($"Failed to add event message #{request.Message.Id} (double message ID)");
+                        throw new InvalidProgramException($"Failed to store event message #{request.Message.Id} (double message ID)");
                     try
                     {
-                        await SendMessageAsync((RpcMessageBase)request.Message, cancellationToken).DynamicContext();
-                        await request.RequestCompletion.Task.DynamicContext();
+                        await SendMessageAsync(request.Message, cancellationToken).DynamicContext();
+                        await request.ProcessorCompletion.Task.DynamicContext();
                     }
                     finally
                     {
@@ -161,9 +163,10 @@ namespace wan24.RPC.Processing
             catch(Exception ex)
             {
                 Options.Logger?.Log(LogLevel.Warning, "{this} handling event \"{name}\" with arguments type {type} failed exceptional: {ex}", this, message.Name, message.Arguments?.GetType().ToString() ?? "NULL", ex);
-                if (message.Waiting)
+                if (message.Waiting && EnsureUndisposed(throwException: false))
                     try
                     {
+                        Options.Logger?.Log(LogLevel.Trace, "{this} sending event \"{name}\" error response", this, message.Name);
                         await SendMessageAsync(new ErrorResponseMessage()
                         {
                             Id = message.Id,

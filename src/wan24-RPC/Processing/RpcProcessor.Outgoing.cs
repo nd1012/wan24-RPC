@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using wan24.Core;
 using wan24.RPC.Api.Messages;
+using wan24.RPC.Api.Messages.Interfaces;
 using wan24.RPC.Api.Messages.Serialization.Extensions;
 
 namespace wan24.RPC.Processing
@@ -35,6 +36,7 @@ namespace wan24.RPC.Processing
             Options.Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" method \"{method}\" at the peer ({count} parameters)", this, api, method, parameters.Length);
             Request request = new()
             {
+                Processor = this,
                 Message = new RequestMessage()
                 {
                     Id = Interlocked.Increment(ref MessageId),
@@ -78,6 +80,7 @@ namespace wan24.RPC.Processing
             Options.Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" nullable method \"{method}\" at the peer ({count} parameters)", this, api, method, parameters.Length);
             Request request = new()
             {
+                Processor = this,
                 Message = new RequestMessage()
                 {
                     Id = Interlocked.Increment(ref MessageId),
@@ -120,6 +123,7 @@ namespace wan24.RPC.Processing
             Options.Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" void method \"{method}\" at the peer ({count} parameters)", this, api, method, parameters.Length);
             Request request = new()
             {
+                Processor = this,
                 Message = new RequestMessage()
                 {
                     Id = Interlocked.Increment(ref MessageId),
@@ -154,13 +158,13 @@ namespace wan24.RPC.Processing
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        protected virtual async Task SendMessageAsync(RpcMessageBase message, CancellationToken cancellationToken = default)
+        protected virtual async Task SendMessageAsync(IRpcMessage message, CancellationToken cancellationToken = default)
         {
             if (cancellationToken == default)
                 cancellationToken = CancelToken;
             using SemaphoreSyncContext ssc = await WriteSync.SyncContextAsync(cancellationToken).DynamicContext();
-            if (message.RequireId && !message.Id.HasValue)
-                message.Id = Interlocked.Increment(ref MessageId);
+            if (message is RpcMessageBase rpcMessage && rpcMessage.RequireId && !rpcMessage.Id.HasValue)
+                rpcMessage.Id = Interlocked.Increment(ref MessageId);
             Options.Logger?.Log(LogLevel.Trace, "{this} sending message type {type} ({clrType}) as #{id}", this, message.Type, message.GetType(), message.Id);
             await Options.Stream.WriteRpcMessageAsync(message, CancelToken).DynamicContext();
             if (Options.FlushStream)

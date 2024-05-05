@@ -27,7 +27,7 @@ namespace wan24.RPC.Processing
             Options.Logger?.Log(LogLevel.Debug, "{this} handling response for #{id}", this, message.Id);
             if (!EnsureUndisposed(throwException: false) || !PendingRequests.TryGetValue(message.Id!.Value, out Request? request))
             {
-                Options.Logger?.Log(LogLevel.Warning, "{this} can't handle response for #{id} (disposing or no pending request)", this, message.Id);
+                Options.Logger?.Log(LogLevel.Warning, "{this} can't handle response for #{id} (is disposing ({disposing}) or pending request not found)", this, message.Id, IsDisposing);
                 await message.DisposeReturnValueAsync().DynamicContext();
                 return;
             }
@@ -91,6 +91,11 @@ namespace wan24.RPC.Processing
         protected record class Request() : DisposableRecordBase(asyncDisposing: false)
         {
             /// <summary>
+            /// RPC processor
+            /// </summary>
+            public required RpcProcessor Processor { get; init; }
+
+            /// <summary>
             /// Created time
             /// </summary>
             public DateTime Created { get; } = DateTime.Now;
@@ -136,7 +141,10 @@ namespace wan24.RPC.Processing
             public virtual void SetDone()
             {
                 if (Done == DateTime.MinValue)
+                {
                     Done = DateTime.Now;
+                    Processor.Options.Logger?.Log(LogLevel.Trace, "{processor} RPC request #{id} processing done within {runtime}", Processor, Message.Id, Done - Created);
+                }
             }
 
             /// <inheritdoc/>

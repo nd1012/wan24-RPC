@@ -1,4 +1,5 @@
 ﻿using wan24.Core;
+using wan24.RPC.Api.Messages.Interfaces;
 
 namespace wan24.RPC.Api.Messages
 {
@@ -24,7 +25,7 @@ namespace wan24.RPC.Api.Messages
         /// </summary>
         /// <typeparam name="T">RPC message type</typeparam>
         /// <param name="id">RPC message type ID</param>
-        public static void Register<T>(in int id) where T : RpcMessageBase, new()
+        public static void Register<T>(in int id) where T : IRpcMessage, new()
         {
             if (Registered.TryGetValue(id, out Type? existing))
                 $"Overriding already registered RPC message type #{id} ({existing}) with {typeof(T)}".WriteWarning();

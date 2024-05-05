@@ -121,7 +121,6 @@ namespace wan24.RPC.Processing
                     : Processor.Options.API.FindApiMethod(request.Method);
                 if (res is null)
                 {
-                    Processor.Options.Logger?.Log(LogLevel.Warning, "{this} call #{id} API \"{api}\" method \"{method}\" not found", this, item.Message.Id, request.Api, request.Method);
                     item.Completion.TrySetException(new InvalidDataException("API or method not found"));
                     return Task.FromResult(res);
                 }

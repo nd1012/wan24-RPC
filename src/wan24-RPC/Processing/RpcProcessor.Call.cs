@@ -28,7 +28,7 @@ namespace wan24.RPC.Processing
             Options.Logger?.Log(LogLevel.Debug, "{this} handle call #{id}", this, message.Id);
             if (!EnsureUndisposed(throwException: false))
             {
-                Options.Logger?.Log(LogLevel.Debug, "{this} can't handle message (disposing)", this);
+                Options.Logger?.Log(LogLevel.Debug, "{this} can't handle message when disposing", this);
                 Options.Logger?.Log(LogLevel.Trace, "{this} disposing parameters of call #{id}", this, message.Id);
                 await message.DisposeParametersAsync().DynamicContext();
                 return;
@@ -37,6 +37,7 @@ namespace wan24.RPC.Processing
                 processingError = false;
             using Call call = new()
             {
+                Processor = this,
                 ProcessorCancellation = CancelToken,
                 Message = message
             };
@@ -55,7 +56,7 @@ namespace wan24.RPC.Processing
                 {
                     Options.Logger?.Log(LogLevel.Warning, "{this} failed to enqueue call #{id} (too many queued calls)", this, message.Id);
                     PendingCalls.TryRemove(message.Id!.Value, out _);
-                    await SendErrorResponseAsync(message, new TooManyRpcRequestsException("RPC request limit exceeded")).DynamicContext();
+                    await SendErrorResponseAsync(message, new TooManyRpcRequestsException("RPC call limit exceeded")).DynamicContext();
                     return;
                 }
                 // Wait for processing
@@ -86,7 +87,7 @@ namespace wan24.RPC.Processing
                     }
                     else
                     {
-                        Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} doesn't want thr return value", this, message.Id);
+                        Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} doesn't want the return value", this, message.Id);
                     }
                     await SendResponseAsync(message, message.WantsReturnValue ? returnValue : null).DynamicContext();
                 }
@@ -162,7 +163,7 @@ namespace wan24.RPC.Processing
             Options.Logger?.Log(LogLevel.Debug, "{this} sending error response {type} for call #{id}", this, exception.GetType(), message.Id);
             if (!EnsureUndisposed(throwException: false))
             {
-                Options.Logger?.Log(LogLevel.Debug, "{this} can't send error response for call #{id} (disposing)", this, message.Id);
+                Options.Logger?.Log(LogLevel.Debug, "{this} can't send error response for call #{id} when disposing", this, message.Id);
                 return;
             }
             try
@@ -192,7 +193,7 @@ namespace wan24.RPC.Processing
             Options.Logger?.Log(LogLevel.Debug, "{this} sending response for call #{id}", this, message.Id);
             if (!EnsureUndisposed(throwException: false))
             {
-                Options.Logger?.Log(LogLevel.Debug, "{this} can't send response for call #{id} (disposing)", this, message.Id);
+                Options.Logger?.Log(LogLevel.Debug, "{this} can't send response for call #{id} when disposing", this, message.Id);
                 return;
             }
             try
@@ -219,6 +220,11 @@ namespace wan24.RPC.Processing
         /// </summary>
         protected record class Call() : DisposableRecordBase(asyncDisposing: false)
         {
+            /// <summary>
+            /// RPC Processor
+            /// </summary>
+            public required RpcProcessor Processor { get; init; }
+
             /// <summary>
             /// Created time
             /// </summary>
@@ -265,7 +271,10 @@ namespace wan24.RPC.Processing
             public virtual void SetDone()
             {
                 if (Done == DateTime.MinValue)
+                {
                     Done = DateTime.Now;
+                    Processor.Options.Logger?.Log(LogLevel.Debug, "{processor} RPC call #{id} processing done within {runtime}", Processor, Message.Id, Done - Created);
+                }
             }
 
             /// <inheritdoc/>

@@ -96,18 +96,25 @@ namespace wan24_RPC_Tests
         {
             RpcProcessor? serverProcessor = null,
                 clientProcessor = null;
-            BlockingBufferStream serverIO = new(Settings.BufferSize),
-                clientIO = new(Settings.BufferSize);
+            BlockingBufferStream serverIO = new(Settings.BufferSize)
+                {
+                    UseFlush = true
+                },
+                clientIO = new(Settings.BufferSize)
+                {
+                    UseFlush = true
+                };
             try
             {
                 serverProcessor = new(new RpcProcessorOptions(typeof(ServerApi))
                 {
                     Logger = Logging.Logger,
                     Stream = new BiDirectionalStream(serverIO, clientIO, leaveOpen: true),
-                    CallQueueSize = 2,
-                    CallThreads = 1,
-                    RequestQueueSize = 2,
-                    RequestThreads = 1
+                    FlushStream = true,
+                    CallQueueSize = 20,
+                    CallThreads = 10,
+                    RequestQueueSize = 20,
+                    RequestThreads = 10
                 })
                 {
                     Name = "Server"
@@ -117,10 +124,11 @@ namespace wan24_RPC_Tests
                 {
                     Logger = Logging.Logger,
                     Stream = new BiDirectionalStream(clientIO, serverIO),
-                    CallQueueSize = 2,
-                    CallThreads = 1,
-                    RequestQueueSize = 2,
-                    RequestThreads = 1
+                    FlushStream = true,
+                    CallQueueSize = 20,
+                    CallThreads = 10,
+                    RequestQueueSize = 20,
+                    RequestThreads = 10
                 })
                 {
                     Name = "Client"

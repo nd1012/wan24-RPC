@@ -65,7 +65,14 @@ namespace wan24.RPC.Api.Messages
             Name = await stream.ReadStringAsync(version, minLen: 1, maxLen: byte.MaxValue, cancellationToken: cancellationToken).DynamicContext();
             object? arguments = await DeserializeObjectAsync(stream, cancellationToken).DynamicContext();
             if (arguments is not null)
-                Arguments = arguments as EventArgs ?? throw new InvalidDataException($"Invalid event arguments {arguments.GetType()}");
+            {
+                Arguments = arguments as EventArgs;
+                if(Arguments is null)
+                {
+                    await arguments.TryDisposeAsync().DynamicContext();
+                    throw new InvalidDataException($"Invalid event arguments {arguments.GetType()}");
+                }
+            }
             Waiting = await stream.ReadBoolAsync(version, cancellationToken: cancellationToken).DynamicContext();
         }
     }

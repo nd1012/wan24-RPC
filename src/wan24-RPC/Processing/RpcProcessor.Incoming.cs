@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using wan24.Core;
 using wan24.RPC.Api.Messages;
+using wan24.RPC.Api.Messages.Interfaces;
 
 namespace wan24.RPC.Processing
 {
@@ -11,8 +12,9 @@ namespace wan24.RPC.Processing
         /// Handle a message (should call <see cref="StopExceptionalAsync(Exception)"/> on exception)
         /// </summary>
         /// <param name="message">Message</param>
-        protected virtual async Task HandleMessageAsync(RpcMessageBase message)
+        protected virtual async Task HandleMessageAsync(IRpcMessage message)
         {
+            await Task.Yield();
             Options.Logger?.Log(LogLevel.Debug, "{this} handling message type {type}", this, message.Type);
             try
             {
