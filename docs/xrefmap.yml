@@ -2239,48 +2239,19 @@ references:
   fullName.vb: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.New
   nameWithType: LocalStreamCloseMessage.LocalStreamCloseMessage
   nameWithType.vb: LocalStreamCloseMessage.New
-- uid: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
-  name: DeserializeAsync(Stream, int, CancellationToken)
-  href: api/wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_LocalStreamCloseMessage_DeserializeAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
-  name.vb: DeserializeAsync(Stream, Integer, CancellationToken)
-  fullName: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.DeserializeAsync(System.IO.Stream, int, System.Threading.CancellationToken)
-  fullName.vb: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.DeserializeAsync(System.IO.Stream, Integer, System.Threading.CancellationToken)
-  nameWithType: LocalStreamCloseMessage.DeserializeAsync(Stream, int, CancellationToken)
-  nameWithType.vb: LocalStreamCloseMessage.DeserializeAsync(Stream, Integer, CancellationToken)
-- uid: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.DeserializeAsync*
-  name: DeserializeAsync
-  href: api/wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_LocalStreamCloseMessage_DeserializeAsync_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.DeserializeAsync
+- uid: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.RequireId
+  name: RequireId
+  href: api/wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_LocalStreamCloseMessage_RequireId
+  commentId: P:wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.RequireId
+  fullName: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.RequireId
+  nameWithType: LocalStreamCloseMessage.RequireId
+- uid: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.RequireId*
+  name: RequireId
+  href: api/wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_LocalStreamCloseMessage_RequireId_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.RequireId
   isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.DeserializeAsync
-  nameWithType: LocalStreamCloseMessage.DeserializeAsync
-- uid: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)
-  name: SerializeAsync(Stream, CancellationToken)
-  href: api/wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_LocalStreamCloseMessage_SerializeAsync_System_IO_Stream_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)
-  fullName: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.SerializeAsync(System.IO.Stream, System.Threading.CancellationToken)
-  nameWithType: LocalStreamCloseMessage.SerializeAsync(Stream, CancellationToken)
-- uid: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.SerializeAsync*
-  name: SerializeAsync
-  href: api/wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_LocalStreamCloseMessage_SerializeAsync_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.SerializeAsync
-  isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.SerializeAsync
-  nameWithType: LocalStreamCloseMessage.SerializeAsync
-- uid: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.Stream
-  name: Stream
-  href: api/wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_LocalStreamCloseMessage_Stream
-  commentId: P:wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.Stream
-  fullName: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.Stream
-  nameWithType: LocalStreamCloseMessage.Stream
-- uid: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.Stream*
-  name: Stream
-  href: api/wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_LocalStreamCloseMessage_Stream_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.Stream
-  isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.Stream
-  nameWithType: LocalStreamCloseMessage.Stream
+  fullName: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.RequireId
+  nameWithType: LocalStreamCloseMessage.RequireId
 - uid: wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.TYPE_ID
   name: TYPE_ID
   href: api/wan24.RPC.Api.Messages.Streaming.LocalStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_LocalStreamCloseMessage_TYPE_ID
@@ -2325,48 +2296,19 @@ references:
   fullName.vb: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.New
   nameWithType: RemoteStreamCloseMessage.RemoteStreamCloseMessage
   nameWithType.vb: RemoteStreamCloseMessage.New
-- uid: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
-  name: DeserializeAsync(Stream, int, CancellationToken)
-  href: api/wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_RemoteStreamCloseMessage_DeserializeAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
-  name.vb: DeserializeAsync(Stream, Integer, CancellationToken)
-  fullName: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.DeserializeAsync(System.IO.Stream, int, System.Threading.CancellationToken)
-  fullName.vb: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.DeserializeAsync(System.IO.Stream, Integer, System.Threading.CancellationToken)
-  nameWithType: RemoteStreamCloseMessage.DeserializeAsync(Stream, int, CancellationToken)
-  nameWithType.vb: RemoteStreamCloseMessage.DeserializeAsync(Stream, Integer, CancellationToken)
-- uid: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.DeserializeAsync*
-  name: DeserializeAsync
-  href: api/wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_RemoteStreamCloseMessage_DeserializeAsync_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.DeserializeAsync
+- uid: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.RequireId
+  name: RequireId
+  href: api/wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_RemoteStreamCloseMessage_RequireId
+  commentId: P:wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.RequireId
+  fullName: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.RequireId
+  nameWithType: RemoteStreamCloseMessage.RequireId
+- uid: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.RequireId*
+  name: RequireId
+  href: api/wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_RemoteStreamCloseMessage_RequireId_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.RequireId
   isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.DeserializeAsync
-  nameWithType: RemoteStreamCloseMessage.DeserializeAsync
-- uid: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)
-  name: SerializeAsync(Stream, CancellationToken)
-  href: api/wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_RemoteStreamCloseMessage_SerializeAsync_System_IO_Stream_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)
-  fullName: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.SerializeAsync(System.IO.Stream, System.Threading.CancellationToken)
-  nameWithType: RemoteStreamCloseMessage.SerializeAsync(Stream, CancellationToken)
-- uid: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.SerializeAsync*
-  name: SerializeAsync
-  href: api/wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_RemoteStreamCloseMessage_SerializeAsync_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.SerializeAsync
-  isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.SerializeAsync
-  nameWithType: RemoteStreamCloseMessage.SerializeAsync
-- uid: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.Stream
-  name: Stream
-  href: api/wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_RemoteStreamCloseMessage_Stream
-  commentId: P:wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.Stream
-  fullName: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.Stream
-  nameWithType: RemoteStreamCloseMessage.Stream
-- uid: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.Stream*
-  name: Stream
-  href: api/wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_RemoteStreamCloseMessage_Stream_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.Stream
-  isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.Stream
-  nameWithType: RemoteStreamCloseMessage.Stream
+  fullName: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.RequireId
+  nameWithType: RemoteStreamCloseMessage.RequireId
 - uid: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.TYPE_ID
   name: TYPE_ID
   href: api/wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.html#wan24_RPC_Api_Messages_Streaming_RemoteStreamCloseMessage_TYPE_ID
@@ -2386,178 +2328,175 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Api.Messages.Streaming.RemoteStreamCloseMessage.Type
   nameWithType: RemoteStreamCloseMessage.Type
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage
-  name: StreamChunkRequestMessage
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html
-  commentId: T:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage
-  nameWithType: StreamChunkRequestMessage
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.#ctor
-  name: StreamChunkRequestMessage()
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage__ctor
-  commentId: M:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.#ctor
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage
+  name: StreamChunkMessage
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html
+  commentId: T:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage
+  nameWithType: StreamChunkMessage
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.#ctor
+  name: StreamChunkMessage()
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage__ctor
+  commentId: M:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.#ctor
   name.vb: New()
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.StreamChunkRequestMessage()
-  fullName.vb: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.New()
-  nameWithType: StreamChunkRequestMessage.StreamChunkRequestMessage()
-  nameWithType.vb: StreamChunkRequestMessage.New()
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.#ctor*
-  name: StreamChunkRequestMessage
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage__ctor_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.#ctor
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.StreamChunkMessage()
+  fullName.vb: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.New()
+  nameWithType: StreamChunkMessage.StreamChunkMessage()
+  nameWithType.vb: StreamChunkMessage.New()
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.#ctor*
+  name: StreamChunkMessage
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage__ctor_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.#ctor
   isSpec: "True"
   name.vb: New
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.StreamChunkRequestMessage
-  fullName.vb: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.New
-  nameWithType: StreamChunkRequestMessage.StreamChunkRequestMessage
-  nameWithType.vb: StreamChunkRequestMessage.New
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.StreamChunkMessage
+  fullName.vb: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.New
+  nameWithType: StreamChunkMessage.StreamChunkMessage
+  nameWithType.vb: StreamChunkMessage.New
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Data
+  name: Data
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_Data
+  commentId: P:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Data
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Data
+  nameWithType: StreamChunkMessage.Data
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Data*
+  name: Data
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_Data_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Data
+  isSpec: "True"
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Data
+  nameWithType: StreamChunkMessage.Data
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
   name: DeserializeAsync(Stream, int, CancellationToken)
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage_DeserializeAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_DeserializeAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
   name.vb: DeserializeAsync(Stream, Integer, CancellationToken)
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.DeserializeAsync(System.IO.Stream, int, System.Threading.CancellationToken)
-  fullName.vb: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.DeserializeAsync(System.IO.Stream, Integer, System.Threading.CancellationToken)
-  nameWithType: StreamChunkRequestMessage.DeserializeAsync(Stream, int, CancellationToken)
-  nameWithType.vb: StreamChunkRequestMessage.DeserializeAsync(Stream, Integer, CancellationToken)
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.DeserializeAsync*
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.DeserializeAsync(System.IO.Stream, int, System.Threading.CancellationToken)
+  fullName.vb: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.DeserializeAsync(System.IO.Stream, Integer, System.Threading.CancellationToken)
+  nameWithType: StreamChunkMessage.DeserializeAsync(Stream, int, CancellationToken)
+  nameWithType.vb: StreamChunkMessage.DeserializeAsync(Stream, Integer, CancellationToken)
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.DeserializeAsync*
   name: DeserializeAsync
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage_DeserializeAsync_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.DeserializeAsync
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_DeserializeAsync_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.DeserializeAsync
   isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.DeserializeAsync
-  nameWithType: StreamChunkRequestMessage.DeserializeAsync
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.DeserializeAsync
+  nameWithType: StreamChunkMessage.DeserializeAsync
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.RequireId
+  name: RequireId
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_RequireId
+  commentId: P:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.RequireId
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.RequireId
+  nameWithType: StreamChunkMessage.RequireId
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.RequireId*
+  name: RequireId
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_RequireId_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.RequireId
+  isSpec: "True"
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.RequireId
+  nameWithType: StreamChunkMessage.RequireId
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)
   name: SerializeAsync(Stream, CancellationToken)
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage_SerializeAsync_System_IO_Stream_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.SerializeAsync(System.IO.Stream, System.Threading.CancellationToken)
-  nameWithType: StreamChunkRequestMessage.SerializeAsync(Stream, CancellationToken)
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.SerializeAsync*
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_SerializeAsync_System_IO_Stream_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.SerializeAsync(System.IO.Stream, System.Threading.CancellationToken)
+  nameWithType: StreamChunkMessage.SerializeAsync(Stream, CancellationToken)
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.SerializeAsync*
   name: SerializeAsync
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage_SerializeAsync_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.SerializeAsync
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_SerializeAsync_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.SerializeAsync
   isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.SerializeAsync
-  nameWithType: StreamChunkRequestMessage.SerializeAsync
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Stream
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.SerializeAsync
+  nameWithType: StreamChunkMessage.SerializeAsync
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Stream
   name: Stream
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage_Stream
-  commentId: P:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Stream
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Stream
-  nameWithType: StreamChunkRequestMessage.Stream
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Stream*
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_Stream
+  commentId: P:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Stream
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Stream
+  nameWithType: StreamChunkMessage.Stream
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Stream*
   name: Stream
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage_Stream_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Stream
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_Stream_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Stream
   isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Stream
-  nameWithType: StreamChunkRequestMessage.Stream
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.TYPE_ID
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Stream
+  nameWithType: StreamChunkMessage.Stream
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.TYPE_ID
   name: TYPE_ID
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage_TYPE_ID
-  commentId: F:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.TYPE_ID
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.TYPE_ID
-  nameWithType: StreamChunkRequestMessage.TYPE_ID
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Type
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_TYPE_ID
+  commentId: F:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.TYPE_ID
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.TYPE_ID
+  nameWithType: StreamChunkMessage.TYPE_ID
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Type
   name: Type
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage_Type
-  commentId: P:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Type
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Type
-  nameWithType: StreamChunkRequestMessage.Type
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Type*
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_Type
+  commentId: P:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Type
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Type
+  nameWithType: StreamChunkMessage.Type
+- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Type*
   name: Type
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage_Type_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Type
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkMessage_Type_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Type
   isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.Type
-  nameWithType: StreamChunkRequestMessage.Type
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage
-  name: StreamChunkResponseMessage
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html
-  commentId: T:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage
-  nameWithType: StreamChunkResponseMessage
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.#ctor
-  name: StreamChunkResponseMessage()
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkResponseMessage__ctor
-  commentId: M:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.#ctor
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.Type
+  nameWithType: StreamChunkMessage.Type
+- uid: wan24.RPC.Api.Messages.Streaming.StreamStartMessage
+  name: StreamStartMessage
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamStartMessage.html
+  commentId: T:wan24.RPC.Api.Messages.Streaming.StreamStartMessage
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamStartMessage
+  nameWithType: StreamStartMessage
+- uid: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.#ctor
+  name: StreamStartMessage()
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamStartMessage.html#wan24_RPC_Api_Messages_Streaming_StreamStartMessage__ctor
+  commentId: M:wan24.RPC.Api.Messages.Streaming.StreamStartMessage.#ctor
   name.vb: New()
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.StreamChunkResponseMessage()
-  fullName.vb: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.New()
-  nameWithType: StreamChunkResponseMessage.StreamChunkResponseMessage()
-  nameWithType.vb: StreamChunkResponseMessage.New()
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.#ctor*
-  name: StreamChunkResponseMessage
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkResponseMessage__ctor_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.#ctor
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.StreamStartMessage()
+  fullName.vb: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.New()
+  nameWithType: StreamStartMessage.StreamStartMessage()
+  nameWithType.vb: StreamStartMessage.New()
+- uid: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.#ctor*
+  name: StreamStartMessage
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamStartMessage.html#wan24_RPC_Api_Messages_Streaming_StreamStartMessage__ctor_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamStartMessage.#ctor
   isSpec: "True"
   name.vb: New
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.StreamChunkResponseMessage
-  fullName.vb: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.New
-  nameWithType: StreamChunkResponseMessage.StreamChunkResponseMessage
-  nameWithType.vb: StreamChunkResponseMessage.New
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Data
-  name: Data
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkResponseMessage_Data
-  commentId: P:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Data
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Data
-  nameWithType: StreamChunkResponseMessage.Data
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Data*
-  name: Data
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkResponseMessage_Data_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Data
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.StreamStartMessage
+  fullName.vb: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.New
+  nameWithType: StreamStartMessage.StreamStartMessage
+  nameWithType.vb: StreamStartMessage.New
+- uid: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.RequireId
+  name: RequireId
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamStartMessage.html#wan24_RPC_Api_Messages_Streaming_StreamStartMessage_RequireId
+  commentId: P:wan24.RPC.Api.Messages.Streaming.StreamStartMessage.RequireId
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.RequireId
+  nameWithType: StreamStartMessage.RequireId
+- uid: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.RequireId*
+  name: RequireId
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamStartMessage.html#wan24_RPC_Api_Messages_Streaming_StreamStartMessage_RequireId_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamStartMessage.RequireId
   isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Data
-  nameWithType: StreamChunkResponseMessage.Data
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
-  name: DeserializeAsync(Stream, int, CancellationToken)
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkResponseMessage_DeserializeAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)
-  name.vb: DeserializeAsync(Stream, Integer, CancellationToken)
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.DeserializeAsync(System.IO.Stream, int, System.Threading.CancellationToken)
-  fullName.vb: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.DeserializeAsync(System.IO.Stream, Integer, System.Threading.CancellationToken)
-  nameWithType: StreamChunkResponseMessage.DeserializeAsync(Stream, int, CancellationToken)
-  nameWithType.vb: StreamChunkResponseMessage.DeserializeAsync(Stream, Integer, CancellationToken)
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.DeserializeAsync*
-  name: DeserializeAsync
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkResponseMessage_DeserializeAsync_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.DeserializeAsync
-  isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.DeserializeAsync
-  nameWithType: StreamChunkResponseMessage.DeserializeAsync
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)
-  name: SerializeAsync(Stream, CancellationToken)
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkResponseMessage_SerializeAsync_System_IO_Stream_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.SerializeAsync(System.IO.Stream, System.Threading.CancellationToken)
-  nameWithType: StreamChunkResponseMessage.SerializeAsync(Stream, CancellationToken)
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.SerializeAsync*
-  name: SerializeAsync
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkResponseMessage_SerializeAsync_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.SerializeAsync
-  isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.SerializeAsync
-  nameWithType: StreamChunkResponseMessage.SerializeAsync
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.TYPE_ID
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.RequireId
+  nameWithType: StreamStartMessage.RequireId
+- uid: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.TYPE_ID
   name: TYPE_ID
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkResponseMessage_TYPE_ID
-  commentId: F:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.TYPE_ID
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.TYPE_ID
-  nameWithType: StreamChunkResponseMessage.TYPE_ID
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Type
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamStartMessage.html#wan24_RPC_Api_Messages_Streaming_StreamStartMessage_TYPE_ID
+  commentId: F:wan24.RPC.Api.Messages.Streaming.StreamStartMessage.TYPE_ID
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.TYPE_ID
+  nameWithType: StreamStartMessage.TYPE_ID
+- uid: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.Type
   name: Type
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkResponseMessage_Type
-  commentId: P:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Type
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Type
-  nameWithType: StreamChunkResponseMessage.Type
-- uid: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Type*
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamStartMessage.html#wan24_RPC_Api_Messages_Streaming_StreamStartMessage_Type
+  commentId: P:wan24.RPC.Api.Messages.Streaming.StreamStartMessage.Type
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.Type
+  nameWithType: StreamStartMessage.Type
+- uid: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.Type*
   name: Type
-  href: api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html#wan24_RPC_Api_Messages_Streaming_StreamChunkResponseMessage_Type_
-  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Type
+  href: api/wan24.RPC.Api.Messages.Streaming.StreamStartMessage.html#wan24_RPC_Api_Messages_Streaming_StreamStartMessage_Type_
+  commentId: Overload:wan24.RPC.Api.Messages.Streaming.StreamStartMessage.Type
   isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.Type
-  nameWithType: StreamChunkResponseMessage.Type
+  fullName: wan24.RPC.Api.Messages.Streaming.StreamStartMessage.Type
+  nameWithType: StreamStartMessage.Type
 - uid: wan24.RPC.Api.Messages.Values
   name: wan24.RPC.Api.Messages.Values
   href: api/wan24.RPC.Api.Messages.Values.html
@@ -2855,19 +2794,6 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Api.Messages.Values.RpcStreamValue.HlObjectVersion
   nameWithType: RpcStreamValue.HlObjectVersion
-- uid: wan24.RPC.Api.Messages.Values.RpcStreamValue.Id
-  name: Id
-  href: api/wan24.RPC.Api.Messages.Values.RpcStreamValue.html#wan24_RPC_Api_Messages_Values_RpcStreamValue_Id
-  commentId: P:wan24.RPC.Api.Messages.Values.RpcStreamValue.Id
-  fullName: wan24.RPC.Api.Messages.Values.RpcStreamValue.Id
-  nameWithType: RpcStreamValue.Id
-- uid: wan24.RPC.Api.Messages.Values.RpcStreamValue.Id*
-  name: Id
-  href: api/wan24.RPC.Api.Messages.Values.RpcStreamValue.html#wan24_RPC_Api_Messages_Values_RpcStreamValue_Id_
-  commentId: Overload:wan24.RPC.Api.Messages.Values.RpcStreamValue.Id
-  isSpec: "True"
-  fullName: wan24.RPC.Api.Messages.Values.RpcStreamValue.Id
-  nameWithType: RpcStreamValue.Id
 - uid: wan24.RPC.Api.Messages.Values.RpcStreamValue.MaxContentLength
   name: MaxContentLength
   href: api/wan24.RPC.Api.Messages.Values.RpcStreamValue.html#wan24_RPC_Api_Messages_Values_RpcStreamValue_MaxContentLength
@@ -2933,6 +2859,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Api.Messages.Values.RpcStreamValue.SerializedHlObjectVersion
   nameWithType: RpcStreamValue.SerializedHlObjectVersion
+- uid: wan24.RPC.Api.Messages.Values.RpcStreamValue.Stream
+  name: Stream
+  href: api/wan24.RPC.Api.Messages.Values.RpcStreamValue.html#wan24_RPC_Api_Messages_Values_RpcStreamValue_Stream
+  commentId: P:wan24.RPC.Api.Messages.Values.RpcStreamValue.Stream
+  fullName: wan24.RPC.Api.Messages.Values.RpcStreamValue.Stream
+  nameWithType: RpcStreamValue.Stream
+- uid: wan24.RPC.Api.Messages.Values.RpcStreamValue.Stream*
+  name: Stream
+  href: api/wan24.RPC.Api.Messages.Values.RpcStreamValue.html#wan24_RPC_Api_Messages_Values_RpcStreamValue_Stream_
+  commentId: Overload:wan24.RPC.Api.Messages.Values.RpcStreamValue.Stream
+  isSpec: "True"
+  fullName: wan24.RPC.Api.Messages.Values.RpcStreamValue.Stream
+  nameWithType: RpcStreamValue.Stream
 - uid: wan24.RPC.Api.Messages.Values.RpcStreamValue.VERSION
   name: VERSION
   href: api/wan24.RPC.Api.Messages.Values.RpcStreamValue.html#wan24_RPC_Api_Messages_Values_RpcStreamValue_VERSION
@@ -4544,19 +4483,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.HandleResponseAsync
   nameWithType: RpcProcessor.HandleResponseAsync
-- uid: wan24.RPC.Processing.RpcProcessor.HandleStreamChunkRequestAsync(wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage)
-  name: HandleStreamChunkRequestAsync(StreamChunkRequestMessage)
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleStreamChunkRequestAsync_wan24_RPC_Api_Messages_Streaming_StreamChunkRequestMessage_
-  commentId: M:wan24.RPC.Processing.RpcProcessor.HandleStreamChunkRequestAsync(wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage)
-  fullName: wan24.RPC.Processing.RpcProcessor.HandleStreamChunkRequestAsync(wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage)
-  nameWithType: RpcProcessor.HandleStreamChunkRequestAsync(StreamChunkRequestMessage)
-- uid: wan24.RPC.Processing.RpcProcessor.HandleStreamChunkRequestAsync*
-  name: HandleStreamChunkRequestAsync
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleStreamChunkRequestAsync_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.HandleStreamChunkRequestAsync
+- uid: wan24.RPC.Processing.RpcProcessor.HandleStreamStartAsync(wan24.RPC.Api.Messages.Streaming.StreamStartMessage)
+  name: HandleStreamStartAsync(StreamStartMessage)
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleStreamStartAsync_wan24_RPC_Api_Messages_Streaming_StreamStartMessage_
+  commentId: M:wan24.RPC.Processing.RpcProcessor.HandleStreamStartAsync(wan24.RPC.Api.Messages.Streaming.StreamStartMessage)
+  fullName: wan24.RPC.Processing.RpcProcessor.HandleStreamStartAsync(wan24.RPC.Api.Messages.Streaming.StreamStartMessage)
+  nameWithType: RpcProcessor.HandleStreamStartAsync(StreamStartMessage)
+- uid: wan24.RPC.Processing.RpcProcessor.HandleStreamStartAsync*
+  name: HandleStreamStartAsync
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleStreamStartAsync_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.HandleStreamStartAsync
   isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.HandleStreamChunkRequestAsync
-  nameWithType: RpcProcessor.HandleStreamChunkRequestAsync
+  fullName: wan24.RPC.Processing.RpcProcessor.HandleStreamStartAsync
+  nameWithType: RpcProcessor.HandleStreamStartAsync
 - uid: wan24.RPC.Processing.RpcProcessor.MessageId
   name: MessageId
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_MessageId

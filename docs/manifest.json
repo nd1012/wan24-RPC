@@ -425,20 +425,20 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.yml",
+      "source_relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamChunkRequestMessage.html"
+          "relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamChunkMessage.html"
         }
       },
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.yml",
+      "source_relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamStartMessage.yml",
       "output": {
         ".html": {
-          "relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamChunkResponseMessage.html"
+          "relative_path": "api/wan24.RPC.Api.Messages.Streaming.StreamStartMessage.html"
         }
       },
       "version": ""

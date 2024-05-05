@@ -266,7 +266,7 @@ public record RpcEnumerableValue&lt;T&gt; : StreamSerializerRecordBase, IObjectV
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[RequiredIf(&quot;Id&quot;, new object?[] { }, RequiredIfNull = true)]
 [RuntimeCountLimit(&quot;wan24.RPC.Api.Messages.Values.RpcEnumerableValue.MaxItemCount&quot;, null)]
-public IEnumerable&lt;T&gt;? Enumerable { get; set; }</code></pre>
+public T[]? Enumerable { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -278,7 +278,7 @@ public IEnumerable&lt;T&gt;? Enumerable { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
+        <td>T[]</td>
         <td></td>
       </tr>
     </tbody>
