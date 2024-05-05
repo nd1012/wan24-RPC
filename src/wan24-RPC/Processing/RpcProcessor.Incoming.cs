@@ -2,6 +2,7 @@
 using wan24.Core;
 using wan24.RPC.Api.Messages;
 using wan24.RPC.Api.Messages.Interfaces;
+using wan24.RPC.Api.Messages.Streaming;
 
 namespace wan24.RPC.Processing
 {
@@ -58,6 +59,18 @@ namespace wan24.RPC.Processing
                             await remoteEvent.DisposeArgumentsAsync().DynamicContext();
                             throw;
                         }
+                        break;
+                    case StreamChunkRequestMessage chunkRequest:
+                        await HandleStreamChunkRequestAsync(chunkRequest).DynamicContext();
+                        break;
+                    case StreamChunkResponseMessage chunkResponse:
+                        //TODO
+                        break;
+                    case RemoteStreamCloseMessage remoteClose:
+                        await HandleOutgoingStreamCloseAsync(remoteClose).DynamicContext();
+                        break;
+                    case LocalStreamCloseMessage localClose:
+                        //TODO
                         break;
                     default:
                         throw new InvalidDataException($"Can't handle message type #{message.Id}");

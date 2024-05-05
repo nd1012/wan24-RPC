@@ -6,7 +6,7 @@ using wan24.StreamSerializerExtensions;
 namespace wan24.RPC.Api.Messages.Values
 {
     /// <summary>
-    /// RPC stream parameter
+    /// RPC stream parameter/return value
     /// </summary>
     [Rpc]
     public record class RpcStreamValue() : StreamSerializerRecordBase(VERSION)
@@ -19,7 +19,7 @@ namespace wan24.RPC.Api.Messages.Values
         /// <summary>
         /// Max. stream content length in bytes
         /// </summary>
-        public static int MaxContentLength { get; set; } = Settings.BufferSize;
+        public static int MaxContentLength { get; set; } = short.MaxValue >> 1;
 
         /// <summary>
         /// Minimum supported higher level object version (see <see cref="SerializedHlObjectVersion"/>)
@@ -45,7 +45,7 @@ namespace wan24.RPC.Api.Messages.Values
         /// <summary>
         /// Stream content
         /// </summary>
-        [RequiredIf(nameof(Id), RequiredIfNull = true)]
+        [RequiredIf(nameof(Id), RequiredIfNull = true), RuntimeCountLimit("wan24.RPC.Api.Messages.Values.RpcStreamValue.MaxContentLength")]
         public byte[]? Content { get; set; }
 
         /// <inheritdoc/>

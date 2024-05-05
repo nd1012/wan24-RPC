@@ -31,12 +31,14 @@
     <PackageReference Include="Stream-Serializer-Extensions" Version="3.6.0" Condition="'$(Configuration)' != 'Trunk'" />
     <PackageReference Include="wan24-Compression" Version="2.7.0" Condition="'$(Configuration)' != 'Trunk'" />
     <PackageReference Include="wan24-Core" Version="2.21.0" Condition="'$(Configuration)' != 'Trunk'" />
+    <PackageReference Include="wan24-Core-Validation" Version="1.0.0" Condition="'$(Configuration)' != 'Trunk'" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\ObjectValidation\src\ObjectValidation\ObjectValidation.csproj" Condition="'$(Configuration)' == 'Trunk'" />
     <ProjectReference Include="..\..\..\Stream-Serializer-Extensions\src\Stream-Serializer-Extensions\Stream-Serializer-Extensions.csproj" Condition="'$(Configuration)' == 'Trunk'" />
     <ProjectReference Include="..\..\..\wan24-Compression\src\wan24-Compression\wan24-Compression.csproj" Condition="'$(Configuration)' == 'Trunk'" />
+    <ProjectReference Include="..\..\..\wan24-Core\src\Wan24-Core-Validation\Wan24-Core-Validation.csproj" Condition="'$(Configuration)' == 'Trunk'" />
     <ProjectReference Include="..\..\..\wan24-Core\src\Wan24-Core\Wan24-Core.csproj" Condition="'$(Configuration)' == 'Trunk'" />
   </ItemGroup>
 
@@ -111,7 +113,6 @@
 
   <ItemGroup>
     <Folder Include="Api\Messages\Enumeration\" />
-    <Folder Include="Api\Messages\Streaming\" />
   </ItemGroup>
 
 </Project>

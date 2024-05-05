@@ -7,9 +7,38 @@ namespace wan24_RPC_Tests
     public class RPC_Tests
     {
         [TestMethod, Timeout(3000)]
+        public async Task NotDisposingApi_TestsAsync()
+        {
+            // Server API shouldn't be disposed when the server RPC processor is being disposed (because it's using the NoRpcDisposeAttribute)
+            ServerApi? serverApi = null;
+            (RpcProcessor server, RpcProcessor client) = await GetRpcAsync();
+            try
+            {
+                serverApi = server.Options.API.Values.First().Instance as ServerApi;
+                Assert.IsNotNull(serverApi);
+            }
+            finally
+            {
+                await server.DisposeAsync();
+                await client.DisposeAsync();
+                if (serverApi is not null)
+                {
+                    try
+                    {
+                        Assert.IsFalse(serverApi.IsDisposing);
+                    }
+                    finally
+                    {
+                        await serverApi.DisposeAsync();
+                    }
+                    Assert.IsTrue(serverApi.IsDisposed);
+                }
+            }
+        }
+        [TestMethod, Timeout(3000)]
         public async Task Echo_TestsAsync()
         {
-            // Simple ping/pong method calls
+            // Simple echo method calls
             (RpcProcessor server, RpcProcessor client) = await GetRpcAsync();
             try
             {
@@ -34,36 +63,6 @@ namespace wan24_RPC_Tests
                 await server.Options.API.Values.First().Instance.TryDisposeAsync();
                 await server.DisposeAsync();
                 await client.DisposeAsync();
-            }
-        }
-
-        [TestMethod, Timeout(3000)]
-        public async Task NotDisposingApi_TestsAsync()
-        {
-            // Server API shouldn't be disposed when the server RPC Processor is being disposed (because it's using the NoRpcDisposeAttribute)
-            ServerApi? serverApi = null;
-            (RpcProcessor server, RpcProcessor client) = await GetRpcAsync();
-            try
-            {
-                serverApi = server.Options.API.Values.First().Instance as ServerApi;
-                Assert.IsNotNull(serverApi);
-            }
-            finally
-            {
-                await server.DisposeAsync();
-                await client.DisposeAsync();
-                if (serverApi is not null)
-                {
-                    try
-                    {
-                        Assert.IsFalse(serverApi.IsDisposing);
-                    }
-                    finally
-                    {
-                        await serverApi.DisposeAsync();
-                    }
-                    Assert.IsTrue(serverApi.IsDisposed);
-                }
             }
         }
 
@@ -111,10 +110,10 @@ namespace wan24_RPC_Tests
                     Logger = Logging.Logger,
                     Stream = new BiDirectionalStream(serverIO, clientIO, leaveOpen: true),
                     FlushStream = true,
-                    CallQueueSize = 20,
-                    CallThreads = 10,
-                    RequestQueueSize = 20,
-                    RequestThreads = 10
+                    CallQueueSize = 2,
+                    CallThreads = 1,
+                    RequestQueueSize = 2,
+                    RequestThreads = 1
                 })
                 {
                     Name = "Server"
@@ -125,10 +124,10 @@ namespace wan24_RPC_Tests
                     Logger = Logging.Logger,
                     Stream = new BiDirectionalStream(clientIO, serverIO),
                     FlushStream = true,
-                    CallQueueSize = 20,
-                    CallThreads = 10,
-                    RequestQueueSize = 20,
-                    RequestThreads = 10
+                    CallQueueSize = 2,
+                    CallThreads = 1,
+                    RequestQueueSize = 2,
+                    RequestThreads = 1
                 })
                 {
                     Name = "Client"

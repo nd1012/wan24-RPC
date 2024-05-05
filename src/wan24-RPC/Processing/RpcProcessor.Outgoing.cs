@@ -166,7 +166,17 @@ namespace wan24.RPC.Processing
             if (message is RpcMessageBase rpcMessage && rpcMessage.RequireId && !rpcMessage.Id.HasValue)
                 rpcMessage.Id = Interlocked.Increment(ref MessageId);
             Options.Logger?.Log(LogLevel.Trace, "{this} sending message type {type} ({clrType}) as #{id}", this, message.Type, message.GetType(), message.Id);
-            await Options.Stream.WriteRpcMessageAsync(message, CancelToken).DynamicContext();
+            using (LimitedLengthStream limited = new(Options.Stream, Options.MaxMessageLength, leaveOpen: true))
+                try
+                {
+                    await limited.WriteRpcMessageAsync(message, CancelToken).DynamicContext();
+                }
+                catch(OutOfMemoryException)
+                {
+                    Options.Logger?.Log(LogLevel.Error, "{this} outgoing message type {type} ({clrType}) ID #{id} is too long (disposing due to invalid RPC stream state)", this, message.Type, message.GetType(), message.Id);
+                    _ = DisposeAsync().AsTask();
+                    throw;
+                }
             if (Options.FlushStream)
                 await Options.Stream.FlushAsync(CancelToken).DynamicContext();
         }

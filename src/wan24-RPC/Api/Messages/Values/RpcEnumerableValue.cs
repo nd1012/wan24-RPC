@@ -46,7 +46,7 @@ namespace wan24.RPC.Api.Messages.Values
         /// <summary>
         /// Enumerable
         /// </summary>
-        [RequiredIf(nameof(Id), RequiredIfNull = true)]
+        [RequiredIf(nameof(Id), RequiredIfNull = true), RuntimeCountLimit("wan24.RPC.Api.Messages.Values.RpcEnumerableValue.MaxItemCount")]
         public IEnumerable<T>? Enumerable { get; set; }
 
         /// <inheritdoc/>

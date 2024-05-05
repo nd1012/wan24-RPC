@@ -96,7 +96,11 @@ namespace wan24.RPC.Processing
                     while (!CancelToken.IsCancellationRequested)
                     {
                         Options.Logger?.Log(LogLevel.Trace, "{this} worker waiting for incoming RPC messages", this);
-                        message = await Options.Stream.ReadRpcMessageAsync(Options.SerializerVersion, cancellationToken: CancelToken).DynamicContext();
+                        using (LimitedLengthStream limited = new(Options.Stream, Options.MaxMessageLength, leaveOpen: true)
+                        {
+                            ThrowOnReadOverflow = true
+                        })
+                            message = await limited.ReadRpcMessageAsync(Options.SerializerVersion, cancellationToken: CancelToken).DynamicContext();
                         Options.Logger?.Log(LogLevel.Trace, "{this} worker handling incoming RPC message", this);
                         _ = HandleMessageAsync(message);
                         message = null;

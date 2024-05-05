@@ -1,5 +1,6 @@
 ﻿using wan24.Core;
 using wan24.RPC.Api.Messages.Interfaces;
+using wan24.RPC.Api.Messages.Streaming;
 
 namespace wan24.RPC.Api.Messages
 {
@@ -17,7 +18,11 @@ namespace wan24.RPC.Api.Messages
             { ResponseMessage.TYPE_ID, typeof(ResponseMessage) },
             { ErrorResponseMessage.TYPE_ID, typeof(ErrorResponseMessage) },
             { CancellationMessage.TYPE_ID, typeof(CancellationMessage) },
-            { EventMessage.TYPE_ID, typeof(EventMessage) }
+            { EventMessage.TYPE_ID, typeof(EventMessage) },
+            { StreamChunkRequestMessage.TYPE_ID, typeof(StreamChunkRequestMessage) },
+            { StreamChunkResponseMessage.TYPE_ID, typeof(StreamChunkResponseMessage) },
+            { RemoteStreamCloseMessage.TYPE_ID, typeof(RemoteStreamCloseMessage) },
+            { LocalStreamCloseMessage.TYPE_ID, typeof(LocalStreamCloseMessage) }
         };
 
         /// <summary>

@@ -62,12 +62,17 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Flush the <see cref="Stream"/> after sending a message?
         /// </summary>
-        public bool FlushStream { get; init; } = true;
+        public bool FlushStream { get; init; }
 
         /// <summary>
         /// Stream serializer version
         /// </summary>
         public int SerializerVersion { get; init; } = StreamSerializer.Version;
+
+        /// <summary>
+        /// Max. message length (I/O) in bytes at both peers
+        /// </summary>
+        public int MaxMessageLength { get; init; } = Settings.BufferSize;
 
         /// <summary>
         /// Peer API version
@@ -85,12 +90,12 @@ namespace wan24.RPC.Processing
         public RpcContext? DefaultContext { get; init; }
 
         /// <summary>
-        /// Max. number of queued RPC requests (RPC requests from the peer; should at last fit the peers <see cref="RequestThreads"/>)
+        /// Max. number of queued RPC call (RPC requests from the peer; should at last fit the peers <see cref="RequestThreads"/>)
         /// </summary>
         public required int CallQueueSize { get; init; }
 
         /// <summary>
-        /// Max. number of RPC request processing threads
+        /// Max. number of RPC call processing threads
         /// </summary>
         public required int CallThreads { get; init; }
 
@@ -105,14 +110,24 @@ namespace wan24.RPC.Processing
         public bool DisconnectOnApiError { get; init; }
 
         /// <summary>
-        /// Max. number of queued RPC calls (RPC requests to the peer)
+        /// Max. number of queued RPC requests (RPC requests to the peer)
         /// </summary>
         public required int RequestQueueSize { get; init; }
 
         /// <summary>
-        /// Max. number of RPC call processing threads (should not exceed the peers <see cref="CallQueueSize"/>)
+        /// Max. number of RPC requests processing threads (should not exceed the peers <see cref="CallQueueSize"/>)
         /// </summary>
         public required int RequestThreads { get; init; }
+
+        /// <summary>
+        /// Maximum number of streams (I/O) at both peers (<c>0</c> to disable streams)
+        /// </summary>
+        public int MaxStreamCount { get; init; }
+
+        /// <summary>
+        /// Maximum number of enumerations (I/O) at both peers (<c>0</c> to disable enumerations)
+        /// </summary>
+        public int MaxEnumerationCount { get; init; }
 
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
