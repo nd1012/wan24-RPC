@@ -112,12 +112,24 @@
     <div>
       <a class="xref" href="wan24.RPC.Api.Messages.Interfaces.IRpcMessage.html#wan24_RPC_Api_Messages_Interfaces_IRpcMessage_Id">IRpcMessage.Id</a>
     </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">IStreamSerializer.Serialize(Stream)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">IStreamSerializer.SerializeAsync(Stream, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">IStreamSerializer.Deserialize(Stream, int)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">IStreamSerializer.DeserializeAsync(Stream, int, CancellationToken)</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="wan24.html">wan24</a>.<a class="xref" href="wan24.RPC.html">RPC</a>.<a class="xref" href="wan24.RPC.Api.html">Api</a>.<a class="xref" href="wan24.RPC.Api.Messages.html">Messages</a>.<a class="xref" href="wan24.RPC.Api.Messages.Interfaces.html">Interfaces</a></h6>
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Api_Messages_Interfaces_IRpcRequest_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IRpcRequest : IRpcMessage</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IRpcRequest : IRpcMessage, IStreamSerializer</code></pre>
   </div>
 
 </article>

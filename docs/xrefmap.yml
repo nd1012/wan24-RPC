@@ -1640,15 +1640,15 @@ references:
   commentId: T:wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions
   fullName: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions
   nameWithType: StreamExtensions
-- uid: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync(System.IO.Stream,System.Nullable{System.Int32},System.Type,System.Threading.CancellationToken)
-  name: ReadRpcMessageAsync(Stream, int?, Type?, CancellationToken)
-  href: api/wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.html#wan24_RPC_Api_Messages_Serialization_Extensions_StreamExtensions_ReadRpcMessageAsync_System_IO_Stream_System_Nullable_System_Int32__System_Type_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync(System.IO.Stream,System.Nullable{System.Int32},System.Type,System.Threading.CancellationToken)
-  name.vb: ReadRpcMessageAsync(Stream, Integer?, Type, CancellationToken)
-  fullName: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync(System.IO.Stream, int?, System.Type?, System.Threading.CancellationToken)
-  fullName.vb: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync(System.IO.Stream, Integer?, System.Type, System.Threading.CancellationToken)
-  nameWithType: StreamExtensions.ReadRpcMessageAsync(Stream, int?, Type?, CancellationToken)
-  nameWithType.vb: StreamExtensions.ReadRpcMessageAsync(Stream, Integer?, Type, CancellationToken)
+- uid: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync(System.IO.Stream,System.Nullable{System.Int32},System.Type,System.Boolean,System.Threading.CancellationToken)
+  name: ReadRpcMessageAsync(Stream, int?, Type?, bool, CancellationToken)
+  href: api/wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.html#wan24_RPC_Api_Messages_Serialization_Extensions_StreamExtensions_ReadRpcMessageAsync_System_IO_Stream_System_Nullable_System_Int32__System_Type_System_Boolean_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync(System.IO.Stream,System.Nullable{System.Int32},System.Type,System.Boolean,System.Threading.CancellationToken)
+  name.vb: ReadRpcMessageAsync(Stream, Integer?, Type, Boolean, CancellationToken)
+  fullName: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync(System.IO.Stream, int?, System.Type?, bool, System.Threading.CancellationToken)
+  fullName.vb: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync(System.IO.Stream, Integer?, System.Type, Boolean, System.Threading.CancellationToken)
+  nameWithType: StreamExtensions.ReadRpcMessageAsync(Stream, int?, Type?, bool, CancellationToken)
+  nameWithType.vb: StreamExtensions.ReadRpcMessageAsync(Stream, Integer?, Type, Boolean, CancellationToken)
 - uid: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync*
   name: ReadRpcMessageAsync
   href: api/wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.html#wan24_RPC_Api_Messages_Serialization_Extensions_StreamExtensions_ReadRpcMessageAsync_
@@ -1656,21 +1656,21 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync
   nameWithType: StreamExtensions.ReadRpcMessageAsync
-- uid: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync``1(System.IO.Stream,System.Nullable{System.Int32},System.Threading.CancellationToken)
-  name: ReadRpcMessageAsync<T>(Stream, int?, CancellationToken)
-  href: api/wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.html#wan24_RPC_Api_Messages_Serialization_Extensions_StreamExtensions_ReadRpcMessageAsync__1_System_IO_Stream_System_Nullable_System_Int32__System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync``1(System.IO.Stream,System.Nullable{System.Int32},System.Threading.CancellationToken)
-  name.vb: ReadRpcMessageAsync(Of T)(Stream, Integer?, CancellationToken)
-  fullName: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync<T>(System.IO.Stream, int?, System.Threading.CancellationToken)
-  fullName.vb: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync(Of T)(System.IO.Stream, Integer?, System.Threading.CancellationToken)
-  nameWithType: StreamExtensions.ReadRpcMessageAsync<T>(Stream, int?, CancellationToken)
-  nameWithType.vb: StreamExtensions.ReadRpcMessageAsync(Of T)(Stream, Integer?, CancellationToken)
-- uid: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.WriteRpcMessageAsync(System.IO.Stream,wan24.RPC.Api.Messages.RpcMessageBase,System.Threading.CancellationToken)
-  name: WriteRpcMessageAsync(Stream, RpcMessageBase, CancellationToken)
-  href: api/wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.html#wan24_RPC_Api_Messages_Serialization_Extensions_StreamExtensions_WriteRpcMessageAsync_System_IO_Stream_wan24_RPC_Api_Messages_RpcMessageBase_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.WriteRpcMessageAsync(System.IO.Stream,wan24.RPC.Api.Messages.RpcMessageBase,System.Threading.CancellationToken)
-  fullName: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.WriteRpcMessageAsync(System.IO.Stream, wan24.RPC.Api.Messages.RpcMessageBase, System.Threading.CancellationToken)
-  nameWithType: StreamExtensions.WriteRpcMessageAsync(Stream, RpcMessageBase, CancellationToken)
+- uid: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync``1(System.IO.Stream,System.Nullable{System.Int32},System.Boolean,System.Threading.CancellationToken)
+  name: ReadRpcMessageAsync<T>(Stream, int?, bool, CancellationToken)
+  href: api/wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.html#wan24_RPC_Api_Messages_Serialization_Extensions_StreamExtensions_ReadRpcMessageAsync__1_System_IO_Stream_System_Nullable_System_Int32__System_Boolean_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync``1(System.IO.Stream,System.Nullable{System.Int32},System.Boolean,System.Threading.CancellationToken)
+  name.vb: ReadRpcMessageAsync(Of T)(Stream, Integer?, Boolean, CancellationToken)
+  fullName: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync<T>(System.IO.Stream, int?, bool, System.Threading.CancellationToken)
+  fullName.vb: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.ReadRpcMessageAsync(Of T)(System.IO.Stream, Integer?, Boolean, System.Threading.CancellationToken)
+  nameWithType: StreamExtensions.ReadRpcMessageAsync<T>(Stream, int?, bool, CancellationToken)
+  nameWithType.vb: StreamExtensions.ReadRpcMessageAsync(Of T)(Stream, Integer?, Boolean, CancellationToken)
+- uid: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.WriteRpcMessageAsync(System.IO.Stream,wan24.RPC.Api.Messages.Interfaces.IRpcMessage,System.Threading.CancellationToken)
+  name: WriteRpcMessageAsync(Stream, IRpcMessage, CancellationToken)
+  href: api/wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.html#wan24_RPC_Api_Messages_Serialization_Extensions_StreamExtensions_WriteRpcMessageAsync_System_IO_Stream_wan24_RPC_Api_Messages_Interfaces_IRpcMessage_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.WriteRpcMessageAsync(System.IO.Stream,wan24.RPC.Api.Messages.Interfaces.IRpcMessage,System.Threading.CancellationToken)
+  fullName: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.WriteRpcMessageAsync(System.IO.Stream, wan24.RPC.Api.Messages.Interfaces.IRpcMessage, System.Threading.CancellationToken)
+  nameWithType: StreamExtensions.WriteRpcMessageAsync(Stream, IRpcMessage, CancellationToken)
 - uid: wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.WriteRpcMessageAsync*
   name: WriteRpcMessageAsync
   href: api/wan24.RPC.Api.Messages.Serialization.Extensions.StreamExtensions.html#wan24_RPC_Api_Messages_Serialization_Extensions_StreamExtensions_WriteRpcMessageAsync_
@@ -3776,6 +3776,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Call.Processed
   nameWithType: RpcProcessor.Call.Processed
+- uid: wan24.RPC.Processing.RpcProcessor.Call.Processor
+  name: Processor
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Processor
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Call.Processor
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.Processor
+  nameWithType: RpcProcessor.Call.Processor
+- uid: wan24.RPC.Processing.RpcProcessor.Call.Processor*
+  name: Processor
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Processor_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.Processor
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.Processor
+  nameWithType: RpcProcessor.Call.Processor
 - uid: wan24.RPC.Processing.RpcProcessor.Call.ProcessorCancellation
   name: ProcessorCancellation
   href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_ProcessorCancellation
@@ -4129,12 +4142,12 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.HandleEventAsync
   nameWithType: RpcProcessor.HandleEventAsync
-- uid: wan24.RPC.Processing.RpcProcessor.HandleMessageAsync(wan24.RPC.Api.Messages.RpcMessageBase)
-  name: HandleMessageAsync(RpcMessageBase)
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleMessageAsync_wan24_RPC_Api_Messages_RpcMessageBase_
-  commentId: M:wan24.RPC.Processing.RpcProcessor.HandleMessageAsync(wan24.RPC.Api.Messages.RpcMessageBase)
-  fullName: wan24.RPC.Processing.RpcProcessor.HandleMessageAsync(wan24.RPC.Api.Messages.RpcMessageBase)
-  nameWithType: RpcProcessor.HandleMessageAsync(RpcMessageBase)
+- uid: wan24.RPC.Processing.RpcProcessor.HandleMessageAsync(wan24.RPC.Api.Messages.Interfaces.IRpcMessage)
+  name: HandleMessageAsync(IRpcMessage)
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleMessageAsync_wan24_RPC_Api_Messages_Interfaces_IRpcMessage_
+  commentId: M:wan24.RPC.Processing.RpcProcessor.HandleMessageAsync(wan24.RPC.Api.Messages.Interfaces.IRpcMessage)
+  fullName: wan24.RPC.Processing.RpcProcessor.HandleMessageAsync(wan24.RPC.Api.Messages.Interfaces.IRpcMessage)
+  nameWithType: RpcProcessor.HandleMessageAsync(IRpcMessage)
 - uid: wan24.RPC.Processing.RpcProcessor.HandleMessageAsync*
   name: HandleMessageAsync
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleMessageAsync_
@@ -4346,6 +4359,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Request.Processed
   nameWithType: RpcProcessor.Request.Processed
+- uid: wan24.RPC.Processing.RpcProcessor.Request.Processor
+  name: Processor
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Processor
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Request.Processor
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.Processor
+  nameWithType: RpcProcessor.Request.Processor
+- uid: wan24.RPC.Processing.RpcProcessor.Request.Processor*
+  name: Processor
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Processor_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Request.Processor
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.Processor
+  nameWithType: RpcProcessor.Request.Processor
 - uid: wan24.RPC.Processing.RpcProcessor.Request.ProcessorCancellation
   name: ProcessorCancellation
   href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_ProcessorCancellation
@@ -4481,12 +4507,12 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.SendErrorResponseAsync
   nameWithType: RpcProcessor.SendErrorResponseAsync
-- uid: wan24.RPC.Processing.RpcProcessor.SendMessageAsync(wan24.RPC.Api.Messages.RpcMessageBase,System.Threading.CancellationToken)
-  name: SendMessageAsync(RpcMessageBase, CancellationToken)
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_SendMessageAsync_wan24_RPC_Api_Messages_RpcMessageBase_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Processing.RpcProcessor.SendMessageAsync(wan24.RPC.Api.Messages.RpcMessageBase,System.Threading.CancellationToken)
-  fullName: wan24.RPC.Processing.RpcProcessor.SendMessageAsync(wan24.RPC.Api.Messages.RpcMessageBase, System.Threading.CancellationToken)
-  nameWithType: RpcProcessor.SendMessageAsync(RpcMessageBase, CancellationToken)
+- uid: wan24.RPC.Processing.RpcProcessor.SendMessageAsync(wan24.RPC.Api.Messages.Interfaces.IRpcMessage,System.Threading.CancellationToken)
+  name: SendMessageAsync(IRpcMessage, CancellationToken)
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_SendMessageAsync_wan24_RPC_Api_Messages_Interfaces_IRpcMessage_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Processing.RpcProcessor.SendMessageAsync(wan24.RPC.Api.Messages.Interfaces.IRpcMessage,System.Threading.CancellationToken)
+  fullName: wan24.RPC.Processing.RpcProcessor.SendMessageAsync(wan24.RPC.Api.Messages.Interfaces.IRpcMessage, System.Threading.CancellationToken)
+  nameWithType: RpcProcessor.SendMessageAsync(IRpcMessage, CancellationToken)
 - uid: wan24.RPC.Processing.RpcProcessor.SendMessageAsync*
   name: SendMessageAsync
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_SendMessageAsync_
