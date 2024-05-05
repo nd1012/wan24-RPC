@@ -1,14 +1,14 @@
 ﻿namespace wan24.RPC.Api.Messages.Streaming
 {
     /// <summary>
-    /// Signal local RPC stream close to the remote
+    /// Outgoing stream start request message
     /// </summary>
-    public class LocalStreamCloseMessage() : RpcMessageBase()
+    public class StreamStartMessage() : RpcMessageBase()
     {
         /// <summary>
         /// RPC message type ID
         /// </summary>
-        public const int TYPE_ID = 8;
+        public const int TYPE_ID = 5;
 
         /// <inheritdoc/>
         public override int Type => TYPE_ID;

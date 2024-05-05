@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using wan24.Core;
-using wan24.StreamSerializerExtensions;
-
-namespace wan24.RPC.Api.Messages.Streaming
+﻿namespace wan24.RPC.Api.Messages.Streaming
 {
     /// <summary>
-    /// Remote RPC stream close message
+    /// Closes a remote RPC stream
     /// </summary>
     public class RemoteStreamCloseMessage() : RpcMessageBase()
     {
@@ -17,24 +13,7 @@ namespace wan24.RPC.Api.Messages.Streaming
         /// <inheritdoc/>
         public override int Type => TYPE_ID;
 
-        /// <summary>
-        /// Remote stream ID
-        /// </summary>
-        [Range(1, long.MaxValue)]
-        public long Stream { get; set; }
-
         /// <inheritdoc/>
-        protected override async Task SerializeAsync(Stream stream, CancellationToken cancellationToken)
-        {
-            await base.SerializeAsync(stream, cancellationToken).DynamicContext();
-            await stream.WriteNumberAsync(Stream, cancellationToken).DynamicContext();
-        }
-
-        /// <inheritdoc/>
-        protected override async Task DeserializeAsync(Stream stream, int version, CancellationToken cancellationToken)
-        {
-            await base.DeserializeAsync(stream, version, cancellationToken).DynamicContext();
-            Stream = await stream.ReadNumberAsync<long>(version, cancellationToken: cancellationToken).DynamicContext();
-        }
+        public sealed override bool RequireId => true;
     }
 }

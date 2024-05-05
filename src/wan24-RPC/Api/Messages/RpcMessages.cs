@@ -19,8 +19,8 @@ namespace wan24.RPC.Api.Messages
             { ErrorResponseMessage.TYPE_ID, typeof(ErrorResponseMessage) },
             { CancellationMessage.TYPE_ID, typeof(CancellationMessage) },
             { EventMessage.TYPE_ID, typeof(EventMessage) },
-            { StreamChunkRequestMessage.TYPE_ID, typeof(StreamChunkRequestMessage) },
-            { StreamChunkResponseMessage.TYPE_ID, typeof(StreamChunkResponseMessage) },
+            { StreamStartMessage.TYPE_ID, typeof(StreamStartMessage) },
+            { StreamChunkMessage.TYPE_ID, typeof(StreamChunkMessage) },
             { RemoteStreamCloseMessage.TYPE_ID, typeof(RemoteStreamCloseMessage) },
             { LocalStreamCloseMessage.TYPE_ID, typeof(LocalStreamCloseMessage) }
         };

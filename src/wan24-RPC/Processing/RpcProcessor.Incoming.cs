@@ -60,10 +60,10 @@ namespace wan24.RPC.Processing
                             throw;
                         }
                         break;
-                    case StreamChunkRequestMessage chunkRequest:
-                        await HandleStreamChunkRequestAsync(chunkRequest).DynamicContext();
+                    case StreamStartMessage chunkRequest:
+                        await HandleStreamStartAsync(chunkRequest).DynamicContext();
                         break;
-                    case StreamChunkResponseMessage chunkResponse:
+                    case StreamChunkMessage chunkResponse:
                         //TODO
                         break;
                     case RemoteStreamCloseMessage remoteClose:

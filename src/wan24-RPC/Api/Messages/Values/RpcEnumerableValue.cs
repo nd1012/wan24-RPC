@@ -47,7 +47,7 @@ namespace wan24.RPC.Api.Messages.Values
         /// Enumerable
         /// </summary>
         [RequiredIf(nameof(Id), RequiredIfNull = true), RuntimeCountLimit("wan24.RPC.Api.Messages.Values.RpcEnumerableValue.MaxItemCount")]
-        public IEnumerable<T>? Enumerable { get; set; }
+        public T[]? Enumerable { get; set; }
 
         /// <inheritdoc/>
         protected sealed override void Serialize(Stream stream) => throw new NotSupportedException();
@@ -62,7 +62,7 @@ namespace wan24.RPC.Api.Messages.Values
             await stream.WriteNumberAsync(HlObjectVersion, cancellationToken).DynamicContext();
             await stream.WriteNumberNullableAsync(Id, cancellationToken).DynamicContext();
             if (!Id.HasValue)
-                await stream.WriteArrayAsync([.. Enumerable], cancellationToken).DynamicContext();
+                await stream.WriteArrayAsync(Enumerable!, cancellationToken).DynamicContext();
         }
 
         /// <inheritdoc/>

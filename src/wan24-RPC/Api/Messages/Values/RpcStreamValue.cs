@@ -40,12 +40,12 @@ namespace wan24.RPC.Api.Messages.Values
         /// Stream ID
         /// </summary>
         [RequiredIf(nameof(Content), RequiredIfNull = true)]
-        public long? Id { get; set; }
+        public long? Stream { get; set; }
 
         /// <summary>
         /// Stream content
         /// </summary>
-        [RequiredIf(nameof(Id), RequiredIfNull = true), RuntimeCountLimit("wan24.RPC.Api.Messages.Values.RpcStreamValue.MaxContentLength")]
+        [RequiredIf(nameof(Stream), RequiredIfNull = true), RuntimeCountLimit("wan24.RPC.Api.Messages.Values.RpcStreamValue.MaxContentLength")]
         public byte[]? Content { get; set; }
 
         /// <inheritdoc/>
@@ -59,8 +59,8 @@ namespace wan24.RPC.Api.Messages.Values
         {
             await base.SerializeAsync(stream, cancellationToken).DynamicContext();
             await stream.WriteNumberAsync(HlObjectVersion, cancellationToken).DynamicContext();
-            await stream.WriteNumberNullableAsync(Id, cancellationToken).DynamicContext();
-            if (!Id.HasValue)
+            await stream.WriteNumberNullableAsync(Stream, cancellationToken).DynamicContext();
+            if (!Stream.HasValue)
                 await stream.WriteBytesAsync(Content!, cancellationToken).DynamicContext();
         }
 
@@ -75,8 +75,8 @@ namespace wan24.RPC.Api.Messages.Values
             SerializedHlObjectVersion = await stream.ReadNumberAsync<int>(version, cancellationToken: cancellationToken).DynamicContext();
             if (SerializedHlObjectVersion < (MinHlObjectVersion ?? 1) || SerializedHlObjectVersion > HlObjectVersion)
                 throw new InvalidDataException($"Unsupported {GetType()} higher level object version #{SerializedHlObjectVersion}");
-            Id = await stream.ReadNumberNullableAsync<long>(version, cancellationToken: cancellationToken).DynamicContext();
-            if (!Id.HasValue)
+            Stream = await stream.ReadNumberNullableAsync<long>(version, cancellationToken: cancellationToken).DynamicContext();
+            if (!Stream.HasValue)
                 Content = (await stream.ReadBytesAsync(version, maxLen: MaxContentLength, cancellationToken: cancellationToken).DynamicContext()).Value;
         }
     }

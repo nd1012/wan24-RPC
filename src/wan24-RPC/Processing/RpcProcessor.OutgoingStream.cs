@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using wan24.Core;
+﻿using wan24.Core;
 using wan24.RPC.Api.Messages.Streaming;
 
 namespace wan24.RPC.Processing
@@ -41,7 +35,7 @@ namespace wan24.RPC.Processing
             using SemaphoreSyncContext ssc = await OutgoingStreamsSync.SyncContextAsync(cancellationToken).DynamicContext();
             EnsureUndisposed();
             if (OutgoingStreams.Count > Options.MaxStreamCount)
-                throw new OutOfMemoryException("Maximum number of outgoing streams exceeded");
+                throw new InternalBufferOverflowException("Maximum number of outgoing streams exceeded");
             OutgoingStream res = new()
             {
                 Processor = this,
@@ -53,10 +47,10 @@ namespace wan24.RPC.Processing
         }
 
         /// <summary>
-        /// Handle an outgoing stream chunk request
+        /// Handle a stream start request
         /// </summary>
         /// <param name="message">Message</param>
-        protected virtual async Task HandleStreamChunkRequestAsync(StreamChunkRequestMessage message)
+        protected virtual async Task HandleStreamStartAsync(StreamStartMessage message)
         {
 
         }
