@@ -1,9 +1,21 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using wan24.Core;
-using wan24.RPC.Api.Exceptions;
-using wan24.RPC.Api.Messages;
-using wan24.RPC.Api.Messages.Interfaces;
+using wan24.RPC.Processing.Exceptions;
+using wan24.RPC.Processing.Messages;
+
+/*
+ * The processing of a call is usually:
+ * 
+ * 1. The incoming message handler starts handling a request message (a call)
+ * 2. A pending call context is being stored and enqueued for processing
+ * 3. The call queue creates a RPC context and authorizes the API method call
+ * 4. The call queue ensures valid API method parameters
+ * 5. The call queue calls the API method and waits for the result
+ * 6. The call queue finalizes the return value and sets it (or an error) to the context object
+ * 7. The call message handler sends the response to the peer
+ * 8. The call message handler removes the pending call context
+ */
 
 namespace wan24.RPC.Processing
 {
@@ -20,16 +32,46 @@ namespace wan24.RPC.Processing
         protected readonly ConcurrentDictionary<long, Call> PendingCalls = [];
 
         /// <summary>
+        /// Add a pending call
+        /// </summary>
+        /// <param name="call">Call</param>
+        /// <returns>If added</returns>
+        protected virtual bool AddPendingCall(in Call call)
+            => PendingCalls.TryAdd(call.Message.Id ?? throw new ArgumentException("Missing message ID", nameof(call)), call);
+
+        /// <summary>
+        /// Get a pending call
+        /// </summary>
+        /// <param name="id">ID</param>
+        /// <returns>Call</returns>
+        protected virtual Call? GetPendingCall(in long id)
+            => PendingCalls.TryGetValue(id, out Call? res) ? res : null;
+
+        /// <summary>
+        /// Remove a pending call
+        /// </summary>
+        /// <param name="call">Call</param>
+        protected virtual void RemovePendingCall(in Call call)
+            => PendingCalls.TryRemove(call.Message.Id ?? throw new ArgumentException("Missing message ID", nameof(call)), out _);
+
+        /// <summary>
+        /// Remove a pending call
+        /// </summary>
+        /// <param name="id">ID</param>
+        protected virtual Call? RemovePendingCall(in long id)
+            => PendingCalls.TryRemove(id, out Call? res) ? res : null;
+
+        /// <summary>
         /// Handle a RPC request (processing will be stopped on handler exception)
         /// </summary>
         /// <param name="message">Message</param>
         protected virtual async Task HandleRequestAsync(RequestMessage message)
         {
-            Options.Logger?.Log(LogLevel.Debug, "{this} handle call #{id}", this, message.Id);
+            Options.Logger?.Log(LogLevel.Debug, "{this} handle call #{id}", ToString(), message.Id);
             if (!EnsureUndisposed(throwException: false))
             {
-                Options.Logger?.Log(LogLevel.Debug, "{this} can't handle message when disposing", this);
-                Options.Logger?.Log(LogLevel.Trace, "{this} disposing parameters of call #{id}", this, message.Id);
+                Options.Logger?.Log(LogLevel.Debug, "{this} can't handle call when disposing", ToString());
+                Options.Logger?.Log(LogLevel.Trace, "{this} disposing parameters of call #{id}", ToString(), message.Id);
                 await message.DisposeParametersAsync().DynamicContext();
                 return;
             }
@@ -44,9 +86,9 @@ namespace wan24.RPC.Processing
             try
             {
                 // Store the call as pending (for handling a remote cancellation)
-                if (!PendingCalls.TryAdd(message.Id!.Value, call))
+                if (!AddPendingCall(call))
                 {
-                    Options.Logger?.Log(LogLevel.Warning, "{this} failed to add pending call #{id} (double message ID)", this, message.Id);
+                    Options.Logger?.Log(LogLevel.Warning, "{this} failed to add pending call #{id} (double message ID)", ToString(), message.Id);
                     await SendErrorResponseAsync(message, new InvalidOperationException("Double message ID")).DynamicContext();
                     return;
                 }
@@ -54,8 +96,7 @@ namespace wan24.RPC.Processing
                 // Try to enqueue the call for processing
                 if (!Calls.TryEnqueue(call))
                 {
-                    Options.Logger?.Log(LogLevel.Warning, "{this} failed to enqueue call #{id} (too many queued calls)", this, message.Id);
-                    PendingCalls.TryRemove(message.Id!.Value, out _);
+                    Options.Logger?.Log(LogLevel.Warning, "{this} failed to enqueue call #{id} (too many queued calls)", ToString(), message.Id);
                     await SendErrorResponseAsync(message, new TooManyRpcRequestsException("RPC call limit exceeded")).DynamicContext();
                     return;
                 }
@@ -63,13 +104,11 @@ namespace wan24.RPC.Processing
                 object? returnValue;
                 try
                 {
-                    Options.Logger?.Log(LogLevel.Debug, "{this} wait for processing call #{id}", this, message.Id);
+                    Options.Logger?.Log(LogLevel.Debug, "{this} wait for processing call #{id}", ToString(), message.Id);
                     returnValue = await call.Completion.Task.DynamicContext();
-                    PendingCalls.TryRemove(message.Id!.Value, out _);
                 }
                 catch
                 {
-                    Options.Logger?.Log(LogLevel.Warning, "{this} call #{id} processing error", this, message.Id);
                     processingError = true;
                     throw;
                 }
@@ -80,14 +119,14 @@ namespace wan24.RPC.Processing
                 // Send the response
                 try
                 {
-                    Options.Logger?.Log(LogLevel.Debug, "{this} send response for call #{id}", this, message.Id);
+                    Options.Logger?.Log(LogLevel.Debug, "{this} send response for call #{id}", ToString(), message.Id);
                     if (message.WantsReturnValue)
                     {
-                        Options.Logger?.Log(LogLevel.Trace, "{this} send response type \"{returnValue}\" for call #{id}", this, returnValue?.GetType(), message.Id);
+                        Options.Logger?.Log(LogLevel.Trace, "{this} send response type \"{returnValue}\" for call #{id}", ToString(), returnValue?.GetType(), message.Id);
                     }
                     else
                     {
-                        Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} doesn't want the return value", this, message.Id);
+                        Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} doesn't want the return value", ToString(), message.Id);
                     }
                     await SendResponseAsync(message, message.WantsReturnValue ? returnValue : null).DynamicContext();
                 }
@@ -95,31 +134,31 @@ namespace wan24.RPC.Processing
                 {
                     if (returnValue is not null && (call.Context is null || call.Context.Method.DisposeReturnValue))
                     {
-                        Options.Logger?.Log(LogLevel.Trace, "{this} disposing return value for call #{id}", this, message.Id);
+                        Options.Logger?.Log(LogLevel.Trace, "{this} disposing return value for call #{id}", ToString(), message.Id);
                         await returnValue.TryDisposeAsync().DynamicContext();
                     }
                 }
             }
             catch (OperationCanceledException ex) when (call.CallCancellation.IsCancellationRequested)
             {
-                Options.Logger?.Log(LogLevel.Warning, "{this} cancelled during call #{id} processing", this, message.Id);
+                Options.Logger?.Log(LogLevel.Warning, "{this} cancelled during call #{id} processing", ToString(), message.Id);
                 await SendErrorResponseAsync(message, ex).DynamicContext();
             }
             catch (Exception ex)
             {
                 if (!processingError || Options.DisconnectOnApiError)
                 {
-                    Options.Logger?.Log(LogLevel.Error, "{this} processing call #{id} failed with an exception: {ex}", this, message.Id, ex);
+                    Options.Logger?.Log(LogLevel.Error, "{this} processing call #{id} failed with an exception: {ex}", ToString(), message.Id, ex);
                     throw;
                 }
-                Options.Logger?.Log(LogLevel.Warning, "{this} processing call #{id} failed with an exception: {ex}", this, message.Id, ex);
+                Options.Logger?.Log(LogLevel.Warning, "{this} processing call #{id} failed with an exception: {ex}", ToString(), message.Id, ex);
                 await HandleCallProcessingErrorAsync(call, ex).DynamicContext();
             }
             finally
             {
                 if (removePending)
-                    PendingCalls.TryRemove(message.Id!.Value, out _);
-                Options.Logger?.Log(LogLevel.Trace, "{this} disposing parameters of call #{id} (processed: {processed})", this, message.Id, call.Processed);
+                    RemovePendingCall(call);
+                Options.Logger?.Log(LogLevel.Trace, "{this} disposing parameters of call #{id} (processed: {processed})", ToString(), message.Id, call.Processed);
                 await message.DisposeParametersAsync(call.Processed ? call.Context?.Method : null).DynamicContext();
                 call.SetDone();
             }
@@ -139,11 +178,11 @@ namespace wan24.RPC.Processing
         /// <param name="message">Message</param>
         protected virtual Task HandleCancellationAsync(CancellationMessage message)
         {
-            Options.Logger?.Log(LogLevel.Debug, "{this} handle cancellation for call #{id}", this, message.Id);
-            if (EnsureUndisposed(throwException: false) && PendingCalls.TryGetValue(message.Id!.Value, out Call? call))
+            Options.Logger?.Log(LogLevel.Debug, "{this} handle cancellation for call #{id}", ToString(), message.Id);
+            if (EnsureUndisposed(throwException: false) && GetPendingCall(message.Id!.Value) is Call call)
                 try
                 {
-                    Options.Logger?.Log(LogLevel.Debug, "{this} cancelling call #{id}", this, message.Id);
+                    Options.Logger?.Log(LogLevel.Debug, "{this} cancelling call #{id}", ToString(), message.Id);
                     if (!call.IsDisposing)
                         call.CallCancellation.Cancel();
                 }
@@ -160,26 +199,27 @@ namespace wan24.RPC.Processing
         /// <param name="exception">Exception</param>
         protected virtual async Task SendErrorResponseAsync(RequestMessage message, Exception exception)
         {
-            Options.Logger?.Log(LogLevel.Debug, "{this} sending error response {type} for call #{id}", this, exception.GetType(), message.Id);
+            Options.Logger?.Log(LogLevel.Debug, "{this} sending error response {type} for call #{id}", ToString(), exception.GetType(), message.Id);
             if (!EnsureUndisposed(throwException: false))
             {
-                Options.Logger?.Log(LogLevel.Debug, "{this} can't send error response for call #{id} when disposing", this, message.Id);
+                Options.Logger?.Log(LogLevel.Debug, "{this} can't send error response for call #{id} when disposing", ToString(), message.Id);
                 return;
             }
             try
             {
                 await SendMessageAsync(new ErrorResponseMessage()
                 {
+                    PeerRpcVersion = Options.RpcVersion,
                     Id = message.Id,
                     Error = exception
-                }).DynamicContext();
+                }, RPC_PRIORTY).DynamicContext();
             }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {
             }
             catch (Exception ex)
             {
-                Options.Logger?.Log(LogLevel.Error, "{this} failed to send error response for call #{id}: {ex}", this, message.Id, ex);
+                Options.Logger?.Log(LogLevel.Warning, "{this} failed to send error response for call #{id}: {ex}", ToString(), message.Id, ex);
             }
         }
 
@@ -190,35 +230,39 @@ namespace wan24.RPC.Processing
         /// <param name="returnValue">Return value (should be <see langword="null"/>, if <see cref="RequestMessage.WantsReturnValue"/> is <see langword="false"/>)</param>
         protected virtual async Task SendResponseAsync(RequestMessage message, object? returnValue)
         {
-            Options.Logger?.Log(LogLevel.Debug, "{this} sending response for call #{id}", this, message.Id);
+            Options.Logger?.Log(LogLevel.Debug, "{this} sending response for call #{id}", ToString(), message.Id);
             if (!EnsureUndisposed(throwException: false))
             {
-                Options.Logger?.Log(LogLevel.Debug, "{this} can't send response for call #{id} when disposing", this, message.Id);
+                Options.Logger?.Log(LogLevel.Debug, "{this} can't send response for call #{id} when disposing", ToString(), message.Id);
                 return;
             }
             try
             {
                 await SendMessageAsync(new ResponseMessage()
                 {
+                    PeerRpcVersion = Options.RpcVersion,
                     Id = message.Id,
                     ReturnValue = message.WantsReturnValue
-                    ? returnValue
-                    : null
-                }).DynamicContext();
+                        ? returnValue
+                        : null
+                }, RPC_PRIORTY).DynamicContext();
             }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {
             }
             catch (Exception ex)
             {
-                Options.Logger?.Log(LogLevel.Debug, "{this} failed to send response for call #{id}: {ex}", this, message.Id, ex);
+                Options.Logger?.Log(LogLevel.Warning, "{this} failed to send response for call #{id}: {ex}", ToString(), message.Id, ex);
             }
         }
 
         /// <summary>
         /// RPC call
         /// </summary>
-        protected record class Call() : DisposableRecordBase(asyncDisposing: false)
+        /// <remarks>
+        /// Constructor
+        /// </remarks>
+        protected record class Call() : DisposableRecordBase()
         {
             /// <summary>
             /// RPC Processor
@@ -266,15 +310,19 @@ namespace wan24.RPC.Processing
             public bool Processed { get; set; }
 
             /// <summary>
+            /// Incoming streams
+            /// </summary>
+            public HashSet<IncomingStream> Streams { get; } = [];
+
+            /// <summary>
             /// Set done
             /// </summary>
             public virtual void SetDone()
             {
-                if (Done == DateTime.MinValue)
-                {
-                    Done = DateTime.Now;
-                    Processor.Options.Logger?.Log(LogLevel.Debug, "{processor} RPC call #{id} processing done within {runtime}", Processor, Message.Id, Done - Created);
-                }
+                if (Done != DateTime.MinValue)
+                    return;
+                Done = DateTime.Now;
+                Processor.Options.Logger?.Log(LogLevel.Debug, "{processor} RPC call #{id} processing done within {runtime}", Processor.ToString(), Message.Id, Done - Created);
             }
 
             /// <inheritdoc/>
@@ -284,6 +332,29 @@ namespace wan24.RPC.Processing
                 CallCancellation.Dispose();
                 Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
                 SetDone();
+                if (Streams.Count > 0)
+                {
+                    using (SemaphoreSyncContext ssc = Processor.IncomingStreamsSync)
+                        foreach (IncomingStream stream in Streams)
+                            Processor.RemoveIncomingStream(stream);
+                    Streams.DisposeAll();
+                }
+            }
+
+            /// <inheritdoc/>
+            protected override async Task DisposeCore()
+            {
+                CallCancellation.Cancel();
+                CallCancellation.Dispose();
+                Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
+                SetDone();
+                if (Streams.Count > 0)
+                {
+                    using (SemaphoreSyncContext ssc = await Processor.IncomingStreamsSync.SyncContextAsync().DynamicContext())
+                        foreach (IncomingStream stream in Streams)
+                            Processor.RemoveIncomingStream(stream);
+                    await Streams.DisposeAllAsync().DynamicContext();
+                }
             }
         }
     }

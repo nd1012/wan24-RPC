@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using wan24.Core;
 using wan24.RPC.Api.Attributes;
-using wan24.RPC.Api.Reflection.Extensions;
 
 namespace wan24.RPC.Api.Reflection
 {
@@ -25,7 +24,6 @@ namespace wan24.RPC.Api.Reflection
             RPC = pi.GetCustomAttributeCached<NoRpcAttribute>() is null;
             Nullable = pi.IsNullable(nic);
             Enumerable = pi.ParameterType.IsEnumerable(strict: true, asyncOnly: true);
-            Stream = pi.GetCustomAttributeCached<RpcStreamAttribute>();
             DisposeParameterValue = pi.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
         }
 
@@ -68,11 +66,6 @@ namespace wan24.RPC.Api.Reflection
         /// If the parameter value may be transported as RPC enumerable
         /// </summary>
         public bool Enumerable { get; protected set; }
-
-        /// <summary>
-        /// Stream configuration
-        /// </summary>
-        public RpcStreamAttribute? Stream { get; protected set; }
 
         /// <summary>
         /// If to dispose the parameter value after processing

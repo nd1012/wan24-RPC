@@ -16,6 +16,8 @@ namespace wan24_RPC_Tests
             {
                 serverApi = server.Options.API.Values.First().Instance as ServerApi;
                 Assert.IsNotNull(serverApi);
+                Assert.IsNotNull(serverApi.Processor);
+                Assert.IsFalse(CancellationToken.Equals(serverApi.ProcessorCancellation, default));
             }
             finally
             {
@@ -43,7 +45,7 @@ namespace wan24_RPC_Tests
             try
             {
                 Logging.WriteInfo("Sync echo client -> server");
-                string result = await client.CallValueAsync<string>(nameof(ServerApi), nameof(ServerApi.Echo), parameters: ["test"]);
+                string? result = await client.CallValueAsync<string>(nameof(ServerApi), nameof(ServerApi.Echo), parameters: ["test"]);
                 Assert.AreEqual("test", result);
 
                 Logging.WriteInfo("Async echo client -> server");
@@ -110,6 +112,7 @@ namespace wan24_RPC_Tests
                     Logger = Logging.Logger,
                     Stream = new BiDirectionalStream(serverIO, clientIO, leaveOpen: true),
                     FlushStream = true,
+                    MessageQueueCapacity = 10,
                     CallQueueSize = 2,
                     CallThreads = 1,
                     RequestQueueSize = 2,
@@ -124,6 +127,7 @@ namespace wan24_RPC_Tests
                     Logger = Logging.Logger,
                     Stream = new BiDirectionalStream(clientIO, serverIO),
                     FlushStream = true,
+                    MessageQueueCapacity = 10,
                     CallQueueSize = 2,
                     CallThreads = 1,
                     RequestQueueSize = 2,

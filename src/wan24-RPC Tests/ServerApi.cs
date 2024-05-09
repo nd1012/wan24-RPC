@@ -5,8 +5,12 @@ using wan24.RPC.Processing;
 namespace wan24_RPC_Tests
 {
     [NoRpcDispose]
-    public sealed class ServerApi() : DisposableRpcApiBase(asyncDisposing: false)
+    public sealed class ServerApi() : DisposableRpcApiBase(asyncDisposing: false), IWantRpcProcessorInfo
     {
+        public RpcProcessor? Processor { get; set; }
+
+        public CancellationToken ProcessorCancellation { get; set; }
+
         public Task<string> EchoAsync(string message, [NoRpc] RpcProcessor processor, [NoRpc] CancellationToken cancellationToken)
         {
             Assert.IsNotNull(processor);

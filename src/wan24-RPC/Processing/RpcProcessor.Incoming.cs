@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using wan24.Core;
-using wan24.RPC.Api.Messages;
-using wan24.RPC.Api.Messages.Interfaces;
-using wan24.RPC.Api.Messages.Streaming;
+using wan24.RPC.Processing.Messages;
+using wan24.RPC.Processing.Messages.Streaming;
 
 namespace wan24.RPC.Processing
 {
@@ -16,7 +15,7 @@ namespace wan24.RPC.Processing
         protected virtual async Task HandleMessageAsync(IRpcMessage message)
         {
             await Task.Yield();
-            Options.Logger?.Log(LogLevel.Debug, "{this} handling message type {type}", this, message.Type);
+            Options.Logger?.Log(LogLevel.Debug, "{this} handling message type {type}", ToString(), message.Type);
             try
             {
                 switch (message)
@@ -43,12 +42,6 @@ namespace wan24.RPC.Processing
                             throw;
                         }
                         break;
-                    case ErrorResponseMessage error:
-                        await HandleErrorAsync(error).DynamicContext();
-                        break;
-                    case CancellationMessage cancellation:
-                        await HandleCancellationAsync(cancellation).DynamicContext();
-                        break;
                     case EventMessage remoteEvent:
                         try
                         {
@@ -60,27 +53,39 @@ namespace wan24.RPC.Processing
                             throw;
                         }
                         break;
-                    case StreamStartMessage chunkRequest:
-                        await HandleStreamStartAsync(chunkRequest).DynamicContext();
+                    case StreamStartMessage streamStart:
+                        EnsureStreamsAreEnabled();
+                        await HandleStreamStartAsync(streamStart).DynamicContext();
                         break;
-                    case StreamChunkMessage chunkResponse:
-                        //TODO
+                    case StreamChunkMessage streamChunk:
+                        EnsureStreamsAreEnabled();
+                        await HandleStreamChunkAsync(streamChunk).DynamicContext();
                         break;
                     case RemoteStreamCloseMessage remoteClose:
-                        await HandleOutgoingStreamCloseAsync(remoteClose).DynamicContext();
+                        EnsureStreamsAreEnabled();
+                        await HandleRemoteStreamCloseAsync(remoteClose).DynamicContext();
                         break;
                     case LocalStreamCloseMessage localClose:
-                        //TODO
+                        EnsureStreamsAreEnabled();
+                        await HandleLocalStreamCloseAsync(localClose).DynamicContext();
+                        break;
+                    case ErrorResponseMessage error:
+                        await HandleErrorAsync(error).DynamicContext();
+                        break;
+                    case CancellationMessage cancellation:
+                        await HandleCancellationAsync(cancellation).DynamicContext();
                         break;
                     default:
-                        throw new InvalidDataException($"Can't handle message type #{message.Id}");
+                        throw new InvalidDataException($"Can't handle message type #{message.Id} ({message.GetType()})");
                 }
             }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {
+                Options.Logger?.Log(LogLevel.Warning, "{this} handling message type {type} canceled", ToString(), message.Type);
             }
             catch (Exception ex)
             {
+                Options.Logger?.Log(LogLevel.Warning, "{this} handling message type {type} failed (will dispose): {ex}", ToString(), message.Type, ex);
                 await StopExceptionalAsync(ex).DynamicContext();
             }
         }

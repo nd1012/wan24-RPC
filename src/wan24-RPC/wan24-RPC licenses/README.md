@@ -18,8 +18,9 @@ source libraries:
 | Library | License |
 | ------- | ------- |
 | [`wan24-Core`](https://github.com/WAN-Solutions/wan24-Core) | [MIT](https://github.com/WAN-Solutions/wan24-Core/blob/main/LICENSE) |
+| [`wan24-Core-Validation`](https://github.com/WAN-Solutions/wan24-Core) | [MIT](https://github.com/WAN-Solutions/wan24-Core/blob/main/LICENSE) |
 | [`wan24-Compression`](https://github.com/nd1012/wan24-Compression) | [MIT](https://github.com/nd1012/wan24-Compression/blob/main/LICENSE) |
-| [`Mapping-Object`](https://github.com/nd1012/Mapping-Object) | [MIT](https://github.com/nd1012/Mapping-Object/blob/main/LICENSE) |
+| [`ObjectValidation`](https://github.com/nd1012/ObjectValidation) | [MIT](https://github.com/nd1012/ObjectValidation/blob/main/LICENSE) |
 
 These referenced libraries have transistive references to these open source 
 libraries:

@@ -1,4 +1,4 @@
-﻿using wan24.RPC.Api.Messages;
+﻿using wan24.RPC.Processing.Messages;
 
 namespace wan24.RPC.Processing
 {

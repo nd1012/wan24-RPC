@@ -4,33 +4,18 @@ using wan24.Compression;
 namespace wan24.RPC.Api.Attributes
 {
     /// <summary>
-    /// Attribute for a RPC API method stream return value or parameter transport configuration
+    /// Attribute for a RPC API method stream return value transport configuration
     /// </summary>
     /// <remarks>
     /// Constructor
     /// </remarks>
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Parameter)]
+    [AttributeUsage(AttributeTargets.Method)]
     public class RpcStreamAttribute() : Attribute()
     {
-        /// <summary>
-        /// Chunk size in bytes
-        /// </summary>
-        public int? ChunkSize { get; set; }
-
-        /// <summary>
-        /// Max. (uncompressed) stream length in bytes
-        /// </summary>
-        public long? MaxLength { get; set; }
-
         /// <summary>
         /// If to use compression
         /// </summary>
         public bool Compression { get; set; } = true;
-
-        /// <summary>
-        /// If to use raw compression (without header)
-        /// </summary>
-        public bool RawCompression { get; set; }
 
         /// <summary>
         /// Used compression algorithm
@@ -51,23 +36,19 @@ namespace wan24.RPC.Api.Attributes
         /// Apply the configuration to <see cref="CompressionOptions"/>
         /// </summary>
         /// <param name="options">Options</param>
-        /// <returns>Options (may be a new instance)</returns>
+        /// <returns>Options (may be a new instance or even <see langword="null"/>, if compression was disabled)</returns>
         public virtual CompressionOptions? ApplyTo(CompressionOptions? options)
         {
             if (!Compression)
                 return null;
             options = CompressionHelper.GetDefaultOptions(options);
-            if (MaxLength.HasValue)
-                options.MaxUncompressedDataLength = MaxLength.Value;
             if (CompressionAlgorithm is not null)
                 options.WithAlgorithm(CompressionAlgorithm);
             if (CompressionFlags.HasValue)
                 options.Flags = CompressionFlags.Value;
             if (CompressionLevel.HasValue)
                 options.Level = CompressionLevel.Value;
-            return RawCompression
-                ? options.IncludeNothing()
-                : options;
+            return options;
         }
     }
 }
