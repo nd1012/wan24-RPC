@@ -1,0 +1,950 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class RpcProcessor.IncomingStream | wan24-RPC </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class RpcProcessor.IncomingStream | wan24-RPC ">
+      <meta name="generator" content="docfx ">
+  
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" integrity="sha384-EvBWSlnoFgZlXJvpzS+MAUEjvN7+gcCwH+qh7GRFOGgZO0PuwOFro7qPOJnLfe7l" crossorigin="anonymous">
+      <link rel="stylesheet" href="../styles/config.css">
+      <link rel="stylesheet" href="../styles/singulink.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+    </head>
+    <body>
+        <!-- Header required for docfx anchor scroll to work -->
+        <header id="head"></header>
+        <div class="top-navbar">
+            <a class="burger-icon" onclick="toggleMenu()">
+                <svg name="Hamburger" style="vertical-align: middle;" width="34" height="34" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M20 6H4V9H20V6ZM4 10.999H20V13.999H4V10.999ZM4 15.999H20V18.999H4V15.999Z"></path></svg>
+            </a>
+
+
+            <a class="brand" href="../index.html">
+              <img src="../logo.svg" alt="" class="logomark">
+              <span class="brand-title"></span>
+            </a>        </div>
+
+        <div class="body-content">
+            <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
+
+            <nav id="sidebar" role="navigation">
+                <div class="sidebar">
+
+                    <div>
+                      <div class="mobile-hide">
+
+                        <a class="brand" href="../index.html">
+                          <img src="../logo.svg" alt="" class="logomark">
+                          <span class="brand-title"></span>
+                        </a>                      </div>
+
+                      <div class="sidesearch">
+                        <form id="search" role="search" class="search">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="search-query" placeholder="Search" autocomplete="off">
+                        </form>
+                      </div>
+
+                      <div id="navbar">
+                      </div>
+                    </div>                    <div class="sidebar-item-separator"></div>
+
+                        <div id="sidetoggle">
+                          <div id="sidetoc"></div>
+                        </div>
+                </div>
+                <div class="footer">
+  (c) 2024 Andreas Zimmermann, wan24.de
+  
+                </div>            </nav>
+
+            <main class="main-panel">
+
+                <div id="search-results" style="display: none;">
+                  <h1 class="search-list">Search Results for <span></span></h1>
+                  <div class="sr-items">
+                    <p><i class="bi bi-hourglass-split index-loading"></i></p>
+                  </div>
+                  <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+                </div>
+ 
+
+                <div role="main" class="hide-when-search">
+
+                        <div class="subnav navbar navbar-default">
+                          <div class="container hide-when-search" id="breadcrumb">
+                            <ul class="breadcrumb">
+                              <li></li>
+                            </ul>
+                          </div>
+                        </div>
+
+                         <div id="contribution">
+                               <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                         </div>
+
+                    <article class="content wrap" id="_content" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream">
+
+
+
+  <h1 id="wan24_RPC_Processing_RpcProcessor_IncomingStream" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream" class="text-break">Class RpcProcessor.IncomingStream</h1>
+  <div class="markdown level0 summary"><p>Incoming stream</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><span class="xref">DisposableRecordBase</span></div>
+    <div class="level2"><span class="xref">RpcProcessor.IncomingStream</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IWillDispose</span></div>
+    <div><span class="xref">IDisposableObject</span></div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<span class="xref">DisposableRecordBase</span>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a>.<a class="xref" href="wan24.RPC.Processing.RpcProcessor.IncomingStream.html">IncomingStream</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">DisposableRecordBase.DisposeSyncObject</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.AsyncDisposing</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.AllowFinalizer</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.DisposeObjects</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.StackInfo</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.RegisterForDispose&lt;T&gt;(in T)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableRecordBase.LockDisposing(in TimeSpan, in CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableRecordBase.LockDisposingAsync(TimeSpan, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableRecordBase.TryLockDisposing(out SemaphoreSyncContext, in TimeSpan, in CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableRecordBase.TryLockDisposingAsync(TimeSpan, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">DisposableRecordBase.EnsureUndisposed(in bool, in bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">DisposableRecordBase.IfUndisposed&lt;T&gt;(in T, in bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">DisposableRecordBase.IfUndisposed(in Action, in bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">DisposableRecordBase.IfUndisposed&lt;T&gt;(in Func&lt;T&gt;, in bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">DisposableRecordBase.IfUndisposedNullable&lt;T&gt;(in Func&lt;T&gt;, in bool)</a>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.DisposeAttributes()</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.DisposeAttributesAsync()</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.Dispose()</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.DisposeAsync()</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.ToString()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.stringbuilder">DisposableRecordBase.PrintMembers(StringBuilder)</a>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.GetHashCode()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">DisposableRecordBase.Equals(object)</a>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.Equals(DisposableRecordBase)</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.&lt;Clone&gt;$()</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.EqualityContract</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.CreateStackInfo</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.DestructorDisposing</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.IsDisposing</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.IsDisposed</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.OnDisposing</span>
+    </div>
+    <div>
+      <span class="xref">DisposableRecordBase.OnDisposed</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="wan24.html">wan24</a>.<a class="xref" href="wan24.RPC.html">RPC</a>.<a class="xref" href="wan24.RPC.Processing.html">Processing</a></h6>
+  <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
+  <h5 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public record RpcProcessor.IncomingStream : DisposableRecordBase, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable, IEquatable&lt;DisposableRecordBase&gt;, IEquatable&lt;RpcProcessor.IncomingStream&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream__ctor.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L261">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream__ctor_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.#ctor*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream__ctor" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.#ctor">IncomingStream()</h4>
+  <div class="markdown level1 summary"><p>Incoming stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IncomingStream()</code></pre>
+  </div>
+  <h3 id="properties">Properties
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_Canceled.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.Canceled%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L321">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Canceled_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Canceled*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Canceled" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Canceled">Canceled</h4>
+  <div class="markdown level1 summary"><p>If canceled</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Canceled { get; protected set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_ChunkRequested.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.ChunkRequested%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L326">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_ChunkRequested_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.ChunkRequested*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_ChunkRequested" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.ChunkRequested">ChunkRequested</h4>
+  <div class="markdown level1 summary"><p>If the next chunk was requested</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ChunkRequested { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_Decompression.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.Decompression%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L291">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Decompression_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Decompression*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Decompression" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Decompression">Decompression</h4>
+  <div class="markdown level1 summary"><p>Decompression stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Stream? Decompression { get; protected set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_Done.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.Done%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L311">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Done_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Done*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Done" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Done">Done</h4>
+  <div class="markdown level1 summary"><p>Done time</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime Done { get; protected set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_IsDone.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.IsDone%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L316">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_IsDone_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.IsDone*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_IsDone" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.IsDone">IsDone</h4>
+  <div class="markdown level1 summary"><p>If done</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsDone { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_IsStarted.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.IsStarted%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L306">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_IsStarted_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.IsStarted*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_IsStarted" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.IsStarted">IsStarted</h4>
+  <div class="markdown level1 summary"><p>If started streaming</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsStarted { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_LastRemoteException.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.LastRemoteException%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L296">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_LastRemoteException_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.LastRemoteException*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_LastRemoteException" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.LastRemoteException">LastRemoteException</h4>
+  <div class="markdown level1 summary"><p>Last remote exception</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Exception? LastRemoteException { get; protected set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.exception">Exception</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_Processor.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.Processor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L266">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Processor_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Processor*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Processor" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Processor">Processor</h4>
+  <div class="markdown level1 summary"><p>RPC processor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public required RpcProcessor Processor { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_ProcessorCancellation.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.ProcessorCancellation%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L271">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_ProcessorCancellation_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.ProcessorCancellation*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_ProcessorCancellation" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.ProcessorCancellation">ProcessorCancellation</h4>
+  <div class="markdown level1 summary"><p>RPC processor cancellation token</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public required CancellationToken ProcessorCancellation { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_Started.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.Started%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L301">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Started_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Started*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Started" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Started">Started</h4>
+  <div class="markdown level1 summary"><p>Streaming started time</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime Started { get; protected set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_Stream.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.Stream%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L281">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Stream_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Stream*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Stream" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Stream">Stream</h4>
+  <div class="markdown level1 summary"><p>RPC stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public required RpcStream Stream { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.RpcStream.html">RpcStream</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_Target.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.Target%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L286">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Target_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Target*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Target" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Target">Target</h4>
+  <div class="markdown level1 summary"><p>Chunk target stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Stream Target { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_Value.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.Value%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L276">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Value_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Value*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Value" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Value">Value</h4>
+  <div class="markdown level1 summary"><p>Stream value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public required RpcStreamValue Value { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Values.RpcStreamValue.html">RpcStreamValue</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_CancelAsync.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.CancelAsync%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L374">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_CancelAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.CancelAsync*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_CancelAsync" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.CancelAsync">CancelAsync()</h4>
+  <div class="markdown level1 summary"><p>Cancel streaming</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task CancelAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_CompleteAsync.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.CompleteAsync%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L356">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_CompleteAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.CompleteAsync*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_CompleteAsync" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.CompleteAsync">CompleteAsync()</h4>
+  <div class="markdown level1 summary"><p>Complete streaming</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task CompleteAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.Dispose(System.Boolean)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L435">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Dispose_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Dispose*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_Dispose_System_Boolean_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.Dispose(System.Boolean)">Dispose(bool)</h4>
+  <div class="markdown level1 summary"><p>Dispose</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Dispose(bool disposing)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><span class="parametername">disposing</span></td>
+        <td><p>Disposing? (may be <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>, if called from the destructor)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">DisposableRecordBase.Dispose(bool)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_DisposeCore.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.DisposeCore%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L445">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_DisposeCore_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.DisposeCore*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_DisposeCore" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.DisposeCore">DisposeCore()</h4>
+  <div class="markdown level1 summary"><p>Dispose</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Task DisposeCore()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">wan24.Core.DisposableRecordBase.DisposeCore()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_SetDone.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.SetDone%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L426">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_SetDone_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.SetDone*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_SetDone" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.SetDone">SetDone()</h4>
+  <div class="markdown level1 summary"><p>Set <a class="xref" href="wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_Done">Done</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetDone()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_SetRemoteExceptionAsync_wan24_RPC_Processing_Messages_Streaming_LocalStreamCloseMessage_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.SetRemoteExceptionAsync(wan24.RPC.Processing.Messages.Streaming.LocalStreamCloseMessage)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L407">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_SetRemoteExceptionAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.SetRemoteExceptionAsync*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_SetRemoteExceptionAsync_wan24_RPC_Processing_Messages_Streaming_LocalStreamCloseMessage_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.SetRemoteExceptionAsync(wan24.RPC.Processing.Messages.Streaming.LocalStreamCloseMessage)">SetRemoteExceptionAsync(LocalStreamCloseMessage)</h4>
+  <div class="markdown level1 summary"><p>Set a remote exception</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task SetRemoteExceptionAsync(LocalStreamCloseMessage message)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Messages.Streaming.LocalStreamCloseMessage.html">LocalStreamCloseMessage</a></td>
+        <td><span class="parametername">message</span></td>
+        <td><p>Message</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingStream_StartAsync_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingStream.StartAsync(System.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingStream.cs/#L332">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingStream_StartAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.StartAsync*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingStream_StartAsync_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingStream.StartAsync(System.Threading.CancellationToken)">StartAsync(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Start streaming</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task StartAsync(CancellationToken cancellationToken = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>Cancellation token</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">wan24.Core.IWillDispose</span>
+  </div>
+  <div>
+      <span class="xref">wan24.Core.IDisposableObject</span>
+  </div>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a>
+  </div>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>
+  </div>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable&lt;T&gt;</a>
+  </div>
+
+</article>
+                </div>
+
+                <div class="copyright-footer">
+                    <span>(c) 2024 Andreas Zimmermann, wan24.de</span>
+                </div>
+            </main>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script type="text/javascript" src="../styles/jquery.twbsPagination.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"></script>
+        <script type="text/javascript" src="../styles/url.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script>
+        <script type="text/javascript" src="../styles/docfx.js"></script>
+        <script type="text/javascript" src="../styles/main.js"></script>
+        <script type="text/javascript" src="../styles/singulink.js"></script>    </body>
+</html>
