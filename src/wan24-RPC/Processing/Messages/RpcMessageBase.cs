@@ -4,6 +4,11 @@ using wan24.Core;
 using wan24.ObjectValidation;
 using wan24.StreamSerializerExtensions;
 
+/*
+ * When defining a new incoming message which has components that need to be disposed, if the message has never been processed, RpcProcessor.HandleMessageStorageErrorAsync 
+ * is responsible for disposing them.
+ */
+
 namespace wan24.RPC.Processing.Messages
 {
     /// <summary>

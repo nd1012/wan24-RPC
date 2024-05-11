@@ -4,6 +4,16 @@ using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Values;
 
+/*
+ * The number of RPC requests is limited in two ways:
+ * 
+ * 1. Number of parallel executing RPC requests to respect the peers max. number of parallel executed calls plus the max. number of pending calls
+ * 2. Number of pending requests to protect memory ressources
+ * 
+ * The RPC processor has to respect the peers limits, otherwise the peer will disconnect due to a protocol error. You should work work with timeout cancellation tokens 
+ * to prevent dead locks on any RPC communication error. To combine them with another cancellation token use wan24.Core.Cancellations.
+ */
+
 namespace wan24.RPC.Processing
 {
     // Request queue
@@ -51,25 +61,34 @@ namespace wan24.RPC.Processing
                     // Finalize parameters
                     if (request.Parameters is not null)
                         for (int i = 0, len = request.Parameters.Length; i < len; i++)
-                        {
-                            Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving final request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type {type}", ToString(), item.Message.Id, request.Api, request.Method, i, request.Parameters[i]?.GetType().ToString() ?? "NULL");
-                            request.Parameters[i] = await GetFinalParameterValueAsync(item, request, i, request.Parameters[i], cancellation).DynamicContext();
-                            Processor.Options.Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type is now {type} after finalizing", ToString(), item.Message.Id, request.Api, request.Method, i, request.Parameters[i]?.GetType().ToString() ?? "NULL");
-                        }
+                            if (request.Parameters[i] is not null)
+                            {
+                                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving final request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type {type}", ToString(), item.Message.Id, request.Api, request.Method, i, request.Parameters[i]?.GetType().ToString() ?? "NULL");
+                                request.Parameters[i] = await GetFinalParameterValueAsync(item, request, i, request.Parameters[i], cancellation).DynamicContext();
+                                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type is now {type} after finalizing", ToString(), item.Message.Id, request.Api, request.Method, i, request.Parameters[i]?.GetType().ToString() ?? "NULL");
+                            }
                     // Send the RPC request and wait for the response
                     await Processor.SendMessageAsync(request, RPC_PRIORTY, cancellation).DynamicContext();
                     item.Processed = true;
                     returnValue = await item.ProcessorCompletion.Task.DynamicContext();
                     // Handle the response
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} finalizing request #{id} API \"{api}\" method \"{method}\" return value type {type}", ToString(), item.Message.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
-                    returnValue = await GetFinalReturnValueAsync(item, request, returnValue, cancellation).DynamicContext();
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" return value type is now {type} after finalizing", ToString(), item.Message.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
-                    item.SetDone();
+                    if (returnValue is not null)
+                    {
+                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} finalizing request #{id} API \"{api}\" method \"{method}\" return value type {type}", ToString(), item.Message.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
+                        returnValue = await GetFinalReturnValueAsync(item, request, returnValue, cancellation).DynamicContext();
+                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" return value type is now {type} after finalizing", ToString(), item.Message.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
+                    }
                     if (!item.RequestCompletion.TrySetResult(returnValue))
                     {
                         Processor.Options.Logger?.Log(LogLevel.Warning, "{this} request #{id} API \"{api}\" method \"{method}\" failed to set return value", ToString(), item.Message.Id, request.Api, request.Method);
                         await returnValue.TryDisposeAsync().DynamicContext();
                     }
+                }
+                catch (ObjectDisposedException) when (IsDisposing)
+                {
+                }
+                catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
+                {
                 }
                 catch (OperationCanceledException ex) when (ex.CancellationToken == item.RequestCancellation)
                 {
@@ -97,6 +116,10 @@ namespace wan24.RPC.Processing
                         await returnValue.TryDisposeAsync().DynamicContext();
                     item.SetDone();
                     item.RequestCompletion.TrySetException(ex);
+                }
+                finally
+                {
+                    item.SetDone();
                 }
             }
 

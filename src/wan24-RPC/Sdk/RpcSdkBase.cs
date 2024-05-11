@@ -28,6 +28,10 @@ namespace wan24.RPC.Sdk
     public abstract class RpcSdkBase<T> : DisposableBase where T : RpcProcessor
     {
         /// <summary>
+        /// Cancellation
+        /// </summary>
+        protected readonly CancellationTokenSource Cancellation = new();
+        /// <summary>
         /// If to dispose the <see cref="Processor"/> when disposing
         /// </summary>
         protected bool DisposeProcessor = true;
@@ -41,7 +45,11 @@ namespace wan24.RPC.Sdk
         /// Constructor
         /// </summary>
         /// <param name="processor">RPC processor (will be disposed)</param>
-        protected RpcSdkBase(in T processor) : base() => Processor = processor;
+        protected RpcSdkBase(in T processor) : base()
+        {
+            Processor = processor;
+            processor.OnDisposing += HandleProcessorDisposing;
+        }
 
         /// <summary>
         /// RPC processor (will be disposed)
@@ -54,19 +62,26 @@ namespace wan24.RPC.Sdk
         /// <param name="api">API name</param>
         /// <param name="method">Method name</param>
         /// <param name="returnValueType">Return value type</param>
+        /// <param name="timeout">Timeout</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <param name="parameters">Parameters (won't be diposed)</param>
         /// <returns>Return value (should be disposed, if possible)</returns>
-        protected virtual Task<object?> CallValueAsync(
+        protected virtual async Task<object?> CallValueAsync(
             string? api,
             string method,
             Type returnValueType,
+            TimeSpan timeout = default,
             CancellationToken cancellationToken = default,
             params object?[] parameters
             )
         {
             EnsureInitialized();
-            return Processor.CallValueAsync(api, method, returnValueType, cancellationToken, parameters);
+            using CancellationTokenSource? cts = timeout == default ? null : new(timeout);
+            List<CancellationToken> tokens = [Cancellation.Token];
+            if (!Equals(cancellationToken, default)) tokens.Add(cancellationToken);
+            if (cts is not null) tokens.Add(cts.Token);
+            using Cancellations cancellation = new([.. tokens]);
+            return await Processor.CallValueAsync(api, method, returnValueType, cancellation, parameters).DynamicContext();
         }
 
         /// <summary>
@@ -74,12 +89,24 @@ namespace wan24.RPC.Sdk
         /// </summary>
         /// <param name="api">API name</param>
         /// <param name="method">Method name</param>
+        /// <param name="timeout">Timeout</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <param name="parameters">Parameters (won't be diposed)</param>
-        protected virtual Task CallVoidAsync(string? api, string method, CancellationToken cancellationToken = default, params object?[] parameters)
+        protected virtual async Task CallVoidAsync(
+            string? api,
+            string method,
+            TimeSpan timeout = default,
+            CancellationToken cancellationToken = default,
+            params object?[] parameters
+            )
         {
             EnsureInitialized();
-            return Processor.CallVoidAsync(api, method, cancellationToken, parameters);
+            using CancellationTokenSource? cts = timeout == default ? null : new(timeout);
+            List<CancellationToken> tokens = [Cancellation.Token];
+            if (!Equals(cancellationToken, default)) tokens.Add(cancellationToken);
+            if (cts is not null) tokens.Add(cts.Token);
+            using Cancellations cancellation = new([.. tokens]);
+            await Processor.CallVoidAsync(api, method, cancellation, parameters).DynamicContext();
         }
 
         /// <summary>
@@ -113,11 +140,23 @@ namespace wan24.RPC.Sdk
         /// <param name="name">Event name</param>
         /// <param name="e">Event arguments (won't be diposed)</param>
         /// <param name="wait">Wait for remote event handlers to finish?</param>
+        /// <param name="timeout">Timeout</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        protected virtual Task RaiseEventAsync(string name, EventArgs? e = null, bool wait = false, CancellationToken cancellationToken = default)
+        protected virtual async Task RaiseEventAsync(
+            string name,
+            EventArgs? e = null,
+            bool wait = false,
+            TimeSpan timeout = default,
+            CancellationToken cancellationToken = default
+            )
         {
             EnsureInitialized();
-            return Processor.RaiseEventAsync(name, e, wait, cancellationToken);
+            using CancellationTokenSource? cts = timeout == default ? null : new(timeout);
+            List<CancellationToken> tokens = [Cancellation.Token];
+            if (!Equals(cancellationToken, default)) tokens.Add(cancellationToken);
+            if (cts is not null) tokens.Add(cts.Token);
+            using Cancellations cancellation = new([.. tokens]);
+            await Processor.RaiseEventAsync(name, e, wait, cancellation).DynamicContext();
         }
 
         /// <summary>
@@ -130,18 +169,43 @@ namespace wan24.RPC.Sdk
                 throw new InvalidOperationException("Missing RPC processor");
         }
 
+        /// <summary>
+        /// Handle a disposing RPC processor
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Arguments</param>
+        protected virtual void HandleProcessorDisposing(IDisposableObject sender, EventArgs e)
+        {
+            if(Processor is RpcProcessor processor)
+                processor.OnDisposing -= HandleProcessorDisposing;
+            if (!IsDisposing)
+                Cancellation.Cancel();
+        }
+
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
-            if (DisposeProcessor)
-                Processor?.Dispose();
+            Cancellation.Cancel();
+            if (Processor is RpcProcessor processor)
+            {
+                processor.OnDisposing -= HandleProcessorDisposing;
+                if (DisposeProcessor)
+                    processor.Dispose();
+            }
+            Cancellation.Dispose();
         }
 
         /// <inheritdoc/>
         protected override async Task DisposeCore()
         {
-            if (DisposeProcessor && Processor is not null)
-                await Processor.DisposeAsync().DynamicContext();
+            Cancellation.Cancel();
+            if (Processor is RpcProcessor processor)
+            {
+                processor.OnDisposing -= HandleProcessorDisposing;
+                if (DisposeProcessor)
+                    await processor.DisposeAsync().DynamicContext();
+            }
+            Cancellation.Dispose();
         }
     }
 }

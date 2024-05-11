@@ -1,4 +1,5 @@
-﻿using wan24.Compression;
+﻿using System.Text.Json.Serialization;
+using wan24.Compression;
 using wan24.Core;
 using wan24.ObjectValidation;
 using wan24.RPC.Api.Attributes;
@@ -43,6 +44,7 @@ namespace wan24.RPC.Processing.Values
         /// <summary>
         /// Higher level object version
         /// </summary>
+        [JsonIgnore]
         public virtual int HlObjectVersion { get; } = 1;
 
         /// <summary>
@@ -90,11 +92,13 @@ namespace wan24.RPC.Processing.Values
         /// <summary>
         /// If compression is being used
         /// </summary>
+        [JsonIgnore]
         public bool UsesCompression => _Compression is not null;
 
         /// <summary>
         /// Incoming stream to dispose when this value disposes
         /// </summary>
+        [JsonIgnore]
         public RpcProcessor.IncomingStream? IncomingStream { get; set; }
 
         /// <inheritdoc/>

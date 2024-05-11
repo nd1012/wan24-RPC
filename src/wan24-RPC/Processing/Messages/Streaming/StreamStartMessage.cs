@@ -1,6 +1,4 @@
-﻿using wan24.RPC.Processing.Messages;
-
-namespace wan24.RPC.Processing.Messages.Streaming
+﻿namespace wan24.RPC.Processing.Messages.Streaming
 {
     /// <summary>
     /// Remote stream start request message

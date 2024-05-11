@@ -1,6 +1,11 @@
 ﻿using wan24.Core;
 using wan24.RPC.Processing.Messages;
 
+/*
+ * The number of queued outgoing messages can be adjusted for your needs to protect memory ressources. Use priorities to ensure that important messages are being sent as 
+ * soon as possible.
+ */
+
 namespace wan24.RPC.Processing
 {
     // Outgoing message queue
@@ -20,10 +25,10 @@ namespace wan24.RPC.Processing
         protected const int CHUNK_PRIORTY = 1_000;
 
         /// <summary>
-        /// Create a message queue
+        /// Create an outgoing message queue
         /// </summary>
-        /// <returns>Message queue</returns>
-        protected virtual OutgoingQueue CreateMessageQueue() => new(this)
+        /// <returns>Outgoing message queue</returns>
+        protected virtual OutgoingQueue CreateOutgoingMessageQueue() => new(this)
         {
             Name = "Outgoing RPC message queue"
         };
@@ -38,7 +43,7 @@ namespace wan24.RPC.Processing
         /// <param name="comparer">Message comparer</param>
         protected class OutgoingQueue(in RpcProcessor processor, in IComparer<OutgoingQueue.QueuedMessage>? comparer = null)
             : PriorityItemQueueWorkerBase<OutgoingQueue.QueuedMessage, OutgoingQueue.QueuedMessage>(
-                processor.Options.MessageQueueCapacity,
+                processor.Options.OutgoingMessageQueueCapacity,
                 comparer ?? new MessageComparer()
                 )
         {

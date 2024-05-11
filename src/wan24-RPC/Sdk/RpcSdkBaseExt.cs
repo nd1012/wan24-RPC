@@ -1,4 +1,5 @@
-﻿using wan24.RPC.Processing;
+﻿using wan24.Core;
+using wan24.RPC.Processing;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Values;
@@ -27,22 +28,34 @@ namespace wan24.RPC.Sdk
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="priority">Priority (higher value will be processed faster)</param>
+        /// <param name="timeout">Timeout</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        protected virtual Task SendMessageAsync(IRpcMessage message, int priority, CancellationToken cancellationToken = default)
+        protected virtual async Task SendMessageAsync(IRpcMessage message, int priority, TimeSpan timeout = default, CancellationToken cancellationToken = default)
         {
             EnsureInitialized();
-            return Processor.SendMessageAsync(message, priority, cancellationToken);
+            using CancellationTokenSource? cts = timeout == default ? null : new(timeout);
+            List<CancellationToken> tokens = [Cancellation.Token];
+            if (!Equals(cancellationToken, default)) tokens.Add(cancellationToken);
+            if (cts is not null) tokens.Add(cts.Token);
+            using Cancellations cancellation = new([.. tokens]);
+            await Processor.SendMessageAsync(message, priority, cancellationToken).DynamicContext();
         }
 
         /// <summary>
         /// Send a RPC message to the peer
         /// </summary>
         /// <param name="message">Message</param>
+        /// <param name="timeout">Timeout</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        protected virtual Task SendMessageAsync(IRpcMessage message, CancellationToken cancellationToken = default)
+        protected virtual async Task SendMessageAsync(IRpcMessage message, TimeSpan timeout = default, CancellationToken cancellationToken = default)
         {
             EnsureInitialized();
-            return Processor.SendMessageAsync(message, cancellationToken);
+            using CancellationTokenSource? cts = timeout == default ? null : new(timeout);
+            List<CancellationToken> tokens = [Cancellation.Token];
+            if (!Equals(cancellationToken, default)) tokens.Add(cancellationToken);
+            if (cts is not null) tokens.Add(cts.Token);
+            using Cancellations cancellation = new([.. tokens]);
+            await Processor.SendMessageAsync(message, cancellationToken).DynamicContext();
         }
 
         /// <summary>
@@ -61,12 +74,22 @@ namespace wan24.RPC.Sdk
         /// Create an outgoing stream
         /// </summary>
         /// <param name="streamParameter">Parameter</param>
+        /// <param name="timeout">Timeout</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Stream value to send to the peer</returns>
-        protected virtual Task<RpcStreamValue> CreateOutgoingStreamAsync(RpcStreamParameter streamParameter, CancellationToken cancellationToken = default)
+        protected virtual async Task<RpcStreamValue> CreateOutgoingStreamAsync(
+            RpcStreamParameter streamParameter, 
+            TimeSpan timeout = default, 
+            CancellationToken cancellationToken = default
+            )
         {
             EnsureInitialized();
-            return Processor.CreateOutgoingStreamAsync(streamParameter, cancellationToken);
+            using CancellationTokenSource? cts = timeout == default ? null : new(timeout);
+            List<CancellationToken> tokens = [Cancellation.Token];
+            if (!Equals(cancellationToken, default)) tokens.Add(cancellationToken);
+            if (cts is not null) tokens.Add(cts.Token);
+            using Cancellations cancellation = new([.. tokens]);
+            return await Processor.CreateOutgoingStreamAsync(streamParameter, cancellationToken).DynamicContext();
         }
     }
 }

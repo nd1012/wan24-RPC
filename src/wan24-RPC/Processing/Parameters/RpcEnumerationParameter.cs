@@ -76,18 +76,21 @@ namespace wan24.RPC.Processing.Parameters
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
+            Enumerator?.Dispose();
+            AsyncEnumerator?.DisposeAsync().AsTask().GetAwaiter().GetResult();
             if (DisposeEnumerable)
             {
                 Enumerable?.TryDispose();
                 AsyncEnumerable?.TryDispose();
             }
-            Enumerator?.Dispose();
-            AsyncEnumerator?.DisposeAsync().AsTask().GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
         protected override async Task DisposeCore()
         {
+            Enumerator?.Dispose();
+            if (AsyncEnumerator is not null)
+                await AsyncEnumerator.DisposeAsync().DynamicContext();
             if (DisposeEnumerable)
             {
                 if (Enumerable is not null)
@@ -95,9 +98,6 @@ namespace wan24.RPC.Processing.Parameters
                 if (AsyncEnumerable is not null)
                     await AsyncEnumerable.TryDisposeAsync().DynamicContext();
             }
-            Enumerator?.Dispose();
-            if (AsyncEnumerator is not null)
-                await AsyncEnumerator.DisposeAsync().DynamicContext();
         }
     }
 }

@@ -14,6 +14,9 @@ using wan24.RPC.Processing.Values;
  * 4. The request queue finalizes the return value and sets it (or an error) to the context object
  * 5. The Call*Async method removes and disposes the context object
  * 6. The Call*Async method returns the result (or throws an exception on error)
+ * 
+ * The requesting code is required to dispose any disposable return value after use. Asynchronous streamed return values (like streams) will be disconnected automatic, if 
+ * the connection to the peer got lost (any attempt to access the ressource in that state will throw).
  */
 
 namespace wan24.RPC.Processing
@@ -113,6 +116,12 @@ namespace wan24.RPC.Processing
                         Id = incomingStream.Stream
                     }, RPC_PRIORTY).DynamicContext();
                 }
+                catch (ObjectDisposedException) when (IsDisposing)
+                {
+                }
+                catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
+                {
+                }
                 catch (Exception ex)
                 {
                     Options.Logger?.Log(LogLevel.Warning, "{this} failed to close invalid remote stream returned for request #{id}: {ex}", ToString(), message.Id, ex);
@@ -147,6 +156,9 @@ namespace wan24.RPC.Processing
                     PeerRpcVersion = Options.RpcVersion,
                     Id = request.Id
                 }).DynamicContext();
+            }
+            catch (ObjectDisposedException) when (IsDisposing)
+            {
             }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {

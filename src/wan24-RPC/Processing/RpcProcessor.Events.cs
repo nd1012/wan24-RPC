@@ -4,7 +4,8 @@ using wan24.Core;
 using wan24.RPC.Processing.Messages;
 
 /*
- * An event can be sent to the peer, or an event from the peer can be handled from a registered event handler.
+ * An event can be sent to the peer, or an event from the peer can be handled from a registered event handler. The RPC processor will send a response to the peer, if the 
+ * peer is waiting for event handlers to finish.
  */
 
 namespace wan24.RPC.Processing
@@ -198,9 +199,11 @@ namespace wan24.RPC.Processing
         protected virtual async Task HandleEventAsync(EventMessage message)
         {
             Options.Logger?.Log(LogLevel.Debug, "{this} handling event \"{name}\" with arguments type {type}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL");
+            RpcEvent? handler = null;
             try
             {
-                if(GetRemoteEvent(message.Name) is not RpcEvent handler)
+                handler = GetRemoteEvent(message.Name);
+                if (handler is null)
                 {
                     Options.Logger?.Log(LogLevel.Debug, "{this} no event \"{name}\" handler - ignoring", ToString(), message.Name);
                     return;
@@ -214,15 +217,19 @@ namespace wan24.RPC.Processing
                     {
                         PeerRpcVersion = Options.RpcVersion,
                         Id = message.Id
-                    }, RPC_PRIORTY, CancelToken).DynamicContext();
+                    }, EVENT_PRIORTY, CancelToken).DynamicContext();
                 }
+            }
+            catch (ObjectDisposedException) when (IsDisposing)
+            {
             }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Options.Logger?.Log(LogLevel.Warning, "{this} handling event \"{name}\" with arguments type {type} failed exceptional: {ex}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL", ex);
+                await HandleEventErrorAsync(message, handler, ex).DynamicContext();
                 if (message.Waiting && EnsureUndisposed(throwException: false))
                     try
                     {
@@ -232,7 +239,7 @@ namespace wan24.RPC.Processing
                             PeerRpcVersion = Options.RpcVersion,
                             Id = message.Id,
                             Error = ex
-                        }, RPC_PRIORTY, CancelToken).DynamicContext();
+                        }, EVENT_PRIORTY, CancelToken).DynamicContext();
                     }
                     catch (Exception ex2)
                     {
@@ -244,5 +251,13 @@ namespace wan24.RPC.Processing
                 await message.DisposeArgumentsAsync().DynamicContext();
             }
         }
+
+        /// <summary>
+        /// Handle an event processing error
+        /// </summary>
+        /// <param name="message">Message</param>
+        /// <param name="e">Event</param>
+        /// <param name="ex">Exception</param>
+        protected virtual Task HandleEventErrorAsync(EventMessage message, RpcEvent? e, Exception ex) => Task.CompletedTask;
     }
 }

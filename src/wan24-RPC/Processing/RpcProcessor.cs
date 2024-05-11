@@ -5,13 +5,14 @@ using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Serialization;
 using wan24.StreamSerializerExtensions;
+using static wan24.Core.TranslationHelper;
 
 namespace wan24.RPC.Processing
 {
     /// <summary>
     /// RPC processor
     /// </summary>
-    public partial class RpcProcessor : HostedServiceBase
+    public partial class RpcProcessor : HostedServiceBase, IStatusProvider
     {
         /// <summary>
         /// Constructor
@@ -20,12 +21,14 @@ namespace wan24.RPC.Processing
         public RpcProcessor(in RpcProcessorOptions options) : base()
         {
             Options = options;
-            OutgoingMessages = CreateMessageQueue();
+            IncomingMessages = CreateIncomingMessageQueue();
+            OutgoingMessages = CreateOutgoingMessageQueue();
             Calls = CreateCallQueue();
             Requests = CreateRequestQueue();
             foreach (object api in Options.API.Values.Select(a => a.Instance))
                 if (api is IWantRpcProcessorInfo processorInfo)
                     processorInfo.Processor = this;
+            RpcProcessorTable.Processors[GetHashCode()] = this;
         }
 
         /// <summary>
@@ -37,6 +40,31 @@ namespace wan24.RPC.Processing
         /// Registered remote events
         /// </summary>
         public IEnumerable<RpcEvent> RemoteEvents => _RemoteEvents.Values;
+
+        /// <inheritdoc/>
+        public virtual IEnumerable<Status> State
+        {
+            get
+            {
+                yield return new(__("Type"), GetType(), __("RPC processor CLR type"));
+                yield return new(__("Name"), Name, __("RPC processor name"));
+                yield return new(__("Running"), IsRunning, __("If the RPC processor is running at present"));
+                yield return new(__("Started"), Started == DateTime.MinValue ? __("(never)") : Started.ToString(), __("Started time"));
+                yield return new(__("Stopped"), Stopped == DateTime.MinValue ? __("(never)") : Stopped.ToString(), __("Stopped time"));
+                yield return new(__("Exception"), LastException?.Message ?? __("(none)"), __("Last exception"));
+                yield return new(__("Calls"), PendingCalls.Count, __("Number of pending RPC calls"));
+                yield return new(__("Requests"), PendingRequests.Count, __("Number of pending RPC requests"));
+                yield return new(__("Events"), _RemoteEvents.Count, __("Number of registered remote event handlers"));
+                foreach (Status status in IncomingMessages.State)
+                    yield return new(status.Name, status.State, status.Description, $"{__("Incoming message queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}");
+                foreach (Status status in Calls.State)
+                    yield return new(status.Name, status.State, status.Description, $"{__("Incoming calls queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}");
+                foreach (Status status in OutgoingMessages.State)
+                    yield return new(status.Name, status.State, status.Description, $"{__("Outgoing message queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}");
+                foreach (Status status in Requests.State)
+                    yield return new(status.Name, status.State, status.Description, $"{__("Incoming requests queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}");
+            }
+        }
 
         /// <summary>
         /// Get a context for processing a RPC call
@@ -92,14 +120,35 @@ namespace wan24.RPC.Processing
                     IRpcMessage? message;
                     while (!CancelToken.IsCancellationRequested)
                     {
+                        // Wait for incoming mesage queue space
+                        Options.Logger?.Log(LogLevel.Trace, "{this} worker waiting for incoming message queue space", ToString());
+                        await IncomingMessages.WaitSpaceAsync().DynamicContext();
+                        // Read the next RPC message
                         Options.Logger?.Log(LogLevel.Trace, "{this} worker waiting for incoming RPC messages", ToString());
                         using (LimitedLengthStream limited = new(Options.Stream, Options.MaxMessageLength, leaveOpen: true)
                         {
                             ThrowOnReadOverflow = true
                         })
                             message = await limited.ReadRpcMessageAsync(Options.SerializerVersion, cancellationToken: CancelToken).DynamicContext();
-                        Options.Logger?.Log(LogLevel.Trace, "{this} worker handling incoming RPC message", ToString());
-                        _ = HandleMessageAsync(message);
+                        // Enqueue the incoming message for processing
+                        Options.Logger?.Log(LogLevel.Trace, "{this} worker storing incoming RPC message", ToString());
+                        try
+                        {
+                            if (IncomingMessages.Queued + 1 >= Options.IncomingMessageQueueCapacity)
+                            {
+                                // Block reading incoming messages due to an incoming message queue overflow
+                                Options.Logger?.Log(LogLevel.Debug, "{this} worker blocking incoming RPC message reading", ToString());
+                                await IncomingMessages.SpaceEvent.ResetAsync().DynamicContext();
+                            }
+                            await IncomingMessages.EnqueueAsync(message, CancelToken).DynamicContext();
+                            Options.Logger?.Log(LogLevel.Trace, "{this} worker incoming RPC message queued", ToString());
+                        }
+                        catch
+                        {
+                            Options.Logger?.Log(LogLevel.Error, "{this} worker failed to enqueue incoming RPC message", ToString());
+                            await HandleMessageStorageErrorAsync(message).DynamicContext();
+                            throw;
+                        }
                         message = null;
                     }
                 }
@@ -135,6 +184,30 @@ namespace wan24.RPC.Processing
         }
 
         /// <summary>
+        /// Handle an error with the incoming message storage (handler should dispose values, if required; peer will be disconnected)
+        /// </summary>
+        /// <param name="message">RPC Message</param>
+        protected virtual async Task HandleMessageStorageErrorAsync(IRpcMessage message)
+        {
+            Options.Logger?.Log(LogLevel.Warning, "{this} handling incoming message type {type} queue error", ToString(), message.GetType());
+            switch (message)
+            {
+                case RequestMessage request:
+                    await request.DisposeParametersAsync().DynamicContext();
+                    break;
+                case ResponseMessage response:
+                    await response.DisposeReturnValueAsync().DynamicContext();
+                    break;
+                case EventMessage e:
+                    await e.DisposeArgumentsAsync().DynamicContext();
+                    break;
+                default:
+                    Options.Logger?.Log(LogLevel.Information, "{this} not required to handle incoming message type {type} queue error", ToString(), message.GetType());
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Begin working
         /// </summary>
         protected virtual async Task BeginWorkAsync()
@@ -146,6 +219,7 @@ namespace wan24.RPC.Processing
             await Calls.StartAsync(CancelToken).DynamicContext();
             await Requests.StartAsync(CancelToken).DynamicContext();
             await OutgoingMessages.StartAsync(CancelToken).DynamicContext();
+            await IncomingMessages.StartAsync(CancelToken).DynamicContext();
         }
 
         /// <summary>
@@ -171,6 +245,7 @@ namespace wan24.RPC.Processing
         protected virtual async Task EndWorkAsync()
         {
             Options.Logger?.Log(LogLevel.Debug, "{this} end work", ToString());
+            await IncomingMessages.StopAsync(CancelToken).DynamicContext();
             await Requests.StopAsync(CancellationToken.None).DynamicContext();
             await Calls.StopAsync(CancellationToken.None).DynamicContext();
             await OutgoingMessages.StopAsync(CancelToken).DynamicContext();
@@ -192,6 +267,7 @@ namespace wan24.RPC.Processing
         protected override void Dispose(bool disposing)
         {
             Options.Logger?.Log(LogLevel.Trace, "{this} sync disposing", ToString());
+            RpcProcessorTable.Processors.TryRemove(GetHashCode(), out _);
             // Cancel outgoing streams
             using (SemaphoreSyncContext ssc = OutgoingStreamsSync)
                 foreach (OutgoingStream stream in OutgoingStreams.Values)
@@ -227,12 +303,17 @@ namespace wan24.RPC.Processing
             IncomingStreams.Values.DisposeAll();
             IncomingStreams.Clear();
             IncomingStreamsSync.Dispose();
+            // Dispose incoming messages
+            IncomingMessages.Dispose();
+            // Dispose outgoing messages
+            OutgoingMessages.Dispose();
         }
 
         /// <inheritdoc/>
         protected override async Task DisposeCore()
         {
             Options.Logger?.Log(LogLevel.Trace, "{this} async disposing", ToString());
+            RpcProcessorTable.Processors.TryRemove(GetHashCode(), out _);
             // Cancel outgoing streams
             using (SemaphoreSyncContext ssc = await OutgoingStreamsSync.SyncContextAsync().DynamicContext())
                 foreach (OutgoingStream stream in OutgoingStreams.Values)
@@ -268,6 +349,10 @@ namespace wan24.RPC.Processing
             await IncomingStreams.Values.DisposeAllAsync().DynamicContext();
             IncomingStreams.Clear();
             await IncomingStreamsSync.DisposeAsync().DynamicContext();
+            // Dispose incoming messages
+            await IncomingMessages.DisposeAsync().DynamicContext();
+            // Dispose outgoing messages
+            await OutgoingMessages.DisposeAsync().DynamicContext();
         }
     }
 }

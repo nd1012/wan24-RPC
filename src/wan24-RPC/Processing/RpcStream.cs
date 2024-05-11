@@ -39,16 +39,13 @@ namespace wan24.RPC.Processing
         public bool LeaveOpen { get; set; }
 
         /// <inheritdoc/>
-        public override void Write(ReadOnlySpan<byte> buffer) => throw new NotSupportedException();
-
-        /// <inheritdoc/>
-        public override void WriteByte(byte value) => throw new NotSupportedException();
-
-        /// <inheritdoc/>
         public override int Read(Span<byte> buffer) => throw new NotSupportedException();
 
         /// <inheritdoc/>
         public override int ReadByte() => throw new NotSupportedException();
+
+        /// <inheritdoc/>
+        public override int TryRead(Span<byte> buffer) => throw new NotSupportedException();
 
         /// <inheritdoc/>
         public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
@@ -62,14 +59,26 @@ namespace wan24.RPC.Processing
             return res;
         }
 
+        /// <inheritdoc/>
+        public override async ValueTask<int> TryReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
+        {
+            EnsureUndisposed();
+            if (!IncomingStream.IsStarted)
+                await IncomingStream.StartAsync(cancellationToken).DynamicContext();
+            EnsureValidIncomingStreamState();
+            int res = await base.TryReadAsync(buffer, cancellationToken).DynamicContext();
+            EnsureValidIncomingStreamState();
+            return res;
+        }
+
         /// <summary>
         /// Ensure a valid state
         /// </summary>
         protected virtual void EnsureValidIncomingStreamState()
         {
             if (IncomingStream.LastRemoteException is not null)
-                throw IncomingStream.LastRemoteException;
-            if (IncomingStream.Canceled)
+                throw new AggregateException(IncomingStream.LastRemoteException);
+            if (IncomingStream.IsCanceled)
                 throw new IOException("The RPC stream was canceled");
         }
 

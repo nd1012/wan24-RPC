@@ -3,6 +3,11 @@ using wan24.Core;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Serialization;
 
+/*
+ * Message priorities should be used to keep the RPC message handling workflow smooth. Wrong priorities can cause a dead lock in combination with exhausted buffers. 
+ * A message priority may be a negative value also.
+ */
+
 namespace wan24.RPC.Processing
 {
     // Outgoing

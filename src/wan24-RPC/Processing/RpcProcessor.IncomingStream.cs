@@ -6,6 +6,26 @@ using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Streaming;
 using wan24.RPC.Processing.Values;
 
+/*
+ * The usual asynchronous streaming process is:
+ * 
+ * 1. The RPC processor received a stream parameter or return value
+ * 2. The RPC processor stores an incoming stream and uses a RPC stream instead
+ * 3. As soon as the consuming code starts reading from the RPC stream, the RPC processor will send a stream start message to the peer
+ * 4. Received stream chunks will be written to the RPC stream for reading from the consuming code
+ * 5. The last chunk sets the RPC stream to an EOF (end of file) state, and the RPC processor removes the incoming stream
+ * 
+ * A stream parameter will be disposed from the RPC processor after the consuming code returned (the NoRpcDisposeAttribute has no effect here!). The consuming code has 
+ * to complete streaming before it returns (copy the stream into a temporary stream to make it available to other code after the method returns). For early canceling a 
+ * stream the consuming code may send a remote close message to the peer by simply disposing the RPC stream. The peer may send a local close message, which will set the 
+ * RPC stream to an error state.
+ * 
+ * If an API method returns a stream, it'll be used from the RPC processor asynchronous and disposed after the sending process finished. Code outside shouldn't dispose the 
+ * stream, or the streaming may fail random. If the returned stream shouldn't be disposed from the RPC processor, the NoRpcDisposeAttribute must be applied to the method.
+ * 
+ * The number of incoming streams is limited to protect memory ressources. It should be equal to the max. number of outgoing streams at the peer.
+ */
+
 namespace wan24.RPC.Processing
 {
     // Incoming stream
@@ -172,10 +192,20 @@ namespace wan24.RPC.Processing
             };
             stream.IncomingStream = res;
             res.Stream.IncomingStream = res;
-            if (await AddIncomingStreamAsync(res, cancellationToken: cancellationToken).DynamicContext())
-                return new ForceAsyncStream(res.Stream);
+            try
+            {
+                if (await AddIncomingStreamAsync(res, cancellationToken: cancellationToken).DynamicContext())
+                    return new ForceAsyncStream(res.Stream);
+            }
+            catch(Exception ex)
+            {
+                await HandleIncomingStreamProcessingErrorAsync(res, ex).DynamicContext();
+                throw;
+            }
+            InvalidDataException exception = new InvalidDataException($"Failed to store incoming stream #{stream.Stream} (double incoming stream ID)");
+            await HandleIncomingStreamProcessingErrorAsync(res, exception).DynamicContext();
             await res.DisposeAsync().DynamicContext();
-            throw new InvalidDataException($"Failed to store incoming stream #{stream.Stream} (double incoming stream ID)");
+            throw exception;
         }
 
         /// <summary>
@@ -191,8 +221,16 @@ namespace wan24.RPC.Processing
                 {
                     await stream.SetRemoteExceptionAsync(message).DynamicContext();
                 }
-                catch//TODO Handle error
+                catch (ObjectDisposedException) when (IsDisposing)
                 {
+                }
+                catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
+                {
+                }
+                catch (Exception ex)
+                {
+                    await HandleIncomingStreamProcessingErrorAsync(stream, ex).DynamicContext();
+                    throw;
                 }
                 finally
                 {
@@ -213,47 +251,68 @@ namespace wan24.RPC.Processing
                 Options.Logger?.Log(LogLevel.Debug, "{this} incoming stream #{stream} chunk message #{id} discarded (stream not found)", ToString(), message.Stream, message.Id);
                 return;
             }
-            if (!stream.IsStarted)
+            try
             {
-                Options.Logger?.Log(LogLevel.Warning, "{this} incoming stream #{stream} chunk message #{id} for unprepared stream", ToString(), message.Stream, message.Id);
-                throw new InvalidOperationException("Incoming stream wasn't prepared for received chunk data yet");
-            }
-            if (!stream.ChunkRequested)
-            {
-                Options.Logger?.Log(LogLevel.Warning, "{this} incoming stream #{stream} chunk message #{id} without request", ToString(), message.Stream, message.Id);
-                throw new InvalidOperationException("Incoming stream chunk data without request received");
-            }
-            stream.ChunkRequested = false;
-            if (stream.IsDone)
-            {
-                Options.Logger?.Log(LogLevel.Warning, "{this} incoming stream #{stream} chunk message #{id} for finalized stream", ToString(), message.Stream, message.Id);
-                throw new InvalidOperationException("Incoming stream chunk data received for an already finalized stream");
-            }
-            if (message.Data is not null)
-            {
-                Options.Logger?.Log(LogLevel.Trace, "{this} incoming stream #{stream} chunk message #{id} contains {len} bytes", ToString(), message.Stream, message.Id, message.Data.Length);
-                if (message.Data.Length > RpcStreamValue.MaxContentLength)
-                    throw new InvalidDataException($"Max. incoming stream chunk length exceeded ({message.Data.Length}/{RpcStreamValue.MaxContentLength} bytes)");
-                await stream.Target.WriteAsync(message.Data, CancelToken).DynamicContext();
-            }
-            if (message.IsLastChunk)
-            {
-                Options.Logger?.Log(LogLevel.Debug, "{this} incoming stream #{stream} chunk message #{id} finalizes the stream", ToString(), message.Stream, message.Id);
-                await stream.CompleteAsync().DynamicContext();
-                await RemoveIncomingStreamAsync(stream, cancellationToken: CancellationToken.None).DynamicContext();
-                await stream.DisposeAsync().DynamicContext();
-            }
-            else
-            {
-                Options.Logger?.Log(LogLevel.Trace, "{this} incoming stream #{stream} requires more data after processing chunk message #{id}", ToString(), message.Stream, message.Id);
-                stream.ChunkRequested = true;
-                await SendMessageAsync(new ResponseMessage()
+                if (!stream.IsStarted)
                 {
-                    PeerRpcVersion = Options.RpcVersion,
-                    Id = message.Id
-                }, CancelToken).DynamicContext();
+                    Options.Logger?.Log(LogLevel.Warning, "{this} incoming stream #{stream} chunk message #{id} for unprepared stream", ToString(), message.Stream, message.Id);
+                    throw new InvalidOperationException("Incoming stream wasn't prepared for received chunk data yet");
+                }
+                if (!stream.IsChunkRequested)
+                {
+                    Options.Logger?.Log(LogLevel.Warning, "{this} incoming stream #{stream} chunk message #{id} without request", ToString(), message.Stream, message.Id);
+                    throw new InvalidOperationException("Incoming stream chunk data without request received");
+                }
+                stream.IsChunkRequested = false;
+                if (stream.IsDone)
+                {
+                    Options.Logger?.Log(LogLevel.Warning, "{this} incoming stream #{stream} chunk message #{id} for finalized stream", ToString(), message.Stream, message.Id);
+                    throw new InvalidOperationException("Incoming stream chunk data received for an already finalized stream");
+                }
+                if (message.Data is not null)
+                {
+                    Options.Logger?.Log(LogLevel.Trace, "{this} incoming stream #{stream} chunk message #{id} contains {len} bytes", ToString(), message.Stream, message.Id, message.Data.Length);
+                    if (message.Data.Length > RpcStreamValue.MaxContentLength)
+                        throw new InvalidDataException($"Max. incoming stream chunk length exceeded ({message.Data.Length}/{RpcStreamValue.MaxContentLength} bytes)");
+                    await stream.Target.WriteAsync(message.Data, CancelToken).DynamicContext();
+                }
+                if (message.IsLastChunk)
+                {
+                    Options.Logger?.Log(LogLevel.Debug, "{this} incoming stream #{stream} chunk message #{id} finalizes the stream", ToString(), message.Stream, message.Id);
+                    await stream.CompleteAsync().DynamicContext();
+                    await RemoveIncomingStreamAsync(stream, cancellationToken: CancellationToken.None).DynamicContext();
+                    await stream.DisposeAsync().DynamicContext();
+                }
+                else
+                {
+                    Options.Logger?.Log(LogLevel.Trace, "{this} incoming stream #{stream} requires more data after processing chunk message #{id}", ToString(), message.Stream, message.Id);
+                    stream.IsChunkRequested = true;
+                    await SendMessageAsync(new ResponseMessage()
+                    {
+                        PeerRpcVersion = Options.RpcVersion,
+                        Id = message.Id
+                    }, CancelToken).DynamicContext();
+                }
+            }
+            catch (ObjectDisposedException) when (IsDisposing)
+            {
+            }
+            catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
+            {
+            }
+            catch (Exception ex)
+            {
+                await HandleIncomingStreamProcessingErrorAsync(stream, ex).DynamicContext();
+                throw;
             }
         }
+
+        /// <summary>
+        /// Handle an incoming stream processing error
+        /// </summary>
+        /// <param name="stream">Stream</param>
+        /// <param name="ex">Exception</param>
+        protected virtual Task HandleIncomingStreamProcessingErrorAsync(IncomingStream stream, Exception ex) => Task.CompletedTask;
 
         /// <summary>
         /// Incoming stream
@@ -318,12 +377,12 @@ namespace wan24.RPC.Processing
             /// <summary>
             /// If canceled
             /// </summary>
-            public bool Canceled { get; protected set; }
+            public bool IsCanceled { get; protected set; }
 
             /// <summary>
             /// If the next chunk was requested
             /// </summary>
-            public bool ChunkRequested { get; set; }
+            public bool IsChunkRequested { get; set; }
 
             /// <summary>
             /// Start streaming
@@ -337,7 +396,7 @@ namespace wan24.RPC.Processing
                 if (IsDone)
                     throw new InvalidOperationException("Streaming was done already");
                 Processor.Options.Logger?.Log(LogLevel.Debug, "{this} starting incoming stream #{id}", Processor.ToString(), Value.Stream);
-                ChunkRequested = true;
+                IsChunkRequested = true;
                 if(Value.Compression is CompressionOptions compression)
                 {
                     Processor.Options.Logger?.Log(LogLevel.Trace, "{this} starting incoming stream #{id} decompression", Processor.ToString(), Value.Stream);
@@ -376,7 +435,7 @@ namespace wan24.RPC.Processing
                 if (!EnsureUndisposed(allowDisposing: true, throwException: false) || IsDone)
                     return;
                 Processor.Options.Logger?.Log(LogLevel.Debug, "{this} canceling incoming stream #{id}", Processor.ToString(), Value.Stream);
-                Canceled = true;
+                IsCanceled = true;
                 SetDone();
                 if (!ProcessorCancellation.IsCancellationRequested)
                     try

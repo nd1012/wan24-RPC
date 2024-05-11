@@ -15,6 +15,10 @@ using wan24.RPC.Processing.Messages;
  * 6. The call queue finalizes the return value and sets it (or an error) to the context object
  * 7. The call message handler sends the response to the peer
  * 8. The call message handler removes the pending call context
+ * 
+ * The called API method doesn't need to dispose any parameter, unless the NoRpcDisposeAttribute has been applied to a specific RPC parameter.
+ * 
+ * The API methods return value will be disposed after sending it to the peer unless the NoRpcDisposeAttribute has been applied to the method.
  */
 
 namespace wan24.RPC.Processing
@@ -139,6 +143,12 @@ namespace wan24.RPC.Processing
                     }
                 }
             }
+            catch (ObjectDisposedException) when (IsDisposing)
+            {
+            }
+            catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
+            {
+            }
             catch (OperationCanceledException ex) when (call.CallCancellation.IsCancellationRequested)
             {
                 Options.Logger?.Log(LogLevel.Warning, "{this} cancelled during call #{id} processing", ToString(), message.Id);
@@ -214,6 +224,9 @@ namespace wan24.RPC.Processing
                     Error = exception
                 }, RPC_PRIORTY).DynamicContext();
             }
+            catch (ObjectDisposedException) when (IsDisposing)
+            {
+            }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {
             }
@@ -246,6 +259,9 @@ namespace wan24.RPC.Processing
                         ? returnValue
                         : null
                 }, RPC_PRIORTY).DynamicContext();
+            }
+            catch (ObjectDisposedException) when (IsDisposing)
+            {
             }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {

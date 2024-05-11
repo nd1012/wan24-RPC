@@ -9,6 +9,11 @@ namespace wan24.RPC.Processing
     public partial class RpcProcessor
     {
         /// <summary>
+        /// Incoming messages
+        /// </summary>
+        protected readonly IncomingQueue IncomingMessages;
+
+        /// <summary>
         /// Handle a message (should call <see cref="StopExceptionalAsync(Exception)"/> on exception)
         /// </summary>
         /// <param name="message">Message</param>
@@ -78,6 +83,9 @@ namespace wan24.RPC.Processing
                     default:
                         throw new InvalidDataException($"Can't handle message type #{message.Id} ({message.GetType()})");
                 }
+            }
+            catch (ObjectDisposedException) when (IsDisposing)
+            {
             }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {

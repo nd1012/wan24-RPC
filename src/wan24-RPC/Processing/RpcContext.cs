@@ -1,6 +1,11 @@
 ﻿using wan24.Core;
+using wan24.RPC.Api.Attributes;
 using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Messages;
+
+/*
+ * This RPC context object will be available to a called RPC API method as non-RPC parameter using DI.
+ */
 
 namespace wan24.RPC.Processing
 {
@@ -12,6 +17,11 @@ namespace wan24.RPC.Processing
     /// </remarks>
     public record class RpcContext() : DisposableRecordBase()
     {
+        /// <summary>
+        /// Unauthorized context handler
+        /// </summary>
+        public static Unauthorized_Delegate? UnauthorizedHandler { get; set; }
+
         /// <summary>
         /// Created time
         /// </summary>
@@ -74,5 +84,12 @@ namespace wan24.RPC.Processing
             await Services.DisposeAsync().DynamicContext();
             SetDone();
         }
+
+        /// <summary>
+        /// Unauthorized handler delegate
+        /// </summary>
+        /// <param name="context">RPC context</param>
+        /// <param name="authZ">Authorization attribute</param>
+        public delegate Task Unauthorized_Delegate(RpcContext context, RpcAuthorizationAttributeBase authZ);
     }
 }

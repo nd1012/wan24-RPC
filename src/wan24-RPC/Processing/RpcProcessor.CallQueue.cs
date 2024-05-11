@@ -6,6 +6,15 @@ using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Values;
 
+/*
+ * The number of RPC calls from the peer is limited in two ways:
+ * 
+ * 1. The number of parallel executed API methods to protect CPU ressources
+ * 2. The number of pending calls to protect memory ressources
+ * 
+ * The peer needs to know and respect these limits. A pending call queue overflow is a protocol error which disconnects the peer.
+ */
+
 namespace wan24.RPC.Processing
 {
     // Call queue
@@ -58,7 +67,8 @@ namespace wan24.RPC.Processing
                     method = await FindApiMethodAsync(item, request).DynamicContext();
                     if (method is null)
                     {
-                        item.Completion.TrySetException(new InvalidDataException("API or method not found"));
+                        if (!item.Completion.Task.IsCompleted)
+                            item.Completion.TrySetException(new InvalidDataException("API or method not found"));
                         return;
                     }
                     // Create a context
@@ -70,7 +80,8 @@ namespace wan24.RPC.Processing
                         Processor.Options.Logger?.Log(LogLevel.Trace, "{this} authorizing call #{id} API method \"{method}\" for the current context", ToString(), item.Message.Id, method);
                         if (!await AuthorizeContextAsync(item, request, method, context).DynamicContext())
                         {
-                            item.Completion.TrySetException(new UnauthorizedAccessException("Not authorized"));
+                            if (!item.Completion.Task.IsCompleted)
+                                item.Completion.TrySetException(new UnauthorizedAccessException("Not authorized"));
                             return;
                         }
                         // Prepare DI
@@ -96,7 +107,8 @@ namespace wan24.RPC.Processing
                             }
                             if (value is not null && !p.Parameter.ParameterType.IsAssignableFrom(value.GetType()))
                             {
-                                item.Completion.TrySetException(new ArgumentException($"RPC parameter \"{p.Parameter.Name}\" for API method \"{method}\" type is {value.GetType()} - {p.Parameter.ParameterType} expected", p.Parameter.Name));
+                                if (!item.Completion.Task.IsCompleted)
+                                    item.Completion.TrySetException(new ArgumentException($"RPC parameter \"{p.Parameter.Name}\" for API method \"{method}\" type is {value.GetType()} - {p.Parameter.ParameterType} expected", p.Parameter.Name));
                                 return;
                             }
                             parameters.Add(value);
@@ -116,7 +128,6 @@ namespace wan24.RPC.Processing
                         }
                         Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{method}\" finished execution with return value type {type}", ToString(), item.Message.Id, method, returnValue?.GetType().ToString() ?? "NULL");
                         // Handle the response
-                        item.SetDone();
                         if (returnValue is not null)
                         {
                             // Finalize the return value for sending
@@ -240,6 +251,8 @@ namespace wan24.RPC.Processing
                     foreach (RpcAuthorizationAttributeBase authZ in method.API.Authorization.Concat(method.Authorization))
                         if (!await authZ.IsContextAuthorizedAsync(context).DynamicContext())
                         {
+                            if (RpcContext.UnauthorizedHandler is RpcContext.Unauthorized_Delegate handler)
+                                await handler(context, authZ).DynamicContext();
                             item.Completion.TrySetException(new UnauthorizedAccessException($"{authZ} denied API method \"{method}\" authorization for the current context"));
                             return false;
                         }

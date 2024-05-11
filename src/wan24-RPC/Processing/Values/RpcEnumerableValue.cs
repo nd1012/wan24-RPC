@@ -1,4 +1,5 @@
-﻿using wan24.Core;
+﻿using System.Text.Json.Serialization;
+using wan24.Core;
 using wan24.ObjectValidation;
 using wan24.RPC.Api.Attributes;
 using wan24.StreamSerializerExtensions;
@@ -38,6 +39,7 @@ namespace wan24.RPC.Processing.Values
         /// <summary>
         /// Higher level object version
         /// </summary>
+        [JsonIgnore]
         public virtual int HlObjectVersion { get; } = 1;
 
         /// <summary>

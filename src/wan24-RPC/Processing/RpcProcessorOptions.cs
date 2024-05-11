@@ -106,9 +106,19 @@ namespace wan24.RPC.Processing
         public RpcContext? DefaultContext { get; init; }
 
         /// <summary>
+        /// Incoming message queue capacity (overflow will block reading incoming messages until a queued message was dequeued)
+        /// </summary>
+        public required int IncomingMessageQueueCapacity { get; init; }
+
+        /// <summary>
+        /// Incoming message queue processing threads
+        /// </summary>
+        public required int IncomingMessageQueueThreads { get; init; }
+
+        /// <summary>
         /// Outgoing message queue capacity (for priority message sending)
         /// </summary>
-        public required int MessageQueueCapacity { get; init; }
+        public required int OutgoingMessageQueueCapacity { get; init; }
 
         /// <summary>
         /// Max. number of queued RPC calls (RPC requests from the peer; should at last fit the peers <see cref="RequestThreads"/>)

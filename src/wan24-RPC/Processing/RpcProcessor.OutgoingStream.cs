@@ -6,6 +6,22 @@ using wan24.RPC.Processing.Messages.Streaming;
 using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Values;
 
+/*
+ * The usual asynchronous streaming process is:
+ * 
+ * 1. A stream parameter or return value must be sent to the peer
+ * 2. An outgoing stream will be initialized and stored
+ * 3. The peer requests start sending the stream
+ * 4. The RPC processor sends all stream chunks
+ * 5. The RPC processor removes the outgoing stream (and disposes the source, if required)
+ * 
+ * The peer may interrupt the stream by sending a remote close message, which will stop sending stream chunks.
+ * 
+ * The RPC processor will send a local close message to the peer on cancellation or error and remove the outgoing stream.
+ * 
+ * The number of outgoing streams is limited to protect memory ressources. It should be equal to the max. number of incoming streams at the peer.
+ */
+
 namespace wan24.RPC.Processing
 {
     // Outgoing stream
@@ -309,6 +325,9 @@ namespace wan24.RPC.Processing
                     }
                 }
             }
+            catch (ObjectDisposedException) when (IsDisposing)
+            {
+            }
             catch (OperationCanceledException) when (stream.RemoteCanceled || CancelToken.IsCancellationRequested)
             {
                 Options.Logger?.Log(LogLevel.Debug, "{this} sending outgoing stream #{id} chunks canceled", ToString(), message.Id);
@@ -543,6 +562,9 @@ namespace wan24.RPC.Processing
                         await Parameter.Source.CopyToAsync(compression, cancellation).DynamicContext();
                     await buffer.SetIsEndOfFileAsync(CancellationToken.None).DynamicContext();
                     Processor.Options.Logger?.Log(LogLevel.Trace, "{this} outgoing stream #{id} compression done", Processor.ToString(), Id);
+                }
+                catch (ObjectDisposedException) when (IsDisposing)
+                {
                 }
                 catch (OperationCanceledException) when (Cancellation.IsCancellationRequested)
                 {

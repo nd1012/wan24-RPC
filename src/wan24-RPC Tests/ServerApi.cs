@@ -14,14 +14,16 @@ namespace wan24_RPC_Tests
         public Task<string> EchoAsync(string message, [NoRpc] RpcProcessor processor, [NoRpc] CancellationToken cancellationToken)
         {
             Assert.IsNotNull(processor);
-            Assert.AreNotEqual(default, cancellationToken);
+            Assert.IsFalse(Equals(default, cancellationToken));
+            Assert.IsFalse(Equals(ProcessorCancellation, cancellationToken));
             return Task.FromResult(message);
         }
 
         public string Echo(string message, [NoRpc] RpcProcessor processor, [NoRpc] CancellationToken cancellationToken)
         {
             Assert.IsNotNull(processor);
-            Assert.AreNotEqual(default, cancellationToken);
+            Assert.IsFalse(Equals(default, cancellationToken));
+            Assert.IsFalse(Equals(ProcessorCancellation, cancellationToken));
             return message;
         }
 
