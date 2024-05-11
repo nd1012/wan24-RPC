@@ -199,19 +199,19 @@
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">BlockingBufferStream.Read(byte[], int, int)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.span-1">BlockingBufferStream.TryRead(Span&lt;byte&gt;)</a>
-    </div>
-    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">BlockingBufferStream.ReadAsync(byte[], int, int, CancellationToken)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.memory-1">BlockingBufferStream.TryReadAsync(Memory&lt;byte&gt;, CancellationToken)</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">BlockingBufferStream.SetLength(long)</a>
     </div>
     <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">BlockingBufferStream.WriteByte(byte)</a>
+    </div>
+    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">BlockingBufferStream.Write(byte[], int, int)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">BlockingBufferStream.Write(ReadOnlySpan&lt;byte&gt;)</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">BlockingBufferStream.TryWrite(ReadOnlySpan&lt;byte&gt;)</a>
@@ -590,7 +590,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcStream_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcStream.Dispose(System.Boolean)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L77">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L86">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcStream_Dispose_" data-uid="wan24.RPC.Processing.RpcStream.Dispose*"></a>
   <h4 id="wan24_RPC_Processing_RpcStream_Dispose_System_Boolean_" data-uid="wan24.RPC.Processing.RpcStream.Dispose(System.Boolean)">Dispose(bool)</h4>
@@ -626,7 +626,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcStream_DisposeCore.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcStream.DisposeCore%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L84">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L93">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcStream_DisposeCore_" data-uid="wan24.RPC.Processing.RpcStream.DisposeCore*"></a>
   <h4 id="wan24_RPC_Processing_RpcStream_DisposeCore" data-uid="wan24.RPC.Processing.RpcStream.DisposeCore">DisposeCore()</h4>
@@ -658,7 +658,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcStream_EnsureValidIncomingStreamState.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcStream.EnsureValidIncomingStreamState%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L68">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L77">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcStream_EnsureValidIncomingStreamState_" data-uid="wan24.RPC.Processing.RpcStream.EnsureValidIncomingStreamState*"></a>
   <h4 id="wan24_RPC_Processing_RpcStream_EnsureValidIncomingStreamState" data-uid="wan24.RPC.Processing.RpcStream.EnsureValidIncomingStreamState">EnsureValidIncomingStreamState()</h4>
@@ -674,7 +674,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcStream_Read_System_Span_System_Byte__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcStream.Read(System.Span%7BSystem.Byte%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L48">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L42">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcStream_Read_" data-uid="wan24.RPC.Processing.RpcStream.Read*"></a>
   <h4 id="wan24_RPC_Processing_RpcStream_Read_System_Span_System_Byte__" data-uid="wan24.RPC.Processing.RpcStream.Read(System.Span{System.Byte})">Read(Span&lt;byte&gt;)</h4>
@@ -726,7 +726,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcStream_ReadAsync_System_Memory_System_Byte__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcStream.ReadAsync(System.Memory%7BSystem.Byte%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L54">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L51">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcStream_ReadAsync_" data-uid="wan24.RPC.Processing.RpcStream.ReadAsync*"></a>
   <h4 id="wan24_RPC_Processing_RpcStream_ReadAsync_System_Memory_System_Byte__System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.RpcStream.ReadAsync(System.Memory{System.Byte},System.Threading.CancellationToken)">ReadAsync(Memory&lt;byte&gt;, CancellationToken)</h4>
@@ -784,7 +784,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcStream_ReadByte.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcStream.ReadByte%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L51">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L45">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcStream_ReadByte_" data-uid="wan24.RPC.Processing.RpcStream.ReadByte*"></a>
   <h4 id="wan24_RPC_Processing_RpcStream_ReadByte" data-uid="wan24.RPC.Processing.RpcStream.ReadByte">ReadByte()</h4>
@@ -836,19 +836,19 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcStream_Write_System_ReadOnlySpan_System_Byte__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcStream.Write(System.ReadOnlySpan%7BSystem.Byte%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcStream_TryRead_System_Span_System_Byte__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcStream.TryRead(System.Span%7BSystem.Byte%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L42">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L48">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_RpcStream_Write_" data-uid="wan24.RPC.Processing.RpcStream.Write*"></a>
-  <h4 id="wan24_RPC_Processing_RpcStream_Write_System_ReadOnlySpan_System_Byte__" data-uid="wan24.RPC.Processing.RpcStream.Write(System.ReadOnlySpan{System.Byte})">Write(ReadOnlySpan&lt;byte&gt;)</h4>
-  <div class="markdown level1 summary"><p>When overridden in a derived class, writes a sequence of bytes to the current stream and advances the current position within this stream by the number of bytes written.</p>
+  <a id="wan24_RPC_Processing_RpcStream_TryRead_" data-uid="wan24.RPC.Processing.RpcStream.TryRead*"></a>
+  <h4 id="wan24_RPC_Processing_RpcStream_TryRead_System_Span_System_Byte__" data-uid="wan24.RPC.Processing.RpcStream.TryRead(System.Span{System.Byte})">TryRead(Span&lt;byte&gt;)</h4>
+  <div class="markdown level1 summary"><p>Try reading as much data as available without blocking</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void Write(ReadOnlySpan&lt;byte&gt; buffer)</code></pre>
+    <pre><code class="lang-csharp hljs">public override int TryRead(Span&lt;byte&gt; buffer)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -861,30 +861,46 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">ReadOnlySpan</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.span-1">Span</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>&gt;</td>
         <td><span class="parametername">buffer</span></td>
-        <td><p>A region of memory. This method copies the contents of this region to the current stream.</p>
+        <td><p>Buffer</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><p>Number of bytes written into the buffer</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.readonlyspan-1">BlockingBufferStream.Write(ReadOnlySpan&lt;byte&gt;)</a></div>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.span-1">BlockingBufferStream.TryRead(Span&lt;byte&gt;)</a></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcStream_WriteByte_System_Byte_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcStream.WriteByte(System.Byte)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcStream_TryReadAsync_System_Memory_System_Byte__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcStream.TryReadAsync(System.Memory%7BSystem.Byte%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L45">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcStream.cs/#L63">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_RpcStream_WriteByte_" data-uid="wan24.RPC.Processing.RpcStream.WriteByte*"></a>
-  <h4 id="wan24_RPC_Processing_RpcStream_WriteByte_System_Byte_" data-uid="wan24.RPC.Processing.RpcStream.WriteByte(System.Byte)">WriteByte(byte)</h4>
-  <div class="markdown level1 summary"><p>Writes a byte to the current position in the stream and advances the position within the stream by one byte.</p>
+  <a id="wan24_RPC_Processing_RpcStream_TryReadAsync_" data-uid="wan24.RPC.Processing.RpcStream.TryReadAsync*"></a>
+  <h4 id="wan24_RPC_Processing_RpcStream_TryReadAsync_System_Memory_System_Byte__System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.RpcStream.TryReadAsync(System.Memory{System.Byte},System.Threading.CancellationToken)">TryReadAsync(Memory&lt;byte&gt;, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Try reading as much data as available without blocking</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void WriteByte(byte value)</code></pre>
+    <pre><code class="lang-csharp hljs">public override ValueTask&lt;int&gt; TryReadAsync(Memory&lt;byte&gt; buffer, CancellationToken cancellationToken = default)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -897,41 +913,37 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a></td>
-        <td><span class="parametername">value</span></td>
-        <td><p>The byte to write to the stream.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.memory-1">Memory</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>&gt;</td>
+        <td><span class="parametername">buffer</span></td>
+        <td><p>Buffer</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>Cancellation token</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask-1">ValueTask</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
+        <td><p>Number of bytes written into the buffer</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">BlockingBufferStream.WriteByte(byte)</a></div>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.ioexception">IOException</a></td>
-        <td><p>An I/O error occurs.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a></td>
-        <td><p>The stream does not support writing, or the stream is already closed.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></td>
-        <td><p>Methods were called after the stream was closed.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.memory-1">BlockingBufferStream.TryReadAsync(Memory&lt;byte&gt;, CancellationToken)</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <span class="xref">wan24.Core.IStream</span>

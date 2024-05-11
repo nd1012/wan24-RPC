@@ -35,6 +35,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Api.Attributes.AttributeExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Api.Attributes.AttributeExtensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Api.Attributes.NoRpcAttribute.yml",
       "output": {
         ".html": {
@@ -279,6 +289,16 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.Messages.CancellationMessage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Messages.ErrorResponseMessage.JsonError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Messages.ErrorResponseMessage.JsonError.html"
         }
       },
       "version": ""
@@ -575,6 +595,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.RpcContext.Unauthorized_Delegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.RpcContext.Unauthorized_Delegate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Processing.RpcContext.yml",
       "output": {
         ".html": {
@@ -619,6 +649,16 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.RpcProcessor.CallQueue.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.RpcProcessor.IncomingQueue.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.RpcProcessor.IncomingQueue.html"
         }
       },
       "version": ""
@@ -699,6 +739,16 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.RpcProcessorOptions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.RpcProcessorTable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.RpcProcessorTable.html"
         }
       },
       "version": ""
