@@ -38,7 +38,7 @@ namespace wan24.RPC.Api.Attributes
         public int? ToVersion { get; }
 
         /// <summary>
-        /// Newer RPC API method name to use
+        /// Newer RPC API method name to use (must not use less RPC parameters!)
         /// </summary>
         public string? NewerMethodName { get; }
 

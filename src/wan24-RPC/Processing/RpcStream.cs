@@ -16,12 +16,12 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Incoming stream
         /// </summary>
-        protected RpcProcessor.IncomingStream? _IncomingStream = null;
+        protected IIncomingRpcStream? _IncomingStream = null;
 
         /// <summary>
         /// Incoming stream
         /// </summary>
-        public RpcProcessor.IncomingStream IncomingStream
+        public IIncomingRpcStream IncomingStream
         {
             get => _IncomingStream ?? throw new InvalidOperationException();
             set
@@ -86,13 +86,14 @@ namespace wan24.RPC.Processing
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            _IncomingStream?.CancelAsync().GetAwaiter().GetResult();
+            if (_IncomingStream is not null && !_IncomingStream.IsDisposed)
+                _IncomingStream.CancelAsync().GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
         protected override async Task DisposeCore()
         {
-            if (_IncomingStream is not null)
+            if (_IncomingStream is not null && !_IncomingStream.IsDisposed)
                 await _IncomingStream.CancelAsync().DynamicContext();
             await base.DisposeCore().DynamicContext();
         }

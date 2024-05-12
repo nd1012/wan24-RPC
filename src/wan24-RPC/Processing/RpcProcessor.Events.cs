@@ -148,7 +148,7 @@ namespace wan24.RPC.Processing
         public virtual async Task RaiseEventAsync(string name, EventArgs? e = null, bool wait = false, CancellationToken cancellationToken = default)
         {
             EnsureUndisposed();
-            Options.Logger?.Log(LogLevel.Debug, "{this} raising event \"{name}\" with arguments type {type} at the peer (and wait: {wait})", ToString(), name, e?.GetType().ToString() ?? "NULL", wait);
+            Logger?.Log(LogLevel.Debug, "{this} raising event \"{name}\" with arguments type {type} at the peer (and wait: {wait})", ToString(), name, e?.GetType().ToString() ?? "NULL", wait);
             if (wait)
             {
                 Request request = new()
@@ -162,12 +162,11 @@ namespace wan24.RPC.Processing
                         Arguments = e,
                         Waiting = true
                     },
-                    ProcessorCancellation = CancelToken,
-                    RequestCancellation = cancellationToken
+                    Cancellation = cancellationToken
                 };
                 await using (request.DynamicContext())
                 {
-                    Options.Logger?.Log(LogLevel.Trace, "{this} storing event \"{name}\" request as #{id}", ToString(), name, request.Message.Id);
+                    Logger?.Log(LogLevel.Trace, "{this} storing event \"{name}\" request as #{id}", ToString(), name, request.Message.Id);
                     if (!AddPendingRequest(request))
                         throw new InvalidProgramException($"Failed to store event message #{request.Message.Id} (double message ID)");
                     try
@@ -198,21 +197,21 @@ namespace wan24.RPC.Processing
         /// <param name="message">Message</param>
         protected virtual async Task HandleEventAsync(EventMessage message)
         {
-            Options.Logger?.Log(LogLevel.Debug, "{this} handling event \"{name}\" with arguments type {type}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL");
+            Logger?.Log(LogLevel.Debug, "{this} handling event \"{name}\" with arguments type {type}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL");
             RpcEvent? handler = null;
             try
             {
                 handler = GetRemoteEvent(message.Name);
                 if (handler is null)
                 {
-                    Options.Logger?.Log(LogLevel.Debug, "{this} no event \"{name}\" handler - ignoring", ToString(), message.Name);
+                    Logger?.Log(LogLevel.Debug, "{this} no event \"{name}\" handler - ignoring", ToString(), message.Name);
                     return;
                 }
                 await handler.RaiseEventAsync(message, CancelToken).DynamicContext();
-                Options.Logger?.Log(LogLevel.Trace, "{this} handled event \"{name}\" with arguments type {type}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL");
+                Logger?.Log(LogLevel.Trace, "{this} handled event \"{name}\" with arguments type {type}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL");
                 if (message.Waiting)
                 {
-                    Options.Logger?.Log(LogLevel.Trace, "{this} sending event \"{name}\" response", ToString(), message.Name);
+                    Logger?.Log(LogLevel.Trace, "{this} sending event \"{name}\" response", ToString(), message.Name);
                     await SendMessageAsync(new ResponseMessage()
                     {
                         PeerRpcVersion = Options.RpcVersion,
@@ -228,12 +227,12 @@ namespace wan24.RPC.Processing
             }
             catch (Exception ex)
             {
-                Options.Logger?.Log(LogLevel.Warning, "{this} handling event \"{name}\" with arguments type {type} failed exceptional: {ex}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL", ex);
+                Logger?.Log(LogLevel.Warning, "{this} handling event \"{name}\" with arguments type {type} failed exceptional: {ex}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL", ex);
                 await HandleEventErrorAsync(message, handler, ex).DynamicContext();
                 if (message.Waiting && EnsureUndisposed(throwException: false))
                     try
                     {
-                        Options.Logger?.Log(LogLevel.Trace, "{this} sending event \"{name}\" error response", ToString(), message.Name);
+                        Logger?.Log(LogLevel.Trace, "{this} sending event \"{name}\" error response", ToString(), message.Name);
                         await SendMessageAsync(new ErrorResponseMessage()
                         {
                             PeerRpcVersion = Options.RpcVersion,
@@ -243,7 +242,7 @@ namespace wan24.RPC.Processing
                     }
                     catch (Exception ex2)
                     {
-                        Options.Logger?.Log(LogLevel.Warning, "{this} sending event \"{name}\" error response failed: {ex2}", ToString(), message.Name, ex2);
+                        Logger?.Log(LogLevel.Warning, "{this} sending event \"{name}\" error response failed: {ex2}", ToString(), message.Name, ex2);
                     }
             }
             finally
@@ -251,13 +250,5 @@ namespace wan24.RPC.Processing
                 await message.DisposeArgumentsAsync().DynamicContext();
             }
         }
-
-        /// <summary>
-        /// Handle an event processing error
-        /// </summary>
-        /// <param name="message">Message</param>
-        /// <param name="e">Event</param>
-        /// <param name="ex">Exception</param>
-        protected virtual Task HandleEventErrorAsync(EventMessage message, RpcEvent? e, Exception ex) => Task.CompletedTask;
     }
 }

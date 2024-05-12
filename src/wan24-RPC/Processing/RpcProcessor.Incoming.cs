@@ -20,7 +20,7 @@ namespace wan24.RPC.Processing
         protected virtual async Task HandleMessageAsync(IRpcMessage message)
         {
             await Task.Yield();
-            Options.Logger?.Log(LogLevel.Debug, "{this} handling message type {type}", ToString(), message.Type);
+            Logger?.Log(LogLevel.Debug, "{this} handling message type {type}", ToString(), message.Type);
             try
             {
                 switch (message)
@@ -75,7 +75,7 @@ namespace wan24.RPC.Processing
                         await HandleLocalStreamCloseAsync(localClose).DynamicContext();
                         break;
                     case ErrorResponseMessage error:
-                        await HandleErrorAsync(error).DynamicContext();
+                        await HandleErrorResponseAsync(error).DynamicContext();
                         break;
                     case CancellationMessage cancellation:
                         await HandleCancellationAsync(cancellation).DynamicContext();
@@ -89,11 +89,11 @@ namespace wan24.RPC.Processing
             }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {
-                Options.Logger?.Log(LogLevel.Warning, "{this} handling message type {type} canceled", ToString(), message.Type);
+                Logger?.Log(LogLevel.Warning, "{this} handling message type {type} canceled", ToString(), message.Type);
             }
             catch (Exception ex)
             {
-                Options.Logger?.Log(LogLevel.Warning, "{this} handling message type {type} failed (will dispose): {ex}", ToString(), message.Type, ex);
+                Logger?.Log(LogLevel.Warning, "{this} handling message type {type} failed (will dispose): {ex}", ToString(), message.Type, ex);
                 await StopExceptionalAsync(ex).DynamicContext();
             }
         }

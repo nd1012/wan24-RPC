@@ -14,7 +14,7 @@ namespace wan24.RPC.Processing.Values
     /// Constructor
     /// </remarks>
     [Rpc]
-    public record class RpcStreamValue() : DisposableStreamSerializerRecordBase(VERSION)
+    public record class RpcStreamValue() : StreamSerializerRecordBase(VERSION)
     {
         /// <summary>
         /// Object version
@@ -22,7 +22,7 @@ namespace wan24.RPC.Processing.Values
         public const int VERSION = 1;
 
         /// <summary>
-        /// Max. stream content length in bytes
+        /// Max. stream content length in bytes (being used as max. chunk length also)
         /// </summary>
         public static int MaxContentLength { get; set; } = short.MaxValue >> 1;
 
@@ -95,12 +95,6 @@ namespace wan24.RPC.Processing.Values
         [JsonIgnore]
         public bool UsesCompression => _Compression is not null;
 
-        /// <summary>
-        /// Incoming stream to dispose when this value disposes
-        /// </summary>
-        [JsonIgnore]
-        public RpcProcessor.IncomingStream? IncomingStream { get; set; }
-
         /// <inheritdoc/>
         protected sealed override void Serialize(Stream stream) => throw new NotSupportedException();
 
@@ -141,19 +135,6 @@ namespace wan24.RPC.Processing.Values
                 Length = await stream.ReadNumberNullableAsync<long>(version, cancellationToken: cancellationToken).DynamicContext();
                 _Compression = (await stream.ReadBytesAsync(version, cancellationToken: cancellationToken).DynamicContext()).Value;
             }
-        }
-
-        /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
-        {
-            IncomingStream?.Dispose();
-        }
-
-        /// <inheritdoc/>
-        protected override async Task DisposeCore()
-        {
-            if (IncomingStream is not null)
-                await IncomingStream.DisposeAsync().DynamicContext();
         }
     }
 }

@@ -38,7 +38,7 @@ namespace wan24.RPC.Sdk
             if (!Equals(cancellationToken, default)) tokens.Add(cancellationToken);
             if (cts is not null) tokens.Add(cts.Token);
             using Cancellations cancellation = new([.. tokens]);
-            await Processor.SendMessageAsync(message, priority, cancellationToken).DynamicContext();
+            await Processor.SendMessageAsync(message, priority, cancellation).DynamicContext();
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace wan24.RPC.Sdk
             if (!Equals(cancellationToken, default)) tokens.Add(cancellationToken);
             if (cts is not null) tokens.Add(cts.Token);
             using Cancellations cancellation = new([.. tokens]);
-            await Processor.SendMessageAsync(message, cancellationToken).DynamicContext();
+            await Processor.SendMessageAsync(message, cancellation).DynamicContext();
         }
 
         /// <summary>
@@ -63,11 +63,12 @@ namespace wan24.RPC.Sdk
         /// </summary>
         /// <param name="stream">Stream</param>
         /// <param name="disposeStream">Dispose the stream after use?</param>
+        /// <param name="disposeRpcStream">Dispose the RPC stream from the RPC processor?</param>
         /// <returns>Parameter</returns>
-        protected virtual RpcStreamParameter CreateStreamParameter(in Stream stream, in bool disposeStream = false)
+        protected virtual RpcOutgoingStreamParameter CreateStreamParameter(in Stream stream, in bool disposeStream = false, in bool disposeRpcStream = false)
         {
             EnsureInitialized();
-            return Processor.CreateStreamParameter(stream, disposeStream);
+            return Processor.CreateOutgoingStreamParameter(stream, disposeStream, disposeRpcStream);
         }
 
         /// <summary>
@@ -78,7 +79,7 @@ namespace wan24.RPC.Sdk
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Stream value to send to the peer</returns>
         protected virtual async Task<RpcStreamValue> CreateOutgoingStreamAsync(
-            RpcStreamParameter streamParameter, 
+            RpcOutgoingStreamParameter streamParameter, 
             TimeSpan timeout = default, 
             CancellationToken cancellationToken = default
             )
@@ -89,7 +90,7 @@ namespace wan24.RPC.Sdk
             if (!Equals(cancellationToken, default)) tokens.Add(cancellationToken);
             if (cts is not null) tokens.Add(cts.Token);
             using Cancellations cancellation = new([.. tokens]);
-            return await Processor.CreateOutgoingStreamAsync(streamParameter, cancellationToken).DynamicContext();
+            return await Processor.CreateOutgoingStreamAsync(streamParameter, cancellation).DynamicContext();
         }
     }
 }

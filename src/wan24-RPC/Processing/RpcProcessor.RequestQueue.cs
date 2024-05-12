@@ -39,14 +39,32 @@ namespace wan24.RPC.Processing
             /// </summary>
             public RpcProcessor Processor { get; } = processor;
 
+            /// <summary>
+            /// Logger
+            /// </summary>
+            public virtual ILogger? Logger => Processor.Logger;
+
             /// <inheritdoc/>
             protected override async Task ProcessItem(Request item, CancellationToken cancellationToken)
             {
                 await Task.Yield();
-                Processor.Options.Logger?.Log(LogLevel.Debug, "{this} processing request #{id}", ToString(), item.Message.Id);
+                Logger?.Log(LogLevel.Debug, "{this} processing request #{id}", ToString(), item.Message.Id);
                 if (item.RequestCompletion.Task.IsCompleted)
                 {
-                    Processor.Options.Logger?.Log(LogLevel.Debug, "{this} request #{id} is completed already", ToString(), item.Message.Id);
+                    Logger?.Log(LogLevel.Debug, "{this} request #{id} is completed already", ToString(), item.Message.Id);
+                    return;
+                }
+                if (item.ProcessorCompletion.Task.IsCompleted)
+                {
+                    Logger?.Log(LogLevel.Debug, "{this} request #{id} processor was completed already", ToString(), item.Message.Id);
+                    if (item.ProcessorCompletion.Task.Exception is not null)
+                    {
+                        item.RequestCompletion.TrySetException(item.ProcessorCompletion.Task.Exception);
+                    }
+                    else
+                    {
+                        item.RequestCompletion.TrySetResult(item.ProcessorCompletion.Task.Result);
+                    }
                     return;
                 }
                 if (item.Message is not RequestMessage request)
@@ -57,31 +75,31 @@ namespace wan24.RPC.Processing
                 object? returnValue = null;
                 try
                 {
-                    using Cancellations cancellation = new(cancellationToken, item.ProcessorCancellation, item.RequestCancellation);
+                    using Cancellations cancellation = new(Processor.CancelToken, item.Cancellation, cancellationToken);
                     // Finalize parameters
                     if (request.Parameters is not null)
                         for (int i = 0, len = request.Parameters.Length; i < len; i++)
                             if (request.Parameters[i] is not null)
                             {
-                                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving final request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type {type}", ToString(), item.Message.Id, request.Api, request.Method, i, request.Parameters[i]?.GetType().ToString() ?? "NULL");
+                                Logger?.Log(LogLevel.Trace, "{this} resolving final request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type {type}", ToString(), item.Message.Id, request.Api, request.Method, i, request.Parameters[i]!.GetType().ToString());
                                 request.Parameters[i] = await GetFinalParameterValueAsync(item, request, i, request.Parameters[i], cancellation).DynamicContext();
-                                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type is now {type} after finalizing", ToString(), item.Message.Id, request.Api, request.Method, i, request.Parameters[i]?.GetType().ToString() ?? "NULL");
+                                Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type is now {type} after finalizing", ToString(), item.Message.Id, request.Api, request.Method, i, request.Parameters[i]?.GetType().ToString() ?? "NULL");
                             }
                     // Send the RPC request and wait for the response
                     await Processor.SendMessageAsync(request, RPC_PRIORTY, cancellation).DynamicContext();
-                    item.Processed = true;
+                    item.WasProcessing = true;
                     returnValue = await item.ProcessorCompletion.Task.DynamicContext();
                     // Handle the response
                     if (returnValue is not null)
                     {
-                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} finalizing request #{id} API \"{api}\" method \"{method}\" return value type {type}", ToString(), item.Message.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
+                        Logger?.Log(LogLevel.Trace, "{this} finalizing request #{id} API \"{api}\" method \"{method}\" return value type {type}", ToString(), item.Message.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
                         returnValue = await GetFinalReturnValueAsync(item, request, returnValue, cancellation).DynamicContext();
-                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" return value type is now {type} after finalizing", ToString(), item.Message.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
+                        Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" return value type is now {type} after finalizing", ToString(), item.Message.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
                     }
                     if (!item.RequestCompletion.TrySetResult(returnValue))
                     {
-                        Processor.Options.Logger?.Log(LogLevel.Warning, "{this} request #{id} API \"{api}\" method \"{method}\" failed to set return value", ToString(), item.Message.Id, request.Api, request.Method);
-                        await returnValue.TryDisposeAsync().DynamicContext();
+                        Logger?.Log(LogLevel.Warning, "{this} request #{id} API \"{api}\" method \"{method}\" failed to set return value", ToString(), item.Message.Id, request.Api, request.Method);
+                        await returnValue.TryDisposeAsync().DynamicContext();//TODO How to handle a stream return value?
                     }
                 }
                 catch (ObjectDisposedException) when (IsDisposing)
@@ -90,7 +108,7 @@ namespace wan24.RPC.Processing
                 catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
                 {
                 }
-                catch (OperationCanceledException ex) when (ex.CancellationToken == item.RequestCancellation)
+                catch (OperationCanceledException ex) when (ex.CancellationToken == item.Cancellation)
                 {
                     if (returnValue is not null)
                     {
@@ -104,7 +122,7 @@ namespace wan24.RPC.Processing
                         }
                         catch(Exception ex2)
                         {
-                            Processor.Options.Logger?.Log(LogLevel.Error, "{this} request #{id} API \"{api}\" method \"{method}\" failed to cancel during queue processing: {ex}", ToString(), item.Message.Id, request.Api, request.Method, ex2);
+                            Logger?.Log(LogLevel.Error, "{this} request #{id} API \"{api}\" method \"{method}\" failed to cancel during queue processing: {ex}", ToString(), item.Message.Id, request.Api, request.Method, ex2);
                         }
                     }
                     item.SetDone();
@@ -142,14 +160,17 @@ namespace wan24.RPC.Processing
             {
                 // Stream parameter handling
                 if (value is Stream stream)
-                    value = Processor.CreateStreamParameter(stream);
-                if (value is RpcStreamParameter streamParameter)
-                    await using (streamParameter.DynamicContext())
-                    {
-                        RpcStreamValue streamValue = await Processor.CreateOutgoingStreamAsync(streamParameter, cancellationToken).DynamicContext();
-                        value = streamValue;
-                        item.Streams.Add((await Processor.GetOutgoingStreamAsync(streamValue.Stream!.Value, cancellationToken: cancellationToken).DynamicContext())!);
-                    }
+                    value = Processor.CreateOutgoingStreamParameter(stream);
+                if (value is RpcOutgoingStreamParameter streamParameter)
+                {
+                    RpcStreamValue streamValue = await Processor.CreateOutgoingStreamAsync(streamParameter, cancellationToken).DynamicContext();
+                    value = streamValue;
+                    if(
+                        streamValue.Stream.HasValue && 
+                        await Processor.GetOutgoingStreamAsync(streamValue.Stream.Value, cancellationToken: cancellationToken).DynamicContext() is OutgoingStream stream2
+                        )
+                    item.ParameterStreams.Add(stream2);
+                }
                 //TODO Enumerations
                 return value;
             }
@@ -171,7 +192,14 @@ namespace wan24.RPC.Processing
             {
                 // Stream handling
                 if (returnValue is RpcStreamValue streamValue)
-                    returnValue = await Processor.CreateIncomingStreamAsync(streamValue, leaveOpen: true, cancellationToken).DynamicContext();
+                {
+                    returnValue = await Processor.CreateIncomingStreamAsync(streamValue, cancellationToken).DynamicContext();
+                    if (
+                        streamValue.Stream.HasValue &&
+                        await Processor.GetIncomingStreamAsync(streamValue.Stream.Value, cancellationToken: cancellationToken).DynamicContext() is IncomingStream stream
+                        )
+                        item.ReturnStream = stream;
+                }
                 //TODO Enumerations
                 return returnValue;
             }

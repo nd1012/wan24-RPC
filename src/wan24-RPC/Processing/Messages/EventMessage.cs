@@ -30,7 +30,7 @@ namespace wan24.RPC.Processing.Messages
         public required string Name { get; set; }
 
         /// <summary>
-        /// Event arguments
+        /// Event arguments (will be disposed at the receiver side)
         /// </summary>
         public EventArgs? Arguments { get; set; }
 

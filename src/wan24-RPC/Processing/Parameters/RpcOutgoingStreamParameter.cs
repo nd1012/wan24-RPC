@@ -1,5 +1,4 @@
 ﻿using wan24.Compression;
-using wan24.Core;
 
 namespace wan24.RPC.Processing.Parameters
 {
@@ -9,7 +8,7 @@ namespace wan24.RPC.Processing.Parameters
     /// <remarks>
     /// Constructor
     /// </remarks>
-    public record class RpcStreamParameter() : DisposableRecordBase()
+    public record class RpcOutgoingStreamParameter()
     {
         /// <summary>
         /// Source stream
@@ -26,18 +25,9 @@ namespace wan24.RPC.Processing.Parameters
         /// </summary>
         public CompressionOptions? Compression { get; set; }
 
-        /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
-        {
-            if (DisposeSource)
-                Source.Dispose();
-        }
-
-        /// <inheritdoc/>
-        protected override async Task DisposeCore()
-        {
-            if (DisposeSource)
-                await Source.DisposeAsync().DynamicContext();
-        }
+        /// <summary>
+        /// If to dispose the RPC stream
+        /// </summary>
+        public bool DisposeRpcStream { get; init; }
     }
 }

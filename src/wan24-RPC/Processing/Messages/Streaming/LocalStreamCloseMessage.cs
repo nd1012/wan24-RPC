@@ -6,7 +6,7 @@
     /// <remarks>
     /// Constructor
     /// </remarks>
-    public class LocalStreamCloseMessage() : ErrorResponseMessage()
+    public class LocalStreamCloseMessage() : ErrorResponseMessage(), IRpcStreamMessage
     {
         /// <summary>
         /// RPC message type ID
@@ -15,5 +15,8 @@
 
         /// <inheritdoc/>
         public override int Type => HL_TYPE_ID;
+
+        /// <inheritdoc/>
+        long? IRpcStreamMessage.Stream => Id;
     }
 }

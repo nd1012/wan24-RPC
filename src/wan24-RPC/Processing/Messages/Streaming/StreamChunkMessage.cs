@@ -11,7 +11,7 @@ namespace wan24.RPC.Processing.Messages.Streaming
     /// <remarks>
     /// Constructor
     /// </remarks>
-    public class StreamChunkMessage() : RpcMessageBase(), IRpcRequest
+    public class StreamChunkMessage() : RpcMessageBase(), IRpcRequest, IRpcStreamMessage
     {
         /// <summary>
         /// RPC message type ID
@@ -40,6 +40,9 @@ namespace wan24.RPC.Processing.Messages.Streaming
         /// If this is the last chunk (stream is closed)
         /// </summary>
         public bool IsLastChunk { get; set; }
+
+        /// <inheritdoc/>
+        long? IRpcStreamMessage.Stream => Stream;
 
         /// <inheritdoc/>
         protected override async Task SerializeAsync(Stream stream, CancellationToken cancellationToken)

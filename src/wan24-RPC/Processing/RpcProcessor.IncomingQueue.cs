@@ -6,6 +6,8 @@ using wan24.RPC.Processing.Messages;
  * a queued message was dequeued.
  */
 
+//TODO Use a priority queue here, too?
+
 namespace wan24.RPC.Processing
 {
     // Incoming queue
@@ -28,7 +30,7 @@ namespace wan24.RPC.Processing
             : ParallelItemQueueWorkerBase<IRpcMessage>(processor.Options.IncomingMessageQueueCapacity, processor.Options.IncomingMessageQueueThreads)
         {
             /// <summary>
-            /// Space event (raised and reset when having space)
+            /// Space event (raised when having space for another incoming message)
             /// </summary>
             public readonly ResetEvent SpaceEvent = new(initialState: true);
 

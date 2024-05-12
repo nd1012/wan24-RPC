@@ -6,7 +6,7 @@
     /// <remarks>
     /// Constructor
     /// </remarks>
-    public class RemoteStreamCloseMessage() : RpcMessageBase()
+    public class RemoteStreamCloseMessage() : RpcMessageBase(), IRpcStreamMessage
     {
         /// <summary>
         /// RPC message type ID
@@ -18,5 +18,8 @@
 
         /// <inheritdoc/>
         public sealed override bool RequireId => true;
+
+        /// <inheritdoc/>
+        long? IRpcStreamMessage.Stream => Id;
     }
 }

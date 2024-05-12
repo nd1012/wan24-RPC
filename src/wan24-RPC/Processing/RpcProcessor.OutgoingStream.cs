@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using wan24.Compression;
 using wan24.Core;
 using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Messages.Streaming;
@@ -164,23 +163,26 @@ namespace wan24.RPC.Processing
         /// </summary>
         /// <param name="stream">Stream</param>
         /// <param name="disposeStream">Dispose the stream after use?</param>
+        /// <param name="disposeRpcStream">Dispose the RPC stream from the RPC processor?</param>
         /// <returns>Parameter</returns>
-        protected virtual RpcStreamParameter CreateStreamParameter(in Stream stream, in bool disposeStream = false)
+        protected virtual RpcOutgoingStreamParameter CreateOutgoingStreamParameter(in Stream stream, in bool disposeStream = false, in bool disposeRpcStream = false)
         {
             EnsureUndisposed();
             EnsureStreamsAreEnabled();
-            CompressionOptions? compression = Options.DefaultCompression;
-            if (compression is not null)
-            {
-                compression.LeaveOpen = true;
-                if (stream.CanSeek)
-                    compression.UncompressedDataLength = stream.Length - stream.Position;
-            }
             return new()
             {
                 Source = stream,
                 DisposeSource = disposeStream,
-                Compression = compression
+                DisposeRpcStream = disposeRpcStream,
+                Compression = Options.DefaultCompression is null
+                    ? null
+                    : Options.DefaultCompression with
+                    {
+                        LeaveOpen = true,
+                        UncompressedDataLength = stream.CanSeek
+                            ? stream.Length - stream.Position
+                            : -1
+                    }
             };
         }
 
@@ -190,7 +192,7 @@ namespace wan24.RPC.Processing
         /// <param name="streamParameter">Parameter</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Stream value to send to the peer</returns>
-        protected virtual async Task<RpcStreamValue> CreateOutgoingStreamAsync(RpcStreamParameter streamParameter, CancellationToken cancellationToken = default)
+        protected virtual async Task<RpcStreamValue> CreateOutgoingStreamAsync(RpcOutgoingStreamParameter streamParameter, CancellationToken cancellationToken = default)
         {
             EnsureUndisposed();
             EnsureStreamsAreEnabled();
@@ -209,7 +211,7 @@ namespace wan24.RPC.Processing
                     Content = content
                 };
             }
-            // Prepare RPC streaming
+            // Create an outgoing RPC stream
             RpcStreamValue res = new()
             {
                 Stream = Interlocked.Increment(ref OutgoingStreamId),
@@ -219,23 +221,19 @@ namespace wan24.RPC.Processing
             OutgoingStream stream = new()
             {
                 Processor = this,
-                Id = res.Stream.Value,
                 Parameter = streamParameter,
-                UncompressedSourceLength = streamParameter.Compression is null
-                    ? len
-                    : null
+                Value = res
             };
             try
             {
                 if (!await AddOutgoingStreamAsync(stream, cancellationToken: cancellationToken).DynamicContext())
                     throw new InvalidProgramException($"Can't store outgoing stream #{stream.Id} (double stream ID)");
-                Options.Logger?.Log(LogLevel.Debug, "{this} created outgoing stream #{id}", ToString(), res.Stream);
+                Logger?.Log(LogLevel.Debug, "{this} created outgoing stream #{id}", ToString(), res.Stream);
                 return res;
             }
             catch
             {
                 await stream.DisposeAsync().DynamicContext();
-                await res.DisposeAsync().DynamicContext();
                 throw;
             }
         }
@@ -258,14 +256,16 @@ namespace wan24.RPC.Processing
             EnsureStreamsAreEnabled();
             if(await GetOutgoingStreamAsync(message.Id!.Value, cancellationToken: CancelToken).DynamicContext() is not OutgoingStream stream)
             {
-                Options.Logger?.Log(LogLevel.Warning, "{this} got unknown outgoing stream #{id} start request", ToString(), message.Id);
+                Logger?.Log(LogLevel.Warning, "{this} got unknown outgoing stream #{id} start request", ToString(), message.Id);
                 return;
             }
-            Options.Logger?.Log(LogLevel.Debug, "{this} got outgoing stream #{id} start request", ToString(), message.Id);
+            Logger?.Log(LogLevel.Debug, "{this} got outgoing stream #{id} start request", ToString(), message.Id);
             try
             {
+                // Start streaming
                 using Cancellations cancellations = new(CancelToken, stream.Cancellation.Token);
                 await stream.StartAsync().DynamicContext();
+                // Send the stream chunks
                 using RentedArrayStructSimple<byte> buffer = new(RpcStreamValue.MaxContentLength, clean: false);
                 int red,// Number of chunk bytes red
                     len;// Number of chunk bytes expected
@@ -275,15 +275,17 @@ namespace wan24.RPC.Processing
                 {
                     // Read the chunk
                     len = await GetStreamChunkLengthAsync(stream, cancellations).DynamicContext();
-                    red = await stream.ReadNextChunkAsync(buffer[..len], cancellations).DynamicContext();
+                    if (len > buffer.Length)
+                        throw new OutOfMemoryException($"Outgoing stream chunk length is larger than the buffer ({len}/{buffer.Length} bytes)");
+                    red = await stream.ReadNextChunkAsync(buffer.Memory[..len], cancellations).DynamicContext();
                     if (red > len)
-                        throw new IOException($"Next outgoing stream chunk is larger than expected ({red}/{len} bytes)");
+                        throw new InvalidProgramException($"Next outgoing stream chunk is larger than the buffer ({red}/{len} bytes)");
                     total += red;
-                    if (stream.UncompressedSourceLength.HasValue && total > stream.UncompressedSourceLength.Value)
-                        throw new IOException($"Total outgoing stream length is larger than expected ({total}/{stream.UncompressedSourceLength.Value} bytes)");
-                    isLastChunk = red != len || (stream.UncompressedSourceLength.HasValue && total == stream.UncompressedSourceLength.Value);
+                    if (stream.Value.Length.HasValue && total > stream.Value.Length.Value)
+                        throw new IOException($"Total outgoing stream length is larger than expected ({total}/{stream.Value.Length.Value} bytes)");
+                    isLastChunk = red != len || (stream.Value.Length.HasValue && total == stream.Value.Length.Value);
                     // Send the chunk and wait for the peer to confirm
-                    Options.Logger?.Log(LogLevel.Trace, "{this} sending outgoing stream #{id} chunk {len} bytes (last: {last})", ToString(), message.Id, red, isLastChunk);
+                    Logger?.Log(LogLevel.Trace, "{this} sending outgoing stream #{id} chunk {len} bytes (last: {last})", ToString(), message.Id, red, isLastChunk);
                     Request request = new()
                     {
                         Processor = this,
@@ -296,8 +298,7 @@ namespace wan24.RPC.Processing
                                 ? null
                                 : buffer[red..].ToArray(),
                             IsLastChunk = isLastChunk
-                        },
-                        ProcessorCancellation = cancellations
+                        }
                     };
                     await using (request.DynamicContext())
                     {
@@ -308,7 +309,7 @@ namespace wan24.RPC.Processing
                             await SendMessageAsync(request.Message, CHUNK_PRIORTY, cancellations).DynamicContext();
                             if (!isLastChunk)
                             {
-                                Options.Logger?.Log(LogLevel.Trace, "{this} outgoing stream #{id} waiting for chunk confirmation from the peer", ToString(), message.Id);
+                                Logger?.Log(LogLevel.Trace, "{this} outgoing stream #{id} waiting for chunk confirmation from the peer", ToString(), message.Id);
                                 await request.ProcessorCompletion.Task.WaitAsync(cancellations).DynamicContext();
                             }
                         }
@@ -330,16 +331,16 @@ namespace wan24.RPC.Processing
             }
             catch (OperationCanceledException) when (stream.RemoteCanceled || CancelToken.IsCancellationRequested)
             {
-                Options.Logger?.Log(LogLevel.Debug, "{this} sending outgoing stream #{id} chunks canceled", ToString(), message.Id);
+                Logger?.Log(LogLevel.Debug, "{this} sending outgoing stream #{id} chunks canceled", ToString(), message.Id);
             }
             catch (RpcRemoteException ex)
             {
-                Options.Logger?.Log(LogLevel.Warning, "{this} sending outgoing stream #{id} chunks canceled due to a remote chunk handler error: {ex}", ToString(), message.Id, ex);
+                Logger?.Log(LogLevel.Warning, "{this} sending outgoing stream #{id} chunks canceled due to a remote chunk handler error: {ex}", ToString(), message.Id, ex);
             }
             catch (Exception ex)
             {
                 stream.LastException ??= ex;
-                Options.Logger?.Log(LogLevel.Warning, "{this} sending outgoing stream #{id} chunks canceled due to a local error: {ex}", ToString(), message.Id, ex);
+                Logger?.Log(LogLevel.Warning, "{this} sending outgoing stream #{id} chunks canceled due to a local error: {ex}", ToString(), message.Id, ex);
                 if (!stream.IsDone)
                 {
                     stream.SetDone();
@@ -360,7 +361,7 @@ namespace wan24.RPC.Processing
             finally
             {
                 stream.SetDone();
-                Options.Logger?.Log(LogLevel.Debug, "{this} outgoing stream #{id} done within {runtime}", ToString(), message.Id, stream.Done - stream.Started);
+                Logger?.Log(LogLevel.Debug, "{this} outgoing stream #{id} done within {runtime}", ToString(), message.Id, stream.Done - stream.Started);
                 await (await RemoveOutgoingStreamAsync(stream.Id, cancellationToken: CancelToken).DynamicContext())!.DisposeAsync().DynamicContext();
             }
         }
@@ -372,13 +373,13 @@ namespace wan24.RPC.Processing
         protected virtual async Task HandleRemoteStreamCloseAsync(RemoteStreamCloseMessage message)
         {
             EnsureStreamsAreEnabled();
-            Options.Logger?.Log(LogLevel.Debug, "{this} got outgoing stream #{id} close request", ToString(), message.Id);
+            Logger?.Log(LogLevel.Debug, "{this} got outgoing stream #{id} close request", ToString(), message.Id);
             if (await GetOutgoingStreamAsync(message.Id!.Value, cancellationToken: CancelToken).DynamicContext() is OutgoingStream stream)
                 try
                 {
                     if (!stream.IsDisposing && !stream.Cancellation.IsCancellationRequested)
                     {
-                        Options.Logger?.Log(LogLevel.Trace, "{this} set outgoing stream #{id} remote canceled", ToString(), message.Id);
+                        Logger?.Log(LogLevel.Trace, "{this} set outgoing stream #{id} remote canceled", ToString(), message.Id);
                         stream.RemoteCanceled = true;
                         stream.Cancellation.Cancel();
                     }
@@ -386,231 +387,6 @@ namespace wan24.RPC.Processing
                 catch
                 {
                 }
-        }
-
-        /// <summary>
-        /// Outgoing stream
-        /// </summary>
-        /// <remarks>
-        /// Constructor
-        /// </remarks>
-        protected record class OutgoingStream() : DisposableRecordBase()
-        {
-            /// <summary>
-            /// RPC processor
-            /// </summary>
-            public required RpcProcessor Processor { get; init; }
-
-            /// <summary>
-            /// Stream ID
-            /// </summary>
-            public required long Id { get; init; }
-
-            /// <summary>
-            /// Parameter
-            /// </summary>
-            public required RpcStreamParameter Parameter { get; init; }
-
-            /// <summary>
-            /// Cancellation
-            /// </summary>
-            public CancellationTokenSource Cancellation { get; } = new();
-
-            /// <summary>
-            /// If canceled from the remote peer
-            /// </summary>
-            public bool RemoteCanceled { get; set; }
-
-            /// <summary>
-            /// Source stream
-            /// </summary>
-            public Stream? Source { get; protected set; }
-
-            /// <summary>
-            /// Uncompressed source stream length in bytes
-            /// </summary>
-            public long? UncompressedSourceLength { get; init; }
-
-            /// <summary>
-            /// Started time
-            /// </summary>
-            public DateTime Started { get; protected set; } = DateTime.MinValue;
-
-            /// <summary>
-            /// Done time
-            /// </summary>
-            public DateTime Done { get; protected set; } = DateTime.MinValue;
-
-            /// <summary>
-            /// If done
-            /// </summary>
-            public bool IsDone => Done != DateTime.MinValue;
-
-            /// <summary>
-            /// Transfer completed?
-            /// </summary>
-            public bool Completed { get; protected set; }
-
-            /// <summary>
-            /// Last transfer exception
-            /// </summary>
-            public Exception? LastException { get; set; }
-
-            /// <summary>
-            /// Start streaming
-            /// </summary>
-            /// <returns></returns>
-            public virtual Task StartAsync()
-            {
-                EnsureUndisposed();
-                if (Source is not null)
-                    throw new InvalidOperationException("Streaming was started already");
-                if (Parameter.Compression is null)
-                {
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} starting outgoing stream #{id} without compression", Processor.ToString(), Id);
-                    Source = Parameter.Source;
-                }
-                else
-                {
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} starting outgoing stream #{id} with compression", Processor.ToString(), Id);
-                    Source = new BlockingBufferStream(Processor.Options.CompressionBufferSize);
-                    _ = CompressAsync();
-                }
-                return Task.CompletedTask;
-            }
-
-            /// <summary>
-            /// Read the next chunk
-            /// </summary>
-            /// <param name="buffer">Buffer</param>
-            /// <param name="cancellationToken">Cancellation token</param>
-            /// <returns>Number of bytes red</returns>
-            public virtual async Task<int> ReadNextChunkAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
-            {
-                EnsureUndisposed();
-                if (Source is null || Completed || LastException is not null)
-                    throw new InvalidOperationException("Streaming wasn't started or is done already");
-                try
-                {
-                    if (Equals(cancellationToken, default))
-                        cancellationToken = Processor.CancelToken;
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} reading outgoing stream #{id} next chunk into {len} bytes buffer", Processor.ToString(), Id, buffer.Length);
-                    using Cancellations cancellation = new(cancellationToken, Cancellation.Token);
-                    int res = await Source.ReadAsync(buffer, cancellation).DynamicContext();
-                    if (res != buffer.Length)
-                    {
-                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} outgoing stream #{id} red last chunk with {len} bytes", Processor.ToString(), Id, res);
-                        Completed = true;
-                        SetDone();
-                    }
-                    else
-                    {
-                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} outgoing stream #{id} red chunk with {len} bytes", Processor.ToString(), Id, res);
-                    }
-                    return res;
-                }
-                catch (OperationCanceledException) when (Cancellation.IsCancellationRequested)
-                {
-                    Processor.Options.Logger?.Log(LogLevel.Debug, "{this} reading outgoing stream #{id} next chunk canceled", Processor.ToString(), Id);
-                    SetDone();
-                    throw;
-                }
-                catch (Exception ex)
-                {
-                    Processor.Options.Logger?.Log(LogLevel.Warning, "{this} reading outgoing stream #{id} next chunk failed: {ex}", Processor.ToString(), Id, ex);
-                    LastException ??= ex;
-                    SetDone();
-                    try
-                    {
-                        await Processor.SendMessageAsync(new LocalStreamCloseMessage()
-                        {
-                            PeerRpcVersion = Processor.Options.RpcVersion,
-                            Id = Id,
-                            Error = ex
-                        }, Processor.CancelToken).DynamicContext();
-                    }
-                    catch//TODO Handle exception
-                    {
-                    }
-                    throw;
-                }
-            }
-
-            /// <summary>
-            /// Set <see cref="Done"/>
-            /// </summary>
-            public virtual void SetDone()
-            {
-                if (Done == DateTime.MinValue)
-                    Done = DateTime.Now;
-            }
-
-            /// <summary>
-            /// Compression thread
-            /// </summary>
-            protected virtual async Task CompressAsync()
-            {
-                try
-                {
-                    await Task.Yield();
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} starting outgoing stream #{id} compression", Processor.ToString(), Id);
-                    using Cancellations cancellation = new(Processor.CancelToken, Cancellation.Token);
-                    BlockingBufferStream buffer = Source as BlockingBufferStream
-                        ?? throw new InvalidProgramException("Outgoing source stream is not a blocking buffer stream");
-                    Stream compression = CompressionHelper.GetCompressionStream(buffer, Parameter.Compression);
-                    await using (compression.DynamicContext())
-                        await Parameter.Source.CopyToAsync(compression, cancellation).DynamicContext();
-                    await buffer.SetIsEndOfFileAsync(CancellationToken.None).DynamicContext();
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} outgoing stream #{id} compression done", Processor.ToString(), Id);
-                }
-                catch (ObjectDisposedException) when (IsDisposing)
-                {
-                }
-                catch (OperationCanceledException) when (Cancellation.IsCancellationRequested)
-                {
-                    Processor.Options.Logger?.Log(LogLevel.Debug, "{this} outgoing stream #{id} compression canceled", Processor.ToString(), Id);
-                }
-                catch (Exception ex)
-                {
-                    Processor.Options.Logger?.Log(LogLevel.Warning, "{this} outgoing stream #{id} compression failed: {ex}", Processor.ToString(), Id, ex);
-                    LastException ??= ex;
-                    SetDone();
-                    try
-                    {
-                        await Processor.SendMessageAsync(new LocalStreamCloseMessage()
-                        {
-                            PeerRpcVersion = Processor.Options.RpcVersion,
-                            Id = Id,
-                            Error = ex
-                        }, Processor.CancelToken).DynamicContext();
-                    }
-                    catch//TODO Handle exception
-                    {
-                    }
-                }
-            }
-
-            /// <inheritdoc/>
-            protected override void Dispose(bool disposing)
-            {
-                Cancellation.Cancel();
-                Parameter.Dispose();
-                Cancellation.Dispose();
-                if (Source is not null && Source != Parameter.Source)
-                    Source?.Dispose();
-                SetDone();
-            }
-
-            /// <inheritdoc/>
-            protected override async Task DisposeCore()
-            {
-                Cancellation.Cancel();
-                await Parameter.DisposeAsync().DynamicContext();
-                Cancellation.Dispose();
-                if (Source is not null && Source != Parameter.Source)
-                    await Source.DisposeAsync().DynamicContext();
-                SetDone();
-            }
         }
     }
 }

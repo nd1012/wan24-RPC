@@ -25,6 +25,7 @@ namespace wan24.RPC.Api.Reflection
             Nullable = pi.IsNullable(nic);
             Enumerable = pi.ParameterType.IsEnumerable(strict: true, asyncOnly: true);
             DisposeParameterValue = pi.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
+            Stream = pi.GetCustomAttributeCached<RpcStreamAttribute>();
         }
 
         /// <summary>
@@ -71,5 +72,10 @@ namespace wan24.RPC.Api.Reflection
         /// If to dispose the parameter value after processing
         /// </summary>
         public bool DisposeParameterValue { get; protected set; } = true;
+
+        /// <summary>
+        /// Stream configuration
+        /// </summary>
+        public RpcStreamAttribute? Stream { get; protected set; }
     }
 }

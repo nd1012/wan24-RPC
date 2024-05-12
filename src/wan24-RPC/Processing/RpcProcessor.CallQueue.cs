@@ -44,19 +44,26 @@ namespace wan24.RPC.Processing
             /// </summary>
             public RpcProcessor Processor { get; } = processor;
 
+            /// <summary>
+            /// Logger
+            /// </summary>
+            public virtual ILogger? Logger => Processor.Logger;
+
             /// <inheritdoc/>
             protected override async Task ProcessItem(Call item, CancellationToken cancellationToken)
             {
                 await Task.Yield();
-                Processor.Options.Logger?.Log(LogLevel.Debug, "{this} processing call #{id}", ToString(), item.Message.Id);
+                Logger?.Log(LogLevel.Debug, "{this} processing call #{id}", ToString(), item.Message.Id);
                 if (item.Completion.Task.IsCompleted)
                 {
-                    Processor.Options.Logger?.Log(LogLevel.Debug, "{this} call #{id} processed already", ToString(), item.Message.Id);
+                    Logger?.Log(LogLevel.Debug, "{this} call #{id} processed already", ToString(), item.Message.Id);
                     return;
                 }
                 if (item.Message is not RequestMessage request)
                 {
-                    item.Completion.TrySetException(new InvalidDataException($"Request message expected (got {item.Message.GetType()} instead)"));
+                    Logger?.Log(LogLevel.Warning, "{this} call #{id} has no valid request message ({type} instead)", ToString(), item.Message.Id, item.Message.GetType());
+                    if (!item.Completion.Task.IsCompleted)
+                        item.Completion.TrySetException(new InvalidDataException($"Request message expected (got {item.Message.GetType()} instead)"));
                     return;
                 }
                 RpcApiMethodInfo? method = null;
@@ -72,12 +79,12 @@ namespace wan24.RPC.Processing
                         return;
                     }
                     // Create a context
-                    using Cancellations cancellation = new(cancellationToken, item.ProcessorCancellation, item.CallCancellation.Token);
-                    RpcContext context = Processor.GetContext(request, method, cancellation);
+                    using Cancellations cancellation = new(cancellationToken, Processor.CancelToken, item.Cancellation.Token);
+                    RpcContext context = Processor.CreateCallContext(request, method, cancellation);
                     await using (context.DynamicContext())
                     {
                         // Authorize
-                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} authorizing call #{id} API method \"{method}\" for the current context", ToString(), item.Message.Id, method);
+                        Logger?.Log(LogLevel.Trace, "{this} authorizing call #{id} API method \"{method}\" for the current context", ToString(), item.Message.Id, method);
                         if (!await AuthorizeContextAsync(item, request, method, context).DynamicContext())
                         {
                             if (!item.Completion.Task.IsCompleted)
@@ -95,15 +102,15 @@ namespace wan24.RPC.Processing
                         object? value;
                         foreach (RpcApiMethodParameterInfo p in method.Parameters.Values)
                         {
-                            Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value", ToString(), item.Message.Id, p.Method, p.Parameter.Name);
+                            Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value", ToString(), item.Message.Id, p.Method, p.Parameter.Name);
                             value = await GetParameterValueAsync(item, request, context, p, p.RPC ? index : -1).DynamicContext();
-                            Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolved call #{id} API method \"{method}\" parameter \"{name}\" value type {type}", ToString(), item.Message.Id, p.Method, p.Parameter.Name, value?.GetType().ToString() ?? "NULL");
+                            Logger?.Log(LogLevel.Trace, "{this} resolved call #{id} API method \"{method}\" parameter \"{name}\" value type {type}", ToString(), item.Message.Id, p.Method, p.Parameter.Name, value?.GetType().ToString() ?? "NULL");
                             if (value is not null)
                             {
                                 // Finalize the parameter value for the method call
-                                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving final call #{id} API method \"{method}\" parameter \"{name}\" value type {type}", ToString(), item.Message.Id, p.Method, p.Parameter.Name, value?.GetType().ToString() ?? "NULL");
+                                Logger?.Log(LogLevel.Trace, "{this} resolving final call #{id} API method \"{method}\" parameter \"{name}\" value type {type}", ToString(), item.Message.Id, p.Method, p.Parameter.Name, value?.GetType().ToString() ?? "NULL");
                                 value = await GetFinalParameterValueAsync(item, request, context, p, p.RPC ? index : -1, value).DynamicContext();
-                                Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{method}\" parameter \"{name}\" value type is now {type} after finalizing", ToString(), item.Message.Id, p.Method, p.Parameter.Name, value?.GetType().ToString() ?? "NULL");
+                                Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{method}\" parameter \"{name}\" value type is now {type} after finalizing", ToString(), item.Message.Id, p.Method, p.Parameter.Name, value?.GetType().ToString() ?? "NULL");
                             }
                             if (value is not null && !p.Parameter.ParameterType.IsAssignableFrom(value.GetType()))
                             {
@@ -116,8 +123,8 @@ namespace wan24.RPC.Processing
                                 index++;
                         }
                         // Call the method
-                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} processing call #{id} API method \"{method}\" execution", ToString(), item.Message.Id, method);
-                        item.Processed = true;
+                        Logger?.Log(LogLevel.Trace, "{this} processing call #{id} API method \"{method}\" execution", ToString(), item.Message.Id, method);
+                        item.WasProcessing = true;
                         returnValue = method.Method.Invoke(method.Method.IsStatic ? null : method.API.Instance, [.. parameters]);
                         while (returnValue is Task task)
                         {
@@ -126,14 +133,14 @@ namespace wan24.RPC.Processing
                                 ? task.GetResultNullable<object?>()
                                 : null;
                         }
-                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{method}\" finished execution with return value type {type}", ToString(), item.Message.Id, method, returnValue?.GetType().ToString() ?? "NULL");
+                        Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{method}\" finished execution with return value type {type}", ToString(), item.Message.Id, method, returnValue?.GetType().ToString() ?? "NULL");
                         // Handle the response
                         if (returnValue is not null)
                         {
                             // Finalize the return value for sending
-                            Processor.Options.Logger?.Log(LogLevel.Trace, "{this} finalizing call #{id} API method \"{method}\" return value type {type}", ToString(), item.Message.Id, method, returnValue?.GetType().ToString() ?? "NULL");
+                            Logger?.Log(LogLevel.Trace, "{this} finalizing call #{id} API method \"{method}\" return value type {type}", ToString(), item.Message.Id, method, returnValue?.GetType().ToString() ?? "NULL");
                             returnValue = await GetFinalReturnValueAsync(item, request, context, method, returnValue).DynamicContext();
-                            Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{method}\" return value type is now {type} after finalizing", ToString(), item.Message.Id, method, returnValue?.GetType().ToString() ?? "NULL");
+                            Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{method}\" return value type is now {type} after finalizing", ToString(), item.Message.Id, method, returnValue?.GetType().ToString() ?? "NULL");
                         }
                         item.Completion.TrySetResult(request.WantsReturnValue ? returnValue : null);
                     }
@@ -193,7 +200,7 @@ namespace wan24.RPC.Processing
                             return Task.FromResult<RpcApiMethodInfo?>(null);
                         }
                         // Get the newer method
-                        Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{currentMethod}\" forwards to \"{name}\"", ToString(), item.Message.Id, currentMethod, newerMethodName);
+                        Logger?.Log(LogLevel.Trace, "{this} call #{id} API method \"{currentMethod}\" forwards to \"{name}\"", ToString(), item.Message.Id, currentMethod, newerMethodName);
                         res = res.API.FindMethod(newerMethodName);
                         if (res is null)
                         {
@@ -242,7 +249,7 @@ namespace wan24.RPC.Processing
                 // Handle authorize all
                 if (method.API.Authorize || method.Authorize)
                 {
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API or method \"{method}\" authorizes all", ToString(), item.Message.Id, method);
+                    Logger?.Log(LogLevel.Trace, "{this} call #{id} API or method \"{method}\" authorizes all", ToString(), item.Message.Id, method);
                     return true;
                 }
                 // Perform authorization
@@ -258,15 +265,15 @@ namespace wan24.RPC.Processing
                         }
                         else
                         {
-                            Processor.Options.Logger?.Log(LogLevel.Trace, "{this} call #{id} API or method \"{method}\" authorized by {authZ}", ToString(), item.Message.Id, method, authZ);
+                            Logger?.Log(LogLevel.Trace, "{this} call #{id} API or method \"{method}\" authorized by {authZ}", ToString(), item.Message.Id, method, authZ);
                         }
+                    return true;
                 }
                 catch (Exception ex)
                 {
                     item.Completion.TrySetException(ex);
                     return false;
                 }
-                return true;
             }
 
             /// <summary>
@@ -291,7 +298,7 @@ namespace wan24.RPC.Processing
                 {
                     if (request.Parameters[index] is null && !parameter.Nullable)
                         throw new ArgumentNullException(parameter.Parameter.Name, $"RPC parameter must not be NULL");
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value from RPC request parameter #{index} ({type})", ToString(), item.Message.Id, parameter.Method, parameter.Parameter.Name, index, request.Parameters[index]?.GetType().ToString() ?? "NULL");
+                    Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value from RPC request parameter #{index} ({type})", ToString(), item.Message.Id, parameter.Method, parameter.Parameter.Name, index, request.Parameters[index]?.GetType().ToString() ?? "NULL");
                     return request.Parameters[index];
                 }
                 // Try DI
@@ -300,19 +307,19 @@ namespace wan24.RPC.Processing
                 {
                     if (result.Result is null && !parameter.Nullable)
                         throw new ArgumentNullException(parameter.Parameter.Name, $"DI resolved non-nullable parameter to NULL");
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value from DI ({type})", ToString(), item.Message.Id, parameter.Method, parameter.Parameter.Name, result.Result?.GetType().ToString() ?? "NULL");
+                    Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value from DI ({type})", ToString(), item.Message.Id, parameter.Method, parameter.Parameter.Name, result.Result?.GetType().ToString() ?? "NULL");
                     return result.Result;
                 }
                 // Use the default value
                 if (parameter.Parameter.HasDefaultValue)
                 {
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value from default ({type})", ToString(), item.Message.Id, parameter.Method, parameter.Parameter.Name, parameter.Parameter.DefaultValue?.GetType().ToString() ?? "NULL");
+                    Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" value from default ({type})", ToString(), item.Message.Id, parameter.Method, parameter.Parameter.Name, parameter.Parameter.DefaultValue?.GetType().ToString() ?? "NULL");
                     return parameter.Parameter.DefaultValue;
                 }
                 // Handle nullable parameter
                 if (parameter.Nullable)
                 {
-                    Processor.Options.Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" nullable value to NULL", ToString(), item.Message.Id, parameter.Method, parameter.Parameter.Name);
+                    Logger?.Log(LogLevel.Trace, "{this} resolving call #{id} API method \"{method}\" parameter \"{name}\" nullable value to NULL", ToString(), item.Message.Id, parameter.Method, parameter.Parameter.Name);
                     return null;
                 }
                 // Fail, if a required parameter value can't be resolved
@@ -341,8 +348,16 @@ namespace wan24.RPC.Processing
                 // Stream parameter handling
                 if (value is RpcStreamValue streamValue)
                 {
-                    value = await Processor.CreateIncomingStreamAsync(streamValue, !parameter.DisposeParameterValue, CancelToken).DynamicContext();
-                    item.Streams.Add(streamValue.IncomingStream ?? throw new InvalidProgramException("Missing incoming stream"));
+                    value = await Processor.CreateIncomingStreamAsync(streamValue, CancelToken).DynamicContext();
+                    if (
+                        streamValue.Stream.HasValue &&
+                        await Processor.GetIncomingStreamAsync(streamValue.Stream.Value, cancellationToken: CancelToken).DynamicContext() is IncomingStream stream
+                        )
+                    {
+                        stream.Call = item;
+                        stream.ApiParameter = parameter;
+                        item.ParameterStreams.Add(stream);
+                    }
                 }
                 //TODO Enumerations
                 return value;
@@ -367,12 +382,22 @@ namespace wan24.RPC.Processing
             {
                 // Stream handling
                 if (returnValue is Stream stream)
-                    returnValue = Processor.CreateStreamParameter(stream, method.DisposeReturnValue);
-                if (returnValue is RpcStreamParameter streamParameter)
+                    returnValue = Processor.CreateOutgoingStreamParameter(stream, method.DisposeReturnValue);
+                if (returnValue is RpcOutgoingStreamParameter streamParameter)
                 {
                     if (method.Stream is not null)
                         streamParameter.Compression = method.Stream.ApplyTo(streamParameter.Compression);
-                    returnValue = await Processor.CreateOutgoingStreamAsync(streamParameter, CancelToken).DynamicContext();
+                    RpcStreamValue value = await Processor.CreateOutgoingStreamAsync(streamParameter, CancelToken).DynamicContext();
+                    returnValue = value;
+                    if (
+                        value.Stream.HasValue &&
+                        await Processor.GetOutgoingStreamAsync(value.Stream.Value, cancellationToken: CancelToken).DynamicContext() is OutgoingStream stream2
+                        )
+                    {
+                        stream2.Call = item;
+                        stream2.ApiMethod = method;
+                        item.ReturnStream = stream2;
+                    }
                 }
                 //TODO Enumerations
                 return returnValue;

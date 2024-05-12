@@ -47,7 +47,7 @@ namespace wan24.RPC.Processing
             )
         {
             EnsureUndisposed();
-            Options.Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" method \"{method}\" at the peer ({count} parameters)", ToString(), api, method, parameters.Length);
+            Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" method \"{method}\" at the peer ({count} parameters)", ToString(), api, method, parameters.Length);
             Request request = new()
             {
                 Processor = this,
@@ -61,8 +61,7 @@ namespace wan24.RPC.Processing
                         ? null
                         : parameters
                 },
-                ProcessorCancellation = CancelToken,
-                RequestCancellation = cancellationToken
+                Cancellation = cancellationToken
             };
             await using (request.DynamicContext())
             {
@@ -108,7 +107,7 @@ namespace wan24.RPC.Processing
         public virtual async Task CallVoidAsync(string? api, string method, CancellationToken cancellationToken = default, params object?[] parameters)
         {
             EnsureUndisposed();
-            Options.Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" void method \"{method}\" at the peer ({count} parameters)", ToString(), api, method, parameters.Length);
+            Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" void method \"{method}\" at the peer ({count} parameters)", ToString(), api, method, parameters.Length);
             Request request = new()
             {
                 Processor = this,
@@ -123,8 +122,7 @@ namespace wan24.RPC.Processing
                         : parameters,
                     WantsReturnValue = false
                 },
-                ProcessorCancellation = CancelToken,
-                RequestCancellation = cancellationToken
+                Cancellation = cancellationToken
             };
             await using (request.DynamicContext())
             {
@@ -176,7 +174,7 @@ namespace wan24.RPC.Processing
         {
             if (queuedMessage.Message is RpcMessageBase rpcMessage && rpcMessage.RequireId && !rpcMessage.Id.HasValue)
                 rpcMessage.Id = Interlocked.Increment(ref MessageId);
-            Options.Logger?.Log(LogLevel.Trace, "{this} sending message type {type} ({clrType}) as #{id} with priority {priority}", ToString(), queuedMessage.Message.Type, queuedMessage.Message.GetType(), queuedMessage.Message.Id, queuedMessage.Priority);
+            Logger?.Log(LogLevel.Trace, "{this} sending message type {type} ({clrType}) as #{id} with priority {priority}", ToString(), queuedMessage.Message.Type, queuedMessage.Message.GetType(), queuedMessage.Message.Id, queuedMessage.Priority);
             try
             {
                 await OutgoingMessages.EnqueueAsync(queuedMessage, queuedMessage, queuedMessage.CancelToken).DynamicContext();
@@ -190,7 +188,7 @@ namespace wan24.RPC.Processing
             finally
             {
                 queuedMessage.SetDone();
-                Options.Logger?.Log(LogLevel.Trace, "{this} processed message type {type} ({clrType}) sending as #{id} with priority {priority} within {runtime}", ToString(), queuedMessage.Message.Type, queuedMessage.Message.GetType(), queuedMessage.Message.Id, queuedMessage.Priority, queuedMessage.Done - queuedMessage.Enqueued);
+                Logger?.Log(LogLevel.Trace, "{this} processed message type {type} ({clrType}) sending as #{id} with priority {priority} within {runtime}", ToString(), queuedMessage.Message.Type, queuedMessage.Message.GetType(), queuedMessage.Message.Id, queuedMessage.Priority, queuedMessage.Done - queuedMessage.Enqueued);
             }
         }
 
@@ -206,7 +204,7 @@ namespace wan24.RPC.Processing
             using SemaphoreSyncContext ssc = await WriteSync.SyncContextAsync(cancellationToken).DynamicContext();
             if (message is RpcMessageBase rpcMessage && rpcMessage.RequireId && !rpcMessage.Id.HasValue)
                 rpcMessage.Id = Interlocked.Increment(ref MessageId);
-            Options.Logger?.Log(LogLevel.Trace, "{this} sending message type {type} ({clrType}) as #{id}", ToString(), message.Type, message.GetType(), message.Id);
+            Logger?.Log(LogLevel.Trace, "{this} sending message type {type} ({clrType}) as #{id}", ToString(), message.Type, message.GetType(), message.Id);
             using (LimitedLengthStream limited = new(Options.Stream, Options.MaxMessageLength, leaveOpen: true))
                 try
                 {
@@ -214,7 +212,7 @@ namespace wan24.RPC.Processing
                 }
                 catch (OutOfMemoryException)
                 {
-                    Options.Logger?.Log(LogLevel.Error, "{this} outgoing message type {type} ({clrType}) ID #{id} is too big (disposing due to invalid RPC stream state)", ToString(), message.Type, message.GetType(), message.Id);
+                    Logger?.Log(LogLevel.Error, "{this} outgoing message type {type} ({clrType}) ID #{id} is too big (disposing due to invalid RPC stream state)", ToString(), message.Type, message.GetType(), message.Id);
                     _ = DisposeAsync().AsTask();
                     throw;
                 }

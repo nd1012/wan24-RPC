@@ -1,15 +1,17 @@
 ﻿using System.IO.Compression;
 using wan24.Compression;
 
+//TODO Require/validate stream length
+
 namespace wan24.RPC.Api.Attributes
 {
     /// <summary>
-    /// Attribute for a RPC API method stream return value transport configuration
+    /// Attribute for a RPC API method stream parameter or return value transport configuration
     /// </summary>
     /// <remarks>
     /// Constructor
     /// </remarks>
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Parameter)]
     public class RpcStreamAttribute() : Attribute()
     {
         /// <summary>
@@ -31,6 +33,11 @@ namespace wan24.RPC.Api.Attributes
         /// Used comression level
         /// </summary>
         public CompressionLevel? CompressionLevel { get; set; }
+
+        /// <summary>
+        /// If to dispose the RPC stream from the RPC processor
+        /// </summary>
+        public bool DisposeRpcStream { get; set; }
 
         /// <summary>
         /// Apply the configuration to <see cref="CompressionOptions"/>

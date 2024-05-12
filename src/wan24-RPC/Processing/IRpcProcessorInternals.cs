@@ -27,14 +27,15 @@ namespace wan24.RPC.Processing
         /// </summary>
         /// <param name="stream">Stream</param>
         /// <param name="disposeStream">Dispose the stream after use?</param>
+        /// <param name="disposeRpcStream">Dispose the RPC stream from the RPC processor?</param>
         /// <returns>Parameter</returns>
-        RpcStreamParameter CreateStreamParameter(in Stream stream, in bool disposeStream = false);
+        RpcOutgoingStreamParameter CreateOutgoingStreamParameter(in Stream stream, in bool disposeStream = false, in bool disposeRpcStream = false);
         /// <summary>
         /// Create an outgoing stream
         /// </summary>
         /// <param name="streamParameter">Parameter</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Stream value to send to the peer</returns>
-        Task<RpcStreamValue> CreateOutgoingStreamAsync(RpcStreamParameter streamParameter, CancellationToken cancellationToken = default);
+        Task<RpcStreamValue> CreateOutgoingStreamAsync(RpcOutgoingStreamParameter streamParameter, CancellationToken cancellationToken = default);
     }
 }
