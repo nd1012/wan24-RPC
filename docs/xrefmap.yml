@@ -329,6 +329,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Api.Attributes.RpcStreamAttribute.CompressionLevel
   nameWithType: RpcStreamAttribute.CompressionLevel
+- uid: wan24.RPC.Api.Attributes.RpcStreamAttribute.DisposeRpcStream
+  name: DisposeRpcStream
+  href: api/wan24.RPC.Api.Attributes.RpcStreamAttribute.html#wan24_RPC_Api_Attributes_RpcStreamAttribute_DisposeRpcStream
+  commentId: P:wan24.RPC.Api.Attributes.RpcStreamAttribute.DisposeRpcStream
+  fullName: wan24.RPC.Api.Attributes.RpcStreamAttribute.DisposeRpcStream
+  nameWithType: RpcStreamAttribute.DisposeRpcStream
+- uid: wan24.RPC.Api.Attributes.RpcStreamAttribute.DisposeRpcStream*
+  name: DisposeRpcStream
+  href: api/wan24.RPC.Api.Attributes.RpcStreamAttribute.html#wan24_RPC_Api_Attributes_RpcStreamAttribute_DisposeRpcStream_
+  commentId: Overload:wan24.RPC.Api.Attributes.RpcStreamAttribute.DisposeRpcStream
+  isSpec: "True"
+  fullName: wan24.RPC.Api.Attributes.RpcStreamAttribute.DisposeRpcStream
+  nameWithType: RpcStreamAttribute.DisposeRpcStream
 - uid: wan24.RPC.Api.Attributes.RpcVersionAttribute
   name: RpcVersionAttribute
   href: api/wan24.RPC.Api.Attributes.RpcVersionAttribute.html
@@ -1229,6 +1242,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Api.Reflection.RpcApiMethodParameterInfo.RPC
   nameWithType: RpcApiMethodParameterInfo.RPC
+- uid: wan24.RPC.Api.Reflection.RpcApiMethodParameterInfo.Stream
+  name: Stream
+  href: api/wan24.RPC.Api.Reflection.RpcApiMethodParameterInfo.html#wan24_RPC_Api_Reflection_RpcApiMethodParameterInfo_Stream
+  commentId: P:wan24.RPC.Api.Reflection.RpcApiMethodParameterInfo.Stream
+  fullName: wan24.RPC.Api.Reflection.RpcApiMethodParameterInfo.Stream
+  nameWithType: RpcApiMethodParameterInfo.Stream
+- uid: wan24.RPC.Api.Reflection.RpcApiMethodParameterInfo.Stream*
+  name: Stream
+  href: api/wan24.RPC.Api.Reflection.RpcApiMethodParameterInfo.html#wan24_RPC_Api_Reflection_RpcApiMethodParameterInfo_Stream_
+  commentId: Overload:wan24.RPC.Api.Reflection.RpcApiMethodParameterInfo.Stream
+  isSpec: "True"
+  fullName: wan24.RPC.Api.Reflection.RpcApiMethodParameterInfo.Stream
+  nameWithType: RpcApiMethodParameterInfo.Stream
 - uid: wan24.RPC.Api.RpcApiBase
   name: RpcApiBase
   href: api/wan24.RPC.Api.RpcApiBase.html
@@ -1450,18 +1476,115 @@ references:
   fullName.vb: wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.New
   nameWithType: TooManyRpcStreamsException.TooManyRpcStreamsException
   nameWithType.vb: TooManyRpcStreamsException.New
+- uid: wan24.RPC.Processing.IIncomingRpcStream
+  name: IIncomingRpcStream
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html
+  commentId: T:wan24.RPC.Processing.IIncomingRpcStream
+  fullName: wan24.RPC.Processing.IIncomingRpcStream
+  nameWithType: IIncomingRpcStream
+- uid: wan24.RPC.Processing.IIncomingRpcStream.CancelAsync
+  name: CancelAsync()
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_CancelAsync
+  commentId: M:wan24.RPC.Processing.IIncomingRpcStream.CancelAsync
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.CancelAsync()
+  nameWithType: IIncomingRpcStream.CancelAsync()
+- uid: wan24.RPC.Processing.IIncomingRpcStream.CancelAsync*
+  name: CancelAsync
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_CancelAsync_
+  commentId: Overload:wan24.RPC.Processing.IIncomingRpcStream.CancelAsync
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.CancelAsync
+  nameWithType: IIncomingRpcStream.CancelAsync
+- uid: wan24.RPC.Processing.IIncomingRpcStream.IsCanceled
+  name: IsCanceled
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_IsCanceled
+  commentId: P:wan24.RPC.Processing.IIncomingRpcStream.IsCanceled
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.IsCanceled
+  nameWithType: IIncomingRpcStream.IsCanceled
+- uid: wan24.RPC.Processing.IIncomingRpcStream.IsCanceled*
+  name: IsCanceled
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_IsCanceled_
+  commentId: Overload:wan24.RPC.Processing.IIncomingRpcStream.IsCanceled
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.IsCanceled
+  nameWithType: IIncomingRpcStream.IsCanceled
+- uid: wan24.RPC.Processing.IIncomingRpcStream.IsDisposed
+  name: IsDisposed
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_IsDisposed
+  commentId: P:wan24.RPC.Processing.IIncomingRpcStream.IsDisposed
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.IsDisposed
+  nameWithType: IIncomingRpcStream.IsDisposed
+- uid: wan24.RPC.Processing.IIncomingRpcStream.IsDisposed*
+  name: IsDisposed
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_IsDisposed_
+  commentId: Overload:wan24.RPC.Processing.IIncomingRpcStream.IsDisposed
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.IsDisposed
+  nameWithType: IIncomingRpcStream.IsDisposed
+- uid: wan24.RPC.Processing.IIncomingRpcStream.IsDone
+  name: IsDone
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_IsDone
+  commentId: P:wan24.RPC.Processing.IIncomingRpcStream.IsDone
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.IsDone
+  nameWithType: IIncomingRpcStream.IsDone
+- uid: wan24.RPC.Processing.IIncomingRpcStream.IsDone*
+  name: IsDone
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_IsDone_
+  commentId: Overload:wan24.RPC.Processing.IIncomingRpcStream.IsDone
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.IsDone
+  nameWithType: IIncomingRpcStream.IsDone
+- uid: wan24.RPC.Processing.IIncomingRpcStream.IsStarted
+  name: IsStarted
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_IsStarted
+  commentId: P:wan24.RPC.Processing.IIncomingRpcStream.IsStarted
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.IsStarted
+  nameWithType: IIncomingRpcStream.IsStarted
+- uid: wan24.RPC.Processing.IIncomingRpcStream.IsStarted*
+  name: IsStarted
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_IsStarted_
+  commentId: Overload:wan24.RPC.Processing.IIncomingRpcStream.IsStarted
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.IsStarted
+  nameWithType: IIncomingRpcStream.IsStarted
+- uid: wan24.RPC.Processing.IIncomingRpcStream.LastRemoteException
+  name: LastRemoteException
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_LastRemoteException
+  commentId: P:wan24.RPC.Processing.IIncomingRpcStream.LastRemoteException
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.LastRemoteException
+  nameWithType: IIncomingRpcStream.LastRemoteException
+- uid: wan24.RPC.Processing.IIncomingRpcStream.LastRemoteException*
+  name: LastRemoteException
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_LastRemoteException_
+  commentId: Overload:wan24.RPC.Processing.IIncomingRpcStream.LastRemoteException
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.LastRemoteException
+  nameWithType: IIncomingRpcStream.LastRemoteException
+- uid: wan24.RPC.Processing.IIncomingRpcStream.StartAsync(System.Threading.CancellationToken)
+  name: StartAsync(CancellationToken)
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_StartAsync_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Processing.IIncomingRpcStream.StartAsync(System.Threading.CancellationToken)
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.StartAsync(System.Threading.CancellationToken)
+  nameWithType: IIncomingRpcStream.StartAsync(CancellationToken)
+- uid: wan24.RPC.Processing.IIncomingRpcStream.StartAsync*
+  name: StartAsync
+  href: api/wan24.RPC.Processing.IIncomingRpcStream.html#wan24_RPC_Processing_IIncomingRpcStream_StartAsync_
+  commentId: Overload:wan24.RPC.Processing.IIncomingRpcStream.StartAsync
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.IIncomingRpcStream.StartAsync
+  nameWithType: IIncomingRpcStream.StartAsync
 - uid: wan24.RPC.Processing.IRpcProcessorInternals
   name: IRpcProcessorInternals
   href: api/wan24.RPC.Processing.IRpcProcessorInternals.html
   commentId: T:wan24.RPC.Processing.IRpcProcessorInternals
   fullName: wan24.RPC.Processing.IRpcProcessorInternals
   nameWithType: IRpcProcessorInternals
-- uid: wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcStreamParameter,System.Threading.CancellationToken)
-  name: CreateOutgoingStreamAsync(RpcStreamParameter, CancellationToken)
-  href: api/wan24.RPC.Processing.IRpcProcessorInternals.html#wan24_RPC_Processing_IRpcProcessorInternals_CreateOutgoingStreamAsync_wan24_RPC_Processing_Parameters_RpcStreamParameter_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcStreamParameter,System.Threading.CancellationToken)
-  fullName: wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcStreamParameter, System.Threading.CancellationToken)
-  nameWithType: IRpcProcessorInternals.CreateOutgoingStreamAsync(RpcStreamParameter, CancellationToken)
+- uid: wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter,System.Threading.CancellationToken)
+  name: CreateOutgoingStreamAsync(RpcOutgoingStreamParameter, CancellationToken)
+  href: api/wan24.RPC.Processing.IRpcProcessorInternals.html#wan24_RPC_Processing_IRpcProcessorInternals_CreateOutgoingStreamAsync_wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter,System.Threading.CancellationToken)
+  fullName: wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter, System.Threading.CancellationToken)
+  nameWithType: IRpcProcessorInternals.CreateOutgoingStreamAsync(RpcOutgoingStreamParameter, CancellationToken)
 - uid: wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamAsync*
   name: CreateOutgoingStreamAsync
   href: api/wan24.RPC.Processing.IRpcProcessorInternals.html#wan24_RPC_Processing_IRpcProcessorInternals_CreateOutgoingStreamAsync_
@@ -1469,22 +1592,22 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamAsync
   nameWithType: IRpcProcessorInternals.CreateOutgoingStreamAsync
-- uid: wan24.RPC.Processing.IRpcProcessorInternals.CreateStreamParameter(System.IO.Stream@,System.Boolean@)
-  name: CreateStreamParameter(in Stream, in bool)
-  href: api/wan24.RPC.Processing.IRpcProcessorInternals.html#wan24_RPC_Processing_IRpcProcessorInternals_CreateStreamParameter_System_IO_Stream__System_Boolean__
-  commentId: M:wan24.RPC.Processing.IRpcProcessorInternals.CreateStreamParameter(System.IO.Stream@,System.Boolean@)
-  name.vb: CreateStreamParameter(Stream, Boolean)
-  fullName: wan24.RPC.Processing.IRpcProcessorInternals.CreateStreamParameter(in System.IO.Stream, in bool)
-  fullName.vb: wan24.RPC.Processing.IRpcProcessorInternals.CreateStreamParameter(System.IO.Stream, Boolean)
-  nameWithType: IRpcProcessorInternals.CreateStreamParameter(in Stream, in bool)
-  nameWithType.vb: IRpcProcessorInternals.CreateStreamParameter(Stream, Boolean)
-- uid: wan24.RPC.Processing.IRpcProcessorInternals.CreateStreamParameter*
-  name: CreateStreamParameter
-  href: api/wan24.RPC.Processing.IRpcProcessorInternals.html#wan24_RPC_Processing_IRpcProcessorInternals_CreateStreamParameter_
-  commentId: Overload:wan24.RPC.Processing.IRpcProcessorInternals.CreateStreamParameter
+- uid: wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamParameter(System.IO.Stream@,System.Boolean@,System.Boolean@)
+  name: CreateOutgoingStreamParameter(in Stream, in bool, in bool)
+  href: api/wan24.RPC.Processing.IRpcProcessorInternals.html#wan24_RPC_Processing_IRpcProcessorInternals_CreateOutgoingStreamParameter_System_IO_Stream__System_Boolean__System_Boolean__
+  commentId: M:wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamParameter(System.IO.Stream@,System.Boolean@,System.Boolean@)
+  name.vb: CreateOutgoingStreamParameter(Stream, Boolean, Boolean)
+  fullName: wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamParameter(in System.IO.Stream, in bool, in bool)
+  fullName.vb: wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamParameter(System.IO.Stream, Boolean, Boolean)
+  nameWithType: IRpcProcessorInternals.CreateOutgoingStreamParameter(in Stream, in bool, in bool)
+  nameWithType.vb: IRpcProcessorInternals.CreateOutgoingStreamParameter(Stream, Boolean, Boolean)
+- uid: wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamParameter*
+  name: CreateOutgoingStreamParameter
+  href: api/wan24.RPC.Processing.IRpcProcessorInternals.html#wan24_RPC_Processing_IRpcProcessorInternals_CreateOutgoingStreamParameter_
+  commentId: Overload:wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamParameter
   isSpec: "True"
-  fullName: wan24.RPC.Processing.IRpcProcessorInternals.CreateStreamParameter
-  nameWithType: IRpcProcessorInternals.CreateStreamParameter
+  fullName: wan24.RPC.Processing.IRpcProcessorInternals.CreateOutgoingStreamParameter
+  nameWithType: IRpcProcessorInternals.CreateOutgoingStreamParameter
 - uid: wan24.RPC.Processing.IRpcProcessorInternals.SendMessageAsync(wan24.RPC.Processing.Messages.IRpcMessage,System.Int32,System.Threading.CancellationToken)
   name: SendMessageAsync(IRpcMessage, int, CancellationToken)
   href: api/wan24.RPC.Processing.IRpcProcessorInternals.html#wan24_RPC_Processing_IRpcProcessorInternals_SendMessageAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Int32_System_Threading_CancellationToken_
@@ -3144,6 +3267,25 @@ references:
   commentId: N:wan24.RPC.Processing.Messages.Streaming
   fullName: wan24.RPC.Processing.Messages.Streaming
   nameWithType: wan24.RPC.Processing.Messages.Streaming
+- uid: wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage
+  name: IRpcStreamMessage
+  href: api/wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage.html
+  commentId: T:wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage
+  fullName: wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage
+  nameWithType: IRpcStreamMessage
+- uid: wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage.Stream
+  name: Stream
+  href: api/wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage.html#wan24_RPC_Processing_Messages_Streaming_IRpcStreamMessage_Stream
+  commentId: P:wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage.Stream
+  fullName: wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage.Stream
+  nameWithType: IRpcStreamMessage.Stream
+- uid: wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage.Stream*
+  name: Stream
+  href: api/wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage.html#wan24_RPC_Processing_Messages_Streaming_IRpcStreamMessage_Stream_
+  commentId: Overload:wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage.Stream
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.Messages.Streaming.IRpcStreamMessage.Stream
+  nameWithType: IRpcStreamMessage.Stream
 - uid: wan24.RPC.Processing.Messages.Streaming.LocalStreamCloseMessage
   name: LocalStreamCloseMessage
   href: api/wan24.RPC.Processing.Messages.Streaming.LocalStreamCloseMessage.html
@@ -3631,99 +3773,83 @@ references:
   fullName.vb: wan24.RPC.Processing.Parameters.RpcEnumerationParameter(Of T).MoveNextAsync
   nameWithType: RpcEnumerationParameter<T>.MoveNextAsync
   nameWithType.vb: RpcEnumerationParameter(Of T).MoveNextAsync
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter
-  name: RpcStreamParameter
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html
-  commentId: T:wan24.RPC.Processing.Parameters.RpcStreamParameter
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter
-  nameWithType: RpcStreamParameter
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.#ctor
-  name: RpcStreamParameter()
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter__ctor
-  commentId: M:wan24.RPC.Processing.Parameters.RpcStreamParameter.#ctor
+- uid: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter
+  name: RpcOutgoingStreamParameter
+  href: api/wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.html
+  commentId: T:wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter
+  fullName: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter
+  nameWithType: RpcOutgoingStreamParameter
+- uid: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.#ctor
+  name: RpcOutgoingStreamParameter()
+  href: api/wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.html#wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter__ctor
+  commentId: M:wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.#ctor
   name.vb: New()
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.RpcStreamParameter()
-  fullName.vb: wan24.RPC.Processing.Parameters.RpcStreamParameter.New()
-  nameWithType: RpcStreamParameter.RpcStreamParameter()
-  nameWithType.vb: RpcStreamParameter.New()
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.#ctor*
-  name: RpcStreamParameter
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter__ctor_
-  commentId: Overload:wan24.RPC.Processing.Parameters.RpcStreamParameter.#ctor
+  fullName: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.RpcOutgoingStreamParameter()
+  fullName.vb: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.New()
+  nameWithType: RpcOutgoingStreamParameter.RpcOutgoingStreamParameter()
+  nameWithType.vb: RpcOutgoingStreamParameter.New()
+- uid: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.#ctor*
+  name: RpcOutgoingStreamParameter
+  href: api/wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.html#wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter__ctor_
+  commentId: Overload:wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.#ctor
   isSpec: "True"
   name.vb: New
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.RpcStreamParameter
-  fullName.vb: wan24.RPC.Processing.Parameters.RpcStreamParameter.New
-  nameWithType: RpcStreamParameter.RpcStreamParameter
-  nameWithType.vb: RpcStreamParameter.New
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.Compression
+  fullName: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.RpcOutgoingStreamParameter
+  fullName.vb: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.New
+  nameWithType: RpcOutgoingStreamParameter.RpcOutgoingStreamParameter
+  nameWithType.vb: RpcOutgoingStreamParameter.New
+- uid: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Compression
   name: Compression
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter_Compression
-  commentId: P:wan24.RPC.Processing.Parameters.RpcStreamParameter.Compression
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.Compression
-  nameWithType: RpcStreamParameter.Compression
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.Compression*
+  href: api/wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.html#wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter_Compression
+  commentId: P:wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Compression
+  fullName: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Compression
+  nameWithType: RpcOutgoingStreamParameter.Compression
+- uid: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Compression*
   name: Compression
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter_Compression_
-  commentId: Overload:wan24.RPC.Processing.Parameters.RpcStreamParameter.Compression
+  href: api/wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.html#wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter_Compression_
+  commentId: Overload:wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Compression
   isSpec: "True"
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.Compression
-  nameWithType: RpcStreamParameter.Compression
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.Dispose(System.Boolean)
-  name: Dispose(bool)
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter_Dispose_System_Boolean_
-  commentId: M:wan24.RPC.Processing.Parameters.RpcStreamParameter.Dispose(System.Boolean)
-  name.vb: Dispose(Boolean)
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.Dispose(bool)
-  fullName.vb: wan24.RPC.Processing.Parameters.RpcStreamParameter.Dispose(Boolean)
-  nameWithType: RpcStreamParameter.Dispose(bool)
-  nameWithType.vb: RpcStreamParameter.Dispose(Boolean)
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.Dispose*
-  name: Dispose
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter_Dispose_
-  commentId: Overload:wan24.RPC.Processing.Parameters.RpcStreamParameter.Dispose
+  fullName: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Compression
+  nameWithType: RpcOutgoingStreamParameter.Compression
+- uid: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeRpcStream
+  name: DisposeRpcStream
+  href: api/wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.html#wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter_DisposeRpcStream
+  commentId: P:wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeRpcStream
+  fullName: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeRpcStream
+  nameWithType: RpcOutgoingStreamParameter.DisposeRpcStream
+- uid: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeRpcStream*
+  name: DisposeRpcStream
+  href: api/wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.html#wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter_DisposeRpcStream_
+  commentId: Overload:wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeRpcStream
   isSpec: "True"
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.Dispose
-  nameWithType: RpcStreamParameter.Dispose
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeCore
-  name: DisposeCore()
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter_DisposeCore
-  commentId: M:wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeCore
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeCore()
-  nameWithType: RpcStreamParameter.DisposeCore()
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeCore*
-  name: DisposeCore
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter_DisposeCore_
-  commentId: Overload:wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeCore
-  isSpec: "True"
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeCore
-  nameWithType: RpcStreamParameter.DisposeCore
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeSource
+  fullName: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeRpcStream
+  nameWithType: RpcOutgoingStreamParameter.DisposeRpcStream
+- uid: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeSource
   name: DisposeSource
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter_DisposeSource
-  commentId: P:wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeSource
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeSource
-  nameWithType: RpcStreamParameter.DisposeSource
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeSource*
+  href: api/wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.html#wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter_DisposeSource
+  commentId: P:wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeSource
+  fullName: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeSource
+  nameWithType: RpcOutgoingStreamParameter.DisposeSource
+- uid: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeSource*
   name: DisposeSource
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter_DisposeSource_
-  commentId: Overload:wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeSource
+  href: api/wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.html#wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter_DisposeSource_
+  commentId: Overload:wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeSource
   isSpec: "True"
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.DisposeSource
-  nameWithType: RpcStreamParameter.DisposeSource
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.Source
+  fullName: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.DisposeSource
+  nameWithType: RpcOutgoingStreamParameter.DisposeSource
+- uid: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Source
   name: Source
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter_Source
-  commentId: P:wan24.RPC.Processing.Parameters.RpcStreamParameter.Source
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.Source
-  nameWithType: RpcStreamParameter.Source
-- uid: wan24.RPC.Processing.Parameters.RpcStreamParameter.Source*
+  href: api/wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.html#wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter_Source
+  commentId: P:wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Source
+  fullName: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Source
+  nameWithType: RpcOutgoingStreamParameter.Source
+- uid: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Source*
   name: Source
-  href: api/wan24.RPC.Processing.Parameters.RpcStreamParameter.html#wan24_RPC_Processing_Parameters_RpcStreamParameter_Source_
-  commentId: Overload:wan24.RPC.Processing.Parameters.RpcStreamParameter.Source
+  href: api/wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.html#wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter_Source_
+  commentId: Overload:wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Source
   isSpec: "True"
-  fullName: wan24.RPC.Processing.Parameters.RpcStreamParameter.Source
-  nameWithType: RpcStreamParameter.Source
+  fullName: wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter.Source
+  nameWithType: RpcOutgoingStreamParameter.Source
 - uid: wan24.RPC.Processing.RpcContext
   name: RpcContext
   href: api/wan24.RPC.Processing.RpcContext.html
@@ -4217,19 +4343,19 @@ references:
   fullName.vb: wan24.RPC.Processing.RpcProcessor.Call.New
   nameWithType: RpcProcessor.Call.Call
   nameWithType.vb: RpcProcessor.Call.New
-- uid: wan24.RPC.Processing.RpcProcessor.Call.CallCancellation
-  name: CallCancellation
-  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_CallCancellation
-  commentId: P:wan24.RPC.Processing.RpcProcessor.Call.CallCancellation
-  fullName: wan24.RPC.Processing.RpcProcessor.Call.CallCancellation
-  nameWithType: RpcProcessor.Call.CallCancellation
-- uid: wan24.RPC.Processing.RpcProcessor.Call.CallCancellation*
-  name: CallCancellation
-  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_CallCancellation_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.CallCancellation
+- uid: wan24.RPC.Processing.RpcProcessor.Call.Cancellation
+  name: Cancellation
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Cancellation
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Call.Cancellation
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.Cancellation
+  nameWithType: RpcProcessor.Call.Cancellation
+- uid: wan24.RPC.Processing.RpcProcessor.Call.Cancellation*
+  name: Cancellation
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Cancellation_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.Cancellation
   isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.Call.CallCancellation
-  nameWithType: RpcProcessor.Call.CallCancellation
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.Cancellation
+  nameWithType: RpcProcessor.Call.Cancellation
 - uid: wan24.RPC.Processing.RpcProcessor.Call.Completion
   name: Completion
   href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Completion
@@ -4311,6 +4437,32 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Call.Done
   nameWithType: RpcProcessor.Call.Done
+- uid: wan24.RPC.Processing.RpcProcessor.Call.HandleExceptionAsync(System.Exception)
+  name: HandleExceptionAsync(Exception)
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_HandleExceptionAsync_System_Exception_
+  commentId: M:wan24.RPC.Processing.RpcProcessor.Call.HandleExceptionAsync(System.Exception)
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.HandleExceptionAsync(System.Exception)
+  nameWithType: RpcProcessor.Call.HandleExceptionAsync(Exception)
+- uid: wan24.RPC.Processing.RpcProcessor.Call.HandleExceptionAsync*
+  name: HandleExceptionAsync
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_HandleExceptionAsync_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.HandleExceptionAsync
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.HandleExceptionAsync
+  nameWithType: RpcProcessor.Call.HandleExceptionAsync
+- uid: wan24.RPC.Processing.RpcProcessor.Call.IsDone
+  name: IsDone
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_IsDone
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Call.IsDone
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.IsDone
+  nameWithType: RpcProcessor.Call.IsDone
+- uid: wan24.RPC.Processing.RpcProcessor.Call.IsDone*
+  name: IsDone
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_IsDone_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.IsDone
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.IsDone
+  nameWithType: RpcProcessor.Call.IsDone
 - uid: wan24.RPC.Processing.RpcProcessor.Call.Message
   name: Message
   href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Message
@@ -4324,19 +4476,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Call.Message
   nameWithType: RpcProcessor.Call.Message
-- uid: wan24.RPC.Processing.RpcProcessor.Call.Processed
-  name: Processed
-  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Processed
-  commentId: P:wan24.RPC.Processing.RpcProcessor.Call.Processed
-  fullName: wan24.RPC.Processing.RpcProcessor.Call.Processed
-  nameWithType: RpcProcessor.Call.Processed
-- uid: wan24.RPC.Processing.RpcProcessor.Call.Processed*
-  name: Processed
-  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Processed_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.Processed
+- uid: wan24.RPC.Processing.RpcProcessor.Call.ParameterStreams
+  name: ParameterStreams
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_ParameterStreams
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Call.ParameterStreams
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.ParameterStreams
+  nameWithType: RpcProcessor.Call.ParameterStreams
+- uid: wan24.RPC.Processing.RpcProcessor.Call.ParameterStreams*
+  name: ParameterStreams
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_ParameterStreams_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.ParameterStreams
   isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.Call.Processed
-  nameWithType: RpcProcessor.Call.Processed
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.ParameterStreams
+  nameWithType: RpcProcessor.Call.ParameterStreams
 - uid: wan24.RPC.Processing.RpcProcessor.Call.Processor
   name: Processor
   href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Processor
@@ -4350,19 +4502,32 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Call.Processor
   nameWithType: RpcProcessor.Call.Processor
-- uid: wan24.RPC.Processing.RpcProcessor.Call.ProcessorCancellation
-  name: ProcessorCancellation
-  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_ProcessorCancellation
-  commentId: P:wan24.RPC.Processing.RpcProcessor.Call.ProcessorCancellation
-  fullName: wan24.RPC.Processing.RpcProcessor.Call.ProcessorCancellation
-  nameWithType: RpcProcessor.Call.ProcessorCancellation
-- uid: wan24.RPC.Processing.RpcProcessor.Call.ProcessorCancellation*
-  name: ProcessorCancellation
-  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_ProcessorCancellation_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.ProcessorCancellation
+- uid: wan24.RPC.Processing.RpcProcessor.Call.ReturnStream
+  name: ReturnStream
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_ReturnStream
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Call.ReturnStream
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.ReturnStream
+  nameWithType: RpcProcessor.Call.ReturnStream
+- uid: wan24.RPC.Processing.RpcProcessor.Call.ReturnStream*
+  name: ReturnStream
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_ReturnStream_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.ReturnStream
   isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.Call.ProcessorCancellation
-  nameWithType: RpcProcessor.Call.ProcessorCancellation
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.ReturnStream
+  nameWithType: RpcProcessor.Call.ReturnStream
+- uid: wan24.RPC.Processing.RpcProcessor.Call.Runtime
+  name: Runtime
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Runtime
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Call.Runtime
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.Runtime
+  nameWithType: RpcProcessor.Call.Runtime
+- uid: wan24.RPC.Processing.RpcProcessor.Call.Runtime*
+  name: Runtime
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Runtime_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.Runtime
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.Runtime
+  nameWithType: RpcProcessor.Call.Runtime
 - uid: wan24.RPC.Processing.RpcProcessor.Call.SetDone
   name: SetDone()
   href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_SetDone
@@ -4376,19 +4541,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Call.SetDone
   nameWithType: RpcProcessor.Call.SetDone
-- uid: wan24.RPC.Processing.RpcProcessor.Call.Streams
-  name: Streams
-  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Streams
-  commentId: P:wan24.RPC.Processing.RpcProcessor.Call.Streams
-  fullName: wan24.RPC.Processing.RpcProcessor.Call.Streams
-  nameWithType: RpcProcessor.Call.Streams
-- uid: wan24.RPC.Processing.RpcProcessor.Call.Streams*
-  name: Streams
-  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_Streams_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.Streams
+- uid: wan24.RPC.Processing.RpcProcessor.Call.WasProcessing
+  name: WasProcessing
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_WasProcessing
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Call.WasProcessing
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.WasProcessing
+  nameWithType: RpcProcessor.Call.WasProcessing
+- uid: wan24.RPC.Processing.RpcProcessor.Call.WasProcessing*
+  name: WasProcessing
+  href: api/wan24.RPC.Processing.RpcProcessor.Call.html#wan24_RPC_Processing_RpcProcessor_Call_WasProcessing_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Call.WasProcessing
   isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.Call.Streams
-  nameWithType: RpcProcessor.Call.Streams
+  fullName: wan24.RPC.Processing.RpcProcessor.Call.WasProcessing
+  nameWithType: RpcProcessor.Call.WasProcessing
 - uid: wan24.RPC.Processing.RpcProcessor.CallQueue
   name: RpcProcessor.CallQueue
   href: api/wan24.RPC.Processing.RpcProcessor.CallQueue.html
@@ -4488,6 +4653,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.CallQueue.GetParameterValueAsync
   nameWithType: RpcProcessor.CallQueue.GetParameterValueAsync
+- uid: wan24.RPC.Processing.RpcProcessor.CallQueue.Logger
+  name: Logger
+  href: api/wan24.RPC.Processing.RpcProcessor.CallQueue.html#wan24_RPC_Processing_RpcProcessor_CallQueue_Logger
+  commentId: P:wan24.RPC.Processing.RpcProcessor.CallQueue.Logger
+  fullName: wan24.RPC.Processing.RpcProcessor.CallQueue.Logger
+  nameWithType: RpcProcessor.CallQueue.Logger
+- uid: wan24.RPC.Processing.RpcProcessor.CallQueue.Logger*
+  name: Logger
+  href: api/wan24.RPC.Processing.RpcProcessor.CallQueue.html#wan24_RPC_Processing_RpcProcessor_CallQueue_Logger_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.CallQueue.Logger
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.CallQueue.Logger
+  nameWithType: RpcProcessor.CallQueue.Logger
 - uid: wan24.RPC.Processing.RpcProcessor.CallQueue.ProcessItem(wan24.RPC.Processing.RpcProcessor.Call,System.Threading.CancellationToken)
   name: ProcessItem(Call, CancellationToken)
   href: api/wan24.RPC.Processing.RpcProcessor.CallQueue.html#wan24_RPC_Processing_RpcProcessor_CallQueue_ProcessItem_wan24_RPC_Processing_RpcProcessor_Call_System_Threading_CancellationToken_
@@ -4574,6 +4752,22 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.CancelRequestAsync
   nameWithType: RpcProcessor.CancelRequestAsync
+- uid: wan24.RPC.Processing.RpcProcessor.CreateCallContext(wan24.RPC.Processing.Messages.RequestMessage@,wan24.RPC.Api.Reflection.RpcApiMethodInfo@,System.Threading.CancellationToken@)
+  name: CreateCallContext(in RequestMessage, in RpcApiMethodInfo, in CancellationToken)
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateCallContext_wan24_RPC_Processing_Messages_RequestMessage__wan24_RPC_Api_Reflection_RpcApiMethodInfo__System_Threading_CancellationToken__
+  commentId: M:wan24.RPC.Processing.RpcProcessor.CreateCallContext(wan24.RPC.Processing.Messages.RequestMessage@,wan24.RPC.Api.Reflection.RpcApiMethodInfo@,System.Threading.CancellationToken@)
+  name.vb: CreateCallContext(RequestMessage, RpcApiMethodInfo, CancellationToken)
+  fullName: wan24.RPC.Processing.RpcProcessor.CreateCallContext(in wan24.RPC.Processing.Messages.RequestMessage, in wan24.RPC.Api.Reflection.RpcApiMethodInfo, in System.Threading.CancellationToken)
+  fullName.vb: wan24.RPC.Processing.RpcProcessor.CreateCallContext(wan24.RPC.Processing.Messages.RequestMessage, wan24.RPC.Api.Reflection.RpcApiMethodInfo, System.Threading.CancellationToken)
+  nameWithType: RpcProcessor.CreateCallContext(in RequestMessage, in RpcApiMethodInfo, in CancellationToken)
+  nameWithType.vb: RpcProcessor.CreateCallContext(RequestMessage, RpcApiMethodInfo, CancellationToken)
+- uid: wan24.RPC.Processing.RpcProcessor.CreateCallContext*
+  name: CreateCallContext
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateCallContext_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.CreateCallContext
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.CreateCallContext
+  nameWithType: RpcProcessor.CreateCallContext
 - uid: wan24.RPC.Processing.RpcProcessor.CreateCallQueue
   name: CreateCallQueue()
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateCallQueue
@@ -4634,15 +4828,12 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.CreateIncomingMessageQueue
   nameWithType: RpcProcessor.CreateIncomingMessageQueue
-- uid: wan24.RPC.Processing.RpcProcessor.CreateIncomingStreamAsync(wan24.RPC.Processing.Values.RpcStreamValue,System.Boolean,System.Threading.CancellationToken)
-  name: CreateIncomingStreamAsync(RpcStreamValue, bool, CancellationToken)
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateIncomingStreamAsync_wan24_RPC_Processing_Values_RpcStreamValue_System_Boolean_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Processing.RpcProcessor.CreateIncomingStreamAsync(wan24.RPC.Processing.Values.RpcStreamValue,System.Boolean,System.Threading.CancellationToken)
-  name.vb: CreateIncomingStreamAsync(RpcStreamValue, Boolean, CancellationToken)
-  fullName: wan24.RPC.Processing.RpcProcessor.CreateIncomingStreamAsync(wan24.RPC.Processing.Values.RpcStreamValue, bool, System.Threading.CancellationToken)
-  fullName.vb: wan24.RPC.Processing.RpcProcessor.CreateIncomingStreamAsync(wan24.RPC.Processing.Values.RpcStreamValue, Boolean, System.Threading.CancellationToken)
-  nameWithType: RpcProcessor.CreateIncomingStreamAsync(RpcStreamValue, bool, CancellationToken)
-  nameWithType.vb: RpcProcessor.CreateIncomingStreamAsync(RpcStreamValue, Boolean, CancellationToken)
+- uid: wan24.RPC.Processing.RpcProcessor.CreateIncomingStreamAsync(wan24.RPC.Processing.Values.RpcStreamValue,System.Threading.CancellationToken)
+  name: CreateIncomingStreamAsync(RpcStreamValue, CancellationToken)
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateIncomingStreamAsync_wan24_RPC_Processing_Values_RpcStreamValue_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Processing.RpcProcessor.CreateIncomingStreamAsync(wan24.RPC.Processing.Values.RpcStreamValue,System.Threading.CancellationToken)
+  fullName: wan24.RPC.Processing.RpcProcessor.CreateIncomingStreamAsync(wan24.RPC.Processing.Values.RpcStreamValue, System.Threading.CancellationToken)
+  nameWithType: RpcProcessor.CreateIncomingStreamAsync(RpcStreamValue, CancellationToken)
 - uid: wan24.RPC.Processing.RpcProcessor.CreateIncomingStreamAsync*
   name: CreateIncomingStreamAsync
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateIncomingStreamAsync_
@@ -4663,12 +4854,12 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.CreateOutgoingMessageQueue
   nameWithType: RpcProcessor.CreateOutgoingMessageQueue
-- uid: wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcStreamParameter,System.Threading.CancellationToken)
-  name: CreateOutgoingStreamAsync(RpcStreamParameter, CancellationToken)
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateOutgoingStreamAsync_wan24_RPC_Processing_Parameters_RpcStreamParameter_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcStreamParameter,System.Threading.CancellationToken)
-  fullName: wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcStreamParameter, System.Threading.CancellationToken)
-  nameWithType: RpcProcessor.CreateOutgoingStreamAsync(RpcStreamParameter, CancellationToken)
+- uid: wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter,System.Threading.CancellationToken)
+  name: CreateOutgoingStreamAsync(RpcOutgoingStreamParameter, CancellationToken)
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateOutgoingStreamAsync_wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter,System.Threading.CancellationToken)
+  fullName: wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter, System.Threading.CancellationToken)
+  nameWithType: RpcProcessor.CreateOutgoingStreamAsync(RpcOutgoingStreamParameter, CancellationToken)
 - uid: wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamAsync*
   name: CreateOutgoingStreamAsync
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateOutgoingStreamAsync_
@@ -4676,6 +4867,22 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamAsync
   nameWithType: RpcProcessor.CreateOutgoingStreamAsync
+- uid: wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamParameter(System.IO.Stream@,System.Boolean@,System.Boolean@)
+  name: CreateOutgoingStreamParameter(in Stream, in bool, in bool)
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateOutgoingStreamParameter_System_IO_Stream__System_Boolean__System_Boolean__
+  commentId: M:wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamParameter(System.IO.Stream@,System.Boolean@,System.Boolean@)
+  name.vb: CreateOutgoingStreamParameter(Stream, Boolean, Boolean)
+  fullName: wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamParameter(in System.IO.Stream, in bool, in bool)
+  fullName.vb: wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamParameter(System.IO.Stream, Boolean, Boolean)
+  nameWithType: RpcProcessor.CreateOutgoingStreamParameter(in Stream, in bool, in bool)
+  nameWithType.vb: RpcProcessor.CreateOutgoingStreamParameter(Stream, Boolean, Boolean)
+- uid: wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamParameter*
+  name: CreateOutgoingStreamParameter
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateOutgoingStreamParameter_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamParameter
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.CreateOutgoingStreamParameter
+  nameWithType: RpcProcessor.CreateOutgoingStreamParameter
 - uid: wan24.RPC.Processing.RpcProcessor.CreateRequestQueue
   name: CreateRequestQueue()
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateRequestQueue
@@ -4689,22 +4896,6 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.CreateRequestQueue
   nameWithType: RpcProcessor.CreateRequestQueue
-- uid: wan24.RPC.Processing.RpcProcessor.CreateStreamParameter(System.IO.Stream@,System.Boolean@)
-  name: CreateStreamParameter(in Stream, in bool)
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateStreamParameter_System_IO_Stream__System_Boolean__
-  commentId: M:wan24.RPC.Processing.RpcProcessor.CreateStreamParameter(System.IO.Stream@,System.Boolean@)
-  name.vb: CreateStreamParameter(Stream, Boolean)
-  fullName: wan24.RPC.Processing.RpcProcessor.CreateStreamParameter(in System.IO.Stream, in bool)
-  fullName.vb: wan24.RPC.Processing.RpcProcessor.CreateStreamParameter(System.IO.Stream, Boolean)
-  nameWithType: RpcProcessor.CreateStreamParameter(in Stream, in bool)
-  nameWithType.vb: RpcProcessor.CreateStreamParameter(Stream, Boolean)
-- uid: wan24.RPC.Processing.RpcProcessor.CreateStreamParameter*
-  name: CreateStreamParameter
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_CreateStreamParameter_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.CreateStreamParameter
-  isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.CreateStreamParameter
-  nameWithType: RpcProcessor.CreateStreamParameter
 - uid: wan24.RPC.Processing.RpcProcessor.Dispose(System.Boolean)
   name: Dispose(bool)
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_Dispose_System_Boolean_
@@ -4766,22 +4957,6 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.EnsureStreamsAreEnabled
   nameWithType: RpcProcessor.EnsureStreamsAreEnabled
-- uid: wan24.RPC.Processing.RpcProcessor.GetContext(wan24.RPC.Processing.Messages.RequestMessage@,wan24.RPC.Api.Reflection.RpcApiMethodInfo@,System.Threading.CancellationToken@)
-  name: GetContext(in RequestMessage, in RpcApiMethodInfo, in CancellationToken)
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_GetContext_wan24_RPC_Processing_Messages_RequestMessage__wan24_RPC_Api_Reflection_RpcApiMethodInfo__System_Threading_CancellationToken__
-  commentId: M:wan24.RPC.Processing.RpcProcessor.GetContext(wan24.RPC.Processing.Messages.RequestMessage@,wan24.RPC.Api.Reflection.RpcApiMethodInfo@,System.Threading.CancellationToken@)
-  name.vb: GetContext(RequestMessage, RpcApiMethodInfo, CancellationToken)
-  fullName: wan24.RPC.Processing.RpcProcessor.GetContext(in wan24.RPC.Processing.Messages.RequestMessage, in wan24.RPC.Api.Reflection.RpcApiMethodInfo, in System.Threading.CancellationToken)
-  fullName.vb: wan24.RPC.Processing.RpcProcessor.GetContext(wan24.RPC.Processing.Messages.RequestMessage, wan24.RPC.Api.Reflection.RpcApiMethodInfo, System.Threading.CancellationToken)
-  nameWithType: RpcProcessor.GetContext(in RequestMessage, in RpcApiMethodInfo, in CancellationToken)
-  nameWithType.vb: RpcProcessor.GetContext(RequestMessage, RpcApiMethodInfo, CancellationToken)
-- uid: wan24.RPC.Processing.RpcProcessor.GetContext*
-  name: GetContext
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_GetContext_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.GetContext
-  isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.GetContext
-  nameWithType: RpcProcessor.GetContext
 - uid: wan24.RPC.Processing.RpcProcessor.GetIncomingStream(System.Int64@,System.Boolean@)
   name: GetIncomingStream(in long, in bool)
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_GetIncomingStream_System_Int64__System_Boolean__
@@ -4933,19 +5108,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.HandleCancellationAsync
   nameWithType: RpcProcessor.HandleCancellationAsync
-- uid: wan24.RPC.Processing.RpcProcessor.HandleErrorAsync(wan24.RPC.Processing.Messages.ErrorResponseMessage)
-  name: HandleErrorAsync(ErrorResponseMessage)
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleErrorAsync_wan24_RPC_Processing_Messages_ErrorResponseMessage_
-  commentId: M:wan24.RPC.Processing.RpcProcessor.HandleErrorAsync(wan24.RPC.Processing.Messages.ErrorResponseMessage)
-  fullName: wan24.RPC.Processing.RpcProcessor.HandleErrorAsync(wan24.RPC.Processing.Messages.ErrorResponseMessage)
-  nameWithType: RpcProcessor.HandleErrorAsync(ErrorResponseMessage)
-- uid: wan24.RPC.Processing.RpcProcessor.HandleErrorAsync*
-  name: HandleErrorAsync
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleErrorAsync_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.HandleErrorAsync
+- uid: wan24.RPC.Processing.RpcProcessor.HandleErrorResponseAsync(wan24.RPC.Processing.Messages.ErrorResponseMessage)
+  name: HandleErrorResponseAsync(ErrorResponseMessage)
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleErrorResponseAsync_wan24_RPC_Processing_Messages_ErrorResponseMessage_
+  commentId: M:wan24.RPC.Processing.RpcProcessor.HandleErrorResponseAsync(wan24.RPC.Processing.Messages.ErrorResponseMessage)
+  fullName: wan24.RPC.Processing.RpcProcessor.HandleErrorResponseAsync(wan24.RPC.Processing.Messages.ErrorResponseMessage)
+  nameWithType: RpcProcessor.HandleErrorResponseAsync(ErrorResponseMessage)
+- uid: wan24.RPC.Processing.RpcProcessor.HandleErrorResponseAsync*
+  name: HandleErrorResponseAsync
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleErrorResponseAsync_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.HandleErrorResponseAsync
   isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.HandleErrorAsync
-  nameWithType: RpcProcessor.HandleErrorAsync
+  fullName: wan24.RPC.Processing.RpcProcessor.HandleErrorResponseAsync
+  nameWithType: RpcProcessor.HandleErrorResponseAsync
 - uid: wan24.RPC.Processing.RpcProcessor.HandleEventAsync(wan24.RPC.Processing.Messages.EventMessage)
   name: HandleEventAsync(EventMessage)
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleEventAsync_wan24_RPC_Processing_Messages_EventMessage_
@@ -4975,6 +5150,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.HandleEventErrorAsync
   nameWithType: RpcProcessor.HandleEventErrorAsync
+- uid: wan24.RPC.Processing.RpcProcessor.HandleIncomingMessageStorageErrorAsync(wan24.RPC.Processing.Messages.IRpcMessage,System.Exception)
+  name: HandleIncomingMessageStorageErrorAsync(IRpcMessage, Exception)
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleIncomingMessageStorageErrorAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Exception_
+  commentId: M:wan24.RPC.Processing.RpcProcessor.HandleIncomingMessageStorageErrorAsync(wan24.RPC.Processing.Messages.IRpcMessage,System.Exception)
+  fullName: wan24.RPC.Processing.RpcProcessor.HandleIncomingMessageStorageErrorAsync(wan24.RPC.Processing.Messages.IRpcMessage, System.Exception)
+  nameWithType: RpcProcessor.HandleIncomingMessageStorageErrorAsync(IRpcMessage, Exception)
+- uid: wan24.RPC.Processing.RpcProcessor.HandleIncomingMessageStorageErrorAsync*
+  name: HandleIncomingMessageStorageErrorAsync
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleIncomingMessageStorageErrorAsync_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.HandleIncomingMessageStorageErrorAsync
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.HandleIncomingMessageStorageErrorAsync
+  nameWithType: RpcProcessor.HandleIncomingMessageStorageErrorAsync
 - uid: wan24.RPC.Processing.RpcProcessor.HandleIncomingStreamProcessingErrorAsync(wan24.RPC.Processing.RpcProcessor.IncomingStream,System.Exception)
   name: HandleIncomingStreamProcessingErrorAsync(IncomingStream, Exception)
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleIncomingStreamProcessingErrorAsync_wan24_RPC_Processing_RpcProcessor_IncomingStream_System_Exception_
@@ -5027,19 +5215,6 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.HandleMessageAsync
   nameWithType: RpcProcessor.HandleMessageAsync
-- uid: wan24.RPC.Processing.RpcProcessor.HandleMessageStorageErrorAsync(wan24.RPC.Processing.Messages.IRpcMessage)
-  name: HandleMessageStorageErrorAsync(IRpcMessage)
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleMessageStorageErrorAsync_wan24_RPC_Processing_Messages_IRpcMessage_
-  commentId: M:wan24.RPC.Processing.RpcProcessor.HandleMessageStorageErrorAsync(wan24.RPC.Processing.Messages.IRpcMessage)
-  fullName: wan24.RPC.Processing.RpcProcessor.HandleMessageStorageErrorAsync(wan24.RPC.Processing.Messages.IRpcMessage)
-  nameWithType: RpcProcessor.HandleMessageStorageErrorAsync(IRpcMessage)
-- uid: wan24.RPC.Processing.RpcProcessor.HandleMessageStorageErrorAsync*
-  name: HandleMessageStorageErrorAsync
-  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleMessageStorageErrorAsync_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.HandleMessageStorageErrorAsync
-  isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.HandleMessageStorageErrorAsync
-  nameWithType: RpcProcessor.HandleMessageStorageErrorAsync
 - uid: wan24.RPC.Processing.RpcProcessor.HandleRemoteStreamCloseAsync(wan24.RPC.Processing.Messages.Streaming.RemoteStreamCloseMessage)
   name: HandleRemoteStreamCloseAsync(RemoteStreamCloseMessage)
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleRemoteStreamCloseAsync_wan24_RPC_Processing_Messages_Streaming_RemoteStreamCloseMessage_
@@ -5105,6 +5280,22 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.HandleStreamStartAsync
   nameWithType: RpcProcessor.HandleStreamStartAsync
+- uid: wan24.RPC.Processing.RpcProcessor.HandleValueOnErrorAsync(System.Object,System.Boolean,System.Exception)
+  name: HandleValueOnErrorAsync(object, bool, Exception)
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleValueOnErrorAsync_System_Object_System_Boolean_System_Exception_
+  commentId: M:wan24.RPC.Processing.RpcProcessor.HandleValueOnErrorAsync(System.Object,System.Boolean,System.Exception)
+  name.vb: HandleValueOnErrorAsync(Object, Boolean, Exception)
+  fullName: wan24.RPC.Processing.RpcProcessor.HandleValueOnErrorAsync(object, bool, System.Exception)
+  fullName.vb: wan24.RPC.Processing.RpcProcessor.HandleValueOnErrorAsync(Object, Boolean, System.Exception)
+  nameWithType: RpcProcessor.HandleValueOnErrorAsync(object, bool, Exception)
+  nameWithType.vb: RpcProcessor.HandleValueOnErrorAsync(Object, Boolean, Exception)
+- uid: wan24.RPC.Processing.RpcProcessor.HandleValueOnErrorAsync*
+  name: HandleValueOnErrorAsync
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_HandleValueOnErrorAsync_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.HandleValueOnErrorAsync
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.HandleValueOnErrorAsync
+  nameWithType: RpcProcessor.HandleValueOnErrorAsync
 - uid: wan24.RPC.Processing.RpcProcessor.IncomingMessages
   name: IncomingMessages
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_IncomingMessages
@@ -5235,6 +5426,32 @@ references:
   fullName.vb: wan24.RPC.Processing.RpcProcessor.IncomingStream.New
   nameWithType: RpcProcessor.IncomingStream.IncomingStream
   nameWithType.vb: RpcProcessor.IncomingStream.New
+- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.ApiParameter
+  name: ApiParameter
+  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_ApiParameter
+  commentId: P:wan24.RPC.Processing.RpcProcessor.IncomingStream.ApiParameter
+  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.ApiParameter
+  nameWithType: RpcProcessor.IncomingStream.ApiParameter
+- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.ApiParameter*
+  name: ApiParameter
+  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_ApiParameter_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.IncomingStream.ApiParameter
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.ApiParameter
+  nameWithType: RpcProcessor.IncomingStream.ApiParameter
+- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.Call
+  name: Call
+  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_Call
+  commentId: P:wan24.RPC.Processing.RpcProcessor.IncomingStream.Call
+  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.Call
+  nameWithType: RpcProcessor.IncomingStream.Call
+- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.Call*
+  name: Call
+  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_Call_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.IncomingStream.Call
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.Call
+  nameWithType: RpcProcessor.IncomingStream.Call
 - uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.CancelAsync
   name: CancelAsync()
   href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_CancelAsync
@@ -5248,6 +5465,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.CancelAsync
   nameWithType: RpcProcessor.IncomingStream.CancelAsync
+- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.ChunkTarget
+  name: ChunkTarget
+  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_ChunkTarget
+  commentId: P:wan24.RPC.Processing.RpcProcessor.IncomingStream.ChunkTarget
+  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.ChunkTarget
+  nameWithType: RpcProcessor.IncomingStream.ChunkTarget
+- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.ChunkTarget*
+  name: ChunkTarget
+  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_ChunkTarget_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.IncomingStream.ChunkTarget
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.ChunkTarget
+  nameWithType: RpcProcessor.IncomingStream.ChunkTarget
 - uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.CompleteAsync
   name: CompleteAsync()
   href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_CompleteAsync
@@ -5394,19 +5624,32 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.Processor
   nameWithType: RpcProcessor.IncomingStream.Processor
-- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.ProcessorCancellation
-  name: ProcessorCancellation
-  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_ProcessorCancellation
-  commentId: P:wan24.RPC.Processing.RpcProcessor.IncomingStream.ProcessorCancellation
-  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.ProcessorCancellation
-  nameWithType: RpcProcessor.IncomingStream.ProcessorCancellation
-- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.ProcessorCancellation*
-  name: ProcessorCancellation
-  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_ProcessorCancellation_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.IncomingStream.ProcessorCancellation
+- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.Request
+  name: Request
+  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_Request
+  commentId: P:wan24.RPC.Processing.RpcProcessor.IncomingStream.Request
+  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.Request
+  nameWithType: RpcProcessor.IncomingStream.Request
+- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.Request*
+  name: Request
+  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_Request_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.IncomingStream.Request
   isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.ProcessorCancellation
-  nameWithType: RpcProcessor.IncomingStream.ProcessorCancellation
+  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.Request
+  nameWithType: RpcProcessor.IncomingStream.Request
+- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.Runtime
+  name: Runtime
+  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_Runtime
+  commentId: P:wan24.RPC.Processing.RpcProcessor.IncomingStream.Runtime
+  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.Runtime
+  nameWithType: RpcProcessor.IncomingStream.Runtime
+- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.Runtime*
+  name: Runtime
+  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_Runtime_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.IncomingStream.Runtime
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.Runtime
+  nameWithType: RpcProcessor.IncomingStream.Runtime
 - uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.SetDone
   name: SetDone()
   href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_SetDone
@@ -5472,19 +5715,6 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.Stream
   nameWithType: RpcProcessor.IncomingStream.Stream
-- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.Target
-  name: Target
-  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_Target
-  commentId: P:wan24.RPC.Processing.RpcProcessor.IncomingStream.Target
-  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.Target
-  nameWithType: RpcProcessor.IncomingStream.Target
-- uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.Target*
-  name: Target
-  href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_Target_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.IncomingStream.Target
-  isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.IncomingStream.Target
-  nameWithType: RpcProcessor.IncomingStream.Target
 - uid: wan24.RPC.Processing.RpcProcessor.IncomingStream.Value
   name: Value
   href: api/wan24.RPC.Processing.RpcProcessor.IncomingStream.html#wan24_RPC_Processing_RpcProcessor_IncomingStream_Value
@@ -5510,6 +5740,19 @@ references:
   commentId: F:wan24.RPC.Processing.RpcProcessor.IncomingStreamsSync
   fullName: wan24.RPC.Processing.RpcProcessor.IncomingStreamsSync
   nameWithType: RpcProcessor.IncomingStreamsSync
+- uid: wan24.RPC.Processing.RpcProcessor.Logger
+  name: Logger
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_Logger
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Logger
+  fullName: wan24.RPC.Processing.RpcProcessor.Logger
+  nameWithType: RpcProcessor.Logger
+- uid: wan24.RPC.Processing.RpcProcessor.Logger*
+  name: Logger
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_Logger_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Logger
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.Logger
+  nameWithType: RpcProcessor.Logger
 - uid: wan24.RPC.Processing.RpcProcessor.MessageId
   name: MessageId
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_MessageId
@@ -5740,6 +5983,32 @@ references:
   fullName.vb: wan24.RPC.Processing.RpcProcessor.OutgoingStream.New
   nameWithType: RpcProcessor.OutgoingStream.OutgoingStream
   nameWithType.vb: RpcProcessor.OutgoingStream.New
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.ApiMethod
+  name: ApiMethod
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_ApiMethod
+  commentId: P:wan24.RPC.Processing.RpcProcessor.OutgoingStream.ApiMethod
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.ApiMethod
+  nameWithType: RpcProcessor.OutgoingStream.ApiMethod
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.ApiMethod*
+  name: ApiMethod
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_ApiMethod_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.OutgoingStream.ApiMethod
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.ApiMethod
+  nameWithType: RpcProcessor.OutgoingStream.ApiMethod
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Call
+  name: Call
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_Call
+  commentId: P:wan24.RPC.Processing.RpcProcessor.OutgoingStream.Call
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Call
+  nameWithType: RpcProcessor.OutgoingStream.Call
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Call*
+  name: Call
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_Call_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.OutgoingStream.Call
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Call
+  nameWithType: RpcProcessor.OutgoingStream.Call
 - uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Cancellation
   name: Cancellation
   href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_Cancellation
@@ -5779,6 +6048,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.CompressAsync
   nameWithType: RpcProcessor.OutgoingStream.CompressAsync
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.CompressionTask
+  name: CompressionTask
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_CompressionTask
+  commentId: P:wan24.RPC.Processing.RpcProcessor.OutgoingStream.CompressionTask
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.CompressionTask
+  nameWithType: RpcProcessor.OutgoingStream.CompressionTask
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.CompressionTask*
+  name: CompressionTask
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_CompressionTask_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.OutgoingStream.CompressionTask
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.CompressionTask
+  nameWithType: RpcProcessor.OutgoingStream.CompressionTask
 - uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Dispose(System.Boolean)
   name: Dispose(bool)
   href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_Dispose_System_Boolean_
@@ -5847,6 +6129,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.IsDone
   nameWithType: RpcProcessor.OutgoingStream.IsDone
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.IsStarted
+  name: IsStarted
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_IsStarted
+  commentId: P:wan24.RPC.Processing.RpcProcessor.OutgoingStream.IsStarted
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.IsStarted
+  nameWithType: RpcProcessor.OutgoingStream.IsStarted
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.IsStarted*
+  name: IsStarted
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_IsStarted_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.OutgoingStream.IsStarted
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.IsStarted
+  nameWithType: RpcProcessor.OutgoingStream.IsStarted
 - uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.LastException
   name: LastException
   href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_LastException
@@ -5915,6 +6210,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.RemoteCanceled
   nameWithType: RpcProcessor.OutgoingStream.RemoteCanceled
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Request
+  name: Request
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_Request
+  commentId: P:wan24.RPC.Processing.RpcProcessor.OutgoingStream.Request
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Request
+  nameWithType: RpcProcessor.OutgoingStream.Request
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Request*
+  name: Request
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_Request_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.OutgoingStream.Request
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Request
+  nameWithType: RpcProcessor.OutgoingStream.Request
 - uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.SetDone
   name: SetDone()
   href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_SetDone
@@ -5967,19 +6275,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Started
   nameWithType: RpcProcessor.OutgoingStream.Started
-- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.UncompressedSourceLength
-  name: UncompressedSourceLength
-  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_UncompressedSourceLength
-  commentId: P:wan24.RPC.Processing.RpcProcessor.OutgoingStream.UncompressedSourceLength
-  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.UncompressedSourceLength
-  nameWithType: RpcProcessor.OutgoingStream.UncompressedSourceLength
-- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.UncompressedSourceLength*
-  name: UncompressedSourceLength
-  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_UncompressedSourceLength_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.OutgoingStream.UncompressedSourceLength
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Value
+  name: Value
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_Value
+  commentId: P:wan24.RPC.Processing.RpcProcessor.OutgoingStream.Value
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Value
+  nameWithType: RpcProcessor.OutgoingStream.Value
+- uid: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Value*
+  name: Value
+  href: api/wan24.RPC.Processing.RpcProcessor.OutgoingStream.html#wan24_RPC_Processing_RpcProcessor_OutgoingStream_Value_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.OutgoingStream.Value
   isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.UncompressedSourceLength
-  nameWithType: RpcProcessor.OutgoingStream.UncompressedSourceLength
+  fullName: wan24.RPC.Processing.RpcProcessor.OutgoingStream.Value
+  nameWithType: RpcProcessor.OutgoingStream.Value
 - uid: wan24.RPC.Processing.RpcProcessor.OutgoingStreamId
   name: OutgoingStreamId
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_OutgoingStreamId
@@ -6279,6 +6587,19 @@ references:
   fullName.vb: wan24.RPC.Processing.RpcProcessor.Request.New
   nameWithType: RpcProcessor.Request.Request
   nameWithType.vb: RpcProcessor.Request.New
+- uid: wan24.RPC.Processing.RpcProcessor.Request.Cancellation
+  name: Cancellation
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Cancellation
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Request.Cancellation
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.Cancellation
+  nameWithType: RpcProcessor.Request.Cancellation
+- uid: wan24.RPC.Processing.RpcProcessor.Request.Cancellation*
+  name: Cancellation
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Cancellation_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Request.Cancellation
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.Cancellation
+  nameWithType: RpcProcessor.Request.Cancellation
 - uid: wan24.RPC.Processing.RpcProcessor.Request.Created
   name: Created
   href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Created
@@ -6334,6 +6655,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Request.Done
   nameWithType: RpcProcessor.Request.Done
+- uid: wan24.RPC.Processing.RpcProcessor.Request.IsDone
+  name: IsDone
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_IsDone
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Request.IsDone
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.IsDone
+  nameWithType: RpcProcessor.Request.IsDone
+- uid: wan24.RPC.Processing.RpcProcessor.Request.IsDone*
+  name: IsDone
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_IsDone_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Request.IsDone
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.IsDone
+  nameWithType: RpcProcessor.Request.IsDone
 - uid: wan24.RPC.Processing.RpcProcessor.Request.Message
   name: Message
   href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Message
@@ -6347,19 +6681,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Request.Message
   nameWithType: RpcProcessor.Request.Message
-- uid: wan24.RPC.Processing.RpcProcessor.Request.Processed
-  name: Processed
-  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Processed
-  commentId: P:wan24.RPC.Processing.RpcProcessor.Request.Processed
-  fullName: wan24.RPC.Processing.RpcProcessor.Request.Processed
-  nameWithType: RpcProcessor.Request.Processed
-- uid: wan24.RPC.Processing.RpcProcessor.Request.Processed*
-  name: Processed
-  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Processed_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Request.Processed
+- uid: wan24.RPC.Processing.RpcProcessor.Request.ParameterStreams
+  name: ParameterStreams
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_ParameterStreams
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Request.ParameterStreams
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.ParameterStreams
+  nameWithType: RpcProcessor.Request.ParameterStreams
+- uid: wan24.RPC.Processing.RpcProcessor.Request.ParameterStreams*
+  name: ParameterStreams
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_ParameterStreams_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Request.ParameterStreams
   isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.Request.Processed
-  nameWithType: RpcProcessor.Request.Processed
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.ParameterStreams
+  nameWithType: RpcProcessor.Request.ParameterStreams
 - uid: wan24.RPC.Processing.RpcProcessor.Request.Processor
   name: Processor
   href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Processor
@@ -6373,19 +6707,6 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Request.Processor
   nameWithType: RpcProcessor.Request.Processor
-- uid: wan24.RPC.Processing.RpcProcessor.Request.ProcessorCancellation
-  name: ProcessorCancellation
-  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_ProcessorCancellation
-  commentId: P:wan24.RPC.Processing.RpcProcessor.Request.ProcessorCancellation
-  fullName: wan24.RPC.Processing.RpcProcessor.Request.ProcessorCancellation
-  nameWithType: RpcProcessor.Request.ProcessorCancellation
-- uid: wan24.RPC.Processing.RpcProcessor.Request.ProcessorCancellation*
-  name: ProcessorCancellation
-  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_ProcessorCancellation_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Request.ProcessorCancellation
-  isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.Request.ProcessorCancellation
-  nameWithType: RpcProcessor.Request.ProcessorCancellation
 - uid: wan24.RPC.Processing.RpcProcessor.Request.ProcessorCompletion
   name: ProcessorCompletion
   href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_ProcessorCompletion
@@ -6399,19 +6720,6 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Request.ProcessorCompletion
   nameWithType: RpcProcessor.Request.ProcessorCompletion
-- uid: wan24.RPC.Processing.RpcProcessor.Request.RequestCancellation
-  name: RequestCancellation
-  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_RequestCancellation
-  commentId: P:wan24.RPC.Processing.RpcProcessor.Request.RequestCancellation
-  fullName: wan24.RPC.Processing.RpcProcessor.Request.RequestCancellation
-  nameWithType: RpcProcessor.Request.RequestCancellation
-- uid: wan24.RPC.Processing.RpcProcessor.Request.RequestCancellation*
-  name: RequestCancellation
-  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_RequestCancellation_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Request.RequestCancellation
-  isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.Request.RequestCancellation
-  nameWithType: RpcProcessor.Request.RequestCancellation
 - uid: wan24.RPC.Processing.RpcProcessor.Request.RequestCompletion
   name: RequestCompletion
   href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_RequestCompletion
@@ -6425,6 +6733,32 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Request.RequestCompletion
   nameWithType: RpcProcessor.Request.RequestCompletion
+- uid: wan24.RPC.Processing.RpcProcessor.Request.ReturnStream
+  name: ReturnStream
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_ReturnStream
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Request.ReturnStream
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.ReturnStream
+  nameWithType: RpcProcessor.Request.ReturnStream
+- uid: wan24.RPC.Processing.RpcProcessor.Request.ReturnStream*
+  name: ReturnStream
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_ReturnStream_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Request.ReturnStream
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.ReturnStream
+  nameWithType: RpcProcessor.Request.ReturnStream
+- uid: wan24.RPC.Processing.RpcProcessor.Request.Runtime
+  name: Runtime
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Runtime
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Request.Runtime
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.Runtime
+  nameWithType: RpcProcessor.Request.Runtime
+- uid: wan24.RPC.Processing.RpcProcessor.Request.Runtime*
+  name: Runtime
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Runtime_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Request.Runtime
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.Runtime
+  nameWithType: RpcProcessor.Request.Runtime
 - uid: wan24.RPC.Processing.RpcProcessor.Request.SetDone
   name: SetDone()
   href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_SetDone
@@ -6438,19 +6772,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.Request.SetDone
   nameWithType: RpcProcessor.Request.SetDone
-- uid: wan24.RPC.Processing.RpcProcessor.Request.Streams
-  name: Streams
-  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Streams
-  commentId: P:wan24.RPC.Processing.RpcProcessor.Request.Streams
-  fullName: wan24.RPC.Processing.RpcProcessor.Request.Streams
-  nameWithType: RpcProcessor.Request.Streams
-- uid: wan24.RPC.Processing.RpcProcessor.Request.Streams*
-  name: Streams
-  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_Streams_
-  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Request.Streams
+- uid: wan24.RPC.Processing.RpcProcessor.Request.WasProcessing
+  name: WasProcessing
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_WasProcessing
+  commentId: P:wan24.RPC.Processing.RpcProcessor.Request.WasProcessing
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.WasProcessing
+  nameWithType: RpcProcessor.Request.WasProcessing
+- uid: wan24.RPC.Processing.RpcProcessor.Request.WasProcessing*
+  name: WasProcessing
+  href: api/wan24.RPC.Processing.RpcProcessor.Request.html#wan24_RPC_Processing_RpcProcessor_Request_WasProcessing_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.Request.WasProcessing
   isSpec: "True"
-  fullName: wan24.RPC.Processing.RpcProcessor.Request.Streams
-  nameWithType: RpcProcessor.Request.Streams
+  fullName: wan24.RPC.Processing.RpcProcessor.Request.WasProcessing
+  nameWithType: RpcProcessor.Request.WasProcessing
 - uid: wan24.RPC.Processing.RpcProcessor.RequestQueue
   name: RpcProcessor.RequestQueue
   href: api/wan24.RPC.Processing.RpcProcessor.RequestQueue.html
@@ -6508,6 +6842,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.RequestQueue.GetFinalReturnValueAsync
   nameWithType: RpcProcessor.RequestQueue.GetFinalReturnValueAsync
+- uid: wan24.RPC.Processing.RpcProcessor.RequestQueue.Logger
+  name: Logger
+  href: api/wan24.RPC.Processing.RpcProcessor.RequestQueue.html#wan24_RPC_Processing_RpcProcessor_RequestQueue_Logger
+  commentId: P:wan24.RPC.Processing.RpcProcessor.RequestQueue.Logger
+  fullName: wan24.RPC.Processing.RpcProcessor.RequestQueue.Logger
+  nameWithType: RpcProcessor.RequestQueue.Logger
+- uid: wan24.RPC.Processing.RpcProcessor.RequestQueue.Logger*
+  name: Logger
+  href: api/wan24.RPC.Processing.RpcProcessor.RequestQueue.html#wan24_RPC_Processing_RpcProcessor_RequestQueue_Logger_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.RequestQueue.Logger
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.RequestQueue.Logger
+  nameWithType: RpcProcessor.RequestQueue.Logger
 - uid: wan24.RPC.Processing.RpcProcessor.RequestQueue.ProcessItem(wan24.RPC.Processing.RpcProcessor.Request,System.Threading.CancellationToken)
   name: ProcessItem(Request, CancellationToken)
   href: api/wan24.RPC.Processing.RpcProcessor.RequestQueue.html#wan24_RPC_Processing_RpcProcessor_RequestQueue_ProcessItem_wan24_RPC_Processing_RpcProcessor_Request_System_Threading_CancellationToken_
@@ -7516,35 +7863,6 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.Values.RpcStreamValue.DeserializeAsync
   nameWithType: RpcStreamValue.DeserializeAsync
-- uid: wan24.RPC.Processing.Values.RpcStreamValue.Dispose(System.Boolean)
-  name: Dispose(bool)
-  href: api/wan24.RPC.Processing.Values.RpcStreamValue.html#wan24_RPC_Processing_Values_RpcStreamValue_Dispose_System_Boolean_
-  commentId: M:wan24.RPC.Processing.Values.RpcStreamValue.Dispose(System.Boolean)
-  name.vb: Dispose(Boolean)
-  fullName: wan24.RPC.Processing.Values.RpcStreamValue.Dispose(bool)
-  fullName.vb: wan24.RPC.Processing.Values.RpcStreamValue.Dispose(Boolean)
-  nameWithType: RpcStreamValue.Dispose(bool)
-  nameWithType.vb: RpcStreamValue.Dispose(Boolean)
-- uid: wan24.RPC.Processing.Values.RpcStreamValue.Dispose*
-  name: Dispose
-  href: api/wan24.RPC.Processing.Values.RpcStreamValue.html#wan24_RPC_Processing_Values_RpcStreamValue_Dispose_
-  commentId: Overload:wan24.RPC.Processing.Values.RpcStreamValue.Dispose
-  isSpec: "True"
-  fullName: wan24.RPC.Processing.Values.RpcStreamValue.Dispose
-  nameWithType: RpcStreamValue.Dispose
-- uid: wan24.RPC.Processing.Values.RpcStreamValue.DisposeCore
-  name: DisposeCore()
-  href: api/wan24.RPC.Processing.Values.RpcStreamValue.html#wan24_RPC_Processing_Values_RpcStreamValue_DisposeCore
-  commentId: M:wan24.RPC.Processing.Values.RpcStreamValue.DisposeCore
-  fullName: wan24.RPC.Processing.Values.RpcStreamValue.DisposeCore()
-  nameWithType: RpcStreamValue.DisposeCore()
-- uid: wan24.RPC.Processing.Values.RpcStreamValue.DisposeCore*
-  name: DisposeCore
-  href: api/wan24.RPC.Processing.Values.RpcStreamValue.html#wan24_RPC_Processing_Values_RpcStreamValue_DisposeCore_
-  commentId: Overload:wan24.RPC.Processing.Values.RpcStreamValue.DisposeCore
-  isSpec: "True"
-  fullName: wan24.RPC.Processing.Values.RpcStreamValue.DisposeCore
-  nameWithType: RpcStreamValue.DisposeCore
 - uid: wan24.RPC.Processing.Values.RpcStreamValue.HlObjectVersion
   name: HlObjectVersion
   href: api/wan24.RPC.Processing.Values.RpcStreamValue.html#wan24_RPC_Processing_Values_RpcStreamValue_HlObjectVersion
@@ -7558,19 +7876,6 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.Values.RpcStreamValue.HlObjectVersion
   nameWithType: RpcStreamValue.HlObjectVersion
-- uid: wan24.RPC.Processing.Values.RpcStreamValue.IncomingStream
-  name: IncomingStream
-  href: api/wan24.RPC.Processing.Values.RpcStreamValue.html#wan24_RPC_Processing_Values_RpcStreamValue_IncomingStream
-  commentId: P:wan24.RPC.Processing.Values.RpcStreamValue.IncomingStream
-  fullName: wan24.RPC.Processing.Values.RpcStreamValue.IncomingStream
-  nameWithType: RpcStreamValue.IncomingStream
-- uid: wan24.RPC.Processing.Values.RpcStreamValue.IncomingStream*
-  name: IncomingStream
-  href: api/wan24.RPC.Processing.Values.RpcStreamValue.html#wan24_RPC_Processing_Values_RpcStreamValue_IncomingStream_
-  commentId: Overload:wan24.RPC.Processing.Values.RpcStreamValue.IncomingStream
-  isSpec: "True"
-  fullName: wan24.RPC.Processing.Values.RpcStreamValue.IncomingStream
-  nameWithType: RpcStreamValue.IncomingStream
 - uid: wan24.RPC.Processing.Values.RpcStreamValue.Length
   name: Length
   href: api/wan24.RPC.Processing.Values.RpcStreamValue.html#wan24_RPC_Processing_Values_RpcStreamValue_Length
@@ -7764,14 +8069,14 @@ references:
   fullName.vb: wan24.RPC.Sdk.RpcSdkBaseExt(Of T).New
   nameWithType: RpcSdkBaseExt<T>.RpcSdkBaseExt
   nameWithType.vb: RpcSdkBaseExt(Of T).New
-- uid: wan24.RPC.Sdk.RpcSdkBaseExt`1.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcStreamParameter,System.TimeSpan,System.Threading.CancellationToken)
-  name: CreateOutgoingStreamAsync(RpcStreamParameter, TimeSpan, CancellationToken)
-  href: api/wan24.RPC.Sdk.RpcSdkBaseExt-1.html#wan24_RPC_Sdk_RpcSdkBaseExt_1_CreateOutgoingStreamAsync_wan24_RPC_Processing_Parameters_RpcStreamParameter_System_TimeSpan_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Sdk.RpcSdkBaseExt`1.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcStreamParameter,System.TimeSpan,System.Threading.CancellationToken)
-  fullName: wan24.RPC.Sdk.RpcSdkBaseExt<T>.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcStreamParameter, System.TimeSpan, System.Threading.CancellationToken)
-  fullName.vb: wan24.RPC.Sdk.RpcSdkBaseExt(Of T).CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcStreamParameter, System.TimeSpan, System.Threading.CancellationToken)
-  nameWithType: RpcSdkBaseExt<T>.CreateOutgoingStreamAsync(RpcStreamParameter, TimeSpan, CancellationToken)
-  nameWithType.vb: RpcSdkBaseExt(Of T).CreateOutgoingStreamAsync(RpcStreamParameter, TimeSpan, CancellationToken)
+- uid: wan24.RPC.Sdk.RpcSdkBaseExt`1.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter,System.TimeSpan,System.Threading.CancellationToken)
+  name: CreateOutgoingStreamAsync(RpcOutgoingStreamParameter, TimeSpan, CancellationToken)
+  href: api/wan24.RPC.Sdk.RpcSdkBaseExt-1.html#wan24_RPC_Sdk_RpcSdkBaseExt_1_CreateOutgoingStreamAsync_wan24_RPC_Processing_Parameters_RpcOutgoingStreamParameter_System_TimeSpan_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Sdk.RpcSdkBaseExt`1.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter,System.TimeSpan,System.Threading.CancellationToken)
+  fullName: wan24.RPC.Sdk.RpcSdkBaseExt<T>.CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter, System.TimeSpan, System.Threading.CancellationToken)
+  fullName.vb: wan24.RPC.Sdk.RpcSdkBaseExt(Of T).CreateOutgoingStreamAsync(wan24.RPC.Processing.Parameters.RpcOutgoingStreamParameter, System.TimeSpan, System.Threading.CancellationToken)
+  nameWithType: RpcSdkBaseExt<T>.CreateOutgoingStreamAsync(RpcOutgoingStreamParameter, TimeSpan, CancellationToken)
+  nameWithType.vb: RpcSdkBaseExt(Of T).CreateOutgoingStreamAsync(RpcOutgoingStreamParameter, TimeSpan, CancellationToken)
 - uid: wan24.RPC.Sdk.RpcSdkBaseExt`1.CreateOutgoingStreamAsync*
   name: CreateOutgoingStreamAsync
   href: api/wan24.RPC.Sdk.RpcSdkBaseExt-1.html#wan24_RPC_Sdk_RpcSdkBaseExt_1_CreateOutgoingStreamAsync_
@@ -7781,15 +8086,15 @@ references:
   fullName.vb: wan24.RPC.Sdk.RpcSdkBaseExt(Of T).CreateOutgoingStreamAsync
   nameWithType: RpcSdkBaseExt<T>.CreateOutgoingStreamAsync
   nameWithType.vb: RpcSdkBaseExt(Of T).CreateOutgoingStreamAsync
-- uid: wan24.RPC.Sdk.RpcSdkBaseExt`1.CreateStreamParameter(System.IO.Stream@,System.Boolean@)
-  name: CreateStreamParameter(in Stream, in bool)
-  href: api/wan24.RPC.Sdk.RpcSdkBaseExt-1.html#wan24_RPC_Sdk_RpcSdkBaseExt_1_CreateStreamParameter_System_IO_Stream__System_Boolean__
-  commentId: M:wan24.RPC.Sdk.RpcSdkBaseExt`1.CreateStreamParameter(System.IO.Stream@,System.Boolean@)
-  name.vb: CreateStreamParameter(Stream, Boolean)
-  fullName: wan24.RPC.Sdk.RpcSdkBaseExt<T>.CreateStreamParameter(in System.IO.Stream, in bool)
-  fullName.vb: wan24.RPC.Sdk.RpcSdkBaseExt(Of T).CreateStreamParameter(System.IO.Stream, Boolean)
-  nameWithType: RpcSdkBaseExt<T>.CreateStreamParameter(in Stream, in bool)
-  nameWithType.vb: RpcSdkBaseExt(Of T).CreateStreamParameter(Stream, Boolean)
+- uid: wan24.RPC.Sdk.RpcSdkBaseExt`1.CreateStreamParameter(System.IO.Stream@,System.Boolean@,System.Boolean@)
+  name: CreateStreamParameter(in Stream, in bool, in bool)
+  href: api/wan24.RPC.Sdk.RpcSdkBaseExt-1.html#wan24_RPC_Sdk_RpcSdkBaseExt_1_CreateStreamParameter_System_IO_Stream__System_Boolean__System_Boolean__
+  commentId: M:wan24.RPC.Sdk.RpcSdkBaseExt`1.CreateStreamParameter(System.IO.Stream@,System.Boolean@,System.Boolean@)
+  name.vb: CreateStreamParameter(Stream, Boolean, Boolean)
+  fullName: wan24.RPC.Sdk.RpcSdkBaseExt<T>.CreateStreamParameter(in System.IO.Stream, in bool, in bool)
+  fullName.vb: wan24.RPC.Sdk.RpcSdkBaseExt(Of T).CreateStreamParameter(System.IO.Stream, Boolean, Boolean)
+  nameWithType: RpcSdkBaseExt<T>.CreateStreamParameter(in Stream, in bool, in bool)
+  nameWithType.vb: RpcSdkBaseExt(Of T).CreateStreamParameter(Stream, Boolean, Boolean)
 - uid: wan24.RPC.Sdk.RpcSdkBaseExt`1.CreateStreamParameter*
   name: CreateStreamParameter
   href: api/wan24.RPC.Sdk.RpcSdkBaseExt-1.html#wan24_RPC_Sdk_RpcSdkBaseExt_1_CreateStreamParameter_

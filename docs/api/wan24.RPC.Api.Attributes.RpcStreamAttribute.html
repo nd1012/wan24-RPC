@@ -101,7 +101,7 @@
 
 
   <h1 id="wan24_RPC_Api_Attributes_RpcStreamAttribute" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute" class="text-break">Class RpcStreamAttribute</h1>
-  <div class="markdown level0 summary"><p>Attribute for a RPC API method stream return value transport configuration</p>
+  <div class="markdown level0 summary"><p>Attribute for a RPC API method stream parameter or return value transport configuration</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -243,7 +243,7 @@
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Api_Attributes_RpcStreamAttribute_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Method)]
+    <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Method|AttributeTargets.Parameter)]
 public class RpcStreamAttribute : Attribute</code></pre>
   </div>
   <h5 id="wan24_RPC_Api_Attributes_RpcStreamAttribute_remarks"><strong>Remarks</strong></h5>
@@ -256,11 +256,11 @@ public class RpcStreamAttribute : Attribute</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_RpcStreamAttribute__ctor.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.RpcStreamAttribute.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L12">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L14">View Source</a>
   </span>
   <a id="wan24_RPC_Api_Attributes_RpcStreamAttribute__ctor_" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.#ctor*"></a>
   <h4 id="wan24_RPC_Api_Attributes_RpcStreamAttribute__ctor" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.#ctor">RpcStreamAttribute()</h4>
-  <div class="markdown level1 summary"><p>Attribute for a RPC API method stream return value transport configuration</p>
+  <div class="markdown level1 summary"><p>Attribute for a RPC API method stream parameter or return value transport configuration</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -277,7 +277,7 @@ public class RpcStreamAttribute : Attribute</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_RpcStreamAttribute_Compression.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.RpcStreamAttribute.Compression%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L18">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L20">View Source</a>
   </span>
   <a id="wan24_RPC_Api_Attributes_RpcStreamAttribute_Compression_" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.Compression*"></a>
   <h4 id="wan24_RPC_Api_Attributes_RpcStreamAttribute_Compression" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.Compression">Compression</h4>
@@ -308,7 +308,7 @@ public class RpcStreamAttribute : Attribute</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_RpcStreamAttribute_CompressionAlgorithm.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.RpcStreamAttribute.CompressionAlgorithm%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L23">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L25">View Source</a>
   </span>
   <a id="wan24_RPC_Api_Attributes_RpcStreamAttribute_CompressionAlgorithm_" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.CompressionAlgorithm*"></a>
   <h4 id="wan24_RPC_Api_Attributes_RpcStreamAttribute_CompressionAlgorithm" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.CompressionAlgorithm">CompressionAlgorithm</h4>
@@ -339,7 +339,7 @@ public class RpcStreamAttribute : Attribute</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_RpcStreamAttribute_CompressionFlags.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.RpcStreamAttribute.CompressionFlags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L28">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L30">View Source</a>
   </span>
   <a id="wan24_RPC_Api_Attributes_RpcStreamAttribute_CompressionFlags_" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.CompressionFlags*"></a>
   <h4 id="wan24_RPC_Api_Attributes_RpcStreamAttribute_CompressionFlags" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.CompressionFlags">CompressionFlags</h4>
@@ -370,7 +370,7 @@ public class RpcStreamAttribute : Attribute</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_RpcStreamAttribute_CompressionLevel.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.RpcStreamAttribute.CompressionLevel%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L33">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L35">View Source</a>
   </span>
   <a id="wan24_RPC_Api_Attributes_RpcStreamAttribute_CompressionLevel_" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.CompressionLevel*"></a>
   <h4 id="wan24_RPC_Api_Attributes_RpcStreamAttribute_CompressionLevel" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.CompressionLevel">CompressionLevel</h4>
@@ -396,6 +396,37 @@ public class RpcStreamAttribute : Attribute</code></pre>
       </tr>
     </tbody>
   </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_RpcStreamAttribute_DisposeRpcStream.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.RpcStreamAttribute.DisposeRpcStream%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L40">View Source</a>
+  </span>
+  <a id="wan24_RPC_Api_Attributes_RpcStreamAttribute_DisposeRpcStream_" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.DisposeRpcStream*"></a>
+  <h4 id="wan24_RPC_Api_Attributes_RpcStreamAttribute_DisposeRpcStream" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.DisposeRpcStream">DisposeRpcStream</h4>
+  <div class="markdown level1 summary"><p>If to dispose the RPC stream from the RPC processor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool DisposeRpcStream { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
 </h3>
   <span class="small pull-right mobile-hide">
@@ -403,7 +434,7 @@ public class RpcStreamAttribute : Attribute</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_RpcStreamAttribute_ApplyTo_wan24_Compression_CompressionOptions_.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.RpcStreamAttribute.ApplyTo(wan24.Compression.CompressionOptions)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L40">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcStreamAttribute.cs/#L47">View Source</a>
   </span>
   <a id="wan24_RPC_Api_Attributes_RpcStreamAttribute_ApplyTo_" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.ApplyTo*"></a>
   <h4 id="wan24_RPC_Api_Attributes_RpcStreamAttribute_ApplyTo_wan24_Compression_CompressionOptions_" data-uid="wan24.RPC.Api.Attributes.RpcStreamAttribute.ApplyTo(wan24.Compression.CompressionOptions)">ApplyTo(CompressionOptions?)</h4>
