@@ -114,6 +114,7 @@
   <div class="implements">
     <h5>Implements</h5>
     <div><span class="xref">IWillDispose</span></div>
+    <div><a class="xref" href="wan24.RPC.Sdk.IRpcSdk.html">IRpcSdk</a></div>
     <div><span class="xref">IDisposableObject</span></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
@@ -134,6 +135,9 @@
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Sdk.RpcSdkBase-1.html#wan24_RPC_Sdk_RpcSdkBase_1_CallVoidAsync_System_String_System_String_System_TimeSpan_System_Threading_CancellationToken_System_Object___">RpcSdkBase&lt;T&gt;.CallVoidAsync(string, string, TimeSpan, CancellationToken, params object[])</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Sdk.RpcSdkBase-1.html#wan24_RPC_Sdk_RpcSdkBase_1_PingAsync_System_TimeSpan_System_Threading_CancellationToken_">RpcSdkBase&lt;T&gt;.PingAsync(TimeSpan, CancellationToken)</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Sdk.RpcSdkBase-1.html#wan24_RPC_Sdk_RpcSdkBase_1_RegisterEvent__1_System_String__wan24_RPC_Processing_RpcEvent_EventHandler_Delegate__">RpcSdkBase&lt;T&gt;.RegisterEvent&lt;tReturn&gt;(in string, in RpcEvent.EventHandler_Delegate)</a>
@@ -257,7 +261,7 @@
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Sdk_RpcSdkBaseExt_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class RpcSdkBaseExt&lt;T&gt; : RpcSdkBase&lt;T&gt;, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable where T : RpcProcessor, IRpcProcessorInternals</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class RpcSdkBaseExt&lt;T&gt; : RpcSdkBase&lt;T&gt;, IWillDispose, IRpcSdk, IDisposableObject, IDisposable, IAsyncDisposable where T : RpcProcessor, IRpcProcessorInternals</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -584,6 +588,9 @@
   <h3 id="implements">Implements</h3>
   <div>
       <span class="xref">wan24.Core.IWillDispose</span>
+  </div>
+  <div>
+      <a class="xref" href="wan24.RPC.Sdk.IRpcSdk.html">IRpcSdk</a>
   </div>
   <div>
       <span class="xref">wan24.Core.IDisposableObject</span>

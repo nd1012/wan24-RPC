@@ -271,7 +271,7 @@
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_Call_Cancellation_" data-uid="wan24.RPC.Processing.RpcProcessor.Call.Cancellation*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_Call_Cancellation" data-uid="wan24.RPC.Processing.RpcProcessor.Call.Cancellation">Cancellation</h4>
-  <div class="markdown level1 summary"><p>Cancellation</p>
+  <div class="markdown level1 summary"><p>Cancellation (will be disposed)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -488,7 +488,7 @@
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_Call_ParameterStreams_" data-uid="wan24.RPC.Processing.RpcProcessor.Call.ParameterStreams*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_Call_ParameterStreams" data-uid="wan24.RPC.Processing.RpcProcessor.Call.ParameterStreams">ParameterStreams</h4>
-  <div class="markdown level1 summary"><p>Incoming streams from parameters</p>
+  <div class="markdown level1 summary"><p>Incoming streams from parameters (will be disposed)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -550,7 +550,7 @@
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_Call_ReturnStream_" data-uid="wan24.RPC.Processing.RpcProcessor.Call.ReturnStream*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_Call_ReturnStream" data-uid="wan24.RPC.Processing.RpcProcessor.Call.ReturnStream">ReturnStream</h4>
-  <div class="markdown level1 summary"><p>Outgoing stream from the return value</p>
+  <div class="markdown level1 summary"><p>Outgoing stream from the return value (will be disposed on error)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -612,7 +612,7 @@
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_Call_WasProcessing_" data-uid="wan24.RPC.Processing.RpcProcessor.Call.WasProcessing*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_Call_WasProcessing" data-uid="wan24.RPC.Processing.RpcProcessor.Call.WasProcessing">WasProcessing</h4>
-  <div class="markdown level1 summary"><p>If the call was processing</p>
+  <div class="markdown level1 summary"><p>If the call was processing (the targeted API method has been called)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -641,7 +641,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_Call_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.Call.Dispose(System.Boolean)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.CallContext.cs/#L112">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.CallContext.cs/#L114">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_Call_Dispose_" data-uid="wan24.RPC.Processing.RpcProcessor.Call.Dispose*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_Call_Dispose_System_Boolean_" data-uid="wan24.RPC.Processing.RpcProcessor.Call.Dispose(System.Boolean)">Dispose(bool)</h4>
@@ -677,7 +677,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_Call_DisposeCore.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.Call.DisposeCore%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.CallContext.cs/#L133">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.CallContext.cs/#L136">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_Call_DisposeCore_" data-uid="wan24.RPC.Processing.RpcProcessor.Call.DisposeCore*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_Call_DisposeCore" data-uid="wan24.RPC.Processing.RpcProcessor.Call.DisposeCore">DisposeCore()</h4>
@@ -714,12 +714,12 @@
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_Call_HandleExceptionAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.Call.HandleExceptionAsync*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_Call_HandleExceptionAsync_System_Exception_" data-uid="wan24.RPC.Processing.RpcProcessor.Call.HandleExceptionAsync(System.Exception)">HandleExceptionAsync(Exception)</h4>
-  <div class="markdown level1 summary"><p>Handle an exception</p>
+  <div class="markdown level1 summary"><p>Handle an exception (this method should not throw)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual Task HandleExceptionAsync(Exception ex)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual Task HandleExceptionAsync(Exception exception)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -733,7 +733,7 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.exception">Exception</a></td>
-        <td><span class="parametername">ex</span></td>
+        <td><span class="parametername">exception</span></td>
         <td><p>Exception</p>
 </td>
       </tr>

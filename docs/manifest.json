@@ -355,6 +355,26 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Messages.PingMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Messages.PingMessage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Messages.PongMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Messages.PongMessage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Processing.Messages.RequestMessage.yml",
       "output": {
         ".html": {
@@ -819,6 +839,16 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Sdk.IRpcSdk.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Sdk.IRpcSdk.html"
         }
       },
       "version": ""
