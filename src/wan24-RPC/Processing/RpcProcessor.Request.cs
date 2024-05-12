@@ -85,7 +85,7 @@ namespace wan24.RPC.Processing
             if (!EnsureUndisposed(throwException: false) || GetPendingRequest(message.Id!.Value) is not Request request)
             {
                 Logger?.Log(LogLevel.Warning, "{this} can't handle response for request #{id} (is disposing ({disposing}) or pending request not found)", ToString(), message.Id, IsDisposing);
-                await HandleInvalidReturnValueAsync(message).DynamicContext();
+                await HandleInvalidResponseReturnValueAsync(message).DynamicContext();
                 await message.DisposeReturnValueAsync().DynamicContext();
                 return;
             }
@@ -99,7 +99,7 @@ namespace wan24.RPC.Processing
             if (message.ReturnValue is not null)
             {
                 // Invalid return value (not requested)
-                await HandleInvalidReturnValueAsync(message).DynamicContext();
+                await HandleInvalidResponseReturnValueAsync(message).DynamicContext();
                 await message.DisposeReturnValueAsync().DynamicContext();
                 request.ProcessorCompletion.TrySetException(new InvalidDataException($"Request #{request.Message.Id} didn't want a return value, but a return value of type {message.ReturnValue.GetType()} was responded"));
             }

@@ -14,7 +14,7 @@ namespace wan24.RPC.Processing
         protected readonly IncomingQueue IncomingMessages;
 
         /// <summary>
-        /// Handle a message (should call <see cref="StopExceptionalAsync(Exception)"/> on exception)
+        /// Handle a message (should call <see cref="StopExceptionalAndDisposeAsync(Exception)"/> on exception)
         /// </summary>
         /// <param name="message">Message</param>
         protected virtual async Task HandleMessageAsync(IRpcMessage message)
@@ -80,12 +80,29 @@ namespace wan24.RPC.Processing
                     case CancellationMessage cancellation:
                         await HandleCancellationAsync(cancellation).DynamicContext();
                         break;
+                    case PingMessage ping:
+                        Logger?.Log(LogLevel.Debug, "{this} sending pong response for ping request #{id}", ToString(), message.Id);
+                        await SendMessageAsync(new PongMessage(ping)
+                        {
+                            PeerRpcVersion = Options.RpcVersion
+                        }).DynamicContext();
+                        break;
+                    case PongMessage:
+                        {
+                            if (GetPendingRequest(message.Id!.Value) is Request pingRequest)
+                            {
+                                Logger?.Log(LogLevel.Debug, "{this} got pong response for ping request #{id}", ToString(), message.Id);
+                                pingRequest.ProcessorCompletion.TrySetResult(result: null);
+                            }
+                        }
+                        break;
                     default:
                         throw new InvalidDataException($"Can't handle message type #{message.Id} ({message.GetType()})");
                 }
             }
             catch (ObjectDisposedException) when (IsDisposing)
             {
+                Logger?.Log(LogLevel.Warning, "{this} handling message type {type} canceled due to disposing", ToString(), message.Type);
             }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {
@@ -93,8 +110,8 @@ namespace wan24.RPC.Processing
             }
             catch (Exception ex)
             {
-                Logger?.Log(LogLevel.Warning, "{this} handling message type {type} failed (will dispose): {ex}", ToString(), message.Type, ex);
-                await StopExceptionalAsync(ex).DynamicContext();
+                Logger?.Log(LogLevel.Error, "{this} handling message type {type} failed (will dispose): {ex}", ToString(), message.Type, ex);
+                await StopExceptionalAndDisposeAsync(ex).DynamicContext();
             }
         }
     }

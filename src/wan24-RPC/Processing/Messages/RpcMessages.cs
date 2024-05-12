@@ -21,7 +21,9 @@ namespace wan24.RPC.Processing.Messages
             { StreamStartMessage.TYPE_ID, typeof(StreamStartMessage) },
             { StreamChunkMessage.TYPE_ID, typeof(StreamChunkMessage) },
             { RemoteStreamCloseMessage.TYPE_ID, typeof(RemoteStreamCloseMessage) },
-            { LocalStreamCloseMessage.HL_TYPE_ID, typeof(LocalStreamCloseMessage) }
+            { LocalStreamCloseMessage.HL_TYPE_ID, typeof(LocalStreamCloseMessage) },
+            { PingMessage.TYPE_ID, typeof(PingMessage) },
+            { PongMessage.TYPE_ID, typeof(PongMessage) }
         };
 
         /// <summary>

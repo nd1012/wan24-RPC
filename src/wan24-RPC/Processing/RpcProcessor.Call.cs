@@ -131,6 +131,13 @@ namespace wan24.RPC.Processing
             {
                 Logger?.Log(LogLevel.Debug, "{this} can't handle call when disposing", ToString());
                 Logger?.Log(LogLevel.Trace, "{this} disposing parameters of call #{id}", ToString(), message.Id);
+                if (message.Parameters is not null)
+                {
+                    ObjectDisposedException disposedException = new(GetType().ToString());
+                    foreach (object? parameter in message.Parameters)
+                        if (parameter is not null)
+                            await HandleValueOnErrorAsync(parameter, outgoing: false, disposedException).DynamicContext();
+                }
                 await message.DisposeParametersAsync().DynamicContext();
                 return;
             }

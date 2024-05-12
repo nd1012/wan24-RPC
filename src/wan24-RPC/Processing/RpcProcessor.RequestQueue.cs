@@ -108,7 +108,7 @@ namespace wan24.RPC.Processing
                 catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
                 {
                 }
-                catch (OperationCanceledException ex) when (ex.CancellationToken == item.Cancellation)
+                catch (OperationCanceledException ex) when (Equals(ex.CancellationToken, item.Cancellation))
                 {
                     if (returnValue is not null)
                     {
@@ -120,7 +120,7 @@ namespace wan24.RPC.Processing
                         {
                             await Processor.CancelRequestAsync(request).DynamicContext();
                         }
-                        catch(Exception ex2)
+                        catch (Exception ex2)
                         {
                             Logger?.Log(LogLevel.Error, "{this} request #{id} API \"{api}\" method \"{method}\" failed to cancel during queue processing: {ex}", ToString(), item.Message.Id, request.Api, request.Method, ex2);
                         }

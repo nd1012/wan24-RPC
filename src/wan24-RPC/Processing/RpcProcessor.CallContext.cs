@@ -48,7 +48,7 @@ namespace wan24.RPC.Processing
             public required IRpcRequest Message { get; init; }
 
             /// <summary>
-            /// Cancellation
+            /// Cancellation (will be disposed)
             /// </summary>
             public CancellationTokenSource Cancellation { get; } = new();
 
@@ -63,17 +63,17 @@ namespace wan24.RPC.Processing
             public RpcContext? Context { get; set; }
 
             /// <summary>
-            /// If the call was processing
+            /// If the call was processing (the targeted API method has been called)
             /// </summary>
             public bool WasProcessing { get; set; }
 
             /// <summary>
-            /// Incoming streams from parameters
+            /// Incoming streams from parameters (will be disposed)
             /// </summary>
             public HashSet<IncomingStream> ParameterStreams { get; } = [];
 
             /// <summary>
-            /// Outgoing stream from the return value
+            /// Outgoing stream from the return value (will be disposed on error)
             /// </summary>
             public OutgoingStream? ReturnStream { get; set; }
 
@@ -89,22 +89,24 @@ namespace wan24.RPC.Processing
             }
 
             /// <summary>
-            /// Handle an exception
+            /// Handle an exception (this method should not throw)
             /// </summary>
-            /// <param name="ex">Exception</param>
-            public virtual async Task HandleExceptionAsync(Exception ex)
+            /// <param name="exception">Exception</param>
+            public virtual async Task HandleExceptionAsync(Exception exception)
             {
-                if (ParameterStreams.Any(s => !s.IsDisposing))
+                try
                 {
-                    using (SemaphoreSyncContext ssc = await Processor.IncomingStreamsSync.SyncContextAsync().DynamicContext())
-                        foreach (IncomingStream stream in ParameterStreams.Where(s => !s.IsDisposing))
-                            Processor.RemoveIncomingStream(stream);
-                    await ParameterStreams.Where(s => !s.IsDisposing).DisposeAllAsync().DynamicContext();
+                    Completion.TrySetException(exception);
+                    if (Message is RequestMessage request && request.Parameters is not null)
+                        await Processor.HandleValuesOnErrorAsync(outgoing: false, exception, request.Parameters).DynamicContext();
+                    if (ReturnStream is not null)
+                    {
+                        await Processor.RemoveOutgoingStreamAsync(ReturnStream).DynamicContext();
+                        await ReturnStream.DisposeAsync().DynamicContext();
+                    }
                 }
-                if (ReturnStream is not null && !ReturnStream.IsDisposing)
+                catch
                 {
-                    await Processor.RemoveOutgoingStreamAsync(ReturnStream).DynamicContext();
-                    await ReturnStream.DisposeAsync().DynamicContext();
                 }
             }
 
@@ -113,18 +115,19 @@ namespace wan24.RPC.Processing
             {
                 Cancellation.Cancel();
                 Cancellation.Dispose();
-                Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
+                if (!Completion.Task.IsCompleted)
+                    Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
                 SetDone();
                 if (ParameterStreams.Any(s => !s.IsDisposing))
                 {
                     List<IncomingStream> disposeStreams = [];
                     using (SemaphoreSyncContext ssc = Processor.IncomingStreamsSync)
                         foreach (IncomingStream stream in ParameterStreams.Where(s => !s.IsDisposing))
+                        {
+                            Processor.RemoveIncomingStream(stream);
                             if (stream.ApiParameter?.DisposeParameterValue ?? stream.ApiParameter?.Stream?.DisposeRpcStream ?? true)
-                            {
-                                Processor.RemoveIncomingStream(stream);
                                 disposeStreams.Add(stream);
-                            }
+                        }
                     disposeStreams.DisposeAll();
                 }
             }
@@ -134,18 +137,19 @@ namespace wan24.RPC.Processing
             {
                 Cancellation.Cancel();
                 Cancellation.Dispose();
-                Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
+                if (!Completion.Task.IsCompleted)
+                    Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
                 SetDone();
                 if (ParameterStreams.Any(s => !s.IsDisposing))
                 {
                     List<IncomingStream> disposeStreams = [];
                     using (SemaphoreSyncContext ssc = await Processor.IncomingStreamsSync.SyncContextAsync().DynamicContext())
                         foreach (IncomingStream stream in ParameterStreams.Where(s => !s.IsDisposing))
+                        {
+                            Processor.RemoveIncomingStream(stream);
                             if (stream.ApiParameter?.DisposeParameterValue ?? stream.ApiParameter?.Stream?.DisposeRpcStream ?? true)
-                            {
-                                Processor.RemoveIncomingStream(stream);
                                 disposeStreams.Add(stream);
-                            }
+                        }
                     await disposeStreams.DisposeAllAsync().DynamicContext();
                 }
             }

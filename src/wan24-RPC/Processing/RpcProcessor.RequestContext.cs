@@ -88,6 +88,27 @@ namespace wan24.RPC.Processing
                 Processor.Logger?.Log(LogLevel.Trace, "{processor} RPC request #{id} processing done within {runtime}", Processor.ToString(), Message.Id, Runtime);
             }
 
+            /// <summary>
+            /// Handle an exception (this method should not throw)
+            /// </summary>
+            /// <param name="exception">Exception</param>
+            public virtual async Task HandleExceptionAsync(Exception exception)
+            {
+                try
+                {
+                    RequestCompletion.TrySetException(exception);
+                    ProcessorCompletion.TrySetException(exception);
+                    if (ReturnStream is not null)
+                    {
+                        await Processor.RemoveIncomingStreamAsync(ReturnStream).DynamicContext();
+                        await ReturnStream.DisposeAsync().DynamicContext();
+                    }
+                }
+                catch
+                {
+                }
+            }
+
             /// <inheritdoc/>
             protected override void Dispose(bool disposing)
             {

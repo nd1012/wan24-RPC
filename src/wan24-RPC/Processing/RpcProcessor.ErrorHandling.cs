@@ -11,23 +11,6 @@ namespace wan24.RPC.Processing
     public partial class RpcProcessor
     {
         /// <summary>
-        /// Stop exceptional
-        /// </summary>
-        /// <param name="ex">Exception</param>
-        protected virtual async Task StopExceptionalAsync(Exception ex)
-        {
-            Logger?.Log(LogLevel.Error, "{this} stop exceptional: {ex}", ToString(), ex);
-            if (StoppedExceptional || LastException is not null)
-            {
-                Logger?.Log(LogLevel.Warning, "{this} had an exception already", ToString());
-                return;
-            }
-            StoppedExceptional = true;
-            LastException = ex;
-            await DisposeAsync().DynamicContext();
-        }
-
-        /// <summary>
         /// Handle an error with the incoming message storage (handler should dispose values, if required; peer will be disconnected; this method should not throw)
         /// </summary>
         /// <param name="message">RPC Message</param>
@@ -106,9 +89,7 @@ namespace wan24.RPC.Processing
                         break;
                     case RequestMessage request:
                         if (request.Parameters is not null)
-                            foreach (object? parameter in request.Parameters)
-                                if (parameter is not null)
-                                    await HandleValueOnErrorAsync(parameter, outgoing: false, ex).DynamicContext();
+                            await HandleValuesOnErrorAsync(outgoing: false, ex, request.Parameters).DynamicContext();
                         await request.DisposeParametersAsync().DynamicContext();
                         break;
                     case ResponseMessage response:
@@ -134,9 +115,22 @@ namespace wan24.RPC.Processing
         }
 
         /// <summary>
+        /// Handle parameter or return values on error (this method shouldn't throw)
+        /// </summary>
+        /// <param name="outgoing">If the values were going to be sent to the peer</param>
+        /// <param name="ex">Exception</param>
+        /// <param name="values">Values (will be disposed)</param>
+        protected virtual async Task HandleValuesOnErrorAsync(bool outgoing, Exception ex, params object?[] values)
+        {
+            foreach (object? value in values)
+                if (value is not null)
+                    await HandleValueOnErrorAsync(value, outgoing, ex).DynamicContext();
+        }
+
+        /// <summary>
         /// Handle a parameter or return value on error (this method shouldn't throw)
         /// </summary>
-        /// <param name="value">Value</param>
+        /// <param name="value">Value (will be disposed)</param>
         /// <param name="outgoing">If the value was going to be sent to the peer</param>
         /// <param name="ex">Exception</param>
         /// <returns>If handled</returns>
@@ -144,6 +138,7 @@ namespace wan24.RPC.Processing
         {
             try
             {
+                // Special type handling
                 switch (value)
                 {
                     case RpcOutgoingStreamParameter streamParameter:
@@ -179,14 +174,21 @@ namespace wan24.RPC.Processing
                                     }
                         }
                         break;
+                    case IAsyncDisposable:
+                    case IDisposable:
+                        break;
+                    default:
+                        return false;
+                }
+                // Disposable handling
+                switch (value)
+                {
                     case IAsyncDisposable asyncDisposable:
                         await asyncDisposable.DisposeAsync().DynamicContext();
                         break;
                     case IDisposable disposable:
                         disposable.Dispose();
                         break;
-                    default:
-                        return false;
                 }
                 return true;
             }
@@ -201,8 +203,16 @@ namespace wan24.RPC.Processing
         /// </summary>
         /// <param name="call">Call</param>
         /// <param name="exception">Exception</param>
-        protected virtual Task HandleCallProcessingErrorAsync(Call call, Exception exception)
-            => SendErrorResponseAsync(call.Message as RequestMessage ?? throw new ArgumentException("Missing request message", nameof(call)), exception);
+        /// <returns>If handled</returns>
+        protected virtual async Task<bool> HandleCallProcessingErrorAsync(Call call, Exception exception)
+        {
+            await call.HandleExceptionAsync(exception).DynamicContext();
+            await SendErrorResponseAsync(
+                call.Message as RequestMessage ?? throw new ArgumentException("Missing request message", nameof(call)), 
+                exception
+                ).DynamicContext();
+            return true;
+        }
 
         /// <summary>
         /// Handle an event processing error
@@ -210,32 +220,35 @@ namespace wan24.RPC.Processing
         /// <param name="message">Message</param>
         /// <param name="e">Event</param>
         /// <param name="ex">Exception</param>
-        protected virtual Task HandleEventErrorAsync(EventMessage message, RpcEvent? e, Exception ex) => Task.CompletedTask;
+        /// <returns>If handled</returns>
+        protected virtual Task<bool> HandleEventProcessingErrorAsync(EventMessage message, RpcEvent? e, Exception ex) => Task.FromResult(false);
 
         /// <summary>
         /// Handle an incoming stream processing error
         /// </summary>
         /// <param name="stream">Stream</param>
         /// <param name="ex">Exception</param>
-        protected virtual Task HandleIncomingStreamProcessingErrorAsync(IncomingStream stream, Exception ex) => Task.CompletedTask;
+        /// <returns>If handled</returns>
+        protected virtual Task<bool> HandleIncomingStreamProcessingErrorAsync(IncomingStream stream, Exception ex) => Task.FromResult(false);
 
         /// <summary>
-        /// Ensure streams are enabled
+        /// Handle an outgoing stream processing error
         /// </summary>
-        protected virtual void EnsureStreamsAreEnabled()
-        {
-            if (Options.MaxStreamCount < 1)
-                throw new InvalidOperationException("Streams are disabled");
-        }
+        /// <param name="stream">Stream</param>
+        /// <param name="ex">Exception</param>
+        /// <returns>If handled</returns>
+        protected virtual Task<bool> HandleOutgoingStreamProcessingErrorAsync(OutgoingStream stream, Exception ex) => Task.FromResult(false);
 
         /// <summary>
-        /// Handle an invalid return value (processing will be stopped on handler exception)
+        /// Handle an invalid response return value (processing will be stopped on handler exception)
         /// </summary>
         /// <param name="message">Message</param>
-        protected virtual async Task HandleInvalidReturnValueAsync(ResponseMessage message)
+        /// <returns>If handled</returns>
+        protected virtual async Task<bool> HandleInvalidResponseReturnValueAsync(ResponseMessage message)
         {
             // Handle invalid stream return value (close the remote stream)
             if (!CancelToken.IsCancellationRequested && message.ReturnValue is RpcStreamValue incomingStream && incomingStream.Stream.HasValue)
+            {
                 try
                 {
                     Logger?.Log(LogLevel.Debug, "{this} closing invalid remote stream return value for request #{id}", ToString(), message.Id);
@@ -255,6 +268,9 @@ namespace wan24.RPC.Processing
                 {
                     Logger?.Log(LogLevel.Warning, "{this} failed to close invalid remote stream returned for request #{id}: {ex}", ToString(), message.Id, ex);
                 }
+                return true;
+            }
+            return false;
         }
     }
 }

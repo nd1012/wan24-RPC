@@ -24,6 +24,18 @@ namespace wan24.RPC.Processing
             OutgoingMessages = CreateOutgoingMessageQueue();
             Calls = CreateCallQueue();
             Requests = CreateRequestQueue();
+            if (options.KeepAlive > TimeSpan.Zero)
+            {
+                HeartBeat = new(options.KeepAlive);
+                HeartBeat.OnTimeout += HandleHeartBeatTimeoutAsync;
+                PeerHeartBeat = new(options.KeepAlive + options.PeerTimeout);
+                PeerHeartBeat.OnTimeout += HandlePeerHeartBeatTimeoutAsync;
+            }
+            else
+            {
+                HeartBeat = null;
+                PeerHeartBeat = null;
+            }
             foreach (object api in Options.API.Values.Select(a => a.Instance))
                 if (api is IWantRpcProcessorInfo processorInfo)
                     processorInfo.Processor = this;
@@ -112,6 +124,7 @@ namespace wan24.RPC.Processing
                             ThrowOnReadOverflow = true
                         })
                             message = await limited.ReadRpcMessageAsync(Options.SerializerVersion, cancellationToken: CancelToken).DynamicContext();
+                        LastMessageReceived = DateTime.Now;
                         // Enqueue the incoming message for processing
                         Logger?.Log(LogLevel.Trace, "{this} worker storing incoming RPC message", ToString());
                         try
@@ -156,6 +169,8 @@ namespace wan24.RPC.Processing
             catch (Exception ex)
             {
                 Logger?.Log(LogLevel.Error, "{this} worker catched exception: {ex}", ToString(), ex);
+                StoppedExceptional = true;
+                LastException ??= ex;
                 _ = DisposeAsync().AsTask();
                 throw;
             }
@@ -178,6 +193,8 @@ namespace wan24.RPC.Processing
             await Requests.StartAsync(CancelToken).DynamicContext();
             await OutgoingMessages.StartAsync(CancelToken).DynamicContext();
             await IncomingMessages.StartAsync(CancelToken).DynamicContext();
+            HeartBeat?.Reset();
+            PeerHeartBeat?.Reset();
         }
 
         /// <summary>
@@ -186,6 +203,8 @@ namespace wan24.RPC.Processing
         protected virtual async Task EndWorkAsync()
         {
             Logger?.Log(LogLevel.Debug, "{this} end work", ToString());
+            HeartBeat?.Stop();
+            PeerHeartBeat?.Stop();
             await IncomingMessages.StopAsync(CancelToken).DynamicContext();
             await Requests.StopAsync(CancellationToken.None).DynamicContext();
             await Calls.StopAsync(CancellationToken.None).DynamicContext();
@@ -197,6 +216,8 @@ namespace wan24.RPC.Processing
         {
             Logger?.Log(LogLevel.Trace, "{this} sync disposing", ToString());
             RpcProcessorTable.Processors.TryRemove(GetHashCode(), out _);
+            HeartBeat?.Dispose();
+            PeerHeartBeat?.Dispose();
             ObjectDisposedException disposedException = new(GetType().ToString());
             // Cancel outgoing streams
             using (SemaphoreSyncContext ssc = OutgoingStreamsSync)
@@ -255,7 +276,7 @@ namespace wan24.RPC.Processing
             IncomingMessages.Dispose();
             // Dispose outgoing messages
             OutgoingMessages.Dispose();
-            // Dispose the options
+            // Dispose others
             Options.Dispose();
         }
 
@@ -264,6 +285,10 @@ namespace wan24.RPC.Processing
         {
             Logger?.Log(LogLevel.Trace, "{this} async disposing", ToString());
             RpcProcessorTable.Processors.TryRemove(GetHashCode(), out _);
+            if (HeartBeat is not null)
+                await HeartBeat.DisposeAsync().DynamicContext();
+            if (PeerHeartBeat is not null)
+                await PeerHeartBeat.DisposeAsync().DynamicContext();
             ObjectDisposedException disposedException = new(GetType().ToString());
             // Cancel outgoing streams
             using (SemaphoreSyncContext ssc = await OutgoingStreamsSync.SyncContextAsync().DynamicContext())
@@ -322,7 +347,7 @@ namespace wan24.RPC.Processing
             await IncomingMessages.DisposeAsync().DynamicContext();
             // Dispose outgoing messages
             await OutgoingMessages.DisposeAsync().DynamicContext();
-            // Dispose the options
+            // Dispose others
             await Options.DisposeAsync().DynamicContext();
         }
     }

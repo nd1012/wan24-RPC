@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Net.NetworkInformation;
 using wan24.Core;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Serialization;
@@ -141,6 +142,41 @@ namespace wan24.RPC.Processing
         }
 
         /// <summary>
+        /// Send a ping message and wait for the pong message
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token</param>
+        public virtual async Task PingAsync(CancellationToken cancellationToken = default)
+        {
+            EnsureUndisposed();
+            Logger?.Log(LogLevel.Debug, "{this} sending ping request", ToString());
+            Request request = new()
+            {
+                Processor = this,
+                Message = new PingMessage()
+                {
+                    PeerRpcVersion = Options.RpcVersion,
+                    Id = Interlocked.Increment(ref MessageId)
+                },
+                Cancellation = cancellationToken
+            };
+            await using (request.DynamicContext())
+            {
+                if (!AddPendingRequest(request))
+                    throw new InvalidProgramException($"Failed to store ping request #{request.Message.Id} (double ID)");
+                try
+                {
+                    await SendMessageAsync(request.Message, cancellationToken).DynamicContext();
+                    await request.ProcessorCompletion.Task.DynamicContext();
+                    Logger?.Log(LogLevel.Debug, "{this} got pong response after {runtime}", ToString(), request.Runtime);
+                }
+                finally
+                {
+                    RemovePendingRequest(request);
+                }
+            }
+        }
+
+        /// <summary>
         /// Send a RPC message to the peer
         /// </summary>
         /// <param name="message">Message</param>
@@ -205,6 +241,7 @@ namespace wan24.RPC.Processing
             if (message is RpcMessageBase rpcMessage && rpcMessage.RequireId && !rpcMessage.Id.HasValue)
                 rpcMessage.Id = Interlocked.Increment(ref MessageId);
             Logger?.Log(LogLevel.Trace, "{this} sending message type {type} ({clrType}) as #{id}", ToString(), message.Type, message.GetType(), message.Id);
+            LastMessageSent = DateTime.Now;
             using (LimitedLengthStream limited = new(Options.Stream, Options.MaxMessageLength, leaveOpen: true))
                 try
                 {

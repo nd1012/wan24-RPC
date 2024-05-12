@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using wan24.Core;
 using wan24.RPC.Processing;
 
@@ -25,7 +26,7 @@ namespace wan24.RPC.Sdk
     /// Base class for a RPC SDK
     /// </summary>
     /// <typeparam name="T">RPC processor type</typeparam>
-    public abstract class RpcSdkBase<T> : DisposableBase where T : RpcProcessor
+    public abstract class RpcSdkBase<T> : DisposableBase, IRpcSdk where T : RpcProcessor
     {
         /// <summary>
         /// Cancellation
@@ -110,6 +111,22 @@ namespace wan24.RPC.Sdk
         }
 
         /// <summary>
+        /// Send a ping request
+        /// </summary>
+        /// <param name="timeout">Timeout</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        protected virtual async Task PingAsync(TimeSpan timeout = default, CancellationToken cancellationToken = default)
+        {
+            EnsureInitialized();
+            using CancellationTokenSource? cts = timeout == default ? null : new(timeout);
+            List<CancellationToken> tokens = [Cancellation.Token];
+            if (!Equals(cancellationToken, default)) tokens.Add(cancellationToken);
+            if (cts is not null) tokens.Add(cts.Token);
+            using Cancellations cancellation = new([.. tokens]);
+            await Processor.PingAsync(cancellation).DynamicContext();
+        }
+
+        /// <summary>
         /// Register a remote event handler
         /// </summary>
         /// <typeparam name="tReturn">Event arguments type</typeparam>
@@ -176,7 +193,7 @@ namespace wan24.RPC.Sdk
         /// <param name="e">Arguments</param>
         protected virtual void HandleProcessorDisposing(IDisposableObject sender, EventArgs e)
         {
-            if(Processor is RpcProcessor processor)
+            if(sender is RpcProcessor processor)
                 processor.OnDisposing -= HandleProcessorDisposing;
             if (!IsDisposing)
                 Cancellation.Cancel();

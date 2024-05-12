@@ -106,6 +106,16 @@ namespace wan24.RPC.Processing
         public RpcContext? DefaultContext { get; init; }
 
         /// <summary>
+        /// Keep alive timeout
+        /// </summary>
+        public TimeSpan KeepAlive { get; init; }
+
+        /// <summary>
+        /// Peer heartbeat timeout (only effective when <see cref="KeepAlive"/> was set)
+        /// </summary>
+        public TimeSpan PeerTimeout { get; init; } = TimeSpan.FromSeconds(1);
+
+        /// <summary>
         /// Incoming message queue capacity (overflow will block reading incoming messages until a queued message was dequeued)
         /// </summary>
         public required int IncomingMessageQueueCapacity { get; init; }

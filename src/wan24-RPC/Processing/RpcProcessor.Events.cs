@@ -228,7 +228,7 @@ namespace wan24.RPC.Processing
             catch (Exception ex)
             {
                 Logger?.Log(LogLevel.Warning, "{this} handling event \"{name}\" with arguments type {type} failed exceptional: {ex}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL", ex);
-                await HandleEventErrorAsync(message, handler, ex).DynamicContext();
+                await HandleEventProcessingErrorAsync(message, handler, ex).DynamicContext();
                 if (message.Waiting && EnsureUndisposed(throwException: false))
                     try
                     {
