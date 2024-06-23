@@ -40,6 +40,20 @@
             };
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        static RpcSerializer() => OnTypeValidation += (e) =>
+        {
+            if (e.IsValid)
+                return;
+            //TODO Validate stream and enumerable value
+            /*if (typeof(Stream).IsAssignableFrom(e.Expected) && typeof(RpcStreamValue).IsAssignableFrom(e.Serialized))
+                e.IsValid = true;
+            else if (e.Expected.IsEnumerable(strict: true, asyncOnly: true) && typeof(IRpcEnumerableValue).IsAssignableFrom(e.Serialized))
+                e.IsValid = true;*/
+        };
+
+        /// <summary>
         /// Opt-in deserializable types?
         /// </summary>
         public static bool DefaultOptIn { get; set; }
@@ -107,17 +121,41 @@
         /// Delegate for an object deserializer
         /// </summary>
         /// <param name="stream">Stream</param>
+        /// <param name="type">Object type</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Object</returns>
-        public delegate Task<object?> ObjectDeserializer_Delegate(Stream stream, CancellationToken cancellationToken);
+        public delegate Task<object?> ObjectDeserializer_Delegate(Stream stream, Type type, CancellationToken cancellationToken);
 
         /// <summary>
         /// Delegate for an object list deserializer
         /// </summary>
         /// <param name="stream">Stream</param>
+        /// <param name="types">Object types</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Object list</returns>
-        public delegate Task<object?[]?> ObjectListDeserializer_Delegate(Stream stream, CancellationToken cancellationToken);
+        public delegate Task<object?[]?> ObjectListDeserializer_Delegate(Stream stream, Type[] types, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delegate for a <see cref="OnTypeValidation"/> event handler
+        /// </summary>
+        /// <param name="e">Arguments</param>
+        public delegate void TypeValidation_Delegate(TypeValidationEventArgs e);
+        /// <summary>
+        /// Raise on type validation, if the serialized type doesn't match the expected type
+        /// </summary>
+        public static event TypeValidation_Delegate? OnTypeValidation;
+        /// <summary>
+        /// Raise the <see cref="OnTypeValidation"/> event
+        /// </summary>
+        /// <param name="expected">Expected type</param>
+        /// <param name="serialized">Serialized type</param>
+        /// <returns></returns>
+        public static bool RaiseOnTypeValidation(in Type expected, in Type serialized)
+        {
+            TypeValidationEventArgs e = new(expected, serialized);
+            OnTypeValidation?.Invoke(e);
+            return e.IsValid;
+        }
 
         /// <summary>
         /// Register a serializer
@@ -138,5 +176,31 @@
         /// </summary>
         /// <param name="id">ID</param>
         public static void Remove(in int id) => Registered.Remove(id);
+
+        /// <summary>
+        /// Arguments for the <see cref="OnTypeValidation"/> event
+        /// </summary>
+        /// <remarks>
+        /// Constructor
+        /// </remarks>
+        /// <param name="expected">Expected type</param>
+        /// <param name="serialized">Serialized type</param>
+        public class TypeValidationEventArgs(in Type expected, in Type serialized) : EventArgs()
+        {
+            /// <summary>
+            /// Expected type
+            /// </summary>
+            public Type Expected { get; } = expected;
+
+            /// <summary>
+            /// Serialized type
+            /// </summary>
+            public Type Serialized { get; } = serialized;
+
+            /// <summary>
+            /// If the serialized type is valid
+            /// </summary>
+            public bool IsValid { get; set; }
+        }
     }
 }

@@ -46,19 +46,21 @@ namespace wan24.RPC.Processing.Messages
         /// Deserialize an object
         /// </summary>
         /// <param name="stream">Stream</param>
+        /// <param name="type">Object type</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Object</returns>
-        protected Task<object?> DeserializeObjectAsync(Stream stream, CancellationToken cancellationToken)
-            => GetSerializer().ObjectDeserializer(stream, cancellationToken);
+        protected Task<object?> DeserializeObjectAsync(Stream stream, Type type, CancellationToken cancellationToken)
+            => GetSerializer().ObjectDeserializer(stream, type, cancellationToken);
 
         /// <summary>
         /// Deserialize an object list
         /// </summary>
         /// <param name="stream">Stream</param>
+        /// <param name="types">Types</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Object list</returns>
-        protected Task<object?[]?> DeserializeObjectListAsync(Stream stream, CancellationToken cancellationToken)
-            => GetSerializer().ObjectListDeserializer(stream, cancellationToken);
+        protected Task<object?[]?> DeserializeObjectListAsync(Stream stream, Type[] types, CancellationToken cancellationToken)
+            => GetSerializer().ObjectListDeserializer(stream, types, cancellationToken);
 
         /// <summary>
         /// Get the serializer

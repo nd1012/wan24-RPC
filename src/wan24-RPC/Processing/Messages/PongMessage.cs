@@ -11,7 +11,7 @@
         /// <summary>
         /// RPC message type ID
         /// </summary>
-        public const int TYPE_ID = 10;
+        public const int TYPE_ID = 6;
 
         /// <summary>
         /// Constructor

@@ -48,6 +48,16 @@ namespace wan24.RPC.Processing
             public required IRpcRequest Message { get; init; }
 
             /// <summary>
+            /// Message ID
+            /// </summary>
+            public long Id => Message.Id ?? throw new InvalidDataException("Missing message ID");
+
+            /// <summary>
+            /// Expected return value type
+            /// </summary>
+            public Type? ExpectedReturnType { get; init; }
+
+            /// <summary>
             /// Cancellation token
             /// </summary>
             public CancellationToken Cancellation { get; init; }
@@ -68,14 +78,14 @@ namespace wan24.RPC.Processing
             public bool WasProcessing { get; set; }
 
             /// <summary>
-            /// Outgoing parameter streams
+            /// Scope parameters
             /// </summary>
-            public HashSet<OutgoingStream> ParameterStreams { get; } = [];
+            public HashSet<RpcScopeBase> ParameterScopes { get; } = [];
 
             /// <summary>
-            /// The returned incoming stream
+            /// The returned remote scope
             /// </summary>
-            public IncomingStream? ReturnStream { get; set; }
+            public RpcRemoteScopeBase? ReturnScope { get; set; }
 
             /// <summary>
             /// Set done
@@ -98,14 +108,15 @@ namespace wan24.RPC.Processing
                 {
                     RequestCompletion.TrySetException(exception);
                     ProcessorCompletion.TrySetException(exception);
-                    if (ReturnStream is not null)
+                    if (ReturnScope is not null)
                     {
-                        await Processor.RemoveIncomingStreamAsync(ReturnStream).DynamicContext();
-                        await ReturnStream.DisposeAsync().DynamicContext();
+                        await ReturnScope.SetIsErrorAsync(exception).DynamicContext();
+                        await ReturnScope.DisposeAsync().DynamicContext();
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
+                    Processor.Logger?.Log(LogLevel.Warning, "Request context #{id} failed to handle processing error: {ex}", Id, ex);
                 }
             }
 
@@ -119,18 +130,7 @@ namespace wan24.RPC.Processing
                     RequestCompletion.TrySetException(exception);
                     ProcessorCompletion.TrySetException(exception);
                 }
-                if (ParameterStreams.Any(s => !s.IsDisposing))
-                {
-                    List<OutgoingStream> disposeStreams = [];
-                    using (SemaphoreSyncContext ssc = Processor.OutgoingStreamsSync)
-                        foreach (OutgoingStream stream in ParameterStreams.Where(s => !s.IsDisposing))
-                            if (stream.Parameter.DisposeRpcStream)
-                            {
-                                Processor.RemoveOutgoingStream(stream);
-                                disposeStreams.Add(stream);
-                            }
-                    disposeStreams.DisposeAll();
-                }
+                ParameterScopes.Where(s => !s.IsDisposing && (s.ScopeParameter?.ShouldDisposeScopeValue ?? true)).DisposeAll();
             }
 
             /// <inheritdoc/>
@@ -143,18 +143,7 @@ namespace wan24.RPC.Processing
                     RequestCompletion.TrySetException(exception);
                     ProcessorCompletion.TrySetException(exception);
                 }
-                if (ParameterStreams.Any(s => !s.IsDisposing))
-                {
-                    List<OutgoingStream> disposeStreams = [];
-                    using (SemaphoreSyncContext ssc = await Processor.OutgoingStreamsSync.SyncContextAsync().DynamicContext())
-                        foreach (OutgoingStream stream in ParameterStreams.Where(s => !s.IsDisposing))
-                            if (stream.Parameter.DisposeRpcStream)
-                            {
-                                Processor.RemoveOutgoingStream(stream);
-                                disposeStreams.Add(stream);
-                            }
-                    await disposeStreams.DisposeAllAsync().DynamicContext();
-                }
+                await ParameterScopes.Where(s => !s.IsDisposing && (s.ScopeParameter?.ShouldDisposeScopeValue ?? true)).DisposeAllAsync().DynamicContext();
             }
         }
     }

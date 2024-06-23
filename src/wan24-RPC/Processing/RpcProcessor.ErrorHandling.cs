@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using wan24.Core;
 using wan24.RPC.Processing.Messages;
-using wan24.RPC.Processing.Messages.Streaming;
 using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Values;
 
@@ -10,110 +9,6 @@ namespace wan24.RPC.Processing
     // Error handling
     public partial class RpcProcessor
     {
-        /// <summary>
-        /// Handle an error with the incoming message storage (handler should dispose values, if required; peer will be disconnected; this method should not throw)
-        /// </summary>
-        /// <param name="message">RPC Message</param>
-        /// <param name="ex">Exception</param>
-        /// <returns>If handled</returns>
-        protected virtual async Task<bool> HandleIncomingMessageStorageErrorAsync(IRpcMessage message, Exception ex)
-        {
-            try
-            {
-                Logger?.Log(LogLevel.Warning, "{this} handling incoming message type {type} queue error", ToString(), message.GetType());
-                switch (message)
-                {
-                    case StreamStartMessage streamStart:
-                        {
-                            if (await RemoveOutgoingStreamAsync(streamStart.Id!.Value).DynamicContext() is OutgoingStream outStream)
-                            {
-                                await using (outStream.DynamicContext())
-                                    if (!CancelToken.IsCancellationRequested && !outStream.IsDisposing && outStream.IsStarted && !outStream.IsDone)
-                                        try
-                                        {
-                                            outStream.LastException ??= ex;
-                                            outStream.Cancellation.Cancel();
-                                        }
-                                        catch
-                                        {
-                                        }
-                                if (!CancelToken.IsCancellationRequested)
-                                    await SendMessageAsync(new LocalStreamCloseMessage()
-                                    {
-                                        PeerRpcVersion = Options.RpcVersion,
-                                        Id = outStream.Id,
-                                        Error = ex
-
-                                    }, RPC_PRIORTY).DynamicContext();
-                            }
-                        }
-                        break;
-                    case StreamChunkMessage streamChunk:
-                        {
-                            if (await RemoveIncomingStreamAsync(streamChunk.Stream).DynamicContext() is IncomingStream inStream)
-                                await using (inStream.DynamicContext())
-                                    if (!CancelToken.IsCancellationRequested && !inStream.IsDisposing && inStream.IsStarted && !inStream.IsDone)
-                                        try
-                                        {
-                                            await inStream.CancelAsync().DynamicContext();
-                                        }
-                                        catch
-                                        {
-                                        }
-                        }
-                        break;
-                    case RemoteStreamCloseMessage remoteClose:
-                        {
-                            if (await RemoveOutgoingStreamAsync(remoteClose.Id!.Value).DynamicContext() is OutgoingStream outStream)
-                            {
-                                await using (outStream.DynamicContext())
-                                    if (!CancelToken.IsCancellationRequested && !outStream.IsDisposing && outStream.IsStarted && !outStream.IsDone)
-                                        try
-                                        {
-                                            outStream.LastException ??= ex;
-                                            outStream.Cancellation.Cancel();
-                                        }
-                                        catch
-                                        {
-                                        }
-                                if (!CancelToken.IsCancellationRequested)
-                                    await SendMessageAsync(new LocalStreamCloseMessage()
-                                    {
-                                        PeerRpcVersion = Options.RpcVersion,
-                                        Id = outStream.Id,
-                                        Error = ex
-
-                                    }, RPC_PRIORTY).DynamicContext();
-                            }
-                        }
-                        break;
-                    case RequestMessage request:
-                        if (request.Parameters is not null)
-                            await HandleValuesOnErrorAsync(outgoing: false, ex, request.Parameters).DynamicContext();
-                        await request.DisposeParametersAsync().DynamicContext();
-                        break;
-                    case ResponseMessage response:
-                        if (response.ReturnValue is not null)
-                            await HandleValueOnErrorAsync(response.ReturnValue, outgoing: false, ex).DynamicContext();
-                        await response.DisposeReturnValueAsync().DynamicContext();
-                        break;
-                    case EventMessage e:
-                        if (e.Arguments is not null)
-                            await HandleValueOnErrorAsync(e.Arguments, outgoing: false, ex).DynamicContext();
-                        await e.DisposeArgumentsAsync().DynamicContext();
-                        break;
-                    default:
-                        Logger?.Log(LogLevel.Information, "{this} not required to handle incoming message type {type} queue error", ToString(), message.GetType());
-                        return false;
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         /// <summary>
         /// Handle parameter or return values on error (this method shouldn't throw)
         /// </summary>
@@ -134,53 +29,64 @@ namespace wan24.RPC.Processing
         /// <param name="outgoing">If the value was going to be sent to the peer</param>
         /// <param name="ex">Exception</param>
         /// <returns>If handled</returns>
-        protected virtual async Task<bool> HandleValueOnErrorAsync(object value, bool outgoing, Exception ex)
+        protected virtual async Task<bool> HandleValueOnErrorAsync(object value, bool outgoing, Exception ex)//TODO Separate method for parameter and return values?
         {
+            bool res = true;
+            // Special type handling
             try
             {
-                // Special type handling
                 switch (value)
                 {
-                    case RpcOutgoingStreamParameter streamParameter:
-                        if (streamParameter.DisposeSource)
-                            await streamParameter.Source.DisposeAsync().DynamicContext();
-                        break;
-                    case RpcStreamValue streamValue:
-                        if (!streamValue.Stream.HasValue)
-                            break;
-                        if (outgoing && await RemoveOutgoingStreamAsync(streamValue.Stream.Value).DynamicContext() is OutgoingStream outStream)
+                    case IRpcScopeParameter scopeParameter:
                         {
-                            await using (outStream.DynamicContext())
-                                if (!CancelToken.IsCancellationRequested && !outStream.IsDisposing && outStream.IsStarted && !outStream.IsDone)
-                                    try
-                                    {
-                                        outStream.LastException ??= ex;
-                                        outStream.Cancellation.Cancel();
-                                    }
-                                    catch
-                                    {
-                                    }
+                            await scopeParameter.SetIsErrorAsync().DynamicContext();
+                            if (scopeParameter.Value is not null && RemoveScope(scopeParameter.Value.Id) is RpcScopeBase scope)
+                                try
+                                {
+                                    await scope.SetIsErrorAsync(ex).DynamicContext();
+                                }
+                                catch
+                                {
+                                    res = false;
+                                }
+                                finally
+                                {
+                                    await scope.DisposeAsync().DynamicContext();
+                                }
                         }
-                        else if (!outgoing && await RemoveIncomingStreamAsync(streamValue.Stream.Value).DynamicContext() is IncomingStream inStream)
+                        break;
+                    case RpcScopeValue scopeValue:
                         {
-                            await using (inStream.DynamicContext())
-                                if (!CancelToken.IsCancellationRequested && !inStream.IsDisposing && inStream.IsStarted && !inStream.IsDone)
-                                    try
-                                    {
-                                        await inStream.CancelAsync().DynamicContext();
-                                    }
-                                    catch
-                                    {
-                                    }
+                            if (outgoing && RemoveScope(scopeValue.Id) is RpcScopeBase scope)
+                                try
+                                {
+                                    await scope.SetIsErrorAsync(ex).DynamicContext();
+                                }
+                                catch
+                                {
+                                    res = false;
+                                }
+                                finally
+                                {
+                                    value = scope;
+                                }
                         }
                         break;
                     case IAsyncDisposable:
                     case IDisposable:
                         break;
                     default:
-                        return false;
+                        res = false;
+                        break;
                 }
-                // Disposable handling
+            }
+            catch
+            {
+                res = false;
+            }
+            // Additional disposable handling
+            try
+            {
                 switch (value)
                 {
                     case IAsyncDisposable asyncDisposable:
@@ -190,87 +96,55 @@ namespace wan24.RPC.Processing
                         disposable.Dispose();
                         break;
                 }
-                return true;
             }
             catch
             {
-                return false;
+                res = false;
             }
+            return res;
         }
 
         /// <summary>
-        /// Handle a call processing error
-        /// </summary>
-        /// <param name="call">Call</param>
-        /// <param name="exception">Exception</param>
-        /// <returns>If handled</returns>
-        protected virtual async Task<bool> HandleCallProcessingErrorAsync(Call call, Exception exception)
-        {
-            await call.HandleExceptionAsync(exception).DynamicContext();
-            await SendErrorResponseAsync(
-                call.Message as RequestMessage ?? throw new ArgumentException("Missing request message", nameof(call)), 
-                exception
-                ).DynamicContext();
-            return true;
-        }
-
-        /// <summary>
-        /// Handle an event processing error
-        /// </summary>
-        /// <param name="message">Message</param>
-        /// <param name="e">Event</param>
-        /// <param name="ex">Exception</param>
-        /// <returns>If handled</returns>
-        protected virtual Task<bool> HandleEventProcessingErrorAsync(EventMessage message, RpcEvent? e, Exception ex) => Task.FromResult(false);
-
-        /// <summary>
-        /// Handle an incoming stream processing error
-        /// </summary>
-        /// <param name="stream">Stream</param>
-        /// <param name="ex">Exception</param>
-        /// <returns>If handled</returns>
-        protected virtual Task<bool> HandleIncomingStreamProcessingErrorAsync(IncomingStream stream, Exception ex) => Task.FromResult(false);
-
-        /// <summary>
-        /// Handle an outgoing stream processing error
-        /// </summary>
-        /// <param name="stream">Stream</param>
-        /// <param name="ex">Exception</param>
-        /// <returns>If handled</returns>
-        protected virtual Task<bool> HandleOutgoingStreamProcessingErrorAsync(OutgoingStream stream, Exception ex) => Task.FromResult(false);
-
-        /// <summary>
-        /// Handle an invalid response return value (processing will be stopped on handler exception)
+        /// Handle an invalid response return value (this method shouldn't throw)
         /// </summary>
         /// <param name="message">Message</param>
         /// <returns>If handled</returns>
         protected virtual async Task<bool> HandleInvalidResponseReturnValueAsync(ResponseMessage message)
         {
-            // Handle invalid stream return value (close the remote stream)
-            if (!CancelToken.IsCancellationRequested && message.ReturnValue is RpcStreamValue incomingStream && incomingStream.Stream.HasValue)
+            if (message.ReturnValue is null)
+                return false;
+            bool res = true;
+            try
             {
-                try
+                if(message.ReturnValue is RpcScopeValue scopeValue && RemoveRemoteScope(scopeValue.Id) is RpcRemoteScopeBase remoteScope)
                 {
-                    Logger?.Log(LogLevel.Debug, "{this} closing invalid remote stream return value for request #{id}", ToString(), message.Id);
-                    await SendMessageAsync(new RemoteStreamCloseMessage()
+                    Logger?.Log(LogLevel.Debug, "{this} disposing invalid remote scope #{scope} return value for request #{id}", ToString(), scopeValue.Id, message.Id);
+                    try
                     {
-                        PeerRpcVersion = Options.RpcVersion,
-                        Id = incomingStream.Stream
-                    }, RPC_PRIORTY).DynamicContext();
+                        await remoteScope.SetIsErrorAsync(new InvalidOperationException("Invalid/unexpected return value")).DynamicContext();
+                    }
+                    catch
+                    {
+                        res = false;
+                    }
+                    finally
+                    {
+                        await remoteScope.DisposeAsync().DynamicContext();
+                    }
                 }
-                catch (ObjectDisposedException) when (IsDisposing)
-                {
-                }
-                catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
-                {
-                }
-                catch (Exception ex)
-                {
-                    Logger?.Log(LogLevel.Warning, "{this} failed to close invalid remote stream returned for request #{id}: {ex}", ToString(), message.Id, ex);
-                }
-                return true;
             }
-            return false;
+            catch (ObjectDisposedException) when (IsDisposing)
+            {
+            }
+            catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
+            {
+            }
+            catch (Exception ex)
+            {
+                Logger?.Log(LogLevel.Warning, "{this} failed to handle invalid return value for request #{id}: {ex}", ToString(), message.Id, ex);
+                res = false;
+            }
+            return res;
         }
     }
 }

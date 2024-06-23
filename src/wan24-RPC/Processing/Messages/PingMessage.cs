@@ -11,7 +11,7 @@
         /// <summary>
         /// RPC message type ID
         /// </summary>
-        public const int TYPE_ID = 9;
+        public const int TYPE_ID = 5;
 
         /// <inheritdoc/>
         public override int Type => TYPE_ID;

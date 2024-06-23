@@ -2,6 +2,8 @@
 using wan24.Core;
 using wan24.ObjectValidation;
 using wan24.RPC.Api.Reflection;
+using wan24.RPC.Processing.Options;
+using wan24.RPC.Processing.Values;
 using wan24.StreamSerializerExtensions;
 
 namespace wan24.RPC.Processing.Messages
@@ -23,6 +25,10 @@ namespace wan24.RPC.Processing.Messages
         /// An object for thread synchronization
         /// </summary>
         protected readonly object SyncObject = new();
+        /// <summary>
+        /// Serialized parameters
+        /// </summary>
+        protected byte[]? _Parameters = null;
         /// <summary>
         /// If the parameters are disposed
         /// </summary>
@@ -58,37 +64,17 @@ namespace wan24.RPC.Processing.Messages
         public object?[]? Parameters { get; set; }
 
         /// <summary>
-        /// Dispose parameter values
+        /// Deserialize parameters for a RPC method call
         /// </summary>
-        /// <param name="method">Method</param>
-        public virtual async Task DisposeParametersAsync(RpcApiMethodInfo? method = null)
+        /// <param name="method">RPC API method</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        public virtual async Task DeserializeParametersAsync(RpcApiMethodInfo method, CancellationToken cancellationToken = default)
         {
-            lock (SyncObject)
-            {
-                if (Parameters is null || ParametersDisposed)
-                    return;
-                ParametersDisposed = true;
-            }
-            if (method is null)
-            {
-                foreach (object? obj in Parameters)
-                    if (obj is not null)
-                        await obj.TryDisposeAsync().DynamicContext();
-                return;
-            }
-            for (int i = 0, len = method.RpcParameters.Count, max = Parameters.Length; i < len && i < max; i++)
-            {
-                if (Parameters[i] is null) continue;
-                if (
-                    method.RpcParameters.Items[i].DisposeParameterValue ||
-                    !method.RpcParameters.Items[i].Parameter.ParameterType.IsAssignableFrom(Parameters[i]!.GetType())
-                    )
-                    await Parameters[i]!.TryDisposeAsync().DynamicContext();
-            }
-            if (method.RpcParameters.Count < Parameters.Length)
-                foreach (object? obj in Parameters.Skip(method.RpcParameters.Count))
-                    if (obj is not null)
-                        await obj.TryDisposeAsync().DynamicContext();
+            if (_Parameters is null)
+                throw new InvalidOperationException();
+            using MemoryStream ms = new(_Parameters);
+            Parameters = await DeserializeObjectListAsync(ms, [.. method.RpcParameters.Select(p => p.Parameter.ParameterType)], cancellationToken).DynamicContext();
+            _Parameters = null;
         }
 
         /// <inheritdoc/>
@@ -98,7 +84,11 @@ namespace wan24.RPC.Processing.Messages
             await stream.WriteAsync(WantsReturnValue, cancellationToken).DynamicContext();
             await stream.WriteStringNullableAsync(Api, cancellationToken).DynamicContext();
             await stream.WriteStringAsync(Method, cancellationToken).DynamicContext();
-            await SerializeObjectListAsync(stream, Parameters, cancellationToken).DynamicContext();
+            using MemoryPoolStream ms = new();
+            await SerializeObjectListAsync(ms, Parameters, cancellationToken).DynamicContext();
+            await stream.WriteNumberAsync(ms.Length, cancellationToken).DynamicContext();
+            ms.Position = 0;
+            await ms.CopyToAsync(stream, cancellationToken).DynamicContext();
         }
 
         /// <inheritdoc/>
@@ -108,15 +98,11 @@ namespace wan24.RPC.Processing.Messages
             WantsReturnValue = await stream.ReadBoolAsync(version, cancellationToken: cancellationToken).DynamicContext();
             Api = await stream.ReadStringNullableAsync(version, minLen: 1, maxLen: byte.MaxValue, cancellationToken: cancellationToken).DynamicContext();
             Method = await stream.ReadStringAsync(version, minLen: 1, maxLen: byte.MaxValue, cancellationToken: cancellationToken).DynamicContext();
-            try
-            {
-                Parameters = await DeserializeObjectListAsync(stream, cancellationToken).DynamicContext();
-            }
-            catch
-            {
-                await DisposeParametersAsync().DynamicContext();
-                throw;
-            }
+            ushort len = await stream.ReadNumberAsync<ushort>(version, cancellationToken: cancellationToken).DynamicContext();
+            if (len < 1 || len > StreamScopeOptions.MaxStreamContentLength)
+                throw new InvalidDataException($"Invalid serialized parameters length {len}");
+            _Parameters = new byte[len];
+            await stream.ReadExactlyAsync(_Parameters, cancellationToken).DynamicContext();
         }
     }
 }

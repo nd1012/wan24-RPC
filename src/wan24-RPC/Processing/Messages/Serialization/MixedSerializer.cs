@@ -18,9 +18,7 @@ namespace wan24.RPC.Processing.Messages.Serialization
         /// </summary>
         /// <param name="type">Type</param>
         /// <returns>If the type can be serialized</returns>
-#pragma warning disable IDE0060 // Remove unused parameter
-        public static bool CanSerialize(Type? type) => true;
-#pragma warning restore IDE0060 // Remove unused parameter
+        public static bool CanSerialize(Type? type) => JsonSerializer.CanSerialize(type);
 
         /// <summary>
         /// Object serializer
@@ -30,15 +28,20 @@ namespace wan24.RPC.Processing.Messages.Serialization
         /// <param name="cancellationToken">Cancellation token</param>
         public static async Task ObjectSerializerAsync(object? obj, Stream stream, CancellationToken cancellationToken)
         {
-            if (BinarySerializer.CanSerialize(obj?.GetType()))
+            Type? type = obj?.GetType();
+            if (BinarySerializer.CanSerialize(type))
             {
                 await stream.WriteNumberAsync(BinarySerializer.SERIALIZER, cancellationToken).DynamicContext();
                 await BinarySerializer.ObjectSerializerAsync(obj, stream, cancellationToken).DynamicContext();
             }
-            else
+            else if(JsonSerializer.CanSerialize(type))
             {
                 await stream.WriteNumberAsync(JsonSerializer.SERIALIZER, cancellationToken).DynamicContext();
                 await JsonSerializer.ObjectSerializerAsync(obj, stream, cancellationToken).DynamicContext();
+            }
+            else
+            {
+                throw new ArgumentException("Not serializable", nameof(obj));
             }
         }
 
@@ -61,15 +64,16 @@ namespace wan24.RPC.Processing.Messages.Serialization
         /// Object deserializer
         /// </summary>
         /// <param name="stream">Stream</param>
+        /// <param name="type">Object type</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Object</returns>
-        public static async Task<object?> ObjectDeserializerAsync(Stream stream, CancellationToken cancellationToken)
+        public static async Task<object?> ObjectDeserializerAsync(Stream stream, Type type, CancellationToken cancellationToken)
         {
             int serializer = await stream.ReadNumberAsync<int>(cancellationToken: cancellationToken).DynamicContext();
             return serializer switch
             {
-                BinarySerializer.SERIALIZER => await BinarySerializer.ObjectDeserializerAsync(stream, cancellationToken).DynamicContext(),
-                JsonSerializer.SERIALIZER => await JsonSerializer.ObjectDeserializerAsync(stream, cancellationToken).DynamicContext(),
+                BinarySerializer.SERIALIZER => await BinarySerializer.ObjectDeserializerAsync(stream, type, cancellationToken).DynamicContext(),
+                JsonSerializer.SERIALIZER => await JsonSerializer.ObjectDeserializerAsync(stream, type, cancellationToken).DynamicContext(),
                 _ => throw new InvalidDataException($"Invalid serializer ID {serializer}"),
             };
         }
@@ -78,18 +82,19 @@ namespace wan24.RPC.Processing.Messages.Serialization
         /// Object list deserializer
         /// </summary>
         /// <param name="stream">Stream</param>
+        /// <param name="types">Object types</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Object list</returns>
-        public static async Task<object?[]?> ObjectListDeserializerAsync(Stream stream, CancellationToken cancellationToken)
+        public static async Task<object?[]?> ObjectListDeserializerAsync(Stream stream, Type[] types, CancellationToken cancellationToken)
         {
             int len = await stream.ReadNumberAsync<int>(cancellationToken: cancellationToken).DynamicContext();
             if (len < 1)
                 return null;
-            if (len > byte.MaxValue)
+            if (len > types.Length)
                 throw new InvalidDataException($"Invalid object list length {len}");
             object?[] res = new object[len];
             for (int i = 0; i < len; i++)
-                res[i] = await ObjectDeserializerAsync(stream, cancellationToken).DynamicContext();
+                res[i] = await ObjectDeserializerAsync(stream, types[i], cancellationToken).DynamicContext();
             return res;
         }
     }

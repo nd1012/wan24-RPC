@@ -10,6 +10,6 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// RPC processors (key is the object hash code)
         /// </summary>
-        public static readonly ConcurrentDictionary<int, RpcProcessor> Processors = [];
+        public static readonly ConcurrentDictionary<int, RpcProcessor> Processors = [];//TODO Use GUID as key
     }
 }

@@ -1,10 +1,10 @@
 ﻿namespace wan24.RPC.Processing.Exceptions
 {
     /// <summary>
-    /// Thrown on too many RPC requests
+    /// Thrown on too many RPC calls (<see cref="RpcProcessorOptions.CallQueue"/>)
     /// </summary>
     [Serializable]
-    public class TooManyRpcRequestsException : Exception
+    public class TooManyRpcRequestsException : OutOfMemoryException
     {
         /// <summary>
         /// Constructor

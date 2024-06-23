@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using wan24.Core;
 using wan24.RPC.Processing;
+
+//TODO Implement cancellation
 
 namespace wan24.RPC.Sdk
 {
@@ -36,6 +37,10 @@ namespace wan24.RPC.Sdk
         /// If to dispose the <see cref="Processor"/> when disposing
         /// </summary>
         protected bool DisposeProcessor = true;
+        /// <summary>
+        /// RPC processor (will be disposed)
+        /// </summary>
+        protected T? _Processor = null;
 
         /// <summary>
         /// Constructor
@@ -46,16 +51,26 @@ namespace wan24.RPC.Sdk
         /// Constructor
         /// </summary>
         /// <param name="processor">RPC processor (will be disposed)</param>
-        protected RpcSdkBase(in T processor) : base()
-        {
-            Processor = processor;
-            processor.OnDisposing += HandleProcessorDisposing;
-        }
+        protected RpcSdkBase(in T processor) : base() =>  Processor = processor;
 
         /// <summary>
         /// RPC processor (will be disposed)
         /// </summary>
-        protected virtual T? Processor { get; set; }
+        protected virtual T? Processor
+        {
+            get => _Processor;
+            set
+            {
+                EnsureUndisposed();
+                if (value == _Processor)
+                    return;
+                if (_Processor is not null)
+                    _Processor.OnDisposed -= HandleProcessorDisposing;
+                _Processor = value;
+                if (value is not null)
+                    value.OnDisposing += HandleProcessorDisposing;
+            }
+        }
 
         /// <summary>
         /// Call a RPC API method at the peer and wait for the return value (may throw after the remote execution)
@@ -115,15 +130,14 @@ namespace wan24.RPC.Sdk
         /// </summary>
         /// <param name="timeout">Timeout</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        protected virtual async Task PingAsync(TimeSpan timeout = default, CancellationToken cancellationToken = default)
+        protected virtual async Task PingAsync(TimeSpan timeout, CancellationToken cancellationToken = default)
         {
             EnsureInitialized();
-            using CancellationTokenSource? cts = timeout == default ? null : new(timeout);
-            List<CancellationToken> tokens = [Cancellation.Token];
+            using CancellationTokenSource cts = new(timeout);
+            List<CancellationToken> tokens = [Cancellation.Token, cts.Token];
             if (!Equals(cancellationToken, default)) tokens.Add(cancellationToken);
-            if (cts is not null) tokens.Add(cts.Token);
             using Cancellations cancellation = new([.. tokens]);
-            await Processor.PingAsync(cancellation).DynamicContext();
+            await Processor.PingAsync(timeout, cancellation).DynamicContext();
         }
 
         /// <summary>
@@ -203,7 +217,7 @@ namespace wan24.RPC.Sdk
         protected override void Dispose(bool disposing)
         {
             Cancellation.Cancel();
-            if (Processor is RpcProcessor processor)
+            if (_Processor is RpcProcessor processor)
             {
                 processor.OnDisposing -= HandleProcessorDisposing;
                 if (DisposeProcessor)
@@ -215,8 +229,8 @@ namespace wan24.RPC.Sdk
         /// <inheritdoc/>
         protected override async Task DisposeCore()
         {
-            Cancellation.Cancel();
-            if (Processor is RpcProcessor processor)
+            await Cancellation.CancelAsync().DynamicContext();
+            if (_Processor is RpcProcessor processor)
             {
                 processor.OnDisposing -= HandleProcessorDisposing;
                 if (DisposeProcessor)

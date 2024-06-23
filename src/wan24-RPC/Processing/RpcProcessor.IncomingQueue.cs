@@ -27,17 +27,22 @@ namespace wan24.RPC.Processing
         /// </summary>
         /// <param name="processor">RPC processor</param>
         protected class IncomingQueue(in RpcProcessor processor)
-            : ParallelItemQueueWorkerBase<IRpcMessage>(processor.Options.IncomingMessageQueueCapacity, processor.Options.IncomingMessageQueueThreads)
+            : ParallelItemQueueWorkerBase<IRpcMessage>(processor.Options.IncomingMessageQueue.Capacity, processor.Options.IncomingMessageQueue.Threads)
         {
             /// <summary>
             /// Space event (raised when having space for another incoming message)
             /// </summary>
-            public readonly ResetEvent SpaceEvent = new(initialState: true);
+            protected readonly ResetEvent SpaceEvent = new(initialState: true);
 
             /// <summary>
             /// RPC processor
             /// </summary>
             public RpcProcessor Processor { get; } = processor;
+
+            /// <summary>
+            /// If the queue has space
+            /// </summary>
+            public bool HasSpace => SpaceEvent.IsSet;
 
             /// <summary>
             /// Wait for space
@@ -46,16 +51,23 @@ namespace wan24.RPC.Processing
             {
                 EnsureUndisposed();
                 using Cancellations cancellation = new(Processor.CancelToken, CancelToken);
-                while (Queued >= Processor.Options.IncomingMessageQueueCapacity)
+                while (Queued >= Processor.Options.IncomingMessageQueue.Capacity)
                     await SpaceEvent.WaitAsync(cancellation).DynamicContext();
             }
+
+            /// <summary>
+            /// Reset the space event
+            /// </summary>
+            /// <param name="cancellationToken">Cancellation token</param>
+            public virtual Task ResetSpaceEventAsync(CancellationToken cancellationToken = default)
+                => SpaceEvent.ResetAsync(cancellationToken);
 
             /// <inheritdoc/>
             protected override async Task ProcessItem(IRpcMessage item, CancellationToken cancellationToken)
             {
-                if (Queued < Processor.Options.IncomingMessageQueueCapacity)
+                if (Queued < Processor.Options.IncomingMessageQueue.Capacity)
                     await SpaceEvent.SetAsync(cancellationToken).DynamicContext();
-                await Processor.HandleMessageAsync(item).DynamicContext();
+                await Processor.HandleIncomingMessageAsync(item).DynamicContext();
             }
 
             /// <inheritdoc/>

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using System.Net.NetworkInformation;
 using wan24.Core;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Serialization;
@@ -62,12 +61,13 @@ namespace wan24.RPC.Processing
                         ? null
                         : parameters
                 },
+                ExpectedReturnType = returnValueType,
                 Cancellation = cancellationToken
             };
             await using (request.DynamicContext())
             {
                 if (!AddPendingRequest(request))
-                    throw new InvalidProgramException($"Failed to store pending request #{request.Message.Id} (double ID)");
+                    throw new InvalidProgramException($"Failed to store pending request #{request.Id} (double ID)");
                 try
                 {
                     await Requests.EnqueueAsync(request, cancellationToken).DynamicContext();
@@ -128,7 +128,7 @@ namespace wan24.RPC.Processing
             await using (request.DynamicContext())
             {
                 if (!AddPendingRequest(request))
-                    throw new InvalidProgramException($"Failed to store pending request #{request.Message.Id} (double ID)");
+                    throw new InvalidProgramException($"Failed to store pending request #{request.Id} (double ID)");
                 try
                 {
                     await Requests.EnqueueAsync(request, cancellationToken).DynamicContext();
@@ -144,8 +144,9 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Send a ping message and wait for the pong message
         /// </summary>
+        /// <param name="timeout">Timeout</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public virtual async Task PingAsync(CancellationToken cancellationToken = default)
+        public virtual async Task PingAsync(TimeSpan timeout, CancellationToken cancellationToken = default)
         {
             EnsureUndisposed();
             Logger?.Log(LogLevel.Debug, "{this} sending ping request", ToString());
@@ -162,12 +163,13 @@ namespace wan24.RPC.Processing
             await using (request.DynamicContext())
             {
                 if (!AddPendingRequest(request))
-                    throw new InvalidProgramException($"Failed to store ping request #{request.Message.Id} (double ID)");
+                    throw new InvalidProgramException($"Failed to store ping request #{request.Id} (double ID)");
                 try
                 {
                     await SendMessageAsync(request.Message, cancellationToken).DynamicContext();
-                    await request.ProcessorCompletion.Task.DynamicContext();
-                    Logger?.Log(LogLevel.Debug, "{this} got pong response after {runtime}", ToString(), request.Runtime);
+                    using CancellationTokenSource cts = new(timeout);
+                    await request.ProcessorCompletion.Task.WaitAsync(cts.Token).DynamicContext();
+                    Logger?.Log(LogLevel.Debug, "{this} got pong response for #{id} after {runtime}", ToString(), request.Id, request.Runtime);
                 }
                 finally
                 {

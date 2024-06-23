@@ -1,5 +1,4 @@
 ﻿using wan24.Core;
-using wan24.RPC.Processing.Messages.Streaming;
 
 namespace wan24.RPC.Processing.Messages
 {
@@ -16,14 +15,12 @@ namespace wan24.RPC.Processing.Messages
             { RequestMessage.TYPE_ID, typeof(RequestMessage) },
             { ResponseMessage.TYPE_ID, typeof(ResponseMessage) },
             { ErrorResponseMessage.TYPE_ID, typeof(ErrorResponseMessage) },
-            { CancellationMessage.TYPE_ID, typeof(CancellationMessage) },
+            { CancelMessage.TYPE_ID, typeof(CancelMessage) },
             { EventMessage.TYPE_ID, typeof(EventMessage) },
-            { StreamStartMessage.TYPE_ID, typeof(StreamStartMessage) },
-            { StreamChunkMessage.TYPE_ID, typeof(StreamChunkMessage) },
-            { RemoteStreamCloseMessage.TYPE_ID, typeof(RemoteStreamCloseMessage) },
-            { LocalStreamCloseMessage.HL_TYPE_ID, typeof(LocalStreamCloseMessage) },
             { PingMessage.TYPE_ID, typeof(PingMessage) },
-            { PongMessage.TYPE_ID, typeof(PongMessage) }
+            { PongMessage.TYPE_ID, typeof(PongMessage) },
+            { ScopeDiscardedMessage.TYPE_ID, typeof(ScopeDiscardedMessage) },
+            { RemoteScopeDiscardedMessage.TYPE_ID, typeof(RemoteScopeDiscardedMessage) }
         };
 
         /// <summary>

@@ -2,6 +2,7 @@
 using wan24.Core;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Parameters;
+using wan24.RPC.Processing.Scopes;
 using wan24.RPC.Processing.Values;
 
 /*
@@ -32,7 +33,7 @@ namespace wan24.RPC.Processing
         /// RPC request queue
         /// </summary>
         protected class RequestQueue(in RpcProcessor processor)
-            : ParallelItemQueueWorkerBase<Request>(processor.Options.RequestQueueSize, processor.Options.RequestThreads)
+            : ParallelItemQueueWorkerBase<Request>(processor.Options.RequestQueue.Capacity, processor.Options.RequestQueue.Threads)
         {
             /// <summary>
             /// RPC processor
@@ -81,24 +82,24 @@ namespace wan24.RPC.Processing
                         for (int i = 0, len = request.Parameters.Length; i < len; i++)
                             if (request.Parameters[i] is not null)
                             {
-                                Logger?.Log(LogLevel.Trace, "{this} resolving final request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type {type}", ToString(), item.Message.Id, request.Api, request.Method, i, request.Parameters[i]!.GetType().ToString());
+                                Logger?.Log(LogLevel.Trace, "{this} resolving final request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type {type}", ToString(), item.Id, request.Api, request.Method, i, request.Parameters[i]!.GetType().ToString());
                                 request.Parameters[i] = await GetFinalParameterValueAsync(item, request, i, request.Parameters[i], cancellation).DynamicContext();
-                                Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type is now {type} after finalizing", ToString(), item.Message.Id, request.Api, request.Method, i, request.Parameters[i]?.GetType().ToString() ?? "NULL");
+                                Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" parameter #{index} value type is now {type} after finalizing", ToString(), item.Id, request.Api, request.Method, i, request.Parameters[i]?.GetType().ToString() ?? "NULL");
                             }
                     // Send the RPC request and wait for the response
-                    await Processor.SendMessageAsync(request, RPC_PRIORTY, cancellation).DynamicContext();
+                    await Processor.SendMessageAsync(request, Processor.Options.Priorities.Rpc, cancellation).DynamicContext();
                     item.WasProcessing = true;
                     returnValue = await item.ProcessorCompletion.Task.DynamicContext();
                     // Handle the response
                     if (returnValue is not null)
                     {
-                        Logger?.Log(LogLevel.Trace, "{this} finalizing request #{id} API \"{api}\" method \"{method}\" return value type {type}", ToString(), item.Message.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
+                        Logger?.Log(LogLevel.Trace, "{this} finalizing request #{id} API \"{api}\" method \"{method}\" return value type {type}", ToString(), item.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
                         returnValue = await GetFinalReturnValueAsync(item, request, returnValue, cancellation).DynamicContext();
-                        Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" return value type is now {type} after finalizing", ToString(), item.Message.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
+                        Logger?.Log(LogLevel.Trace, "{this} request #{id} API \"{api}\" method \"{method}\" return value type is now {type} after finalizing", ToString(), item.Id, request.Api, request.Method, returnValue?.GetType().ToString() ?? "NULL");
                     }
                     if (!item.RequestCompletion.TrySetResult(returnValue))
                     {
-                        Logger?.Log(LogLevel.Warning, "{this} request #{id} API \"{api}\" method \"{method}\" failed to set return value", ToString(), item.Message.Id, request.Api, request.Method);
+                        Logger?.Log(LogLevel.Warning, "{this} request #{id} API \"{api}\" method \"{method}\" failed to set return value", ToString(), item.Id, request.Api, request.Method);
                         await returnValue.TryDisposeAsync().DynamicContext();//TODO How to handle a stream return value?
                     }
                 }
@@ -122,7 +123,7 @@ namespace wan24.RPC.Processing
                         }
                         catch (Exception ex2)
                         {
-                            Logger?.Log(LogLevel.Error, "{this} request #{id} API \"{api}\" method \"{method}\" failed to cancel during queue processing: {ex}", ToString(), item.Message.Id, request.Api, request.Method, ex2);
+                            Logger?.Log(LogLevel.Error, "{this} request #{id} API \"{api}\" method \"{method}\" failed to cancel during queue processing: {ex}", ToString(), item.Id, request.Api, request.Method, ex2);
                         }
                     }
                     item.SetDone();
@@ -158,20 +159,36 @@ namespace wan24.RPC.Processing
                 CancellationToken cancellationToken
                 )
             {
-                // Stream parameter handling
-                if (value is Stream stream)
-                    value = Processor.CreateOutgoingStreamParameter(stream);
-                if (value is RpcOutgoingStreamParameter streamParameter)
-                {
-                    RpcStreamValue streamValue = await Processor.CreateOutgoingStreamAsync(streamParameter, cancellationToken).DynamicContext();
-                    value = streamValue;
-                    if(
-                        streamValue.Stream.HasValue && 
-                        await Processor.GetOutgoingStreamAsync(streamValue.Stream.Value, cancellationToken: cancellationToken).DynamicContext() is OutgoingStream stream2
-                        )
-                    item.ParameterStreams.Add(stream2);
-                }
-                //TODO Enumerations
+                // Scopeable parameter handling
+                if(value is not null)
+                    if(value is IRpcScopeParameter scopeParameter)
+                    {
+                        if(RpcScopes.Factories.TryGetValue(scopeParameter.Type, out RpcScopes.ScopeFactory_Delegate? scopeFactory))
+                        {
+                            RpcScopeBase scope = await scopeFactory.Invoke(Processor, scopeParameter, cancellationToken).DynamicContext();
+                            item.ParameterScopes.Add(scope);
+                            value = scope.ScopeParameter?.Value;
+                        }
+                        else
+                        {
+                            await value.TryDisposeAsync().DynamicContext();
+                            throw new ArgumentException($"Failed to get scope type #{scopeParameter.Type} factory for parameter #{index}");
+                        }
+                    }
+                    else if(RpcScopes.GetParameterScopeFactory(value.GetType()) is RpcScopes.ParameterScopeFactory_Delegate scopeFactory)
+                    {
+                        RpcScopeBase? scope = await scopeFactory.Invoke(Processor, value, cancellationToken).DynamicContext();
+                        if(scope is not null)
+                        {
+                            item.ParameterScopes.Add(scope);
+                            value = scope.Value;
+                        }
+                        else
+                        {
+                            await value.TryDisposeAsync().DynamicContext();
+                            value = null;
+                        }
+                    }
                 return value;
             }
 
@@ -190,17 +207,15 @@ namespace wan24.RPC.Processing
                 CancellationToken cancellationToken
                 )
             {
-                // Stream handling
-                if (returnValue is RpcStreamValue streamValue)
+                // Remote scope handling
+                if(returnValue is RpcScopeValue scopeValue)
                 {
-                    returnValue = await Processor.CreateIncomingStreamAsync(streamValue, cancellationToken).DynamicContext();
-                    if (
-                        streamValue.Stream.HasValue &&
-                        await Processor.GetIncomingStreamAsync(streamValue.Stream.Value, cancellationToken: cancellationToken).DynamicContext() is IncomingStream stream
-                        )
-                        item.ReturnStream = stream;
+                    if(!RpcScopes.RemoteFactories.TryGetValue(scopeValue.Type, out RpcScopes.RemoteScopeFactory_Delegate? scopeFactory))
+                        throw new InvalidDataException($"Failed to find remote scope type #{scopeValue.Type} return value factory");
+                    RpcRemoteScopeBase remoteScope = await scopeFactory.Invoke(Processor, scopeValue, cancellationToken).DynamicContext();
+                    item.ReturnScope = remoteScope;
+                    returnValue = remoteScope.Value;
                 }
-                //TODO Enumerations
                 return returnValue;
             }
         }

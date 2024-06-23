@@ -39,7 +39,7 @@ namespace wan24.RPC.Processing
         protected virtual bool AddPendingRequest(in Request request)
         {
             EnsureUndisposed();
-            return PendingRequests.TryAdd(request.Message.Id ?? throw new ArgumentException("Missing message ID", nameof(request)), request);
+            return PendingRequests.TryAdd(request.Id, request);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace wan24.RPC.Processing
         protected virtual void RemovePendingRequest(in Request request)
         {
             EnsureUndisposed(allowDisposing: true);
-            PendingRequests.TryRemove(request.Message.Id ?? throw new ArgumentException("Missing message ID", nameof(request)), out _);
+            PendingRequests.TryRemove(request.Id, out _);
         }
 
         /// <summary>
@@ -82,13 +82,16 @@ namespace wan24.RPC.Processing
         {
             Logger?.Log(LogLevel.Debug, "{this} handling response for request #{id}", ToString(), message.Id);
             // Handle disposing or request not found
-            if (!EnsureUndisposed(throwException: false) || GetPendingRequest(message.Id!.Value) is not Request request)
+            if (IsDisposing || GetPendingRequest(message.Id!.Value) is not Request request)
             {
                 Logger?.Log(LogLevel.Warning, "{this} can't handle response for request #{id} (is disposing ({disposing}) or pending request not found)", ToString(), message.Id, IsDisposing);
                 await HandleInvalidResponseReturnValueAsync(message).DynamicContext();
                 await message.DisposeReturnValueAsync().DynamicContext();
                 return;
             }
+            // Deserialize the return value
+            if (request.ExpectedReturnType is not null)
+                await message.DeserializeReturnValueAsync(request.ExpectedReturnType, request.Cancellation).DynamicContext();
             // Complete the processing, if required
             if (request.Message is not RequestMessage requestMessage || requestMessage.WantsReturnValue)
             {
@@ -101,7 +104,7 @@ namespace wan24.RPC.Processing
                 // Invalid return value (not requested)
                 await HandleInvalidResponseReturnValueAsync(message).DynamicContext();
                 await message.DisposeReturnValueAsync().DynamicContext();
-                request.ProcessorCompletion.TrySetException(new InvalidDataException($"Request #{request.Message.Id} didn't want a return value, but a return value of type {message.ReturnValue.GetType()} was responded"));
+                request.ProcessorCompletion.TrySetException(new InvalidDataException($"Request #{request.Id} didn't want a return value, but a return value of type {message.ReturnValue.GetType()} was responded"));
             }
             else
             {
@@ -117,7 +120,7 @@ namespace wan24.RPC.Processing
         protected virtual Task HandleErrorResponseAsync(ErrorResponseMessage message)
         {
             Logger?.Log(LogLevel.Debug, "{this} handling error response for request #{id}", ToString(), message.Id);
-            if (EnsureUndisposed(throwException: false) && GetPendingRequest(message.Id!.Value) is Request request)
+            if (!IsDisposing && GetPendingRequest(message.Id!.Value) is Request request)
                 request.ProcessorCompletion.TrySetException(message.Error);
             return Task.CompletedTask;
         }
@@ -129,15 +132,15 @@ namespace wan24.RPC.Processing
         protected virtual async Task CancelRequestAsync(RequestMessage request)
         {
             Logger?.Log(LogLevel.Debug, "{this} canceling request #{id} at the peer", ToString(), request.Id);
-            if (!EnsureUndisposed(throwException: false))
+            if (IsDisposing)
                 return;
             try
             {
-                await SendMessageAsync(new CancellationMessage()
+                await SendMessageAsync(new CancelMessage()
                 {
                     PeerRpcVersion = Options.RpcVersion,
                     Id = request.Id
-                }, RPC_PRIORTY).DynamicContext();
+                }, Options.Priorities.Rpc).DynamicContext();
             }
             catch (ObjectDisposedException) when (IsDisposing)
             {

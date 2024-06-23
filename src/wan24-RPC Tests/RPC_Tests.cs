@@ -17,7 +17,7 @@ namespace wan24_RPC_Tests
                 serverApi = server.Options.API.Values.First().Instance as ServerApi;
                 Assert.IsNotNull(serverApi);
                 Assert.IsNotNull(serverApi.Processor);
-                Assert.IsFalse(CancellationToken.Equals(serverApi.ProcessorCancellation, default));
+                Assert.IsFalse(serverApi.ProcessorCancellation.IsEqualTo(default));
             }
             finally
             {
@@ -40,7 +40,7 @@ namespace wan24_RPC_Tests
         [TestMethod, Timeout(3000)]
         public async Task Echo_TestsAsync()
         {
-            // Simple echo method calls
+            // Simple client/server echo method calls
             (RpcProcessor server, RpcProcessor client) = await GetRpcAsync();
             try
             {
@@ -62,9 +62,7 @@ namespace wan24_RPC_Tests
             }
             finally
             {
-                await server.Options.API.Values.First().Instance.TryDisposeAsync();
-                await server.DisposeAsync();
-                await client.DisposeAsync();
+                await DisposeRpcAsync(server, client);
             }
         }
 
@@ -87,9 +85,7 @@ namespace wan24_RPC_Tests
             }
             finally
             {
-                await server.Options.API.Values.First().Instance.TryDisposeAsync();
-                await server.DisposeAsync();
-                await client.DisposeAsync();
+                await DisposeRpcAsync(server, client);
             }
         }
 
@@ -112,13 +108,22 @@ namespace wan24_RPC_Tests
                     Logger = Logging.Logger,
                     Stream = new BiDirectionalStream(serverIO, clientIO, leaveOpen: true),
                     FlushStream = true,
-                    IncomingMessageQueueCapacity = 20,
-                    IncomingMessageQueueThreads = 10,
+                    IncomingMessageQueue = new()
+                    {
+                        Capacity = 20,
+                        Threads = 10
+                    },
                     OutgoingMessageQueueCapacity = 10,
-                    CallQueueSize = 2,
-                    CallThreads = 1,
-                    RequestQueueSize = 2,
-                    RequestThreads = 1
+                    CallQueue = new()
+                    {
+                        Capacity = 2,
+                        Threads = 1
+                    },
+                    RequestQueue = new()
+                    {
+                        Capacity = 2,
+                        Threads = 1
+                    }
                 })
                 {
                     Name = "Server"
@@ -129,13 +134,22 @@ namespace wan24_RPC_Tests
                     Logger = Logging.Logger,
                     Stream = new BiDirectionalStream(clientIO, serverIO),
                     FlushStream = true,
-                    IncomingMessageQueueCapacity = 20,
-                    IncomingMessageQueueThreads = 10,
+                    IncomingMessageQueue = new()
+                    {
+                        Capacity = 20,
+                        Threads = 10
+                    },
                     OutgoingMessageQueueCapacity = 10,
-                    CallQueueSize = 2,
-                    CallThreads = 1,
-                    RequestQueueSize = 2,
-                    RequestThreads = 1
+                    CallQueue = new()
+                    {
+                        Capacity = 2,
+                        Threads = 1
+                    },
+                    RequestQueue = new()
+                    {
+                        Capacity = 2,
+                        Threads = 1
+                    }
                 })
                 {
                     Name = "Client"
@@ -157,6 +171,13 @@ namespace wan24_RPC_Tests
                 throw;
             }
             return (serverProcessor, clientProcessor);
+        }
+
+        public static async Task DisposeRpcAsync(RpcProcessor server, RpcProcessor client)
+        {
+            await server.Options.API.Values.First().Instance.TryDisposeAsync();
+            await server.DisposeAsync();
+            await client.DisposeAsync();
         }
     }
 }

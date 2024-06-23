@@ -12,19 +12,6 @@ namespace wan24.RPC.Processing
     public partial class RpcProcessor
     {
         /// <summary>
-        /// RPC message priority
-        /// </summary>
-        protected const int RPC_PRIORTY = 3_000;
-        /// <summary>
-        /// Event message priority
-        /// </summary>
-        protected const int EVENT_PRIORTY = 2_000;
-        /// <summary>
-        /// Chunk message priority
-        /// </summary>
-        protected const int CHUNK_PRIORTY = 1_000;
-
-        /// <summary>
         /// Create an outgoing message queue
         /// </summary>
         /// <returns>Outgoing message queue</returns>

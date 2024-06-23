@@ -29,6 +29,7 @@ namespace wan24.RPC.Api.Reflection
             Authorize = Type.GetCustomAttribute<RpcAuthorizedAttribute>() is not null;
             Version = Type.GetCustomAttributeCached<RpcVersionAttribute>();
             DisposeInstance = Type.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
+            DisconnectOnError = Type.GetCustomAttributeCached<RpcDisconnectOnErrorAttribute>() is not null;
             Methods = new Dictionary<string, RpcApiMethodInfo>(
                 from mi in Type.GetMethodsCached(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
                 where mi.GetCustomAttributeCached<NoRpcAttribute>() is null
@@ -37,6 +38,9 @@ namespace wan24.RPC.Api.Reflection
                 .ToFrozenDictionary();
             if (Methods.Count < 1)
                 throw new ArgumentException("No methods", nameof(api));
+            Attributes = Type.GetCustomAttributesCached<RpcAttributeBase>().ToFrozenSet();
+            foreach (RpcAttributeBase attr in Attributes)
+                attr.HandleAssignedApi(this);
         }
 
         /// <summary>
@@ -90,9 +94,19 @@ namespace wan24.RPC.Api.Reflection
         public bool DisposeInstance { get; protected set; }
 
         /// <summary>
+        /// If to disconnect on any API method execution error
+        /// </summary>
+        public bool DisconnectOnError { get; protected set; }
+
+        /// <summary>
         /// Methods
         /// </summary>
         public FrozenDictionary<string, RpcApiMethodInfo> Methods { get; protected set; } = null!;
+
+        /// <summary>
+        /// Extended RPC attributes
+        /// </summary>
+        public FrozenSet<RpcAttributeBase> Attributes { get; protected set; } = null!;
 
         /// <summary>
         /// Find a method by its name

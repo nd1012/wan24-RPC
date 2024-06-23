@@ -48,6 +48,11 @@ namespace wan24.RPC.Processing
             public required IRpcRequest Message { get; init; }
 
             /// <summary>
+            /// Message ID
+            /// </summary>
+            public long Id => Message.Id ?? throw new InvalidDataException("Missing message ID");
+
+            /// <summary>
             /// Cancellation (will be disposed)
             /// </summary>
             public CancellationTokenSource Cancellation { get; } = new();
@@ -68,14 +73,19 @@ namespace wan24.RPC.Processing
             public bool WasProcessing { get; set; }
 
             /// <summary>
-            /// Incoming streams from parameters (will be disposed)
+            /// If the called API method returned without error
             /// </summary>
-            public HashSet<IncomingStream> ParameterStreams { get; } = [];
+            public bool DidReturn { get; set; }
 
             /// <summary>
-            /// Outgoing stream from the return value (will be disposed on error)
+            /// Remote scopes from parameters
             /// </summary>
-            public OutgoingStream? ReturnStream { get; set; }
+            public HashSet<RpcRemoteScopeBase> ParameterScopes { get; } = [];
+
+            /// <summary>
+            /// Scope return value
+            /// </summary>
+            public RpcScopeBase? ReturnScope { get; set; }
 
             /// <summary>
             /// Set done
@@ -88,70 +98,24 @@ namespace wan24.RPC.Processing
                 Processor.Logger?.Log(LogLevel.Debug, "{processor} RPC call #{id} processing done within {runtime}", Processor.ToString(), Message.Id, Runtime);
             }
 
-            /// <summary>
-            /// Handle an exception (this method should not throw)
-            /// </summary>
-            /// <param name="exception">Exception</param>
-            public virtual async Task HandleExceptionAsync(Exception exception)
-            {
-                try
-                {
-                    Completion.TrySetException(exception);
-                    if (Message is RequestMessage request && request.Parameters is not null)
-                        await Processor.HandleValuesOnErrorAsync(outgoing: false, exception, request.Parameters).DynamicContext();
-                    if (ReturnStream is not null)
-                    {
-                        await Processor.RemoveOutgoingStreamAsync(ReturnStream).DynamicContext();
-                        await ReturnStream.DisposeAsync().DynamicContext();
-                    }
-                }
-                catch
-                {
-                }
-            }
-
             /// <inheritdoc/>
             protected override void Dispose(bool disposing)
             {
-                Cancellation.Cancel();
-                Cancellation.Dispose();
                 if (!Completion.Task.IsCompleted)
                     Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
+                Cancellation.Cancel();
+                Cancellation.Dispose();
                 SetDone();
-                if (ParameterStreams.Any(s => !s.IsDisposing))
-                {
-                    List<IncomingStream> disposeStreams = [];
-                    using (SemaphoreSyncContext ssc = Processor.IncomingStreamsSync)
-                        foreach (IncomingStream stream in ParameterStreams.Where(s => !s.IsDisposing))
-                        {
-                            Processor.RemoveIncomingStream(stream);
-                            if (stream.ApiParameter?.DisposeParameterValue ?? stream.ApiParameter?.Stream?.DisposeRpcStream ?? true)
-                                disposeStreams.Add(stream);
-                        }
-                    disposeStreams.DisposeAll();
-                }
             }
 
             /// <inheritdoc/>
             protected override async Task DisposeCore()
             {
-                Cancellation.Cancel();
-                Cancellation.Dispose();
                 if (!Completion.Task.IsCompleted)
                     Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
+                await Cancellation.CancelAsync().DynamicContext();
+                Cancellation.Dispose();
                 SetDone();
-                if (ParameterStreams.Any(s => !s.IsDisposing))
-                {
-                    List<IncomingStream> disposeStreams = [];
-                    using (SemaphoreSyncContext ssc = await Processor.IncomingStreamsSync.SyncContextAsync().DynamicContext())
-                        foreach (IncomingStream stream in ParameterStreams.Where(s => !s.IsDisposing))
-                        {
-                            Processor.RemoveIncomingStream(stream);
-                            if (stream.ApiParameter?.DisposeParameterValue ?? stream.ApiParameter?.Stream?.DisposeRpcStream ?? true)
-                                disposeStreams.Add(stream);
-                        }
-                    await disposeStreams.DisposeAllAsync().DynamicContext();
-                }
             }
         }
     }

@@ -26,8 +26,11 @@ namespace wan24.RPC.Api.Reflection
             Authorize = method.GetCustomAttribute<RpcAuthorizedAttribute>() is not null;
             EnumerateReturnValue = method.ReturnType.IsEnumerable() && method.GetCustomAttributeCached<NoRpcEnumerableAttribute>() is null;
             Stream = method.GetCustomAttributeCached<RpcStreamAttribute>();
+            Cancellation = method.GetCustomAttributeCached<RpcCancellationAttribute>();
             Version = method.GetCustomAttributeCached<RpcVersionAttribute>();
             DisposeReturnValue = method.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
+            DisposeReturnValueOnError = DisposeReturnValue || method.GetCustomAttributeCached<RpcDisposeOnErrorAttribute>() is not null;
+            DisconnectOnError = api.DisconnectOnError || method.GetCustomAttributeCached<RpcDisconnectOnErrorAttribute>() is not null;
             int index = -1;
             NullabilityInfoContext nic = new();
             Parameters = new Dictionary<string, RpcApiMethodParameterInfo>(
@@ -39,6 +42,9 @@ namespace wan24.RPC.Api.Reflection
                 )
                 .ToFrozenDictionary();
             RpcParameters = new HashSet<RpcApiMethodParameterInfo>(Parameters.Values.Where(p => p.RPC)).ToFrozenSet();
+            Attributes = method.GetCustomAttributesCached<RpcAttributeBase>().ToFrozenSet();
+            foreach (RpcAttributeBase attr in Attributes)
+                attr.HandleAssignedApiMethod(this);
         }
 
         /// <summary>
@@ -87,9 +93,24 @@ namespace wan24.RPC.Api.Reflection
         public bool DisposeReturnValue { get; protected set; } = true;
 
         /// <summary>
+        /// If to dispose the return value on error
+        /// </summary>
+        public bool DisposeReturnValueOnError { get; protected set; } = true;
+
+        /// <summary>
+        /// If to disconnect on execution error
+        /// </summary>
+        public bool DisconnectOnError { get; protected set; }
+
+        /// <summary>
         /// Stream configuration
         /// </summary>
         public RpcStreamAttribute? Stream { get; protected set; }
+
+        /// <summary>
+        /// Cancellation configuration
+        /// </summary>
+        public RpcCancellationAttribute? Cancellation { get; protected set; }
 
         /// <summary>
         /// Version
@@ -105,6 +126,11 @@ namespace wan24.RPC.Api.Reflection
         /// RPC parameters
         /// </summary>
         public FrozenSet<RpcApiMethodParameterInfo> RpcParameters { get; protected set; } = null!;
+
+        /// <summary>
+        /// Extended RPC attributes
+        /// </summary>
+        public FrozenSet<RpcAttributeBase> Attributes { get; protected set; } = null!;
 
         /// <inheritdoc/>
         public override string ToString() => $"{API.Name}->{Name} ({API.Type}.{Method.Name})";

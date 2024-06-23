@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using wan24.Core;
+using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Messages;
-using wan24.RPC.Processing.Messages.Streaming;
 
 namespace wan24.RPC.Processing
 {
@@ -14,10 +14,17 @@ namespace wan24.RPC.Processing
         protected readonly IncomingQueue IncomingMessages;
 
         /// <summary>
-        /// Handle a message (should call <see cref="StopExceptionalAndDisposeAsync(Exception)"/> on exception)
+        /// Handle an incoming message (should call <see cref="StopExceptionalAndDisposeAsync(Exception)"/> on exception)
         /// </summary>
         /// <param name="message">Message</param>
-        protected virtual async Task HandleMessageAsync(IRpcMessage message)
+        /// <returns>If handled</returns>
+        protected virtual async Task<bool> PreHandleIncomingMessageAsync(IRpcMessage message) => await HandleHeartBeatMessageAsync(message).DynamicContext();
+
+        /// <summary>
+        /// Handle an incoming message (should call <see cref="StopExceptionalAndDisposeAsync(Exception)"/> on exception)
+        /// </summary>
+        /// <param name="message">Message</param>
+        protected virtual async Task HandleIncomingMessageAsync(IRpcMessage message)
         {
             await Task.Yield();
             Logger?.Log(LogLevel.Debug, "{this} handling message type {type}", ToString(), message.Type);
@@ -26,75 +33,69 @@ namespace wan24.RPC.Processing
                 switch (message)
                 {
                     case RequestMessage request:
-                        try
-                        {
-                            await HandleRequestAsync(request).DynamicContext();
-                        }
-                        catch
-                        {
-                            await request.DisposeParametersAsync().DynamicContext();
-                            throw;
-                        }
+                        await HandleRequestAsync(request).DynamicContext();
                         break;
                     case ResponseMessage response:
-                        try
-                        {
-                            await HandleResponseAsync(response).DynamicContext();
-                        }
-                        catch
-                        {
-                            await response.DisposeReturnValueAsync().DynamicContext();
-                            throw;
-                        }
+                        await HandleResponseAsync(response).DynamicContext();
                         break;
                     case EventMessage remoteEvent:
-                        try
+                        await HandleEventAsync(remoteEvent).DynamicContext();
+                        break;
+                    case IRpcRemoteScopeMessage scopeMessage:
+                        if (GetRemoteScope(scopeMessage.ScopeId) is RpcRemoteScopeBase remoteScope)
                         {
-                            await HandleEventAsync(remoteEvent).DynamicContext();
+                            await remoteScope.HandleMessageAsync(scopeMessage, CancelToken).DynamicContext();
                         }
-                        catch
+                        else if (scopeMessage.FailOnScopeNotFound)
                         {
-                            await remoteEvent.DisposeArgumentsAsync().DynamicContext();
-                            throw;
+                            throw new RpcScopeNotFoundException($"Unknown remote scope #{scopeMessage.ScopeId} in message {scopeMessage.GetType()}")
+                            {
+                                ScopeMessage = scopeMessage
+                            };
+                        }
+                        else
+                        {
+                            Logger?.Log(
+                                scopeMessage.WarnOnScopeNotFound 
+                                    ? LogLevel.Warning 
+                                    : LogLevel.Debug, 
+                                "{this} received unknown remote scope #{id} in message {type}", 
+                                ToString(), 
+                                scopeMessage.ScopeId, 
+                                scopeMessage.GetType()
+                                );
                         }
                         break;
-                    case StreamStartMessage streamStart:
-                        EnsureStreamsAreEnabled();
-                        await HandleStreamStartAsync(streamStart).DynamicContext();
-                        break;
-                    case StreamChunkMessage streamChunk:
-                        EnsureStreamsAreEnabled();
-                        await HandleStreamChunkAsync(streamChunk).DynamicContext();
-                        break;
-                    case RemoteStreamCloseMessage remoteClose:
-                        EnsureStreamsAreEnabled();
-                        await HandleRemoteStreamCloseAsync(remoteClose).DynamicContext();
-                        break;
-                    case LocalStreamCloseMessage localClose:
-                        EnsureStreamsAreEnabled();
-                        await HandleLocalStreamCloseAsync(localClose).DynamicContext();
+                    case IRpcScopeMessage scopeMessage:
+                        if (GetScope(scopeMessage.ScopeId) is RpcScopeBase scope)
+                        {
+                            await scope.HandleMessageAsync(scopeMessage, CancelToken).DynamicContext();
+                        }
+                        else if (scopeMessage.FailOnScopeNotFound)
+                        {
+                            throw new RpcScopeNotFoundException($"Unknown local scope #{scopeMessage.ScopeId} in message {scopeMessage.GetType()}")
+                            {
+                                ScopeMessage = scopeMessage
+                            };
+                        }
+                        else
+                        {
+                            Logger?.Log(
+                                scopeMessage.WarnOnScopeNotFound 
+                                    ? LogLevel.Warning 
+                                    : LogLevel.Debug, 
+                                "{this} received unknown local scope #{id} in message {type}", 
+                                ToString(), 
+                                scopeMessage.ScopeId, 
+                                scopeMessage.GetType()
+                                );
+                        }
                         break;
                     case ErrorResponseMessage error:
                         await HandleErrorResponseAsync(error).DynamicContext();
                         break;
-                    case CancellationMessage cancellation:
-                        await HandleCancellationAsync(cancellation).DynamicContext();
-                        break;
-                    case PingMessage ping:
-                        Logger?.Log(LogLevel.Debug, "{this} sending pong response for ping request #{id}", ToString(), message.Id);
-                        await SendMessageAsync(new PongMessage(ping)
-                        {
-                            PeerRpcVersion = Options.RpcVersion
-                        }).DynamicContext();
-                        break;
-                    case PongMessage:
-                        {
-                            if (GetPendingRequest(message.Id!.Value) is Request pingRequest)
-                            {
-                                Logger?.Log(LogLevel.Debug, "{this} got pong response for ping request #{id}", ToString(), message.Id);
-                                pingRequest.ProcessorCompletion.TrySetResult(result: null);
-                            }
-                        }
+                    case CancelMessage cancel:
+                        await HandleCallCancellationAsync(cancel).DynamicContext();
                         break;
                     default:
                         throw new InvalidDataException($"Can't handle message type #{message.Id} ({message.GetType()})");
@@ -111,7 +112,7 @@ namespace wan24.RPC.Processing
             catch (Exception ex)
             {
                 Logger?.Log(LogLevel.Error, "{this} handling message type {type} failed (will dispose): {ex}", ToString(), message.Type, ex);
-                await StopExceptionalAndDisposeAsync(ex).DynamicContext();
+                _ = StopExceptionalAndDisposeAsync(ex);
             }
         }
     }

@@ -2,6 +2,8 @@
 using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Values;
 
+//TODO Implement cancellation
+
 namespace wan24.RPC.Processing
 {
     /// <summary>
@@ -22,20 +24,5 @@ namespace wan24.RPC.Processing
         /// <param name="message">Message</param>
         /// <param name="cancellationToken">Cancellation token</param>
         Task SendMessageAsync(IRpcMessage message, CancellationToken cancellationToken = default);
-        /// <summary>
-        /// Create a RPC stream parameter
-        /// </summary>
-        /// <param name="stream">Stream</param>
-        /// <param name="disposeStream">Dispose the stream after use?</param>
-        /// <param name="disposeRpcStream">Dispose the RPC stream from the RPC processor?</param>
-        /// <returns>Parameter</returns>
-        RpcOutgoingStreamParameter CreateOutgoingStreamParameter(in Stream stream, in bool disposeStream = false, in bool disposeRpcStream = false);
-        /// <summary>
-        /// Create an outgoing stream
-        /// </summary>
-        /// <param name="streamParameter">Parameter</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Stream value to send to the peer</returns>
-        Task<RpcStreamValue> CreateOutgoingStreamAsync(RpcOutgoingStreamParameter streamParameter, CancellationToken cancellationToken = default);
     }
 }

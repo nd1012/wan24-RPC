@@ -1,10 +1,12 @@
-﻿namespace wan24.RPC.Processing.Exceptions
+﻿using wan24.RPC.Processing.Options;
+
+namespace wan24.RPC.Processing.Exceptions
 {
     /// <summary>
-    /// Thrown on too many RPC streams
+    /// Thrown on too many RPC streams (<see cref="StreamScopeOptions.MaxStreamContentLength"/>)
     /// </summary>
     [Serializable]
-    public class TooManyRpcStreamsException : Exception
+    public class TooManyRpcStreamsException : OutOfMemoryException
     {
         /// <summary>
         /// Constructor

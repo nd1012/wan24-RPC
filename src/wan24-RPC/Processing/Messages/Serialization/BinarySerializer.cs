@@ -19,7 +19,16 @@ namespace wan24.RPC.Processing.Messages.Serialization
         /// </summary>
         /// <param name="type">Type</param>
         /// <returns>If the type can be serialized</returns>
-        public static bool CanSerialize(Type? type) => type is not null && typeof(IStreamSerializer).IsAssignableFrom(type);
+        public static bool CanSerialize(Type? type)
+            => type is null ||
+                (
+                    typeof(IStreamSerializer).IsAssignableFrom(type) &&
+                    type.GetCustomAttributeCached<NoRpcAttribute>() is null &&
+                    (
+                        !(RpcSerializer.Get(SERIALIZER)?.GetIsOptIn() ?? throw new InvalidProgramException("Failed to get opt-in behavior")) ||
+                        type.GetCustomAttributeCached<RpcAttribute>() is not null
+                    )
+                );
 
         /// <summary>
         /// Object serializer
@@ -29,9 +38,9 @@ namespace wan24.RPC.Processing.Messages.Serialization
         /// <param name="cancellationToken">Cancellation token</param>
         public static async Task ObjectSerializerAsync(object? obj, Stream stream, CancellationToken cancellationToken)
         {
-            IStreamSerializer? serializable = obj as IStreamSerializer;
-            if (obj is not null && serializable is null)
+            if (!CanSerialize(obj?.GetType()))
                 throw new ArgumentException("Not serializable", nameof(obj));
+            IStreamSerializer? serializable = obj as IStreamSerializer;
             await stream.WriteStringNullableAsync(serializable?.GetType().ToString(), cancellationToken).DynamicContext();
             if (serializable is not null)
                 await stream.WriteSerializedAsync(serializable, cancellationToken).DynamicContext();
@@ -56,40 +65,38 @@ namespace wan24.RPC.Processing.Messages.Serialization
         /// Object deserializer
         /// </summary>
         /// <param name="stream">Stream</param>
+        /// <param name="type">Object type</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Object</returns>
-        public static async Task<object?> ObjectDeserializerAsync(Stream stream, CancellationToken cancellationToken)
+        public static async Task<object?> ObjectDeserializerAsync(Stream stream, Type type, CancellationToken cancellationToken)
         {
             if (await stream.ReadStringNullableAsync(cancellationToken: cancellationToken).DynamicContext() is not string typeName)
                 return null;
-            Type type = TypeHelper.Instance.GetType(typeName, throwOnError: true)!;
-            if (type.GetCustomAttributeCached<NoRpcAttribute>() is not null)
-                throw new InvalidDataException($"{type} was denied for RPC deserialization");
-            if (
-                (RpcSerializer.Get(SERIALIZER)?.GetIsOptIn() ?? throw new InvalidProgramException("Failed to get opt-in behavior")) &&
-                type.GetCustomAttributeCached<RpcAttribute>() is null &&
-                !StreamSerializer.IsTypeAllowed(type)
-                )
-                throw new InvalidDataException($"Opt-in is required for binary deserializing {type} using RpcAttribute or by registering an allowed type to StreamSerializer");
-            return await stream.ReadSerializedObjectAsync(type, cancellationToken: cancellationToken).DynamicContext();
+            Type serializedType = TypeHelper.Instance.GetType(typeName, throwOnError: true)!;
+            if (!CanSerialize(serializedType))
+                throw new InvalidDataException($"Serialized type {serializedType} is not serializable");
+            if (!type.IsAssignableFrom(serializedType) && !RpcSerializer.RaiseOnTypeValidation(type, serializedType))
+                throw new InvalidDataException($"Serialized type {serializedType} not valid for expected type {type}");
+            return await stream.ReadSerializedObjectAsync(serializedType, cancellationToken: cancellationToken).DynamicContext();
         }
 
         /// <summary>
         /// Object list deserializer
         /// </summary>
         /// <param name="stream">Stream</param>
+        /// <param name="types">Object types</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Object list</returns>
-        public static async Task<object?[]?> ObjectListDeserializerAsync(Stream stream, CancellationToken cancellationToken)
+        public static async Task<object?[]?> ObjectListDeserializerAsync(Stream stream, Type[] types, CancellationToken cancellationToken)
         {
             int len = await stream.ReadNumberAsync<int>(cancellationToken: cancellationToken).DynamicContext();
             if (len < 1)
                 return null;
-            if (len > byte.MaxValue)
+            if (len > types.Length)
                 throw new InvalidDataException($"Invalid object list length {len}");
             object?[] res = new object[len];
             for (int i = 0; i < len; i++)
-                res[i] = await ObjectDeserializerAsync(stream, cancellationToken).DynamicContext();
+                res[i] = await ObjectDeserializerAsync(stream, types[i], cancellationToken).DynamicContext();
             return res;
         }
     }

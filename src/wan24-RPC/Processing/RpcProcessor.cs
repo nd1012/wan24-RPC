@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using wan24.Core;
 using wan24.RPC.Api;
+using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Serialization;
 using wan24.StreamSerializerExtensions;
@@ -20,15 +21,23 @@ namespace wan24.RPC.Processing
         public RpcProcessor(in RpcProcessorOptions options) : base()
         {
             Options = options;
+            // Create queues
             IncomingMessages = CreateIncomingMessageQueue();
             OutgoingMessages = CreateOutgoingMessageQueue();
             Calls = CreateCallQueue();
             Requests = CreateRequestQueue();
-            if (options.KeepAlive > TimeSpan.Zero)
+            // Keep alive
+            if (options.KeepAlive is not null && options.KeepAlive.Timeout > TimeSpan.Zero)
             {
-                HeartBeat = new(options.KeepAlive);
+                HeartBeat = new(options.KeepAlive.Timeout)
+                {
+                    Name = "RPC processor heartbeat"
+                };
                 HeartBeat.OnTimeout += HandleHeartBeatTimeoutAsync;
-                PeerHeartBeat = new(options.KeepAlive + options.PeerTimeout);
+                PeerHeartBeat = new(options.KeepAlive.Timeout + options.KeepAlive.PeerTimeout)
+                {
+                    Name = "RPC processor peer heartbeat"
+                };
                 PeerHeartBeat.OnTimeout += HandlePeerHeartBeatTimeoutAsync;
             }
             else
@@ -36,6 +45,7 @@ namespace wan24.RPC.Processing
                 HeartBeat = null;
                 PeerHeartBeat = null;
             }
+            // Others
             foreach (object api in Options.API.Values.Select(a => a.Instance))
                 if (api is IWantRpcProcessorInfo processorInfo)
                     processorInfo.Processor = this;
@@ -68,6 +78,8 @@ namespace wan24.RPC.Processing
                 yield return new(__("Started"), Started == DateTime.MinValue ? __("(never)") : Started.ToString(), __("Started time"));
                 yield return new(__("Stopped"), Stopped == DateTime.MinValue ? __("(never)") : Stopped.ToString(), __("Stopped time"));
                 yield return new(__("Exception"), LastException?.Message ?? __("(none)"), __("Last exception"));
+                yield return new(__("Scopes"), Scopes.Count, __("Number of RPC scopes"));
+                yield return new(__("Remote scopes"), RemoteScopes.Count, __("Number of RPC remote scopes"));
                 yield return new(__("Calls"), PendingCalls.Count, __("Number of pending RPC calls"));
                 yield return new(__("Requests"), PendingRequests.Count, __("Number of pending RPC requests"));
                 yield return new(__("Events"), _RemoteEvents.Count, __("Number of registered remote event handlers"));
@@ -109,14 +121,17 @@ namespace wan24.RPC.Processing
             {
                 Logger?.Log(LogLevel.Debug, "{this} worker", ToString());
                 await BeginWorkAsync().DynamicContext();
-                if (Options.API.Count > 0 && Options.Stream.CanRead)
+                if (Options.Stream.CanRead)
                 {
                     IRpcMessage? message;
                     while (!CancelToken.IsCancellationRequested)
                     {
                         // Wait for incoming mesage queue space
-                        Logger?.Log(LogLevel.Trace, "{this} worker waiting for incoming message queue space", ToString());
-                        await IncomingMessages.WaitSpaceAsync().DynamicContext();
+                        if (!IncomingMessages.HasSpace)
+                        {
+                            Logger?.Log(LogLevel.Trace, "{this} worker waiting for incoming message queue space", ToString());
+                            await IncomingMessages.WaitSpaceAsync().DynamicContext();
+                        }
                         // Read the next RPC message
                         Logger?.Log(LogLevel.Trace, "{this} worker waiting for incoming RPC messages", ToString());
                         using (LimitedLengthStream limited = new(Options.Stream, Options.MaxMessageLength, leaveOpen: true)
@@ -125,23 +140,44 @@ namespace wan24.RPC.Processing
                         })
                             message = await limited.ReadRpcMessageAsync(Options.SerializerVersion, cancellationToken: CancelToken).DynamicContext();
                         LastMessageReceived = DateTime.Now;
-                        // Enqueue the incoming message for processing
-                        Logger?.Log(LogLevel.Trace, "{this} worker storing incoming RPC message", ToString());
+                        // Allow pre-queue message processing
+                        Logger?.Log(LogLevel.Trace, "{this} worker pre-processing incoming RPC message", ToString());
                         try
                         {
-                            if (IncomingMessages.Queued + 1 >= Options.IncomingMessageQueueCapacity)
+                            if (await PreHandleIncomingMessageAsync(message).DynamicContext())
+                            {
+                                Logger?.Log(LogLevel.Trace, "{this} worker incoming RPC message pre-processor processed the message", ToString());
+                                message = null;
+                                continue;
+                            }
+                        }
+                        catch
+                        {
+                            Logger?.Log(LogLevel.Error, "{this} worker failed to pre-process incoming RPC message", ToString());
+                            throw;
+                        }
+                        // Enqueue the incoming message for processing
+                        Logger?.Log(LogLevel.Trace, "{this} worker enqueue incoming RPC message", ToString());
+                        try
+                        {
+                            if (Options.KeepAlive != default)
+                            {
+                                // Exceeding the incoming message queue is not allowed when using keep alive
+                                if (IncomingMessages.Queued >= Options.IncomingMessageQueue.Capacity)
+                                    throw new TooManyRpcMessagesException("Can't keep alive anymore (incoming message queue is exhausted)");
+                            }
+                            else if (IncomingMessages.Queued + 1 >= Options.IncomingMessageQueue.Capacity)
                             {
                                 // Block reading incoming messages due to an incoming message queue overflow
                                 Logger?.Log(LogLevel.Debug, "{this} worker blocking incoming RPC message reading", ToString());
-                                await IncomingMessages.SpaceEvent.ResetAsync().DynamicContext();
+                                await IncomingMessages.ResetSpaceEventAsync().DynamicContext();
                             }
                             await IncomingMessages.EnqueueAsync(message, CancelToken).DynamicContext();
-                            Logger?.Log(LogLevel.Trace, "{this} worker incoming RPC message queued", ToString());
+                            Logger?.Log(LogLevel.Trace, "{this} worker incoming RPC message queued (now {count} messages are queued)", ToString(), IncomingMessages.Count);
                         }
-                        catch (Exception ex)
+                        catch
                         {
                             Logger?.Log(LogLevel.Error, "{this} worker failed to enqueue incoming RPC message", ToString());
-                            await HandleIncomingMessageStorageErrorAsync(message, ex).DynamicContext();
                             throw;
                         }
                         message = null;
@@ -149,7 +185,7 @@ namespace wan24.RPC.Processing
                 }
                 else
                 {
-                    Logger?.Log(LogLevel.Trace, "{this} worker waiting for cancellation (no incoming messages are being accepted, 'cause there are no APIs)", ToString());
+                    Logger?.Log(LogLevel.Debug, "{this} worker waiting for cancellation (RPC stream is write-only)", ToString());
                     await CancelToken.WaitHandle.WaitAsync().DynamicContext();
                 }
                 Logger?.Log(LogLevel.Debug, "{this} worker done", ToString());
@@ -189,12 +225,31 @@ namespace wan24.RPC.Processing
             foreach (object api in Options.API.Values.Select(a => a.Instance))
                 if (api is IWantRpcProcessorInfo processorInfo)
                     processorInfo.ProcessorCancellation = CancelToken;
-            await Calls.StartAsync(CancelToken).DynamicContext();
-            await Requests.StartAsync(CancelToken).DynamicContext();
-            await OutgoingMessages.StartAsync(CancelToken).DynamicContext();
-            await IncomingMessages.StartAsync(CancelToken).DynamicContext();
+            await Task.WhenAll(
+                Calls.StartAsync(),
+                Requests.StartAsync(),
+                OutgoingMessages.StartAsync(),
+                IncomingMessages.StartAsync()
+                ).DynamicContext();
             HeartBeat?.Reset();
             PeerHeartBeat?.Reset();
+        }
+
+        /// <summary>
+        /// Stop exceptional and dispose
+        /// </summary>
+        /// <param name="ex">Exception</param>
+        protected virtual async Task StopExceptionalAndDisposeAsync(Exception ex)
+        {
+            Logger?.Log(LogLevel.Error, "{this} stop exceptional: {ex}", ToString(), ex);
+            if (StoppedExceptional || LastException is not null)
+            {
+                Logger?.Log(LogLevel.Warning, "{this} had an exception already", ToString());
+                return;
+            }
+            StoppedExceptional = true;
+            LastException = ex;
+            await DisposeAsync().DynamicContext();
         }
 
         /// <summary>
@@ -205,150 +260,13 @@ namespace wan24.RPC.Processing
             Logger?.Log(LogLevel.Debug, "{this} end work", ToString());
             HeartBeat?.Stop();
             PeerHeartBeat?.Stop();
-            await IncomingMessages.StopAsync(CancelToken).DynamicContext();
-            await Requests.StopAsync(CancellationToken.None).DynamicContext();
-            await Calls.StopAsync(CancellationToken.None).DynamicContext();
-            await OutgoingMessages.StopAsync(CancelToken).DynamicContext();
-        }
-
-        /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
-        {
-            Logger?.Log(LogLevel.Trace, "{this} sync disposing", ToString());
-            RpcProcessorTable.Processors.TryRemove(GetHashCode(), out _);
-            HeartBeat?.Dispose();
-            PeerHeartBeat?.Dispose();
-            ObjectDisposedException disposedException = new(GetType().ToString());
-            // Cancel outgoing streams
-            using (SemaphoreSyncContext ssc = OutgoingStreamsSync)
-                foreach (OutgoingStream stream in OutgoingStreams.Values)
-                    if (!stream.IsDisposing && stream.IsStarted && !stream.IsDone)
-                        try
-                        {
-                            stream.LastException ??= disposedException;
-                            stream.Cancellation.Cancel();
-                        }
-                        catch
-                        {
-                        }
-            // Cancel incoming streams
-            using (SemaphoreSyncContext ssc = IncomingStreamsSync)
-                foreach (IncomingStream stream in IncomingStreams.Values)
-                    if (!stream.IsDisposing && stream.IsStarted && !stream.IsDone)
-                        try
-                        {
-                            stream.CancelAsync().GetAwaiter().GetResult();
-                        }
-                        catch
-                        {
-                        }
-            // Stop processing
-            base.Dispose(disposing);
-            // Dispose message synchronization
-            WriteSync.Dispose();
-            // Dispose requests
-            Requests.Dispose();
-            foreach (Request request in PendingRequests.Values)
-            {
-                request.ProcessorCompletion.TrySetException(disposedException);
-                request.RequestCompletion.TrySetException(disposedException);
-            }
-            PendingRequests.Values.DisposeAll();
-            PendingRequests.Clear();
-            // Dispose calls
-            Calls.Dispose();
-            foreach (Call call in PendingCalls.Values)
-                call.Completion.TrySetException(disposedException);
-            PendingCalls.Values.DisposeAll();
-            PendingCalls.Clear();
-            // Dispose events (if disposable)
-            _RemoteEvents.Values.TryDisposeAll();
-            _RemoteEvents.Clear();
-            // Dispose outgoing streams
-            OutgoingStreamsSync.Dispose();
-            OutgoingStreams.Values.DisposeAll();
-            OutgoingStreams.Clear();
-            // Dispose incoming streams
-            IncomingStreamsSync.Dispose();
-            IncomingStreams.Values.DisposeAll();
-            IncomingStreams.Clear();
-            // Dispose incoming messages
-            IncomingMessages.Dispose();
-            // Dispose outgoing messages
-            OutgoingMessages.Dispose();
-            // Dispose others
-            Options.Dispose();
-        }
-
-        /// <inheritdoc/>
-        protected override async Task DisposeCore()
-        {
-            Logger?.Log(LogLevel.Trace, "{this} async disposing", ToString());
-            RpcProcessorTable.Processors.TryRemove(GetHashCode(), out _);
-            if (HeartBeat is not null)
-                await HeartBeat.DisposeAsync().DynamicContext();
-            if (PeerHeartBeat is not null)
-                await PeerHeartBeat.DisposeAsync().DynamicContext();
-            ObjectDisposedException disposedException = new(GetType().ToString());
-            // Cancel outgoing streams
-            using (SemaphoreSyncContext ssc = await OutgoingStreamsSync.SyncContextAsync().DynamicContext())
-                foreach (OutgoingStream stream in OutgoingStreams.Values)
-                    if (!stream.IsDisposing && stream.IsStarted && !stream.IsDone)
-                        try
-                        {
-                            stream.LastException ??= disposedException;
-                            stream.Cancellation.Cancel();
-                        }
-                        catch
-                        {
-                        }
-            // Cancel incoming streams
-            using (SemaphoreSyncContext ssc = await IncomingStreamsSync.SyncContextAsync().DynamicContext())
-                foreach (IncomingStream stream in IncomingStreams.Values)
-                    if (!stream.IsDisposing && stream.IsStarted && !stream.IsDone)
-                        try
-                        {
-                            await stream.CancelAsync().DynamicContext();
-                        }
-                        catch
-                        {
-                        }
-            // Stop processing
-            await base.DisposeCore().DynamicContext();
-            // Dispose message synchronization
-            await WriteSync.DisposeAsync().DynamicContext();
-            // Dispose requests
-            await Requests.DisposeAsync().DynamicContext();
-            foreach (Request request in PendingRequests.Values)
-            {
-                request.ProcessorCompletion.TrySetException(disposedException);
-                request.RequestCompletion.TrySetException(disposedException);
-            }
-            await PendingRequests.Values.DisposeAllAsync().DynamicContext();
-            PendingRequests.Clear();
-            // Dispose calls
-            await Calls.DisposeAsync().DynamicContext();
-            foreach (Call call in PendingCalls.Values)
-                call.Completion.TrySetException(disposedException);
-            await PendingCalls.Values.DisposeAllAsync().DynamicContext();
-            PendingCalls.Clear();
-            // Dispose events (if disposable)
-            await _RemoteEvents.Values.TryDisposeAllAsync().DynamicContext();
-            _RemoteEvents.Clear();
-            // Dispose outgoing streams
-            await OutgoingStreamsSync.DisposeAsync().DynamicContext();
-            await OutgoingStreams.Values.DisposeAllAsync().DynamicContext();
-            OutgoingStreams.Clear();
-            // Dispose incoming streams
-            await IncomingStreamsSync.DisposeAsync().DynamicContext();
-            await IncomingStreams.Values.DisposeAllAsync().DynamicContext();
-            IncomingStreams.Clear();
-            // Dispose incoming messages
-            await IncomingMessages.DisposeAsync().DynamicContext();
-            // Dispose outgoing messages
-            await OutgoingMessages.DisposeAsync().DynamicContext();
-            // Dispose others
-            await Options.DisposeAsync().DynamicContext();
+            await Task.WhenAll(
+                IncomingMessages.StopAsync(),
+                Requests.StopAsync(),
+                Calls.StopAsync(),
+                OutgoingMessages.StopAsync(),
+                IncomingMessages.StopAsync()
+                ).DynamicContext();
         }
     }
 }

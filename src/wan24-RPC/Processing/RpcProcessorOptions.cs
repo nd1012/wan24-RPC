@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using wan24.Compression;
 using wan24.Core;
 using wan24.RPC.Api.Reflection;
-using wan24.RPC.Processing.Values;
+using wan24.RPC.Processing.Options;
 using wan24.StreamSerializerExtensions;
 
 namespace wan24.RPC.Processing
@@ -31,7 +30,7 @@ namespace wan24.RPC.Processing
                 throw new ArgumentOutOfRangeException(nameof(apis));
             API = new(apis.Length);
             RpcApiInfo info;
-            foreach(object api in apis)
+            foreach (object api in apis)
             {
                 info = new(api);
                 API[info.Type.Name] = info;
@@ -106,41 +105,6 @@ namespace wan24.RPC.Processing
         public RpcContext? DefaultContext { get; init; }
 
         /// <summary>
-        /// Keep alive timeout
-        /// </summary>
-        public TimeSpan KeepAlive { get; init; }
-
-        /// <summary>
-        /// Peer heartbeat timeout (only effective when <see cref="KeepAlive"/> was set)
-        /// </summary>
-        public TimeSpan PeerTimeout { get; init; } = TimeSpan.FromSeconds(1);
-
-        /// <summary>
-        /// Incoming message queue capacity (overflow will block reading incoming messages until a queued message was dequeued)
-        /// </summary>
-        public required int IncomingMessageQueueCapacity { get; init; }
-
-        /// <summary>
-        /// Incoming message queue processing threads
-        /// </summary>
-        public required int IncomingMessageQueueThreads { get; init; }
-
-        /// <summary>
-        /// Outgoing message queue capacity (for priority message sending)
-        /// </summary>
-        public required int OutgoingMessageQueueCapacity { get; init; }
-
-        /// <summary>
-        /// Max. number of queued RPC calls (RPC requests from the peer; should at last fit the peers <see cref="RequestThreads"/>)
-        /// </summary>
-        public required int CallQueueSize { get; init; }
-
-        /// <summary>
-        /// Max. number of RPC call processing threads
-        /// </summary>
-        public required int CallThreads { get; init; }
-
-        /// <summary>
         /// Default service provider for an incoming RPC call (will be disposed)
         /// </summary>
         public IServiceProvider? DefaultServices { get; init; }
@@ -151,39 +115,44 @@ namespace wan24.RPC.Processing
         public bool DisconnectOnApiError { get; init; }
 
         /// <summary>
-        /// Max. number of queued RPC requests (RPC requests to the peer)
+        /// Keep alive options
         /// </summary>
-        public required int RequestQueueSize { get; init; }
+        public KeepAliveOptions? KeepAlive { get; init; }
 
         /// <summary>
-        /// Max. number of RPC requests processing threads (should not exceed the peers <see cref="CallQueueSize"/>)
+        /// RPC message priority options
         /// </summary>
-        public required int RequestThreads { get; init; }
+        public MessagePriorityOptions Priorities { get; init; } = new();
 
         /// <summary>
-        /// Maximum number of streams (I/O) at both peers (<c>0</c> to disable streams)
+        /// Incoming message queue options
         /// </summary>
-        public int MaxStreamCount { get; init; }
+        public required ParallelQueueOptions IncomingMessageQueue { get; init; }
 
         /// <summary>
-        /// Default compression options for streams
+        /// Outgoing message queue capacity (for priority message sending)
         /// </summary>
-        public CompressionOptions? DefaultCompression { get; init; }
+        public required int OutgoingMessageQueueCapacity { get; init; }
 
         /// <summary>
-        /// Compression buffer size in bytes
+        /// Call queue options
         /// </summary>
-        public int CompressionBufferSize { get; init; } = RpcStreamValue.MaxContentLength;
+        public required ParallelQueueOptions CallQueue { get; init; }
 
         /// <summary>
-        /// Decompression buffer size in bytes
+        /// Request queue options
         /// </summary>
-        public int DecompressionBufferSize { get; init; } = RpcStreamValue.MaxContentLength;
+        public required ParallelQueueOptions RequestQueue { get; init; }
 
         /// <summary>
-        /// Maximum number of enumerations (I/O) at both peers (<c>0</c> to disable enumerations)
+        /// Use scopes?
         /// </summary>
-        public int MaxEnumerationCount { get; init; }
+        public bool UseScopes { get; init; } = true;
+
+        /// <summary>
+        /// Stream options
+        /// </summary>
+        public StreamScopeOptions? Streams { get; init; }
 
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)

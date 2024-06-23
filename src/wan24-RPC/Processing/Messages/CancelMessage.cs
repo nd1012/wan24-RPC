@@ -1,12 +1,12 @@
 ﻿namespace wan24.RPC.Processing.Messages
 {
     /// <summary>
-    /// RPC cancellation message
+    /// RPC cancel message (cancels a RPC call)
     /// </summary>
     /// <remarks>
     /// Constructor
     /// </remarks>
-    public class CancellationMessage() : RpcMessageBase()
+    public class CancelMessage() : RpcMessageBase()
     {
         /// <summary>
         /// RPC message type ID
@@ -17,7 +17,7 @@
         /// Constructor
         /// </summary>
         /// <param name="request">RPC request to cancel</param>
-        public CancellationMessage(in RequestMessage request) : this() => Id = request.Id;
+        public CancelMessage(in RequestMessage request) : this() => Id = request.Id;
 
         /// <inheritdoc/>
         public override int Type => TYPE_ID;

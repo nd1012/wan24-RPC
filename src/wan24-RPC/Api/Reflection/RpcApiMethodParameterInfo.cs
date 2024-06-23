@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Frozen;
+using System.Reflection;
 using wan24.Core;
 using wan24.RPC.Api.Attributes;
 
@@ -25,7 +26,14 @@ namespace wan24.RPC.Api.Reflection
             Nullable = pi.IsNullable(nic);
             Enumerable = pi.ParameterType.IsEnumerable(strict: true, asyncOnly: true);
             DisposeParameterValue = pi.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
+            DisposeParameterValueOnError = DisposeParameterValue || pi.GetCustomAttributeCached<RpcDisposeOnErrorAttribute>() is not null;
+            Scope = pi.GetCustomAttributeCached<RpcScopeKeyAttribute>();
+            RemoteScope = pi.GetCustomAttributeCached<RpcRemoteScopeKeyAttribute>();
             Stream = pi.GetCustomAttributeCached<RpcStreamAttribute>();
+            Cancellation = pi.GetCustomAttributeCached<RpcCancellationAttribute>();
+            Attributes = pi.GetCustomAttributesCached<RpcAttributeBase>().ToFrozenSet();
+            foreach (RpcAttributeBase attr in Attributes)
+                attr.HandleAssignedApiMethodParameter(this);
         }
 
         /// <summary>
@@ -74,8 +82,33 @@ namespace wan24.RPC.Api.Reflection
         public bool DisposeParameterValue { get; protected set; } = true;
 
         /// <summary>
+        /// If to dispose the parameter value on error
+        /// </summary>
+        public bool DisposeParameterValueOnError { get; protected set; } = true;
+
+        /// <summary>
+        /// Scope key settings
+        /// </summary>
+        public RpcScopeKeyAttribute? Scope { get; protected set; }
+
+        /// <summary>
+        /// Remote scope key settings
+        /// </summary>
+        public RpcRemoteScopeKeyAttribute? RemoteScope { get; protected set; }
+
+        /// <summary>
         /// Stream configuration
         /// </summary>
         public RpcStreamAttribute? Stream { get; protected set; }
+
+        /// <summary>
+        /// Cancellation configuration
+        /// </summary>
+        public RpcCancellationAttribute? Cancellation { get; protected set; }
+
+        /// <summary>
+        /// Extended RPC attributes
+        /// </summary>
+        public FrozenSet<RpcAttributeBase> Attributes { get; protected set; } = null!;
     }
 }
