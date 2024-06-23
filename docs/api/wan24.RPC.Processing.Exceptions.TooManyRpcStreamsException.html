@@ -101,14 +101,16 @@
 
 
   <h1 id="wan24_RPC_Processing_Exceptions_TooManyRpcStreamsException" data-uid="wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException" class="text-break">Class TooManyRpcStreamsException</h1>
-  <div class="markdown level0 summary"><p>Thrown on too many RPC streams</p>
+  <div class="markdown level0 summary"><p>Thrown on too many RPC streams (<a class="xref" href="wan24.RPC.Processing.Options.StreamScopeOptions.html#wan24_RPC_Processing_Options_StreamScopeOptions_MaxStreamContentLength">MaxStreamContentLength</a>)</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.exception">Exception</a></div>
-    <div class="level2"><span class="xref">TooManyRpcStreamsException</span></div>
+    <div class="level2"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.systemexception">SystemException</a></div>
+    <div class="level3"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.outofmemoryexception">OutOfMemoryException</a></div>
+    <div class="level4"><span class="xref">TooManyRpcStreamsException</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
@@ -173,7 +175,7 @@
   <h5 id="wan24_RPC_Processing_Exceptions_TooManyRpcStreamsException_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Serializable]
-public class TooManyRpcStreamsException : Exception, ISerializable</code></pre>
+public class TooManyRpcStreamsException : OutOfMemoryException, ISerializable</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -182,7 +184,7 @@ public class TooManyRpcStreamsException : Exception, ISerializable</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Exceptions_TooManyRpcStreamsException__ctor.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Exceptions/TooManyRpcStreamsException.cs/#L12">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Exceptions/TooManyRpcStreamsException.cs/#L14">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Exceptions_TooManyRpcStreamsException__ctor_" data-uid="wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.#ctor*"></a>
   <h4 id="wan24_RPC_Processing_Exceptions_TooManyRpcStreamsException__ctor" data-uid="wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.#ctor">TooManyRpcStreamsException()</h4>
@@ -198,7 +200,7 @@ public class TooManyRpcStreamsException : Exception, ISerializable</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Exceptions_TooManyRpcStreamsException__ctor_System_String_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.%23ctor(System.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Exceptions/TooManyRpcStreamsException.cs/#L18">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Exceptions/TooManyRpcStreamsException.cs/#L20">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Exceptions_TooManyRpcStreamsException__ctor_" data-uid="wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.#ctor*"></a>
   <h4 id="wan24_RPC_Processing_Exceptions_TooManyRpcStreamsException__ctor_System_String_" data-uid="wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.#ctor(System.String)">TooManyRpcStreamsException(string?)</h4>
@@ -232,7 +234,7 @@ public class TooManyRpcStreamsException : Exception, ISerializable</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Exceptions_TooManyRpcStreamsException__ctor_System_String_System_Exception_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.%23ctor(System.String%2CSystem.Exception)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Exceptions/TooManyRpcStreamsException.cs/#L25">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Exceptions/TooManyRpcStreamsException.cs/#L27">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Exceptions_TooManyRpcStreamsException__ctor_" data-uid="wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.#ctor*"></a>
   <h4 id="wan24_RPC_Processing_Exceptions_TooManyRpcStreamsException__ctor_System_String_System_Exception_" data-uid="wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.#ctor(System.String,System.Exception)">TooManyRpcStreamsException(string?, Exception?)</h4>

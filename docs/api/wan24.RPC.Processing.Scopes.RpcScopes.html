@@ -1,0 +1,473 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class RpcScopes | wan24-RPC </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class RpcScopes | wan24-RPC ">
+      <meta name="generator" content="docfx ">
+  
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" integrity="sha384-EvBWSlnoFgZlXJvpzS+MAUEjvN7+gcCwH+qh7GRFOGgZO0PuwOFro7qPOJnLfe7l" crossorigin="anonymous">
+      <link rel="stylesheet" href="../styles/config.css">
+      <link rel="stylesheet" href="../styles/singulink.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+    </head>
+    <body>
+        <!-- Header required for docfx anchor scroll to work -->
+        <header id="head"></header>
+        <div class="top-navbar">
+            <a class="burger-icon" onclick="toggleMenu()">
+                <svg name="Hamburger" style="vertical-align: middle;" width="34" height="34" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M20 6H4V9H20V6ZM4 10.999H20V13.999H4V10.999ZM4 15.999H20V18.999H4V15.999Z"></path></svg>
+            </a>
+
+
+            <a class="brand" href="../index.html">
+              <img src="../logo.svg" alt="" class="logomark">
+              <span class="brand-title"></span>
+            </a>        </div>
+
+        <div class="body-content">
+            <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
+
+            <nav id="sidebar" role="navigation">
+                <div class="sidebar">
+
+                    <div>
+                      <div class="mobile-hide">
+
+                        <a class="brand" href="../index.html">
+                          <img src="../logo.svg" alt="" class="logomark">
+                          <span class="brand-title"></span>
+                        </a>                      </div>
+
+                      <div class="sidesearch">
+                        <form id="search" role="search" class="search">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="search-query" placeholder="Search" autocomplete="off">
+                        </form>
+                      </div>
+
+                      <div id="navbar">
+                      </div>
+                    </div>                    <div class="sidebar-item-separator"></div>
+
+                        <div id="sidetoggle">
+                          <div id="sidetoc"></div>
+                        </div>
+                </div>
+                <div class="footer">
+  (c) 2024 Andreas Zimmermann, wan24.de
+  
+                </div>            </nav>
+
+            <main class="main-panel">
+
+                <div id="search-results" style="display: none;">
+                  <h1 class="search-list">Search Results for <span></span></h1>
+                  <div class="sr-items">
+                    <p><i class="bi bi-hourglass-split index-loading"></i></p>
+                  </div>
+                  <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+                </div>
+ 
+
+                <div role="main" class="hide-when-search">
+
+                        <div class="subnav navbar navbar-default">
+                          <div class="container hide-when-search" id="breadcrumb">
+                            <ul class="breadcrumb">
+                              <li></li>
+                            </ul>
+                          </div>
+                        </div>
+
+                         <div id="contribution">
+                               <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopes.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopes%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                         </div>
+
+                    <article class="content wrap" id="_content" data-uid="wan24.RPC.Processing.Scopes.RpcScopes">
+
+
+
+  <h1 id="wan24_RPC_Processing_Scopes_RpcScopes" data-uid="wan24.RPC.Processing.Scopes.RpcScopes" class="text-break">Class RpcScopes</h1>
+  <div class="markdown level0 summary"><p>RPC scope factories</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><span class="xref">RpcScopes</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="wan24.html">wan24</a>.<a class="xref" href="wan24.RPC.html">RPC</a>.<a class="xref" href="wan24.RPC.Processing.html">Processing</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.html">Scopes</a></h6>
+  <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
+  <h5 id="wan24_RPC_Processing_Scopes_RpcScopes_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class RpcScopes</code></pre>
+  </div>
+  <h3 id="fields">Fields
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopes_Factories.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopes.Factories%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopes.cs/#L15">View Source</a>
+  </span>
+  <h4 id="wan24_RPC_Processing_Scopes_RpcScopes_Factories" data-uid="wan24.RPC.Processing.Scopes.RpcScopes.Factories">Factories</h4>
+  <div class="markdown level1 summary"><p>Registered scope factories (key is the scope type)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Dictionary&lt;int, RpcScopes.ScopeFactory_Delegate&gt; Factories</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>, <a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.html">RpcScopes</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.ScopeFactory_Delegate.html">ScopeFactory_Delegate</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopes_ParameterScopeFactories.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopes.ParameterScopeFactories%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopes.cs/#L23">View Source</a>
+  </span>
+  <h4 id="wan24_RPC_Processing_Scopes_RpcScopes_ParameterScopeFactories" data-uid="wan24.RPC.Processing.Scopes.RpcScopes.ParameterScopeFactories">ParameterScopeFactories</h4>
+  <div class="markdown level1 summary"><p>Registered parameter scope factories (key is the parameter value type)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Dictionary&lt;Type, RpcScopes.ParameterScopeFactory_Delegate&gt; ParameterScopeFactories</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.html">RpcScopes</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.ParameterScopeFactory_Delegate.html">ParameterScopeFactory_Delegate</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopes_RemoteFactories.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopes.RemoteFactories%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopes.cs/#L19">View Source</a>
+  </span>
+  <h4 id="wan24_RPC_Processing_Scopes_RpcScopes_RemoteFactories" data-uid="wan24.RPC.Processing.Scopes.RpcScopes.RemoteFactories">RemoteFactories</h4>
+  <div class="markdown level1 summary"><p>Registered remote scope factories (key is the scope type)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Dictionary&lt;int, RpcScopes.RemoteScopeFactory_Delegate&gt; RemoteFactories</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>, <a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.html">RpcScopes</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.RemoteScopeFactory_Delegate.html">RemoteScopeFactory_Delegate</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopes_ReturnScopeFactories.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopes.ReturnScopeFactories%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopes.cs/#L27">View Source</a>
+  </span>
+  <h4 id="wan24_RPC_Processing_Scopes_RpcScopes_ReturnScopeFactories" data-uid="wan24.RPC.Processing.Scopes.RpcScopes.ReturnScopeFactories">ReturnScopeFactories</h4>
+  <div class="markdown level1 summary"><p>Registered return scope factories (key is the return value type)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Dictionary&lt;Type, RpcScopes.ReturnScopeFactory_Delegate&gt; ReturnScopeFactories</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.html">RpcScopes</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.ReturnScopeFactory_Delegate.html">ReturnScopeFactory_Delegate</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopes_GetParameterScopeFactory_System_Type_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopes.GetParameterScopeFactory(System.Type)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopes.cs/#L75">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_RpcScopes_GetParameterScopeFactory_" data-uid="wan24.RPC.Processing.Scopes.RpcScopes.GetParameterScopeFactory*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_RpcScopes_GetParameterScopeFactory_System_Type_" data-uid="wan24.RPC.Processing.Scopes.RpcScopes.GetParameterScopeFactory(System.Type)">GetParameterScopeFactory(Type)</h4>
+  <div class="markdown level1 summary"><p>Get the parameter scope factory for a parameter value type</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RpcScopes.ParameterScopeFactory_Delegate? GetParameterScopeFactory(Type type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>Parameter value type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.html">RpcScopes</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.ParameterScopeFactory_Delegate.html">ParameterScopeFactory_Delegate</a></td>
+        <td><p>Parameter scope factory</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopes_GetReturnScopeFactory_System_Type_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopes.GetReturnScopeFactory(System.Type)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopes.cs/#L86">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_RpcScopes_GetReturnScopeFactory_" data-uid="wan24.RPC.Processing.Scopes.RpcScopes.GetReturnScopeFactory*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_RpcScopes_GetReturnScopeFactory_System_Type_" data-uid="wan24.RPC.Processing.Scopes.RpcScopes.GetReturnScopeFactory(System.Type)">GetReturnScopeFactory(Type)</h4>
+  <div class="markdown level1 summary"><p>Get the return scope factory for a return value type</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RpcScopes.ReturnScopeFactory_Delegate? GetReturnScopeFactory(Type type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>Return value type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.html">RpcScopes</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.ReturnScopeFactory_Delegate.html">ReturnScopeFactory_Delegate</a></td>
+        <td><p>Return scope factory</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopes_RegisterScope_System_Int32_wan24_RPC_Processing_Scopes_RpcScopes_ScopeFactory_Delegate_wan24_RPC_Processing_Scopes_RpcScopes_RemoteScopeFactory_Delegate_System_Type_wan24_RPC_Processing_Scopes_RpcScopes_ParameterScopeFactory_Delegate_System_Type_wan24_RPC_Processing_Scopes_RpcScopes_ReturnScopeFactory_Delegate_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopes.RegisterScope(System.Int32%2Cwan24.RPC.Processing.Scopes.RpcScopes.ScopeFactory_Delegate%2Cwan24.RPC.Processing.Scopes.RpcScopes.RemoteScopeFactory_Delegate%2CSystem.Type%2Cwan24.RPC.Processing.Scopes.RpcScopes.ParameterScopeFactory_Delegate%2CSystem.Type%2Cwan24.RPC.Processing.Scopes.RpcScopes.ReturnScopeFactory_Delegate)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopes.cs/#L48">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_RpcScopes_RegisterScope_" data-uid="wan24.RPC.Processing.Scopes.RpcScopes.RegisterScope*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_RpcScopes_RegisterScope_System_Int32_wan24_RPC_Processing_Scopes_RpcScopes_ScopeFactory_Delegate_wan24_RPC_Processing_Scopes_RpcScopes_RemoteScopeFactory_Delegate_System_Type_wan24_RPC_Processing_Scopes_RpcScopes_ParameterScopeFactory_Delegate_System_Type_wan24_RPC_Processing_Scopes_RpcScopes_ReturnScopeFactory_Delegate_" data-uid="wan24.RPC.Processing.Scopes.RpcScopes.RegisterScope(System.Int32,wan24.RPC.Processing.Scopes.RpcScopes.ScopeFactory_Delegate,wan24.RPC.Processing.Scopes.RpcScopes.RemoteScopeFactory_Delegate,System.Type,wan24.RPC.Processing.Scopes.RpcScopes.ParameterScopeFactory_Delegate,System.Type,wan24.RPC.Processing.Scopes.RpcScopes.ReturnScopeFactory_Delegate)">RegisterScope(int, ScopeFactory_Delegate, RemoteScopeFactory_Delegate, Type, ParameterScopeFactory_Delegate, Type, ReturnScopeFactory_Delegate)</h4>
+  <div class="markdown level1 summary"><p>Register a custom scope</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void RegisterScope(int scopeType, RpcScopes.ScopeFactory_Delegate scopeFactory, RpcScopes.RemoteScopeFactory_Delegate remoteScopeFactory, Type parameterType, RpcScopes.ParameterScopeFactory_Delegate parameterScopeFactory, Type returnType, RpcScopes.ReturnScopeFactory_Delegate returnScopeFactory)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">scopeType</span></td>
+        <td><p>Scope type (see <a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeTypes.html">RpcScopeTypes</a>)</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.html">RpcScopes</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.ScopeFactory_Delegate.html">ScopeFactory_Delegate</a></td>
+        <td><span class="parametername">scopeFactory</span></td>
+        <td><p>Scope factory</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.html">RpcScopes</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.RemoteScopeFactory_Delegate.html">RemoteScopeFactory_Delegate</a></td>
+        <td><span class="parametername">remoteScopeFactory</span></td>
+        <td><p>Remote scope factory</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">parameterType</span></td>
+        <td><p>Parameter type</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.html">RpcScopes</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.ParameterScopeFactory_Delegate.html">ParameterScopeFactory_Delegate</a></td>
+        <td><span class="parametername">parameterScopeFactory</span></td>
+        <td><p>Parameter scope factory</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">returnType</span></td>
+        <td><p>Return type</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.html">RpcScopes</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopes.ReturnScopeFactory_Delegate.html">ReturnScopeFactory_Delegate</a></td>
+        <td><span class="parametername">returnScopeFactory</span></td>
+        <td><p>Return scope factory</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+</article>
+                </div>
+
+                <div class="copyright-footer">
+                    <span>(c) 2024 Andreas Zimmermann, wan24.de</span>
+                </div>
+            </main>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script type="text/javascript" src="../styles/jquery.twbsPagination.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"></script>
+        <script type="text/javascript" src="../styles/url.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script>
+        <script type="text/javascript" src="../styles/docfx.js"></script>
+        <script type="text/javascript" src="../styles/main.js"></script>
+        <script type="text/javascript" src="../styles/singulink.js"></script>    </body>
+</html>

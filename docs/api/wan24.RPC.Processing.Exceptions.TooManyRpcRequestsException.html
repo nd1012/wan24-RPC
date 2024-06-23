@@ -101,14 +101,16 @@
 
 
   <h1 id="wan24_RPC_Processing_Exceptions_TooManyRpcRequestsException" data-uid="wan24.RPC.Processing.Exceptions.TooManyRpcRequestsException" class="text-break">Class TooManyRpcRequestsException</h1>
-  <div class="markdown level0 summary"><p>Thrown on too many RPC requests</p>
+  <div class="markdown level0 summary"><p>Thrown on too many RPC calls (<a class="xref" href="wan24.RPC.Processing.RpcProcessorOptions.html#wan24_RPC_Processing_RpcProcessorOptions_CallQueue">CallQueue</a>)</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.exception">Exception</a></div>
-    <div class="level2"><span class="xref">TooManyRpcRequestsException</span></div>
+    <div class="level2"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.systemexception">SystemException</a></div>
+    <div class="level3"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.outofmemoryexception">OutOfMemoryException</a></div>
+    <div class="level4"><span class="xref">TooManyRpcRequestsException</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
@@ -173,7 +175,7 @@
   <h5 id="wan24_RPC_Processing_Exceptions_TooManyRpcRequestsException_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Serializable]
-public class TooManyRpcRequestsException : Exception, ISerializable</code></pre>
+public class TooManyRpcRequestsException : OutOfMemoryException, ISerializable</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
