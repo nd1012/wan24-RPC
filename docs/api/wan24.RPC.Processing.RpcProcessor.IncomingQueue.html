@@ -117,6 +117,7 @@
   <div class="implements">
     <h5>Implements</h5>
     <div><span class="xref">IWillDispose</span></div>
+    <div><span class="xref">IExportUserActions</span></div>
     <div><span class="xref">IParallelQueueWorker</span></div>
     <div><span class="xref">IItemQueueWorker</span>&lt;<a class="xref" href="wan24.RPC.Processing.Messages.IRpcMessage.html">IRpcMessage</a>&gt;</div>
     <div><span class="xref">IQueueWorker</span></div>
@@ -451,7 +452,7 @@
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected class RpcProcessor.IncomingQueue : ParallelItemQueueWorkerBase&lt;IRpcMessage&gt;, IWillDispose, IParallelQueueWorker, IItemQueueWorker&lt;IRpcMessage&gt;, IQueueWorker, IServiceWorkerStatus, IServiceWorker, IHostedService, IDisposableObject, IDisposable, IAsyncDisposable, IStatusProvider, IProducerConsumerCollection&lt;QueueWorker.Task_Delegate&gt;, IEnumerable&lt;QueueWorker.Task_Delegate&gt;, ICollection, IEnumerable</code></pre>
+    <pre><code class="lang-csharp hljs">protected class RpcProcessor.IncomingQueue : ParallelItemQueueWorkerBase&lt;IRpcMessage&gt;, IWillDispose, IExportUserActions, IParallelQueueWorker, IItemQueueWorker&lt;IRpcMessage&gt;, IQueueWorker, IServiceWorkerStatus, IServiceWorker, IHostedService, IDisposableObject, IDisposable, IAsyncDisposable, IStatusProvider, IProducerConsumerCollection&lt;QueueWorker.Task_Delegate&gt;, IEnumerable&lt;QueueWorker.Task_Delegate&gt;, ICollection, IEnumerable</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -504,7 +505,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly ResetEvent SpaceEvent</code></pre>
+    <pre><code class="lang-csharp hljs">protected readonly ResetEvent SpaceEvent</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-condensed">
@@ -523,6 +524,37 @@
   </table>
   <h3 id="properties">Properties
 </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingQueue_HasSpace.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingQueue.HasSpace%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingQueue.cs/#L45">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_HasSpace_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.HasSpace*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_HasSpace" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.HasSpace">HasSpace</h4>
+  <div class="markdown level1 summary"><p>If the queue has space</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasSpace { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingQueue_Processor.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingQueue.Processor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
@@ -561,7 +593,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingQueue_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingQueue.Dispose(System.Boolean)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingQueue.cs/#L62">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingQueue.cs/#L74">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_Dispose_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.Dispose*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_Dispose_System_Boolean_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.Dispose(System.Boolean)">Dispose(bool)</h4>
@@ -597,7 +629,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingQueue_DisposeCore.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingQueue.DisposeCore%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingQueue.cs/#L69">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingQueue.cs/#L81">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_DisposeCore_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.DisposeCore*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_DisposeCore" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.DisposeCore">DisposeCore()</h4>
@@ -630,7 +662,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingQueue_ProcessItem_wan24_RPC_Processing_Messages_IRpcMessage_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingQueue.ProcessItem(wan24.RPC.Processing.Messages.IRpcMessage%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingQueue.cs/#L54">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingQueue.cs/#L66">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_ProcessItem_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.ProcessItem*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_ProcessItem_wan24_RPC_Processing_Messages_IRpcMessage_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.ProcessItem(wan24.RPC.Processing.Messages.IRpcMessage,System.Threading.CancellationToken)">ProcessItem(IRpcMessage, CancellationToken)</h4>
@@ -684,10 +716,59 @@
   <div><a class="xref" href="wan24.RPC.Processing.Messages.IRpcMessage.html">ParallelItemQueueWorkerBase&lt;IRpcMessage&gt;.ProcessItem(IRpcMessage, CancellationToken)</a></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingQueue_ResetSpaceEventAsync_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingQueue.ResetSpaceEventAsync(System.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingQueue.cs/#L62">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_ResetSpaceEventAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.ResetSpaceEventAsync*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_ResetSpaceEventAsync_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.ResetSpaceEventAsync(System.Threading.CancellationToken)">ResetSpaceEventAsync(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Reset the space event</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task ResetSpaceEventAsync(CancellationToken cancellationToken = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>Cancellation token</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_IncomingQueue_WaitSpaceAsync.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.IncomingQueue.WaitSpaceAsync%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingQueue.cs/#L45">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.IncomingQueue.cs/#L50">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_WaitSpaceAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.WaitSpaceAsync*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_IncomingQueue_WaitSpaceAsync" data-uid="wan24.RPC.Processing.RpcProcessor.IncomingQueue.WaitSpaceAsync">WaitSpaceAsync()</h4>
@@ -716,6 +797,9 @@
   <h3 id="implements">Implements</h3>
   <div>
       <span class="xref">wan24.Core.IWillDispose</span>
+  </div>
+  <div>
+      <span class="xref">wan24.Core.IExportUserActions</span>
   </div>
   <div>
       <span class="xref">wan24.Core.IParallelQueueWorker</span>

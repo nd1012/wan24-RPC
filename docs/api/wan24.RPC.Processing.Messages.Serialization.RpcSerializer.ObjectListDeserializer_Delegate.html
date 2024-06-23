@@ -108,7 +108,7 @@
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Processing_Messages_Serialization_RpcSerializer_ObjectListDeserializer_Delegate_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public delegate Task&lt;object?[]?&gt; RpcSerializer.ObjectListDeserializer_Delegate(Stream stream, CancellationToken cancellationToken)</code></pre>
+    <pre><code class="lang-csharp hljs">public delegate Task&lt;object?[]?&gt; RpcSerializer.ObjectListDeserializer_Delegate(Stream stream, Type[] types, CancellationToken cancellationToken)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -124,6 +124,12 @@
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
         <td><span class="parametername">stream</span></td>
         <td><p>Stream</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>[]</td>
+        <td><span class="parametername">types</span></td>
+        <td><p>Object types</p>
 </td>
       </tr>
       <tr>

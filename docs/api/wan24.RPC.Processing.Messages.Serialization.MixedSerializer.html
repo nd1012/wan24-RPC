@@ -178,7 +178,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Serialization_MixedSerializer_CanSerialize_System_Type_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Serialization.MixedSerializer.CanSerialize(System.Type)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Serialization/MixedSerializer.cs/#L22">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Serialization/MixedSerializer.cs/#L21">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_CanSerialize_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.CanSerialize*"></a>
   <h4 id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_CanSerialize_System_Type_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.CanSerialize(System.Type)">CanSerialize(Type?)</h4>
@@ -225,19 +225,19 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectDeserializerAsync_System_IO_Stream_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectDeserializerAsync(System.IO.Stream%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectDeserializerAsync_System_IO_Stream_System_Type_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectDeserializerAsync(System.IO.Stream%2CSystem.Type%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Serialization/MixedSerializer.cs/#L66">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Serialization/MixedSerializer.cs/#L70">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectDeserializerAsync_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectDeserializerAsync*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectDeserializerAsync_System_IO_Stream_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectDeserializerAsync(System.IO.Stream,System.Threading.CancellationToken)">ObjectDeserializerAsync(Stream, CancellationToken)</h4>
+  <h4 id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectDeserializerAsync_System_IO_Stream_System_Type_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectDeserializerAsync(System.IO.Stream,System.Type,System.Threading.CancellationToken)">ObjectDeserializerAsync(Stream, Type, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Object deserializer</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Task&lt;object?&gt; ObjectDeserializerAsync(Stream stream, CancellationToken cancellationToken)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Task&lt;object?&gt; ObjectDeserializerAsync(Stream stream, Type type, CancellationToken cancellationToken)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -253,6 +253,12 @@
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
         <td><span class="parametername">stream</span></td>
         <td><p>Stream</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>Object type</p>
 </td>
       </tr>
       <tr>
@@ -281,19 +287,19 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectListDeserializerAsync_System_IO_Stream_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectListDeserializerAsync(System.IO.Stream%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectListDeserializerAsync_System_IO_Stream_System_Type___System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectListDeserializerAsync(System.IO.Stream%2CSystem.Type%5B%5D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Serialization/MixedSerializer.cs/#L83">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Serialization/MixedSerializer.cs/#L88">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectListDeserializerAsync_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectListDeserializerAsync*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectListDeserializerAsync_System_IO_Stream_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectListDeserializerAsync(System.IO.Stream,System.Threading.CancellationToken)">ObjectListDeserializerAsync(Stream, CancellationToken)</h4>
+  <h4 id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectListDeserializerAsync_System_IO_Stream_System_Type___System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectListDeserializerAsync(System.IO.Stream,System.Type[],System.Threading.CancellationToken)">ObjectListDeserializerAsync(Stream, Type[], CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Object list deserializer</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Task&lt;object?[]?&gt; ObjectListDeserializerAsync(Stream stream, CancellationToken cancellationToken)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Task&lt;object?[]?&gt; ObjectListDeserializerAsync(Stream stream, Type[] types, CancellationToken cancellationToken)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -309,6 +315,12 @@
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
         <td><span class="parametername">stream</span></td>
         <td><p>Stream</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>[]</td>
+        <td><span class="parametername">types</span></td>
+        <td><p>Object types</p>
 </td>
       </tr>
       <tr>
@@ -340,7 +352,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectListSerializerAsync_System_Object___System_IO_Stream_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectListSerializerAsync(System.Object%5B%5D%2CSystem.IO.Stream%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Serialization/MixedSerializer.cs/#L51">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Serialization/MixedSerializer.cs/#L54">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectListSerializerAsync_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectListSerializerAsync*"></a>
   <h4 id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectListSerializerAsync_System_Object___System_IO_Stream_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectListSerializerAsync(System.Object[],System.IO.Stream,System.Threading.CancellationToken)">ObjectListSerializerAsync(object?[]?, Stream, CancellationToken)</h4>
@@ -401,7 +413,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectSerializerAsync_System_Object_System_IO_Stream_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectSerializerAsync(System.Object%2CSystem.IO.Stream%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Serialization/MixedSerializer.cs/#L31">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Serialization/MixedSerializer.cs/#L29">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectSerializerAsync_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectSerializerAsync*"></a>
   <h4 id="wan24_RPC_Processing_Messages_Serialization_MixedSerializer_ObjectSerializerAsync_System_Object_System_IO_Stream_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.Serialization.MixedSerializer.ObjectSerializerAsync(System.Object,System.IO.Stream,System.Threading.CancellationToken)">ObjectSerializerAsync(object?, Stream, CancellationToken)</h4>

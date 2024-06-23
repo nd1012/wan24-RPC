@@ -107,11 +107,20 @@ Classes
       <h5><a class="xref" href="wan24.RPC.Processing.Exceptions.RpcRemoteException.html">RpcRemoteException</a></h5>
       <section><p>RPC remote exception (<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.exception.innerexception">InnerException</a> should serve the remote exception type)</p>
 </section>
+      <h5><a class="xref" href="wan24.RPC.Processing.Exceptions.RpcScopeNotFoundException.html">RpcScopeNotFoundException</a></h5>
+      <section><p>Thrown if a message for an unknown scope was received</p>
+</section>
+      <h5><a class="xref" href="wan24.RPC.Processing.Exceptions.TooManyRpcCancellationsException.html">TooManyRpcCancellationsException</a></h5>
+      <section><p>Thrown on too many RPC cancellations (<a class="xref" href="wan24.RPC.Processing.Options.StreamScopeOptions.html#wan24_RPC_Processing_Options_StreamScopeOptions_MaxStreamContentLength">MaxStreamContentLength</a>)</p>
+</section>
+      <h5><a class="xref" href="wan24.RPC.Processing.Exceptions.TooManyRpcMessagesException.html">TooManyRpcMessagesException</a></h5>
+      <section><p>Thrown on too many incoming RPC messages while keep alive is being used (<a class="xref" href="wan24.RPC.Processing.RpcProcessorOptions.html#wan24_RPC_Processing_RpcProcessorOptions_IncomingMessageQueue">IncomingMessageQueue</a>)</p>
+</section>
       <h5><a class="xref" href="wan24.RPC.Processing.Exceptions.TooManyRpcRequestsException.html">TooManyRpcRequestsException</a></h5>
-      <section><p>Thrown on too many RPC requests</p>
+      <section><p>Thrown on too many RPC calls (<a class="xref" href="wan24.RPC.Processing.RpcProcessorOptions.html#wan24_RPC_Processing_RpcProcessorOptions_CallQueue">CallQueue</a>)</p>
 </section>
       <h5><a class="xref" href="wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.html">TooManyRpcStreamsException</a></h5>
-      <section><p>Thrown on too many RPC streams</p>
+      <section><p>Thrown on too many RPC streams (<a class="xref" href="wan24.RPC.Processing.Options.StreamScopeOptions.html#wan24_RPC_Processing_Options_StreamScopeOptions_MaxStreamContentLength">MaxStreamContentLength</a>)</p>
 </section>
 
 

@@ -104,8 +104,8 @@
     <h3 id="classes">
 Classes
 </h3>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.CancellationMessage.html">CancellationMessage</a></h5>
-      <section><p>RPC cancellation message</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.CancelMessage.html">CancelMessage</a></h5>
+      <section><p>RPC cancel message (cancels a RPC call)</p>
 </section>
       <h5><a class="xref" href="wan24.RPC.Processing.Messages.ErrorResponseMessage.html">ErrorResponseMessage</a></h5>
       <section><p>RPC error response message</p>
@@ -122,6 +122,9 @@ Classes
       <h5><a class="xref" href="wan24.RPC.Processing.Messages.PongMessage.html">PongMessage</a></h5>
       <section><p>Pong message</p>
 </section>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.RemoteScopeDiscardedMessage.html">RemoteScopeDiscardedMessage</a></h5>
+      <section><p>RPC remote scope was discarded (informational message to the scope master)</p>
+</section>
       <h5><a class="xref" href="wan24.RPC.Processing.Messages.RequestMessage.html">RequestMessage</a></h5>
       <section><p>RPC request message</p>
 </section>
@@ -134,8 +137,17 @@ Classes
       <h5><a class="xref" href="wan24.RPC.Processing.Messages.RpcMessages.html">RpcMessages</a></h5>
       <section><p>Registered RPC message types</p>
 </section>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.ScopeDiscardedMessage.html">ScopeDiscardedMessage</a></h5>
+      <section><p>RPC scope was discarded (informational message to the scope consumer)</p>
+</section>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.ScopeMessageBase.html">ScopeMessageBase</a></h5>
+      <section><p>Base class for a RPC scope message</p>
+</section>
       <h5><a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html">SerializerRpcMessageBase</a></h5>
       <section><p>Base type for a variable serializer RPC message</p>
+</section>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.SerializerScopeMessageBase.html">SerializerScopeMessageBase</a></h5>
+      <section><p>Base type for a variable serializer RPC scope message</p>
 </section>
     <h3 id="interfaces">
 Interfaces
@@ -143,8 +155,14 @@ Interfaces
       <h5><a class="xref" href="wan24.RPC.Processing.Messages.IRpcMessage.html">IRpcMessage</a></h5>
       <section><p>Interface for a RPC message</p>
 </section>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.IRpcRemoteScopeMessage.html">IRpcRemoteScopeMessage</a></h5>
+      <section><p>Interface for a RPC remote scope message</p>
+</section>
       <h5><a class="xref" href="wan24.RPC.Processing.Messages.IRpcRequest.html">IRpcRequest</a></h5>
       <section><p>Interface for a RPC request message (which can be used with a <a class="xref" href="wan24.RPC.Processing.RpcProcessor.Request.html">RpcProcessor.Request</a> or a <a class="xref" href="wan24.RPC.Processing.RpcProcessor.Call.html">RpcProcessor.Call</a>)</p>
+</section>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.IRpcScopeMessage.html">IRpcScopeMessage</a></h5>
+      <section><p>RPC message for a scope</p>
 </section>
 
 
