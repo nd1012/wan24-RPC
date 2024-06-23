@@ -5,9 +5,9 @@
     <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>Class EventMessage | wan24-RPC </title>
+      <title>Class ScopeEventMessage | wan24-RPC </title>
       <meta name="viewport" content="width=device-width">
-      <meta name="title" content="Class EventMessage | wan24-RPC ">
+      <meta name="title" content="Class ScopeEventMessage | wan24-RPC ">
       <meta name="generator" content="docfx ">
   
       <link rel="shortcut icon" href="../favicon.ico">
@@ -93,15 +93,15 @@
                         </div>
 
                          <div id="contribution">
-                               <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                               <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
                          </div>
 
-                    <article class="content wrap" id="_content" data-uid="wan24.RPC.Processing.Messages.EventMessage">
+                    <article class="content wrap" id="_content" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage">
 
 
 
-  <h1 id="wan24_RPC_Processing_Messages_EventMessage" data-uid="wan24.RPC.Processing.Messages.EventMessage" class="text-break">Class EventMessage</h1>
-  <div class="markdown level0 summary"><p>RPC event message</p>
+  <h1 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage" class="text-break">Class ScopeEventMessage</h1>
+  <div class="markdown level0 summary"><p>RPC scope event message for the consumer</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -110,40 +110,53 @@
     <div class="level1"><span class="xref">ValidatableObjectBase</span></div>
     <div class="level2"><span class="xref">StreamSerializerBase</span></div>
     <div class="level3"><a class="xref" href="wan24.RPC.Processing.Messages.RpcMessageBase.html">RpcMessageBase</a></div>
-    <div class="level4"><a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html">SerializerRpcMessageBase</a></div>
-    <div class="level5"><span class="xref">EventMessage</span></div>
+    <div class="level4"><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeMessageBase.html">ScopeMessageBase</a></div>
+    <div class="level5"><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.SerializerScopeMessageBase.html">SerializerScopeMessageBase</a></div>
+    <div class="level6"><span class="xref">ScopeEventMessage</span></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
     <div><span class="xref">IObjectValidatable</span></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.ivalidatableobject">IValidatableObject</a></div>
     <div><span class="xref">IStreamSerializerVersion</span></div>
+    <div><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeEventMessage.html">IRpcScopeEventMessage</a></div>
     <div><a class="xref" href="wan24.RPC.Processing.Messages.IRpcRequest.html">IRpcRequest</a></div>
+    <div><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcRemoteScopeMessage.html">IRpcRemoteScopeMessage</a></div>
+    <div><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeMessage.html">IRpcScopeMessage</a></div>
     <div><a class="xref" href="wan24.RPC.Processing.Messages.IRpcMessage.html">IRpcMessage</a></div>
     <div><span class="xref">IStreamSerializer</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html#wan24_RPC_Processing_Messages_SerializerRpcMessageBase_DefaultSerializer">SerializerRpcMessageBase.DefaultSerializer</a>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.SerializerScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_SerializerScopeMessageBase_DefaultSerializer">SerializerScopeMessageBase.DefaultSerializer</a>
     </div>
     <div>
-      <a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html#wan24_RPC_Processing_Messages_SerializerRpcMessageBase_Serializer">SerializerRpcMessageBase.Serializer</a>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.SerializerScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_SerializerScopeMessageBase_Serializer">SerializerScopeMessageBase.Serializer</a>
     </div>
     <div>
-      <a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html#wan24_RPC_Processing_Messages_SerializerRpcMessageBase_SerializeObjectAsync_System_IO_Stream_System_Object_System_Threading_CancellationToken_">SerializerRpcMessageBase.SerializeObjectAsync(Stream, object, CancellationToken)</a>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.SerializerScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_SerializerScopeMessageBase_SerializeObjectAsync_System_IO_Stream_System_Object_System_Threading_CancellationToken_">SerializerScopeMessageBase.SerializeObjectAsync(Stream, object, CancellationToken)</a>
     </div>
     <div>
-      <a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html#wan24_RPC_Processing_Messages_SerializerRpcMessageBase_SerializeObjectListAsync_System_IO_Stream_System_Object___System_Threading_CancellationToken_">SerializerRpcMessageBase.SerializeObjectListAsync(Stream, object[], CancellationToken)</a>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.SerializerScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_SerializerScopeMessageBase_SerializeObjectListAsync_System_IO_Stream_System_Object___System_Threading_CancellationToken_">SerializerScopeMessageBase.SerializeObjectListAsync(Stream, object[], CancellationToken)</a>
     </div>
     <div>
-      <a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html#wan24_RPC_Processing_Messages_SerializerRpcMessageBase_DeserializeObjectAsync_System_IO_Stream_System_Type_System_Threading_CancellationToken_">SerializerRpcMessageBase.DeserializeObjectAsync(Stream, Type, CancellationToken)</a>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.SerializerScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_SerializerScopeMessageBase_DeserializeObjectAsync_System_IO_Stream_System_Type_System_Threading_CancellationToken_">SerializerScopeMessageBase.DeserializeObjectAsync(Stream, Type, CancellationToken)</a>
     </div>
     <div>
-      <a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html#wan24_RPC_Processing_Messages_SerializerRpcMessageBase_DeserializeObjectListAsync_System_IO_Stream_System_Type___System_Threading_CancellationToken_">SerializerRpcMessageBase.DeserializeObjectListAsync(Stream, Type[], CancellationToken)</a>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.SerializerScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_SerializerScopeMessageBase_DeserializeObjectListAsync_System_IO_Stream_System_Type___System_Threading_CancellationToken_">SerializerScopeMessageBase.DeserializeObjectListAsync(Stream, Type[], CancellationToken)</a>
     </div>
     <div>
-      <a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html#wan24_RPC_Processing_Messages_SerializerRpcMessageBase_GetSerializer">SerializerRpcMessageBase.GetSerializer()</a>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.SerializerScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_SerializerScopeMessageBase_GetSerializer">SerializerScopeMessageBase.GetSerializer()</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_ScopeMessageBase_FailOnScopeNotFound">ScopeMessageBase.FailOnScopeNotFound</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_ScopeMessageBase_WarnOnScopeNotFound">ScopeMessageBase.WarnOnScopeNotFound</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_ScopeMessageBase_ScopeId">ScopeMessageBase.ScopeId</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.Messages.RpcMessageBase.html#wan24_RPC_Processing_Messages_RpcMessageBase_VERSION">RpcMessageBase.VERSION</a>
@@ -212,52 +225,86 @@
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="wan24.html">wan24</a>.<a class="xref" href="wan24.RPC.html">RPC</a>.<a class="xref" href="wan24.RPC.Processing.html">Processing</a>.<a class="xref" href="wan24.RPC.Processing.Messages.html">Messages</a></h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="wan24.html">wan24</a>.<a class="xref" href="wan24.RPC.html">RPC</a>.<a class="xref" href="wan24.RPC.Processing.html">Processing</a>.<a class="xref" href="wan24.RPC.Processing.Messages.html">Messages</a>.<a class="xref" href="wan24.RPC.Processing.Messages.Scopes.html">Scopes</a></h6>
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
-  <h5 id="wan24_RPC_Processing_Messages_EventMessage_syntax">Syntax</h5>
+  <h5 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class EventMessage : SerializerRpcMessageBase, IObjectValidatable, IValidatableObject, IStreamSerializerVersion, IRpcRequest, IRpcMessage, IStreamSerializer</code></pre>
+    <pre><code class="lang-csharp hljs">public class ScopeEventMessage : SerializerScopeMessageBase, IObjectValidatable, IValidatableObject, IStreamSerializerVersion, IRpcScopeEventMessage, IRpcRequest, IRpcRemoteScopeMessage, IRpcScopeMessage, IRpcMessage, IStreamSerializer</code></pre>
   </div>
-  <h5 id="wan24_RPC_Processing_Messages_EventMessage_remarks"><strong>Remarks</strong></h5>
+  <h5 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Constructor</p>
 </div>
   <h3 id="constructors">Constructors
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage__ctor.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage__ctor.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L14">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L14">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Messages_EventMessage__ctor_" data-uid="wan24.RPC.Processing.Messages.EventMessage.#ctor*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage__ctor" data-uid="wan24.RPC.Processing.Messages.EventMessage.#ctor">EventMessage()</h4>
-  <div class="markdown level1 summary"><p>RPC event message</p>
+  <a id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage__ctor_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.#ctor*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage__ctor" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.#ctor">ScopeEventMessage()</h4>
+  <div class="markdown level1 summary"><p>RPC scope event message for the consumer</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EventMessage()</code></pre>
+    <pre><code class="lang-csharp hljs">public ScopeEventMessage()</code></pre>
   </div>
-  <h5 id="wan24_RPC_Processing_Messages_EventMessage__ctor_remarks">Remarks</h5>
+  <h5 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage__ctor_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Constructor</p>
 </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage__ctor_wan24_RPC_Processing_RpcProcessor_RpcScopeBase__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.%23ctor(wan24.RPC.Processing.RpcProcessor.RpcScopeBase%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L30">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage__ctor_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.#ctor*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage__ctor_wan24_RPC_Processing_RpcProcessor_RpcScopeBase__" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.#ctor(wan24.RPC.Processing.RpcProcessor.RpcScopeBase@)">ScopeEventMessage(in RpcScopeBase)</h4>
+  <div class="markdown level1 summary"><p>Constructor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ScopeEventMessage(in RpcProcessor.RpcScopeBase scope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a>.<a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html">RpcScopeBase</a></td>
+        <td><span class="parametername">scope</span></td>
+        <td><p>Scope</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="fields">Fields
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage_TYPE_ID.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage.TYPE_ID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_TYPE_ID.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.TYPE_ID%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L19">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L19">View Source</a>
   </span>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage_TYPE_ID" data-uid="wan24.RPC.Processing.Messages.EventMessage.TYPE_ID">TYPE_ID</h4>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_TYPE_ID" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.TYPE_ID">TYPE_ID</h4>
   <div class="markdown level1 summary"><p>RPC message type ID</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const int TYPE_ID = 4</code></pre>
+    <pre><code class="lang-csharp hljs">public const int TYPE_ID = 13</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-condensed">
@@ -276,12 +323,12 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage__Arguments.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage._Arguments%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage__Arguments.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage._Arguments%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L24">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L24">View Source</a>
   </span>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage__Arguments" data-uid="wan24.RPC.Processing.Messages.EventMessage._Arguments">_Arguments</h4>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage__Arguments" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage._Arguments">_Arguments</h4>
   <div class="markdown level1 summary"><p>Serialized arguments</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -308,13 +355,13 @@
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage_Arguments.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage.Arguments%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Arguments.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Arguments%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L41">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L43">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Messages_EventMessage_Arguments_" data-uid="wan24.RPC.Processing.Messages.EventMessage.Arguments*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage_Arguments" data-uid="wan24.RPC.Processing.Messages.EventMessage.Arguments">Arguments</h4>
+  <a id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Arguments_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Arguments*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Arguments" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Arguments">Arguments</h4>
   <div class="markdown level1 summary"><p>Event arguments (will be disposed at the receiver side)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -339,13 +386,13 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage_Name.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage.Name%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Name.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Name%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L35">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L39">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Messages_EventMessage_Name_" data-uid="wan24.RPC.Processing.Messages.EventMessage.Name*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage_Name" data-uid="wan24.RPC.Processing.Messages.EventMessage.Name">Name</h4>
+  <a id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Name_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Name*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Name" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Name">Name</h4>
   <div class="markdown level1 summary"><p>Event name</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -372,13 +419,13 @@ public required string Name { get; set; }</code></pre>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage_RequireId.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage.RequireId%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_RequireId.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.RequireId%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L30">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L36">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Messages_EventMessage_RequireId_" data-uid="wan24.RPC.Processing.Messages.EventMessage.RequireId*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage_RequireId" data-uid="wan24.RPC.Processing.Messages.EventMessage.RequireId">RequireId</h4>
+  <a id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_RequireId_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.RequireId*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_RequireId" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.RequireId">RequireId</h4>
   <div class="markdown level1 summary"><p>If an <a class="xref" href="wan24.RPC.Processing.Messages.RpcMessageBase.html#wan24_RPC_Processing_Messages_RpcMessageBase_Id">Id</a> is required</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -405,13 +452,13 @@ public required string Name { get; set; }</code></pre>
   <div><a class="xref" href="wan24.RPC.Processing.Messages.RpcMessageBase.html#wan24_RPC_Processing_Messages_RpcMessageBase_RequireId">RpcMessageBase.RequireId</a></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage_Type.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage.Type%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Type.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Type%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L27">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L33">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Messages_EventMessage_Type_" data-uid="wan24.RPC.Processing.Messages.EventMessage.Type*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage_Type" data-uid="wan24.RPC.Processing.Messages.EventMessage.Type">Type</h4>
+  <a id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Type_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Type*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Type" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Type">Type</h4>
   <div class="markdown level1 summary"><p>Message Type ID</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -438,13 +485,13 @@ public required string Name { get; set; }</code></pre>
   <div><a class="xref" href="wan24.RPC.Processing.Messages.RpcMessageBase.html#wan24_RPC_Processing_Messages_RpcMessageBase_Type">RpcMessageBase.Type</a></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage_Waiting.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage.Waiting%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Waiting.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Waiting%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L46">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L46">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Messages_EventMessage_Waiting_" data-uid="wan24.RPC.Processing.Messages.EventMessage.Waiting*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage_Waiting" data-uid="wan24.RPC.Processing.Messages.EventMessage.Waiting">Waiting</h4>
+  <a id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Waiting_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Waiting*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_Waiting" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.Waiting">Waiting</h4>
   <div class="markdown level1 summary"><p>If the sender is waiting for the event handlers to finish</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -471,13 +518,13 @@ public required string Name { get; set; }</code></pre>
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage_DeserializeArgumentsAsync_System_Type_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage.DeserializeArgumentsAsync(System.Type%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_DeserializeArgumentsAsync_System_Type_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.DeserializeArgumentsAsync(System.Type%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L53">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L49">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Messages_EventMessage_DeserializeArgumentsAsync_" data-uid="wan24.RPC.Processing.Messages.EventMessage.DeserializeArgumentsAsync*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage_DeserializeArgumentsAsync_System_Type_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.EventMessage.DeserializeArgumentsAsync(System.Type,System.Threading.CancellationToken)">DeserializeArgumentsAsync(Type, CancellationToken)</h4>
+  <a id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_DeserializeArgumentsAsync_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.DeserializeArgumentsAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_DeserializeArgumentsAsync_System_Type_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.DeserializeArgumentsAsync(System.Type,System.Threading.CancellationToken)">DeserializeArgumentsAsync(Type, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Deserialize the arguments</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -526,13 +573,13 @@ public required string Name { get; set; }</code></pre>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage_DeserializeAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage.DeserializeAsync(System.IO.Stream%2CSystem.Int32%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_DeserializeAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.DeserializeAsync(System.IO.Stream%2CSystem.Int32%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L94">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L88">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Messages_EventMessage_DeserializeAsync_" data-uid="wan24.RPC.Processing.Messages.EventMessage.DeserializeAsync*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage_DeserializeAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.EventMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)">DeserializeAsync(Stream, int, CancellationToken)</h4>
+  <a id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_DeserializeAsync_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.DeserializeAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_DeserializeAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.DeserializeAsync(System.IO.Stream,System.Int32,System.Threading.CancellationToken)">DeserializeAsync(Stream, int, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Deserialize</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -586,16 +633,16 @@ public required string Name { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html#wan24_RPC_Processing_Messages_SerializerRpcMessageBase_DeserializeAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_">SerializerRpcMessageBase.DeserializeAsync(Stream, int, CancellationToken)</a></div>
+  <div><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.SerializerScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_SerializerScopeMessageBase_DeserializeAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_">SerializerScopeMessageBase.DeserializeAsync(Stream, int, CancellationToken)</a></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage_DisposeArgumentsAsync.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage.DisposeArgumentsAsync%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_DisposeArgumentsAsync.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.DisposeArgumentsAsync%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L74">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L68">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Messages_EventMessage_DisposeArgumentsAsync_" data-uid="wan24.RPC.Processing.Messages.EventMessage.DisposeArgumentsAsync*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage_DisposeArgumentsAsync" data-uid="wan24.RPC.Processing.Messages.EventMessage.DisposeArgumentsAsync">DisposeArgumentsAsync()</h4>
+  <a id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_DisposeArgumentsAsync_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.DisposeArgumentsAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_DisposeArgumentsAsync" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.DisposeArgumentsAsync">DisposeArgumentsAsync()</h4>
   <div class="markdown level1 summary"><p>Dispose the arguments</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -620,13 +667,13 @@ public required string Name { get; set; }</code></pre>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_EventMessage_SerializeAsync_System_IO_Stream_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.EventMessage.SerializeAsync(System.IO.Stream%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_SerializeAsync_System_IO_Stream_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.SerializeAsync(System.IO.Stream%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/EventMessage.cs/#L81">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/ScopeEventMessage.cs/#L75">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Messages_EventMessage_SerializeAsync_" data-uid="wan24.RPC.Processing.Messages.EventMessage.SerializeAsync*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_EventMessage_SerializeAsync_System_IO_Stream_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.EventMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)">SerializeAsync(Stream, CancellationToken)</h4>
+  <a id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_SerializeAsync_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.SerializeAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_ScopeEventMessage_SerializeAsync_System_IO_Stream_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.SerializeAsync(System.IO.Stream,System.Threading.CancellationToken)">SerializeAsync(Stream, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Serialize</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -674,7 +721,7 @@ public required string Name { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html#wan24_RPC_Processing_Messages_SerializerRpcMessageBase_SerializeAsync_System_IO_Stream_System_Threading_CancellationToken_">SerializerRpcMessageBase.SerializeAsync(Stream, CancellationToken)</a></div>
+  <div><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.SerializerScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_SerializerScopeMessageBase_SerializeAsync_System_IO_Stream_System_Threading_CancellationToken_">SerializerScopeMessageBase.SerializeAsync(Stream, CancellationToken)</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <span class="xref">wan24.ObjectValidation.IObjectValidatable</span>
@@ -686,7 +733,16 @@ public required string Name { get; set; }</code></pre>
       <span class="xref">wan24.StreamSerializerExtensions.IStreamSerializerVersion</span>
   </div>
   <div>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeEventMessage.html">IRpcScopeEventMessage</a>
+  </div>
+  <div>
       <a class="xref" href="wan24.RPC.Processing.Messages.IRpcRequest.html">IRpcRequest</a>
+  </div>
+  <div>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcRemoteScopeMessage.html">IRpcRemoteScopeMessage</a>
+  </div>
+  <div>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeMessage.html">IRpcScopeMessage</a>
   </div>
   <div>
       <a class="xref" href="wan24.RPC.Processing.Messages.IRpcMessage.html">IRpcMessage</a>

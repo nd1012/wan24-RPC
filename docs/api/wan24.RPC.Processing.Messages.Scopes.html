@@ -5,9 +5,9 @@
     <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>Namespace wan24.RPC.Processing.Messages | wan24-RPC </title>
+      <title>Namespace wan24.RPC.Processing.Messages.Scopes | wan24-RPC </title>
       <meta name="viewport" content="width=device-width">
-      <meta name="title" content="Namespace wan24.RPC.Processing.Messages | wan24-RPC ">
+      <meta name="title" content="Namespace wan24.RPC.Processing.Messages.Scopes | wan24-RPC ">
       <meta name="generator" content="docfx ">
   
       <link rel="shortcut icon" href="../favicon.ico">
@@ -95,56 +95,59 @@
                          <div id="contribution">
                          </div>
 
-                    <article class="content wrap" id="_content" data-uid="wan24.RPC.Processing.Messages">
+                    <article class="content wrap" id="_content" data-uid="wan24.RPC.Processing.Messages.Scopes">
 
-  <h1 id="wan24_RPC_Processing_Messages" data-uid="wan24.RPC.Processing.Messages" class="text-break">Namespace wan24.RPC.Processing.Messages</h1>
+  <h1 id="wan24_RPC_Processing_Messages_Scopes" data-uid="wan24.RPC.Processing.Messages.Scopes" class="text-break">Namespace wan24.RPC.Processing.Messages.Scopes</h1>
   <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">
 Classes
 </h3>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.CancelMessage.html">CancelMessage</a></h5>
-      <section><p>RPC cancel message (cancels a RPC call)</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.html">RemoteScopeDiscardedMessage</a></h5>
+      <section><p>RPC remote scope was discarded (informational message to the scope master)</p>
 </section>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.ErrorResponseMessage.html">ErrorResponseMessage</a></h5>
-      <section><p>RPC error response message</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.RemoteScopeErrorMessage.html">RemoteScopeErrorMessage</a></h5>
+      <section><p>RPC scope error message for the scope master</p>
 </section>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.ErrorResponseMessage.JsonError.html">ErrorResponseMessage.JsonError</a></h5>
-      <section><p>JSON error object</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.RemoteScopeEventMessage.html">RemoteScopeEventMessage</a></h5>
+      <section><p>RPC scope event message for the scope master</p>
 </section>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.EventMessage.html">EventMessage</a></h5>
-      <section><p>RPC event message</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage.html">RemoteScopeTriggerMessage</a></h5>
+      <section><p>Trigger a RPC scope at the master</p>
 </section>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.PingMessage.html">PingMessage</a></h5>
-      <section><p>Ping message</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeDiscardedMessage.html">ScopeDiscardedMessage</a></h5>
+      <section><p>RPC scope was discarded (informational message to the scope consumer)</p>
 </section>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.PongMessage.html">PongMessage</a></h5>
-      <section><p>Pong message</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeErrorMessage.html">ScopeErrorMessage</a></h5>
+      <section><p>RPC scope error message for the consumer</p>
 </section>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.RequestMessage.html">RequestMessage</a></h5>
-      <section><p>RPC request message</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeEventMessage.html">ScopeEventMessage</a></h5>
+      <section><p>RPC scope event message for the consumer</p>
 </section>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.ResponseMessage.html">ResponseMessage</a></h5>
-      <section><p>RPC response message</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeMessageBase.html">ScopeMessageBase</a></h5>
+      <section><p>Base class for a RPC scope message</p>
 </section>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.RpcMessageBase.html">RpcMessageBase</a></h5>
-      <section><p>Base type for a RPC message</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage.html">ScopeTriggerMessage</a></h5>
+      <section><p>Trigger a RPC scope at the consumer</p>
 </section>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.RpcMessages.html">RpcMessages</a></h5>
-      <section><p>Registered RPC message types</p>
-</section>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.SerializerRpcMessageBase.html">SerializerRpcMessageBase</a></h5>
-      <section><p>Base type for a variable serializer RPC message</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.SerializerScopeMessageBase.html">SerializerScopeMessageBase</a></h5>
+      <section><p>Base type for a variable serializer RPC scope message</p>
 </section>
     <h3 id="interfaces">
 Interfaces
 </h3>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.IRpcMessage.html">IRpcMessage</a></h5>
-      <section><p>Interface for a RPC message</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcRemoteScopeMessage.html">IRpcRemoteScopeMessage</a></h5>
+      <section><p>Interface for a RPC remote scope message</p>
 </section>
-      <h5><a class="xref" href="wan24.RPC.Processing.Messages.IRpcRequest.html">IRpcRequest</a></h5>
-      <section><p>Interface for a RPC request message (which can be used with a <a class="xref" href="wan24.RPC.Processing.RpcProcessor.Request.html">RpcProcessor.Request</a> or a <a class="xref" href="wan24.RPC.Processing.RpcProcessor.Call.html">RpcProcessor.Call</a>)</p>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeDiscardedMessage.html">IRpcScopeDiscardedMessage</a></h5>
+      <section><p>Interface for a RPC scope discarded message</p>
+</section>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeEventMessage.html">IRpcScopeEventMessage</a></h5>
+      <section><p>Interface for a RPC scope event message</p>
+</section>
+      <h5><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeMessage.html">IRpcScopeMessage</a></h5>
+      <section><p>RPC message for a scope</p>
 </section>
 
 
