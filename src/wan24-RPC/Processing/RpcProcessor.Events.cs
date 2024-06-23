@@ -150,6 +150,7 @@ namespace wan24.RPC.Processing
         /// <returns>Event</returns>
         protected virtual RpcEvent? RemoveRemoteEvent(in string name)
             => _RemoteEvents.TryRemove(name, out RpcEvent? res) ? res : null;
+
         /// <summary>
         /// Create an event
         /// </summary>

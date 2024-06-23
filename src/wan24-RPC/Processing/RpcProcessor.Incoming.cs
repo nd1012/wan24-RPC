@@ -2,6 +2,7 @@
 using wan24.Core;
 using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Messages;
+using wan24.RPC.Processing.Messages.Scopes;
 
 namespace wan24.RPC.Processing
 {
@@ -34,13 +35,13 @@ namespace wan24.RPC.Processing
                 {
                     case RequestMessage request:
                         await HandleRequestAsync(request).DynamicContext();
-                        break;
+                        return;
                     case ResponseMessage response:
                         await HandleResponseAsync(response).DynamicContext();
-                        break;
+                        return;
                     case EventMessage remoteEvent:
                         await HandleEventAsync(remoteEvent).DynamicContext();
-                        break;
+                        return;
                     case IRpcRemoteScopeMessage scopeMessage:
                         if (GetRemoteScope(scopeMessage.ScopeId) is RpcRemoteScopeBase remoteScope)
                         {
@@ -65,7 +66,7 @@ namespace wan24.RPC.Processing
                                 scopeMessage.GetType()
                                 );
                         }
-                        break;
+                        return;
                     case IRpcScopeMessage scopeMessage:
                         if (GetScope(scopeMessage.ScopeId) is RpcScopeBase scope)
                         {
@@ -90,16 +91,16 @@ namespace wan24.RPC.Processing
                                 scopeMessage.GetType()
                                 );
                         }
-                        break;
+                        return;
                     case ErrorResponseMessage error:
                         await HandleErrorResponseAsync(error).DynamicContext();
-                        break;
+                        return;
                     case CancelMessage cancel:
                         await HandleCallCancellationAsync(cancel).DynamicContext();
-                        break;
-                    default:
-                        throw new InvalidDataException($"Can't handle message type #{message.Id} ({message.GetType()})");
+                        return;
                 }
+                if(!await HandleIncomingCustomMessageAsync(message).DynamicContext())
+                    throw new InvalidDataException($"Can't handle message type #{message.Id} ({message.GetType()})");
             }
             catch (ObjectDisposedException) when (IsDisposing)
             {
@@ -115,5 +116,12 @@ namespace wan24.RPC.Processing
                 _ = StopExceptionalAndDisposeAsync(ex);
             }
         }
+
+        /// <summary>
+        /// Handle an incoming custom message (will disconnect on exception by this method)
+        /// </summary>
+        /// <param name="message">Message</param>
+        /// <returns>If handled</returns>
+        protected virtual Task<bool> HandleIncomingCustomMessageAsync(IRpcMessage message) => Task.FromResult(false);
     }
 }

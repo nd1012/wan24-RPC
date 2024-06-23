@@ -3,7 +3,7 @@ using wan24.Core;
 using wan24.RPC.Processing.Messages.Serialization;
 using wan24.StreamSerializerExtensions;
 
-namespace wan24.RPC.Processing.Messages
+namespace wan24.RPC.Processing.Messages.Scopes
 {
     /// <summary>
     /// Base type for a variable serializer RPC scope message
@@ -11,7 +11,7 @@ namespace wan24.RPC.Processing.Messages
     /// <remarks>
     /// Constructor
     /// </remarks>
-    public abstract class SerializerScopeMessageBase() : RpcMessageBase()
+    public abstract class SerializerScopeMessageBase() : ScopeMessageBase()
     {
         /// <summary>
         /// Default serializer ID

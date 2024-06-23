@@ -33,8 +33,7 @@ namespace wan24.RPC.Processing
                 call.Completion.TrySetException(disposedException);
             PendingCalls.Values.DisposeAll();
             PendingCalls.Clear();
-            // Dispose events (if disposable)
-            _RemoteEvents.Values.TryDisposeAll();
+            // Remove events
             _RemoteEvents.Clear();
             // Dispose remote scopes
             RemoteScopes.Values.DisposeAll();
@@ -79,8 +78,7 @@ namespace wan24.RPC.Processing
                 call.Completion.TrySetException(disposedException);
             await PendingCalls.Values.DisposeAllAsync().DynamicContext();
             PendingCalls.Clear();
-            // Dispose events (if disposable)
-            await _RemoteEvents.Values.TryDisposeAllAsync().DynamicContext();
+            // Remove events
             _RemoteEvents.Clear();
             // Dispose remote scopes
             await RemoteScopes.Values.DisposeAllAsync().DynamicContext();

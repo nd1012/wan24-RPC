@@ -17,7 +17,7 @@ namespace wan24_RPC_Tests
                 serverApi = server.Options.API.Values.First().Instance as ServerApi;
                 Assert.IsNotNull(serverApi);
                 Assert.IsNotNull(serverApi.Processor);
-                await Task.Delay(500);
+                await Task.Delay(500);// Wait for the RPC processor worker to start working
                 Assert.IsFalse(serverApi.ProcessorCancellation.IsEqualTo(default));
             }
             finally

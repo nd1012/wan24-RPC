@@ -1,4 +1,4 @@
-﻿using wan24.RPC.Processing.Messages;
+﻿using wan24.RPC.Processing.Messages.Scopes;
 
 namespace wan24.RPC.Processing.Exceptions
 {

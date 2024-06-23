@@ -2,7 +2,7 @@
 using wan24.Core;
 using wan24.StreamSerializerExtensions;
 
-namespace wan24.RPC.Processing.Messages
+namespace wan24.RPC.Processing.Messages.Scopes
 {
     /// <summary>
     /// Base class for a RPC scope message

@@ -4,57 +4,68 @@ using System.Diagnostics.Contracts;
 using wan24.Core;
 using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Messages.Scopes;
-using wan24.RPC.Processing.Parameters;
+using wan24.RPC.Processing.Values;
 
 namespace wan24.RPC.Processing
 {
-    // Scope context
+    // Remote scope context
     public partial class RpcProcessor
     {
         /// <summary>
-        /// Base class for a RPC scope
+        /// Base class for a RPC remote scope
         /// </summary>
-        /// <remarks>
-        /// Constructor
-        /// </remarks>
-        /// <param name="processor">RPC processor</param>
-        /// <param name="id">ID</param>
-        /// <param name="key">Key</param>
-        public abstract record class RpcScopeBase(in RpcProcessor processor, in long id, in string? key = null) : RpcScopeProcessorBase(processor, key)
+        public abstract record class RpcRemoteScopeBase : RpcScopeProcessorBase
         {
-            /// <summary>
-            /// Dispose the <see cref="Value"/> when disposing?
-            /// </summary>
-            protected bool DisposeValue = true;
-
             /// <summary>
             /// Constructor
             /// </summary>
             /// <param name="processor">RPC processor</param>
-            protected RpcScopeBase(in RpcProcessor processor) : this(processor, processor.CreateScopeId()) => processor.AddScope(this);
+            /// <param name="scope">Scope</param>
+            /// <param name="add">Add the sope?</param>
+            protected RpcRemoteScopeBase(in RpcProcessor processor, in RpcScopeValue scope, in bool add) : base(processor, scope.Key)
+            {
+                ScopeValue = scope;
+                ReplaceExistingScope = scope.ReplaceExistingScope;
+                IsStored = scope.IsStored;
+                DisposeValue = scope.DisposeScopeValue;
+                DisposeValueOnError = scope.DisposeScopeValueOnError;
+                InformMasterWhenDisposing = scope.InformMasterWhenDisposing;
+                if (add)
+                    processor.AddRemoteScopeAsync(this).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Received RPC scope value
+            /// </summary>
+            public RpcScopeValue ScopeValue { get; }
+
+            /// <summary>
+            /// RPC method parameter which got the scope
+            /// </summary>
+            public RpcApiMethodParameterInfo? Parameter { get; set; }
 
             /// <inheritdoc/>
-            public sealed override long Id { get; } = id;
+            public sealed override long Id => ScopeValue.Id;
 
             /// <summary>
-            /// Scope parameter
+            /// If to replace the existing keyed remote scope
             /// </summary>
-            public IRpcScopeParameter? ScopeParameter { get; init; }
-
-            /// <summary>
-            /// RPC method which returns the scope
-            /// </summary>
-            public RpcApiMethodInfo? Method { get; set; }
+            public bool ReplaceExistingScope { get; }
 
             /// <summary>
             /// Value
             /// </summary>
-            public abstract object? Value { get; }
+            public virtual object? Value { get; }
+
+            /// <summary>
+            /// Dispose the <see cref="Value"/> when disposing?
+            /// </summary>
+            public bool DisposeValue { get; set; }
 
             /// <summary>
             /// If to dispose the <see cref="Value"/> on error
             /// </summary>
-            public bool DisposeValueOnError { get; protected set; } = true;
+            public bool DisposeValueOnError { get; protected set; }
 
             /// <summary>
             /// If the <see cref="Value"/> will be disposed when disposing
@@ -62,14 +73,14 @@ namespace wan24.RPC.Processing
             public virtual bool WillDisposeValue => DisposeValue || (DisposeValueOnError && IsError);
 
             /// <summary>
-            /// If to inform the scope consumer when disposing
-            /// </summary>
-            public bool InformConsumerWhenDisposing { get; set; } = true;
-
-            /// <summary>
             /// If there was an error
             /// </summary>
             public bool IsError { get; protected set; }
+
+            /// <summary>
+            /// If to inform the scope master when disposing
+            /// </summary>
+            public bool InformMasterWhenDisposing { get; set; }
 
             /// <summary>
             /// Last exception
@@ -96,8 +107,6 @@ namespace wan24.RPC.Processing
                     IsError = true;
                 }
                 LastException = ex;
-                if (ScopeParameter is not null)
-                    await ScopeParameter.SetIsErrorAsync().DynamicContext();
             }
 
             /// <inheritdoc/>
@@ -110,7 +119,7 @@ namespace wan24.RPC.Processing
                     Request request = new()
                     {
                         Processor = Processor,
-                        Message = new ScopeEventMessage(this)
+                        Message = new RemoteScopeEventMessage(this)
                         {
                             ScopeId = Id,
                             PeerRpcVersion = Processor.Options.RpcVersion,
@@ -139,7 +148,7 @@ namespace wan24.RPC.Processing
                 }
                 else
                 {
-                    await SendMessageAsync(new ScopeEventMessage(this)
+                    await SendMessageAsync(new RemoteScopeEventMessage(this)
                     {
                         ScopeId = Id,
                         PeerRpcVersion = Processor.Options.RpcVersion,
@@ -150,23 +159,15 @@ namespace wan24.RPC.Processing
             }
 
             /// <inheritdoc/>
-            public override string ToString() => $"{Processor}: Scope #{Id} ({GetType()})";
+            public override string ToString() => $"{Processor}: Remote scope #{Id} ({GetType()})";
 
             /// <inheritdoc/>
             protected override void Dispose(bool disposing)
             {
                 base.Dispose(disposing);
-                //TODO Signal the scope is not used anymore to the consumer
+                //TODO Signal the scope is not used anymore to the master
                 if (IsStored)
-                    Processor.RemoveScope(this);
-                if (ScopeParameter is IDisposableObject disposable)
-                {
-                    disposable.Dispose();
-                }
-                else if (ScopeParameter?.ShouldDisposeScopeValue ?? false)
-                {
-                    ScopeParameter.DisposeScopeValueAsync().GetAwaiter().GetResult();
-                }
+                    Processor.RemoveRemoteScope(this);
                 if (WillDisposeValue)
                     Value?.TryDispose();
             }
@@ -175,17 +176,9 @@ namespace wan24.RPC.Processing
             protected override async Task DisposeCore()
             {
                 await base.DisposeCore().DynamicContext();
-                //TODO Signal the scope is not used anymore to the consumer
+                //TODO Signal the scope is not used anymore to the master
                 if (IsStored)
-                    Processor.RemoveScope(this);
-                if (ScopeParameter is IDisposableObject disposable)
-                {
-                    await disposable.DisposeAsync().DynamicContext();
-                }
-                else if (ScopeParameter?.ShouldDisposeScopeValue ?? false)
-                {
-                    await ScopeParameter.DisposeScopeValueAsync().DynamicContext();
-                }
+                    Processor.RemoveRemoteScope(this);
                 if (WillDisposeValue && Value is object value)
                     await value.TryDisposeAsync().DynamicContext();
             }

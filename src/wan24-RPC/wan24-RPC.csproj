@@ -118,6 +118,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Processing\Messages\Cancellation\" />
     <Folder Include="Processing\Messages\Enumeration\" />
     <Folder Include="Processing\Messages\Streaming\" />
   </ItemGroup>

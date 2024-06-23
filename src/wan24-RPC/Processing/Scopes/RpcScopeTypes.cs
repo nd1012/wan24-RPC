@@ -1,4 +1,6 @@
-﻿namespace wan24.RPC.Processing.Scopes
+﻿using wan24.Core;
+
+namespace wan24.RPC.Processing.Scopes
 {
     /// <summary>
     /// RPC scope types enumeration (use <c>&gt;255</c> for your custom scope implementations)
@@ -6,16 +8,24 @@
     public enum RpcScopeTypes : int
     {
         /// <summary>
+        /// Simple sope without any specific functionality
+        /// </summary>
+        [DisplayText("Scope")]
+        Scope = 0,
+        /// <summary>
         /// Stream
         /// </summary>
-        Stream = 0,
+        [DisplayText("Stream")]
+        Stream = 1,
         /// <summary>
         /// Enumerable
         /// </summary>
-        Enumerable = 1,
+        [DisplayText("Enumerable")]
+        Enumerable = 2,
         /// <summary>
         /// Cancellation
         /// </summary>
-        Cancellation = 2
+        [DisplayText("Cancellation")]
+        Cancellation = 3
     }
 }

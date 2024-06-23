@@ -1,4 +1,5 @@
 ﻿using wan24.Core;
+using wan24.RPC.Processing.Messages.Scopes;
 
 namespace wan24.RPC.Processing.Messages
 {
@@ -20,7 +21,13 @@ namespace wan24.RPC.Processing.Messages
             { PingMessage.TYPE_ID, typeof(PingMessage) },
             { PongMessage.TYPE_ID, typeof(PongMessage) },
             { ScopeDiscardedMessage.TYPE_ID, typeof(ScopeDiscardedMessage) },
-            { RemoteScopeDiscardedMessage.TYPE_ID, typeof(RemoteScopeDiscardedMessage) }
+            { RemoteScopeDiscardedMessage.TYPE_ID, typeof(RemoteScopeDiscardedMessage) },
+            { ScopeTriggerMessage.TYPE_ID, typeof(ScopeTriggerMessage) },
+            { RemoteScopeTriggerMessage.TYPE_ID, typeof(RemoteScopeTriggerMessage) },
+            { ScopeErrorMessage.TYPE_ID, typeof(ScopeErrorMessage) },
+            { RemoteScopeErrorMessage.TYPE_ID, typeof(RemoteScopeErrorMessage) },
+            { ScopeEventMessage.TYPE_ID, typeof(ScopeEventMessage) },
+            { RemoteScopeEventMessage.TYPE_ID, typeof(RemoteScopeEventMessage) }
         };
 
         /// <summary>

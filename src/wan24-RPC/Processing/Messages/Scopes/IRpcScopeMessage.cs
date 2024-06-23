@@ -1,4 +1,4 @@
-﻿namespace wan24.RPC.Processing.Messages
+﻿namespace wan24.RPC.Processing.Messages.Scopes
 {
     /// <summary>
     /// RPC message for a scope

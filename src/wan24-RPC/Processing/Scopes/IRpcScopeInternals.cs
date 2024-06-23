@@ -3,9 +3,9 @@
 namespace wan24.RPC.Processing
 {
     /// <summary>
-    /// Interface for a RPC processor which exports its internals
+    /// Interface for a RPC scope which exports its internals
     /// </summary>
-    public interface IRpcProcessorInternals
+    public interface IRpcScopeInternals
     {
         /// <summary>
         /// Send a RPC message to the peer

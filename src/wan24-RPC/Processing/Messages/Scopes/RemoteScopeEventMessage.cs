@@ -3,25 +3,31 @@ using wan24.Core;
 using wan24.RPC.Processing.Options;
 using wan24.StreamSerializerExtensions;
 
-namespace wan24.RPC.Processing.Messages
+namespace wan24.RPC.Processing.Messages.Scopes
 {
     /// <summary>
-    /// RPC event message
+    /// RPC scope event message for the scope master
     /// </summary>
     /// <remarks>
     /// Constructor
     /// </remarks>
-    public class EventMessage() : SerializerRpcMessageBase(), IRpcRequest
+    public class RemoteScopeEventMessage() : SerializerScopeMessageBase(), IRpcScopeEventMessage
     {
         /// <summary>
         /// RPC message type ID
         /// </summary>
-        public const int TYPE_ID = 4;
+        public const int TYPE_ID = 14;
 
         /// <summary>
         /// Serialized arguments
         /// </summary>
         protected byte[]? _Arguments = null;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="scope">Scope</param>
+        public RemoteScopeEventMessage(in RpcProcessor.RpcRemoteScopeBase scope) : this() => ScopeId = scope.Id;
 
         /// <inheritdoc/>
         public override int Type => TYPE_ID;
@@ -29,27 +35,17 @@ namespace wan24.RPC.Processing.Messages
         /// <inheritdoc/>
         public sealed override bool RequireId => Waiting;
 
-        /// <summary>
-        /// Event name
-        /// </summary>
+        /// <inheritdoc/>
         [MinLength(1), MaxLength(byte.MaxValue)]
         public required string Name { get; set; }
 
-        /// <summary>
-        /// Event arguments (will be disposed at the receiver side)
-        /// </summary>
+        /// <inheritdoc/>
         public EventArgs? Arguments { get; set; }
 
-        /// <summary>
-        /// If the sender is waiting for the event handlers to finish
-        /// </summary>
+        /// <inheritdoc/>
         public bool Waiting { get; set; }
 
-        /// <summary>
-        /// Deserialize the arguments
-        /// </summary>
-        /// <param name="type">Arguments type (must be am <see cref="EventArgs"/>)</param>
-        /// <param name="cancellationToken">Cancellation token</param>
+        /// <inheritdoc/>
         public virtual async Task DeserializeArgumentsAsync(Type type, CancellationToken cancellationToken = default)
         {
             if (_Arguments is null)
@@ -68,9 +64,7 @@ namespace wan24.RPC.Processing.Messages
             _Arguments = null;
         }
 
-        /// <summary>
-        /// Dispose the arguments
-        /// </summary>
+        /// <inheritdoc/>
         public virtual async Task DisposeArgumentsAsync()
         {
             if (Arguments is not null)
