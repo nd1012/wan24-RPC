@@ -70,6 +70,11 @@ namespace wan24.RPC.Processing
             public CancellationToken CancelToken => Processor.CancelToken;
 
             /// <summary>
+            /// Registered remote events
+            /// </summary>
+            public IEnumerable<RpcScopeEvent> RemoteEvents => _RemoteEvents.Values;
+
+            /// <summary>
             /// Register a remote event handler
             /// </summary>
             /// <param name="name">Event name</param>
@@ -265,18 +270,20 @@ namespace wan24.RPC.Processing
             /// <param name="cancellationToken">Cancellation token</param>
             protected virtual async Task HandleEventAsync(IRpcScopeEventMessage message, CancellationToken cancellationToken)
             {
+                await Task.Yield();
                 Logger?.Log(LogLevel.Debug, "{this} handling event \"{name}\" with arguments type {type}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL");
                 RpcScopeEvent? handler;
                 try
                 {
                     handler = GetRemoteEvent(message.Name);
+                    if (handler?.Arguments is not null)
+                        await message.DeserializeArgumentsAsync(handler.Arguments, cancellationToken).DynamicContext();
+                    RaiseOnRemoteEvent(handler, message);
                     if (handler is null)
                     {
                         Logger?.Log(LogLevel.Debug, "{this} no event \"{name}\" handler - ignoring", ToString(), message.Name);
                         return;
                     }
-                    if (handler.Arguments is not null)
-                        await message.DeserializeArgumentsAsync(handler.Arguments, cancellationToken).DynamicContext();
                     await handler.RaiseEventAsync(message, cancellationToken).DynamicContext();
                     Logger?.Log(LogLevel.Trace, "{this} handled event \"{name}\" with arguments type {type}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL");
                     if (message.Waiting)
@@ -347,6 +354,41 @@ namespace wan24.RPC.Processing
                 _RemoteEvents.Clear();
                 // Others
                 await Sync.DisposeAsync().DynamicContext();
+            }
+
+            /// <summary>
+            /// Delegate for a remote event handler
+            /// </summary>
+            /// <param name="scope">RPC processor</param>
+            /// <param name="message">Event message</param>
+            public delegate void RemoteEventHandler_Delegate(RpcScopeProcessorBase scope, RemoteEventArgs message);
+            /// <summary>
+            /// Raised on remote event
+            /// </summary>
+            public event RemoteEventHandler_Delegate? OnRemoteEvent;
+            /// <summary>
+            /// Raise the <see cref="OnRemoteEvent"/>
+            /// </summary>
+            /// <param name="handler">Event handler</param>
+            /// <param name="message">Event RPC message</param>
+            protected virtual void RaiseOnRemoteEvent(RpcScopeEvent? handler, IRpcScopeEventMessage message) => OnRemoteEvent?.Invoke(this, new(handler, message));
+
+            /// <summary>
+            /// Remote event arguments
+            /// </summary>
+            /// <param name="e">Event handler</param>
+            /// <param name="message">Event RPC message</param>
+            public class RemoteEventArgs(in RpcScopeEvent? e, in IRpcScopeEventMessage message) : EventArgs()
+            {
+                /// <summary>
+                /// Event handler
+                /// </summary>
+                public RpcScopeEvent? EventHandler { get; } = e;
+
+                /// <summary>
+                /// Event RPC message
+                /// </summary>
+                public IRpcScopeEventMessage Message { get; } = message;
             }
         }
     }

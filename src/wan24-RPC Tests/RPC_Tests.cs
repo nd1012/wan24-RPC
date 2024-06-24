@@ -11,13 +11,13 @@ namespace wan24_RPC_Tests
         {
             // Server API shouldn't be disposed when the server RPC processor is being disposed (because it's using the NoRpcDisposeAttribute)
             ServerApi? serverApi = null;
-            (RpcProcessor server, RpcProcessor client) = await GetRpcAsync();
+            (TestRpcProcessor server, TestRpcProcessor client) = await GetRpcAsync();
             try
             {
                 serverApi = server.Options.API.Values.First().Instance as ServerApi;
                 Assert.IsNotNull(serverApi);
                 Assert.IsNotNull(serverApi.Processor);
-                await Task.Delay(500);// Wait for the RPC processor worker to start working
+                await Task.Delay(200);// Wait for the RPC processor worker to start working
                 Assert.IsFalse(serverApi.ProcessorCancellation.IsEqualTo(default));
             }
             finally
@@ -42,27 +42,32 @@ namespace wan24_RPC_Tests
         public async Task Echo_TestsAsync()
         {
             // Simple client/server echo method calls
-            (RpcProcessor server, RpcProcessor client) = await GetRpcAsync();
+            (TestRpcProcessor server, TestRpcProcessor client) = await GetRpcAsync();
+            ServerSdk serverSdk = new(client);
+            ClientSdk clientSdk = new(server);
             try
             {
+
                 Logging.WriteInfo("Sync echo client -> server");
-                string? result = await client.CallValueAsync<string>(nameof(ServerApi), nameof(ServerApi.Echo), parameters: ["test"]);
+                string? result = await serverSdk.EchoSyncAsync("test");
                 Assert.AreEqual("test", result);
 
                 Logging.WriteInfo("Async echo client -> server");
-                result = await client.CallValueAsync<string>(nameof(ServerApi), nameof(ServerApi.EchoAsync), parameters: ["test"]);
+                result = await serverSdk.EchoAsync("test");
                 Assert.AreEqual("test", result);
 
                 Logging.WriteInfo("Sync echo server -> client");
-                result = await server.CallValueAsync<string>(nameof(ClientApi), nameof(ClientApi.Echo), parameters: ["test"]);
+                result = await clientSdk.EchoSyncAsync("test");
                 Assert.AreEqual("test", result);
 
                 Logging.WriteInfo("Async echo server -> client");
-                result = await server.CallValueAsync<string>(nameof(ClientApi), nameof(ClientApi.EchoAsync), parameters: ["test"]);
+                result = await clientSdk.EchoAsync("test");
                 Assert.AreEqual("test", result);
             }
             finally
             {
+                await serverSdk.DisposeAsync();
+                await clientSdk.DisposeAsync();
                 await DisposeRpcAsync(server, client);
             }
         }
@@ -71,18 +76,71 @@ namespace wan24_RPC_Tests
         public async Task Event_TestsAsync()
         {
             // Simple remote event
-            (RpcProcessor server, RpcProcessor client) = await GetRpcAsync();
+            (TestRpcProcessor server, TestRpcProcessor client) = await GetRpcAsync();
+            ServerSdk serverSdk = new(client);
             try
             {
-                int eventHandlerCall = 0;
+                int eventHandlerCall = 0,
+                    eventRaised = 0;
+                Logging.WriteInfo("Client event registration");
                 RpcEvent e = client.RegisterEvent("test", (e, m, ct) =>
                 {
+                    Logging.WriteInfo("Server executed registered event handler");
                     eventHandlerCall++;
                     return Task.CompletedTask;
                 });
-                await client.CallVoidAsync(nameof(ServerApi), nameof(ServerApi.RaiseRemoteEventAsync));
+                client.OnRemoteEvent += (s, e) =>
+                {
+                    Logging.WriteInfo("Server raised event");
+                    eventRaised++;
+                };
+                Logging.WriteInfo("Client raises event");
+                await serverSdk.RaiseRemoteEventAsync();
                 Assert.AreEqual(1, e.RaiseCount);
                 Assert.AreEqual(1, eventHandlerCall);
+                Assert.AreEqual(1, eventRaised);
+            }
+            finally
+            {
+                await serverSdk.DisposeAsync();
+                await DisposeRpcAsync(server, client);
+            }
+        }
+
+        [TestMethod, Timeout(3000)]
+        public async Task PingPong_TestsAsync()
+        {
+            // Ping/pong
+            (TestRpcProcessor server, TestRpcProcessor client) = await GetRpcAsync();
+            try
+            {
+                // Both processors watch the heartbeat bi-directional (uni-directional would be good already, actually)
+                Logging.WriteInfo("Client/server state checks");
+                Assert.IsNotNull(server.ServerHeartBeat);
+                Assert.IsNotNull(server.ClientHeartBeat);
+                Assert.IsNotNull(client.ServerHeartBeat);
+                Assert.IsNotNull(client.ClientHeartBeat);
+                Assert.AreEqual(TimeSpan.Zero, client.MessageLoopDuration);
+                Assert.AreEqual(TimeSpan.Zero, server.MessageLoopDuration);
+
+                // Manual ping/pong sequence
+                Logging.WriteInfo("Ping client -> server");
+                DateTime time = DateTime.Now;
+                await client.PingAsync(TimeSpan.FromSeconds(1));
+                Assert.IsTrue(time < client.LastMessageSent);
+                Assert.IsTrue(time < server.LastMessageReceived);
+                Assert.IsTrue(client.MessageLoopDuration > TimeSpan.Zero);
+                Assert.AreEqual(TimeSpan.Zero, server.MessageLoopDuration);
+
+                // Automatic heartbeat messages
+                Logging.WriteInfo("Heartbeat");
+                time = DateTime.Now;
+                await Task.Delay(1000);// Wait for a ping/pong heartbeat sequence
+                Assert.IsTrue(time < client.LastMessageSent);
+                Assert.IsTrue(time < client.LastMessageReceived);
+                Assert.IsTrue(time < server.LastMessageSent);
+                Assert.IsTrue(time < server.LastMessageReceived);
+                Assert.IsTrue(server.MessageLoopDuration > TimeSpan.Zero);
             }
             finally
             {
@@ -90,9 +148,9 @@ namespace wan24_RPC_Tests
             }
         }
 
-        public static async Task<(RpcProcessor Server, RpcProcessor Client)> GetRpcAsync()
+        public static async Task<(TestRpcProcessor Server, TestRpcProcessor Client)> GetRpcAsync()
         {
-            RpcProcessor? serverProcessor = null,
+            TestRpcProcessor? serverProcessor = null,
                 clientProcessor = null;
             BlockingBufferStream serverIO = new(Settings.BufferSize)
                 {
@@ -124,6 +182,11 @@ namespace wan24_RPC_Tests
                     {
                         Capacity = 2,
                         Threads = 1
+                    },
+                    KeepAlive = new()
+                    {
+                        Timeout = TimeSpan.FromMilliseconds(500),
+                        PeerTimeout  = TimeSpan.FromMilliseconds(700)
                     }
                 })
                 {
@@ -150,6 +213,11 @@ namespace wan24_RPC_Tests
                     {
                         Capacity = 2,
                         Threads = 1
+                    },
+                    KeepAlive = new()
+                    {
+                        Timeout = TimeSpan.FromMilliseconds(500),
+                        PeerTimeout = TimeSpan.FromMilliseconds(700)
                     }
                 })
                 {
@@ -174,7 +242,7 @@ namespace wan24_RPC_Tests
             return (serverProcessor, clientProcessor);
         }
 
-        public static async Task DisposeRpcAsync(RpcProcessor server, RpcProcessor client)
+        public static async Task DisposeRpcAsync(TestRpcProcessor server, TestRpcProcessor client)
         {
             await server.Options.API.Values.First().Instance.TryDisposeAsync();
             await server.DisposeAsync();

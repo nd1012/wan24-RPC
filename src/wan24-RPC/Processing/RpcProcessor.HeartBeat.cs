@@ -54,6 +54,11 @@ namespace wan24.RPC.Processing
         }
 
         /// <summary>
+        /// Message loop duration (only available if <see cref="RpcProcessorOptions.KeepAlive"/> is used or <see cref="PingAsync(TimeSpan, CancellationToken)"/> was called)
+        /// </summary>
+        public TimeSpan MessageLoopDuration { get; protected set; }
+
+        /// <summary>
         /// Handle a heartbeat message
         /// </summary>
         /// <param name="message">Message</param>
@@ -149,7 +154,9 @@ namespace wan24.RPC.Processing
             try
             {
                 Contract.Assert(Options.KeepAlive is not null);
+                DateTime now = DateTime.Now;
                 await PingAsync(Options.KeepAlive.PeerTimeout, CancelToken).DynamicContext();
+                MessageLoopDuration = DateTime.Now - now;
                 Logger?.Log(LogLevel.Trace, "{this} got peer heartbeat", ToString());
             }
             catch (TimeoutException ex)

@@ -41,6 +41,11 @@ namespace wan24.RPC.Processing.Messages
         public EventArgs? Arguments { get; set; }
 
         /// <summary>
+        /// If there are serialized event arguments that need to be deserialized
+        /// </summary>
+        public bool HasSerializedArguments => _Arguments is not null;
+
+        /// <summary>
         /// If the sender is waiting for the event handlers to finish
         /// </summary>
         public bool Waiting { get; set; }

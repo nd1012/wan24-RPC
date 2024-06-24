@@ -166,9 +166,11 @@ namespace wan24.RPC.Processing
                     throw new InvalidProgramException($"Failed to store ping request #{request.Id} (double ID)");
                 try
                 {
+                    DateTime now = DateTime.Now;
                     await SendMessageAsync(request.Message, cancellationToken).DynamicContext();
                     using CancellationTokenSource cts = new(timeout);
                     await request.ProcessorCompletion.Task.WaitAsync(cts.Token).DynamicContext();
+                    MessageLoopDuration = DateTime.Now - now;
                     Logger?.Log(LogLevel.Debug, "{this} got pong response for #{id} after {runtime}", ToString(), request.Id, request.Runtime);
                 }
                 finally

@@ -197,18 +197,20 @@ namespace wan24.RPC.Processing
         /// <param name="message">Message</param>
         protected virtual async Task HandleEventAsync(EventMessage message)
         {
+            await Task.Yield();
             Logger?.Log(LogLevel.Debug, "{this} handling event \"{name}\" with arguments type {type}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL");
             RpcEvent? handler;
             try
             {
                 handler = GetRemoteEvent(message.Name);
+                if (handler?.Arguments is not null && message.HasSerializedArguments)
+                    await message.DeserializeArgumentsAsync(handler.Arguments, CancelToken).DynamicContext();
+                RaiseOnRemoteEvent(handler, message);
                 if (handler is null)
                 {
                     Logger?.Log(LogLevel.Debug, "{this} no event \"{name}\" handler - ignoring", ToString(), message.Name);
                     return;
                 }
-                if (handler.Arguments is not null)
-                    await message.DeserializeArgumentsAsync(handler.Arguments, CancelToken).DynamicContext();
                 await handler.RaiseEventAsync(message, CancelToken).DynamicContext();
                 Logger?.Log(LogLevel.Trace, "{this} handled event \"{name}\" with arguments type {type}", ToString(), message.Name, message.Arguments?.GetType().ToString() ?? "NULL");
                 if (message.Waiting)
@@ -250,6 +252,41 @@ namespace wan24.RPC.Processing
             {
                 await message.DisposeArgumentsAsync().DynamicContext();
             }
+        }
+
+        /// <summary>
+        /// Delegate for a remote event handler
+        /// </summary>
+        /// <param name="processor">RPC processor</param>
+        /// <param name="message">Event message</param>
+        public delegate void RemoteEventHandler_Delegate(RpcProcessor processor, RemoteEventArgs message);
+        /// <summary>
+        /// Raised on remote event
+        /// </summary>
+        public event RemoteEventHandler_Delegate? OnRemoteEvent;
+        /// <summary>
+        /// Raise the <see cref="OnRemoteEvent"/>
+        /// </summary>
+        /// <param name="handler">Event handler</param>
+        /// <param name="message">Event RPC message</param>
+        protected virtual void RaiseOnRemoteEvent(RpcEvent? handler, EventMessage message) => OnRemoteEvent?.Invoke(this, new(handler,message));
+
+        /// <summary>
+        /// Remote event arguments
+        /// </summary>
+        /// <param name="e">Event handler</param>
+        /// <param name="message">Event RPC message</param>
+        public class RemoteEventArgs(in RpcEvent? e, in EventMessage message) : EventArgs()
+        {
+            /// <summary>
+            /// Event handler
+            /// </summary>
+            public RpcEvent? EventHandler { get; } = e;
+
+            /// <summary>
+            /// Event RPC message
+            /// </summary>
+            public EventMessage Message { get; } = message;
         }
     }
 }
