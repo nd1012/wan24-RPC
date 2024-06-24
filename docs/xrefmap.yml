@@ -2392,6 +2392,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.Messages.EventMessage.DisposeArgumentsAsync
   nameWithType: EventMessage.DisposeArgumentsAsync
+- uid: wan24.RPC.Processing.Messages.EventMessage.HasSerializedArguments
+  name: HasSerializedArguments
+  href: api/wan24.RPC.Processing.Messages.EventMessage.html#wan24_RPC_Processing_Messages_EventMessage_HasSerializedArguments
+  commentId: P:wan24.RPC.Processing.Messages.EventMessage.HasSerializedArguments
+  fullName: wan24.RPC.Processing.Messages.EventMessage.HasSerializedArguments
+  nameWithType: EventMessage.HasSerializedArguments
+- uid: wan24.RPC.Processing.Messages.EventMessage.HasSerializedArguments*
+  name: HasSerializedArguments
+  href: api/wan24.RPC.Processing.Messages.EventMessage.html#wan24_RPC_Processing_Messages_EventMessage_HasSerializedArguments_
+  commentId: Overload:wan24.RPC.Processing.Messages.EventMessage.HasSerializedArguments
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.Messages.EventMessage.HasSerializedArguments
+  nameWithType: EventMessage.HasSerializedArguments
 - uid: wan24.RPC.Processing.Messages.EventMessage.Name
   name: Name
   href: api/wan24.RPC.Processing.Messages.EventMessage.html#wan24_RPC_Processing_Messages_EventMessage_Name
@@ -7611,6 +7624,19 @@ references:
   commentId: F:wan24.RPC.Processing.RpcProcessor.MessageId
   fullName: wan24.RPC.Processing.RpcProcessor.MessageId
   nameWithType: RpcProcessor.MessageId
+- uid: wan24.RPC.Processing.RpcProcessor.MessageLoopDuration
+  name: MessageLoopDuration
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_MessageLoopDuration
+  commentId: P:wan24.RPC.Processing.RpcProcessor.MessageLoopDuration
+  fullName: wan24.RPC.Processing.RpcProcessor.MessageLoopDuration
+  nameWithType: RpcProcessor.MessageLoopDuration
+- uid: wan24.RPC.Processing.RpcProcessor.MessageLoopDuration*
+  name: MessageLoopDuration
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_MessageLoopDuration_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.MessageLoopDuration
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.MessageLoopDuration
+  nameWithType: RpcProcessor.MessageLoopDuration
 - uid: wan24.RPC.Processing.RpcProcessor.OnCallErrorAsync(wan24.RPC.Processing.RpcProcessor.Call,System.Exception,System.Collections.Generic.List{System.Object},System.Object)
   name: OnCallErrorAsync(Call, Exception, List<object?>?, object?)
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_OnCallErrorAsync_wan24_RPC_Processing_RpcProcessor_Call_System_Exception_System_Collections_Generic_List_System_Object__System_Object_
@@ -7659,6 +7685,12 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.OnCallRespondedAsync
   nameWithType: RpcProcessor.OnCallRespondedAsync
+- uid: wan24.RPC.Processing.RpcProcessor.OnRemoteEvent
+  name: OnRemoteEvent
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_OnRemoteEvent
+  commentId: E:wan24.RPC.Processing.RpcProcessor.OnRemoteEvent
+  fullName: wan24.RPC.Processing.RpcProcessor.OnRemoteEvent
+  nameWithType: RpcProcessor.OnRemoteEvent
 - uid: wan24.RPC.Processing.RpcProcessor.Options
   name: Options
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_Options
@@ -7918,6 +7950,22 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.RaiseEventAsync
   nameWithType: RpcProcessor.RaiseEventAsync
+- uid: wan24.RPC.Processing.RpcProcessor.RaiseOnRemoteEvent(wan24.RPC.Processing.RpcEvent,wan24.RPC.Processing.Messages.EventMessage)
+  name: RaiseOnRemoteEvent(RpcEvent?, EventMessage)
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_RaiseOnRemoteEvent_wan24_RPC_Processing_RpcEvent_wan24_RPC_Processing_Messages_EventMessage_
+  commentId: M:wan24.RPC.Processing.RpcProcessor.RaiseOnRemoteEvent(wan24.RPC.Processing.RpcEvent,wan24.RPC.Processing.Messages.EventMessage)
+  name.vb: RaiseOnRemoteEvent(RpcEvent, EventMessage)
+  fullName: wan24.RPC.Processing.RpcProcessor.RaiseOnRemoteEvent(wan24.RPC.Processing.RpcEvent?, wan24.RPC.Processing.Messages.EventMessage)
+  fullName.vb: wan24.RPC.Processing.RpcProcessor.RaiseOnRemoteEvent(wan24.RPC.Processing.RpcEvent, wan24.RPC.Processing.Messages.EventMessage)
+  nameWithType: RpcProcessor.RaiseOnRemoteEvent(RpcEvent?, EventMessage)
+  nameWithType.vb: RpcProcessor.RaiseOnRemoteEvent(RpcEvent, EventMessage)
+- uid: wan24.RPC.Processing.RpcProcessor.RaiseOnRemoteEvent*
+  name: RaiseOnRemoteEvent
+  href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_RaiseOnRemoteEvent_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.RaiseOnRemoteEvent
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.RaiseOnRemoteEvent
+  nameWithType: RpcProcessor.RaiseOnRemoteEvent
 - uid: wan24.RPC.Processing.RpcProcessor.RegisterEvent(System.String@,System.Type@,wan24.RPC.Processing.RpcEvent.EventHandler_Delegate@)
   name: RegisterEvent(in string, in Type, in EventHandler_Delegate)
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_RegisterEvent_System_String__System_Type__wan24_RPC_Processing_RpcEvent_EventHandler_Delegate__
@@ -7952,6 +8000,63 @@ references:
   fullName.vb: wan24.RPC.Processing.RpcProcessor.RegisterEvent(Of T)(String, wan24.RPC.Processing.RpcEvent.EventHandler_Delegate)
   nameWithType: RpcProcessor.RegisterEvent<T>(in string, in RpcEvent.EventHandler_Delegate)
   nameWithType.vb: RpcProcessor.RegisterEvent(Of T)(String, RpcEvent.EventHandler_Delegate)
+- uid: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs
+  name: RpcProcessor.RemoteEventArgs
+  href: api/wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.html
+  commentId: T:wan24.RPC.Processing.RpcProcessor.RemoteEventArgs
+  fullName: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs
+  nameWithType: RpcProcessor.RemoteEventArgs
+- uid: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.#ctor(wan24.RPC.Processing.RpcEvent@,wan24.RPC.Processing.Messages.EventMessage@)
+  name: RemoteEventArgs(in RpcEvent?, in EventMessage)
+  href: api/wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RemoteEventArgs__ctor_wan24_RPC_Processing_RpcEvent__wan24_RPC_Processing_Messages_EventMessage__
+  commentId: M:wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.#ctor(wan24.RPC.Processing.RpcEvent@,wan24.RPC.Processing.Messages.EventMessage@)
+  name.vb: New(RpcEvent, EventMessage)
+  fullName: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.RemoteEventArgs(in wan24.RPC.Processing.RpcEvent?, in wan24.RPC.Processing.Messages.EventMessage)
+  fullName.vb: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.New(wan24.RPC.Processing.RpcEvent, wan24.RPC.Processing.Messages.EventMessage)
+  nameWithType: RpcProcessor.RemoteEventArgs.RemoteEventArgs(in RpcEvent?, in EventMessage)
+  nameWithType.vb: RpcProcessor.RemoteEventArgs.New(RpcEvent, EventMessage)
+- uid: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.#ctor*
+  name: RemoteEventArgs
+  href: api/wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RemoteEventArgs__ctor_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.RemoteEventArgs
+  fullName.vb: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.New
+  nameWithType: RpcProcessor.RemoteEventArgs.RemoteEventArgs
+  nameWithType.vb: RpcProcessor.RemoteEventArgs.New
+- uid: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.EventHandler
+  name: EventHandler
+  href: api/wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RemoteEventArgs_EventHandler
+  commentId: P:wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.EventHandler
+  fullName: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.EventHandler
+  nameWithType: RpcProcessor.RemoteEventArgs.EventHandler
+- uid: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.EventHandler*
+  name: EventHandler
+  href: api/wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RemoteEventArgs_EventHandler_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.EventHandler
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.EventHandler
+  nameWithType: RpcProcessor.RemoteEventArgs.EventHandler
+- uid: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.Message
+  name: Message
+  href: api/wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RemoteEventArgs_Message
+  commentId: P:wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.Message
+  fullName: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.Message
+  nameWithType: RpcProcessor.RemoteEventArgs.Message
+- uid: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.Message*
+  name: Message
+  href: api/wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RemoteEventArgs_Message_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.Message
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.RemoteEventArgs.Message
+  nameWithType: RpcProcessor.RemoteEventArgs.Message
+- uid: wan24.RPC.Processing.RpcProcessor.RemoteEventHandler_Delegate
+  name: RpcProcessor.RemoteEventHandler_Delegate
+  href: api/wan24.RPC.Processing.RpcProcessor.RemoteEventHandler_Delegate.html
+  commentId: T:wan24.RPC.Processing.RpcProcessor.RemoteEventHandler_Delegate
+  fullName: wan24.RPC.Processing.RpcProcessor.RemoteEventHandler_Delegate
+  nameWithType: RpcProcessor.RemoteEventHandler_Delegate
 - uid: wan24.RPC.Processing.RpcProcessor.RemoteEvents
   name: RemoteEvents
   href: api/wan24.RPC.Processing.RpcProcessor.html#wan24_RPC_Processing_RpcProcessor_RemoteEvents
@@ -9203,6 +9308,12 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.Name
   nameWithType: RpcProcessor.RpcScopeProcessorBase.Name
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.OnRemoteEvent
+  name: OnRemoteEvent
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_OnRemoteEvent
+  commentId: E:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.OnRemoteEvent
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.OnRemoteEvent
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.OnRemoteEvent
 - uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.Processor
   name: Processor
   href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Processor
@@ -9232,6 +9343,22 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RaiseEventAsync
   nameWithType: RpcProcessor.RpcScopeProcessorBase.RaiseEventAsync
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent(wan24.RPC.Processing.Scopes.RpcScopeEvent,wan24.RPC.Processing.Messages.Scopes.IRpcScopeEventMessage)
+  name: RaiseOnRemoteEvent(RpcScopeEvent?, IRpcScopeEventMessage)
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RaiseOnRemoteEvent_wan24_RPC_Processing_Scopes_RpcScopeEvent_wan24_RPC_Processing_Messages_Scopes_IRpcScopeEventMessage_
+  commentId: M:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent(wan24.RPC.Processing.Scopes.RpcScopeEvent,wan24.RPC.Processing.Messages.Scopes.IRpcScopeEventMessage)
+  name.vb: RaiseOnRemoteEvent(RpcScopeEvent, IRpcScopeEventMessage)
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent(wan24.RPC.Processing.Scopes.RpcScopeEvent?, wan24.RPC.Processing.Messages.Scopes.IRpcScopeEventMessage)
+  fullName.vb: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent(wan24.RPC.Processing.Scopes.RpcScopeEvent, wan24.RPC.Processing.Messages.Scopes.IRpcScopeEventMessage)
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent(RpcScopeEvent?, IRpcScopeEventMessage)
+  nameWithType.vb: RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent(RpcScopeEvent, IRpcScopeEventMessage)
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent*
+  name: RaiseOnRemoteEvent
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RaiseOnRemoteEvent_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent
 - uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RegisterEvent(System.String@,System.Type@,wan24.RPC.Processing.Scopes.RpcScopeEvent.EventHandler_Delegate@)
   name: RegisterEvent(in string, in Type, in EventHandler_Delegate)
   href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RegisterEvent_System_String__System_Type__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__
@@ -9266,6 +9393,76 @@ references:
   fullName.vb: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RegisterEvent(Of T)(String, wan24.RPC.Processing.Scopes.RpcScopeEvent.EventHandler_Delegate)
   nameWithType: RpcProcessor.RpcScopeProcessorBase.RegisterEvent<T>(in string, in RpcScopeEvent.EventHandler_Delegate)
   nameWithType.vb: RpcProcessor.RpcScopeProcessorBase.RegisterEvent(Of T)(String, RpcScopeEvent.EventHandler_Delegate)
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs
+  name: RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.html
+  commentId: T:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.#ctor(wan24.RPC.Processing.Scopes.RpcScopeEvent@,wan24.RPC.Processing.Messages.Scopes.IRpcScopeEventMessage@)
+  name: RemoteEventArgs(in RpcScopeEvent?, in IRpcScopeEventMessage)
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoteEventArgs__ctor_wan24_RPC_Processing_Scopes_RpcScopeEvent__wan24_RPC_Processing_Messages_Scopes_IRpcScopeEventMessage__
+  commentId: M:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.#ctor(wan24.RPC.Processing.Scopes.RpcScopeEvent@,wan24.RPC.Processing.Messages.Scopes.IRpcScopeEventMessage@)
+  name.vb: New(RpcScopeEvent, IRpcScopeEventMessage)
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.RemoteEventArgs(in wan24.RPC.Processing.Scopes.RpcScopeEvent?, in wan24.RPC.Processing.Messages.Scopes.IRpcScopeEventMessage)
+  fullName.vb: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.New(wan24.RPC.Processing.Scopes.RpcScopeEvent, wan24.RPC.Processing.Messages.Scopes.IRpcScopeEventMessage)
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.RemoteEventArgs(in RpcScopeEvent?, in IRpcScopeEventMessage)
+  nameWithType.vb: RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.New(RpcScopeEvent, IRpcScopeEventMessage)
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.#ctor*
+  name: RemoteEventArgs
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoteEventArgs__ctor_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.RemoteEventArgs
+  fullName.vb: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.New
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.RemoteEventArgs
+  nameWithType.vb: RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.New
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.EventHandler
+  name: EventHandler
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoteEventArgs_EventHandler
+  commentId: P:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.EventHandler
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.EventHandler
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.EventHandler
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.EventHandler*
+  name: EventHandler
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoteEventArgs_EventHandler_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.EventHandler
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.EventHandler
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.EventHandler
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.Message
+  name: Message
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoteEventArgs_Message
+  commentId: P:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.Message
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.Message
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.Message
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.Message*
+  name: Message
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoteEventArgs_Message_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.Message
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.Message
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.Message
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventHandler_Delegate
+  name: RpcProcessor.RpcScopeProcessorBase.RemoteEventHandler_Delegate
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventHandler_Delegate.html
+  commentId: T:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventHandler_Delegate
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventHandler_Delegate
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RemoteEventHandler_Delegate
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEvents
+  name: RemoteEvents
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoteEvents
+  commentId: P:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEvents
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEvents
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RemoteEvents
+- uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEvents*
+  name: RemoteEvents
+  href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoteEvents_
+  commentId: Overload:wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEvents
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEvents
+  nameWithType: RpcProcessor.RpcScopeProcessorBase.RemoteEvents
 - uid: wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoveRemoteEvent(System.String@)
   name: RemoveRemoteEvent(in string)
   href: api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoveRemoteEvent_System_String__
