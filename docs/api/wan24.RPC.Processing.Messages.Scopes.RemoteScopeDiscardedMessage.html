@@ -118,15 +118,13 @@
     <div><span class="xref">IObjectValidatable</span></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations.ivalidatableobject">IValidatableObject</a></div>
     <div><span class="xref">IStreamSerializerVersion</span></div>
+    <div><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeDiscardedMessage.html">IRpcScopeDiscardedMessage</a></div>
     <div><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeMessage.html">IRpcScopeMessage</a></div>
     <div><a class="xref" href="wan24.RPC.Processing.Messages.IRpcMessage.html">IRpcMessage</a></div>
     <div><span class="xref">IStreamSerializer</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_ScopeMessageBase_FailOnScopeNotFound">ScopeMessageBase.FailOnScopeNotFound</a>
-    </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_ScopeMessageBase_WarnOnScopeNotFound">ScopeMessageBase.WarnOnScopeNotFound</a>
     </div>
@@ -210,7 +208,7 @@
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RemoteScopeDiscardedMessage : ScopeMessageBase, IObjectValidatable, IValidatableObject, IStreamSerializerVersion, IRpcScopeMessage, IRpcMessage, IStreamSerializer</code></pre>
+    <pre><code class="lang-csharp hljs">public class RemoteScopeDiscardedMessage : ScopeMessageBase, IObjectValidatable, IValidatableObject, IStreamSerializerVersion, IRpcScopeDiscardedMessage, IRpcScopeMessage, IRpcMessage, IStreamSerializer</code></pre>
   </div>
   <h5 id="wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Constructor</p>
@@ -236,40 +234,6 @@
   <h5 id="wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage__ctor_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Constructor</p>
 </div>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage__ctor_wan24_RPC_Processing_RpcProcessor_RpcRemoteScopeBase__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.%23ctor(wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/RemoteScopeDiscardedMessage.cs/#L20">View Source</a>
-  </span>
-  <a id="wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage__ctor_" data-uid="wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.#ctor*"></a>
-  <h4 id="wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage__ctor_wan24_RPC_Processing_RpcProcessor_RpcRemoteScopeBase__" data-uid="wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.#ctor(wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase@)">RemoteScopeDiscardedMessage(in RpcRemoteScopeBase)</h4>
-  <div class="markdown level1 summary"><p>Constructor</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RemoteScopeDiscardedMessage(in RpcProcessor.RpcRemoteScopeBase scope)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a>.<a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase.html">RpcRemoteScopeBase</a></td>
-        <td><span class="parametername">scope</span></td>
-        <td><p>Discarded remote RPC scope</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="fields">Fields
 </h3>
   <span class="small pull-right mobile-hide">
@@ -306,10 +270,43 @@
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage_FailOnScopeNotFound.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.FailOnScopeNotFound%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/RemoteScopeDiscardedMessage.cs/#L23">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage_FailOnScopeNotFound_" data-uid="wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.FailOnScopeNotFound*"></a>
+  <h4 id="wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage_FailOnScopeNotFound" data-uid="wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.FailOnScopeNotFound">FailOnScopeNotFound</h4>
+  <div class="markdown level1 summary"><p>If to fail the RPC processor if a message for an unknown scope was received</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override sealed bool FailOnScopeNotFound { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.ScopeMessageBase.html#wan24_RPC_Processing_Messages_Scopes_ScopeMessageBase_FailOnScopeNotFound">ScopeMessageBase.FailOnScopeNotFound</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage_RequireId.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.RequireId%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/RemoteScopeDiscardedMessage.cs/#L26">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/RemoteScopeDiscardedMessage.cs/#L20">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage_RequireId_" data-uid="wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.RequireId*"></a>
   <h4 id="wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage_RequireId" data-uid="wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.RequireId">RequireId</h4>
@@ -342,7 +339,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage_Type.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.Type%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/RemoteScopeDiscardedMessage.cs/#L23">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Messages/Scopes/RemoteScopeDiscardedMessage.cs/#L17">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage_Type_" data-uid="wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.Type*"></a>
   <h4 id="wan24_RPC_Processing_Messages_Scopes_RemoteScopeDiscardedMessage_Type" data-uid="wan24.RPC.Processing.Messages.Scopes.RemoteScopeDiscardedMessage.Type">Type</h4>
@@ -379,6 +376,9 @@
   </div>
   <div>
       <span class="xref">wan24.StreamSerializerExtensions.IStreamSerializerVersion</span>
+  </div>
+  <div>
+      <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeDiscardedMessage.html">IRpcScopeDiscardedMessage</a>
   </div>
   <div>
       <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeMessage.html">IRpcScopeMessage</a>

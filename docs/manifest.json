@@ -625,6 +625,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Messages.Scopes.ScopeRegistrationMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Messages.Scopes.ScopeRegistrationMessage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage.yml",
       "output": {
         ".html": {
@@ -875,6 +885,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Parameters.RpcScopeParameter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Parameters.RpcScopeParameter.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Processing.Parameters.RpcScopeParameterBase.yml",
       "output": {
         ".html": {
@@ -1035,10 +1055,30 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeInternalsBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeInternalsBase.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Processing.RpcProcessor.RpcScopeBase.yml",
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.html"
         }
       },
       "version": ""
@@ -1099,6 +1139,66 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.RpcProcessorTable.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerHandler_Delegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerHandler_Delegate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.RpcRemoteScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.RpcRemoteScope.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.RpcScope.TriggerHandler_Delegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.RpcScope.TriggerHandler_Delegate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.RpcScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.RpcScope.html"
         }
       },
       "version": ""

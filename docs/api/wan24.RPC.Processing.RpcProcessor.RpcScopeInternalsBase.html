@@ -1,0 +1,508 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class RpcProcessor.RpcScopeInternalsBase | wan24-RPC </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class RpcProcessor.RpcScopeInternalsBase | wan24-RPC ">
+      <meta name="generator" content="docfx ">
+  
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" integrity="sha384-EvBWSlnoFgZlXJvpzS+MAUEjvN7+gcCwH+qh7GRFOGgZO0PuwOFro7qPOJnLfe7l" crossorigin="anonymous">
+      <link rel="stylesheet" href="../styles/config.css">
+      <link rel="stylesheet" href="../styles/singulink.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+    </head>
+    <body>
+        <!-- Header required for docfx anchor scroll to work -->
+        <header id="head"></header>
+        <div class="top-navbar">
+            <a class="burger-icon" onclick="toggleMenu()">
+                <svg name="Hamburger" style="vertical-align: middle;" width="34" height="34" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M20 6H4V9H20V6ZM4 10.999H20V13.999H4V10.999ZM4 15.999H20V18.999H4V15.999Z"></path></svg>
+            </a>
+
+
+            <a class="brand" href="../index.html">
+              <img src="../logo.svg" alt="" class="logomark">
+              <span class="brand-title"></span>
+            </a>        </div>
+
+        <div class="body-content">
+            <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
+
+            <nav id="sidebar" role="navigation">
+                <div class="sidebar">
+
+                    <div>
+                      <div class="mobile-hide">
+
+                        <a class="brand" href="../index.html">
+                          <img src="../logo.svg" alt="" class="logomark">
+                          <span class="brand-title"></span>
+                        </a>                      </div>
+
+                      <div class="sidesearch">
+                        <form id="search" role="search" class="search">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="search-query" placeholder="Search" autocomplete="off">
+                        </form>
+                      </div>
+
+                      <div id="navbar">
+                      </div>
+                    </div>                    <div class="sidebar-item-separator"></div>
+
+                        <div id="sidetoggle">
+                          <div id="sidetoc"></div>
+                        </div>
+                </div>
+                <div class="footer">
+  (c) 2024 Andreas Zimmermann, wan24.de
+  
+                </div>            </nav>
+
+            <main class="main-panel">
+
+                <div id="search-results" style="display: none;">
+                  <h1 class="search-list">Search Results for <span></span></h1>
+                  <div class="sr-items">
+                    <p><i class="bi bi-hourglass-split index-loading"></i></p>
+                  </div>
+                  <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+                </div>
+ 
+
+                <div role="main" class="hide-when-search">
+
+                        <div class="subnav navbar navbar-default">
+                          <div class="container hide-when-search" id="breadcrumb">
+                            <ul class="breadcrumb">
+                              <li></li>
+                            </ul>
+                          </div>
+                        </div>
+
+                         <div id="contribution">
+                               <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                         </div>
+
+                    <article class="content wrap" id="_content" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase">
+
+
+
+  <h1 id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase" class="text-break">Class RpcProcessor.RpcScopeInternalsBase</h1>
+  <div class="markdown level0 summary"><p>Base class for a RPC scope which exports its internals (explicit <a class="xref" href="wan24.RPC.Processing.IRpcProcessorInternals.html">IRpcProcessorInternals</a>)</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><span class="xref">DisposableBase</span></div>
+    <div class="level2"><a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a>.<a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html">RpcScopeProcessorBase</a></div>
+    <div class="level3"><a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a>.<a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html">RpcScopeBase</a></div>
+    <div class="level4"><span class="xref">RpcProcessor.RpcScopeInternalsBase</span></div>
+      <div class="level5"><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScope.html">RpcScope</a></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IWillDispose</span></div>
+    <div><span class="xref">IDisposableObject</span></div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
+    <div><a class="xref" href="wan24.RPC.Processing.IRpcProcessorInternals.html">IRpcProcessorInternals</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeValue">RpcProcessor.RpcScopeBase.DisposeValue</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ScopeParameter">RpcProcessor.RpcScopeBase._ScopeParameter</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase__IsStored">RpcProcessor.RpcScopeBase._IsStored</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Id">RpcProcessor.RpcScopeBase.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_IsStored">RpcProcessor.RpcScopeBase.IsStored</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_ScopeParameter">RpcProcessor.RpcScopeBase.ScopeParameter</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Method">RpcProcessor.RpcScopeBase.Method</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Value">RpcProcessor.RpcScopeBase.Value</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeValueOnError">RpcProcessor.RpcScopeBase.DisposeValueOnError</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_WillDisposeValue">RpcProcessor.RpcScopeBase.WillDisposeValue</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_InformConsumerWhenDisposing">RpcProcessor.RpcScopeBase.InformConsumerWhenDisposing</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_IsError">RpcProcessor.RpcScopeBase.IsError</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_LastException">RpcProcessor.RpcScopeBase.LastException</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_RegisterRemoteAsync_System_Threading_CancellationToken_">RpcProcessor.RpcScopeBase.RegisterRemoteAsync(CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_SetIsErrorAsync_System_Exception_">RpcProcessor.RpcScopeBase.SetIsErrorAsync(Exception)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_RaiseEventAsync_System_String_System_EventArgs_System_Boolean_System_Threading_CancellationToken_">RpcProcessor.RpcScopeBase.RaiseEventAsync(string, EventArgs, bool, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_ToString">RpcProcessor.RpcScopeBase.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_CreateScopeParameterAsync_System_Threading_CancellationToken_">RpcProcessor.RpcScopeBase.CreateScopeParameterAsync(CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DiscardAsync_System_Boolean_System_Threading_CancellationToken_">RpcProcessor.RpcScopeBase.DiscardAsync(bool, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Dispose_System_Boolean_">RpcProcessor.RpcScopeBase.Dispose(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeCore">RpcProcessor.RpcScopeBase.DisposeCore()</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Sync">RpcProcessor.RpcScopeProcessorBase.Sync</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase__RemoteEvents">RpcProcessor.RpcScopeProcessorBase._RemoteEvents</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Type">RpcProcessor.RpcScopeProcessorBase.Type</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Name">RpcProcessor.RpcScopeProcessorBase.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Key">RpcProcessor.RpcScopeProcessorBase.Key</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_IsDiscarded">RpcProcessor.RpcScopeProcessorBase.IsDiscarded</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Processor">RpcProcessor.RpcScopeProcessorBase.Processor</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Logger">RpcProcessor.RpcScopeProcessorBase.Logger</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_CancelToken">RpcProcessor.RpcScopeProcessorBase.CancelToken</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoteEvents">RpcProcessor.RpcScopeProcessorBase.RemoteEvents</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RegisterEvent_System_String__System_Type__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__">RpcProcessor.RpcScopeProcessorBase.RegisterEvent(in string, in Type, in RpcScopeEvent.EventHandler_Delegate)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RegisterEvent__1_System_String__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__">RpcProcessor.RpcScopeProcessorBase.RegisterEvent&lt;T&gt;(in string, in RpcScopeEvent.EventHandler_Delegate)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RegisterEvent_System_String__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__">RpcProcessor.RpcScopeProcessorBase.RegisterEvent(in string, in RpcScopeEvent.EventHandler_Delegate)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_HandleMessageAsync_wan24_RPC_Processing_Messages_Scopes_IRpcScopeMessage_System_Threading_CancellationToken_">RpcProcessor.RpcScopeProcessorBase.HandleMessageAsync(IRpcScopeMessage, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_SendMessageAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Int32_System_Threading_CancellationToken_">RpcProcessor.RpcScopeProcessorBase.SendMessageAsync(IRpcMessage, int, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_SendMessageAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Threading_CancellationToken_">RpcProcessor.RpcScopeProcessorBase.SendMessageAsync(IRpcMessage, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_AddRemoteEvent_wan24_RPC_Processing_Scopes_RpcScopeEvent__">RpcProcessor.RpcScopeProcessorBase.AddRemoteEvent(in RpcScopeEvent)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_GetRemoteEvent_System_String__">RpcProcessor.RpcScopeProcessorBase.GetRemoteEvent(in string)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoveRemoteEvent_wan24_RPC_Processing_Scopes_RpcScopeEvent__">RpcProcessor.RpcScopeProcessorBase.RemoveRemoteEvent(in RpcScopeEvent)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoveRemoteEvent_System_String__">RpcProcessor.RpcScopeProcessorBase.RemoveRemoteEvent(in string)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_CreateEvent_System_String__System_Type__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__">RpcProcessor.RpcScopeProcessorBase.CreateEvent(in string, in Type, in RpcScopeEvent.EventHandler_Delegate)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_CreateEvent__1_System_String__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__">RpcProcessor.RpcScopeProcessorBase.CreateEvent&lt;T&gt;(in string, in RpcScopeEvent.EventHandler_Delegate)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_CreateEvent_System_String__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__">RpcProcessor.RpcScopeProcessorBase.CreateEvent(in string, in RpcScopeEvent.EventHandler_Delegate)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_HandleMessageIntAsync_wan24_RPC_Processing_Messages_Scopes_IRpcScopeMessage_System_Threading_CancellationToken_">RpcProcessor.RpcScopeProcessorBase.HandleMessageIntAsync(IRpcScopeMessage, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_HandleEventAsync_wan24_RPC_Processing_Messages_Scopes_IRpcScopeEventMessage_System_Threading_CancellationToken_">RpcProcessor.RpcScopeProcessorBase.HandleEventAsync(IRpcScopeEventMessage, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_HandleDiscardedAsync_wan24_RPC_Processing_Messages_Scopes_IRpcScopeDiscardedMessage_System_Threading_CancellationToken_">RpcProcessor.RpcScopeProcessorBase.HandleDiscardedAsync(IRpcScopeDiscardedMessage, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_EnsureNotDiscarded">RpcProcessor.RpcScopeProcessorBase.EnsureNotDiscarded()</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_OnRemoteEvent">RpcProcessor.RpcScopeProcessorBase.OnRemoteEvent</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RaiseOnRemoteEvent_wan24_RPC_Processing_Scopes_RpcScopeEvent_wan24_RPC_Processing_Messages_Scopes_IRpcScopeEventMessage_">RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent(RpcScopeEvent, IRpcScopeEventMessage)</a>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.DisposeSyncObject</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.AsyncDisposing</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.AllowFinalizer</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.DisposeObjects</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.StackInfo</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.RegisterForDispose&lt;T&gt;(in T)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">DisposableBase.EnsureUndisposed(in bool, in bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableBase.LockDisposing(in TimeSpan, in CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableBase.LockDisposingAsync(TimeSpan, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableBase.TryLockDisposing(out SemaphoreSyncContext, in TimeSpan, in CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableBase.TryLockDisposingAsync(TimeSpan, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">DisposableBase.IfUndisposed&lt;T&gt;(in T, in bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">DisposableBase.IfUndisposed(in Action, in bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">DisposableBase.IfUndisposed&lt;T&gt;(in Func&lt;T&gt;, in bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">DisposableBase.IfUndisposedNullable&lt;T&gt;(in Func&lt;T&gt;, in bool)</a>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.DisposeAttributes()</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.DisposeAttributesAsync()</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.Dispose()</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.DisposeAsync()</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.CreateStackInfo</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.DestructorDisposing</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.IsDisposing</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.IsDisposed</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.OnDisposing</span>
+    </div>
+    <div>
+      <span class="xref">DisposableBase.OnDisposed</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="wan24.html">wan24</a>.<a class="xref" href="wan24.RPC.html">RPC</a>.<a class="xref" href="wan24.RPC.Processing.html">Processing</a></h6>
+  <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
+  <h5 id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class RpcProcessor.RpcScopeInternalsBase : RpcProcessor.RpcScopeBase, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable, IRpcProcessorInternals</code></pre>
+  </div>
+  <h5 id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Constructor</p>
+</div>
+  <h3 id="constructors">Constructors
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_wan24_RPC_Processing_RpcProcessor__System_Int64__System_String__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.%23ctor(wan24.RPC.Processing.RpcProcessor%40%2CSystem.Int64%40%2CSystem.String%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L329">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.#ctor*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_wan24_RPC_Processing_RpcProcessor__System_Int64__System_String__" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.#ctor(wan24.RPC.Processing.RpcProcessor@,System.Int64@,System.String@)">RpcScopeInternalsBase(in RpcProcessor, in long, in string?)</h4>
+  <div class="markdown level1 summary"><p>Base class for a RPC scope which exports its internals (explicit <a class="xref" href="wan24.RPC.Processing.IRpcProcessorInternals.html">IRpcProcessorInternals</a>)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected RpcScopeInternalsBase(in RpcProcessor processor, in long id, in string? key = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a></td>
+        <td><span class="parametername">processor</span></td>
+        <td><p>RPC processor</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>ID</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>Key</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_wan24_RPC_Processing_RpcProcessor__System_Int64__System_String___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Constructor</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_wan24_RPC_Processing_RpcProcessor__System_String__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.%23ctor(wan24.RPC.Processing.RpcProcessor%40%2CSystem.String%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L337">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.#ctor*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_wan24_RPC_Processing_RpcProcessor__System_String__" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.#ctor(wan24.RPC.Processing.RpcProcessor@,System.String@)">RpcScopeInternalsBase(in RpcProcessor, in string?)</h4>
+  <div class="markdown level1 summary"><p>Constructor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected RpcScopeInternalsBase(in RpcProcessor processor, in string? key = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a></td>
+        <td><span class="parametername">processor</span></td>
+        <td><p>RPC processor</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>Key</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">wan24.Core.IWillDispose</span>
+  </div>
+  <div>
+      <span class="xref">wan24.Core.IDisposableObject</span>
+  </div>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a>
+  </div>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>
+  </div>
+  <div>
+      <a class="xref" href="wan24.RPC.Processing.IRpcProcessorInternals.html">IRpcProcessorInternals</a>
+  </div>
+
+</article>
+                </div>
+
+                <div class="copyright-footer">
+                    <span>(c) 2024 Andreas Zimmermann, wan24.de</span>
+                </div>
+            </main>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script type="text/javascript" src="../styles/jquery.twbsPagination.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"></script>
+        <script type="text/javascript" src="../styles/url.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script>
+        <script type="text/javascript" src="../styles/docfx.js"></script>
+        <script type="text/javascript" src="../styles/main.js"></script>
+        <script type="text/javascript" src="../styles/singulink.js"></script>    </body>
+</html>
