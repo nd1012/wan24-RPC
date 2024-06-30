@@ -107,9 +107,10 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-    <div class="level1"><span class="xref">DisposableRecordBase</span></div>
+    <div class="level1"><span class="xref">DisposableBase</span></div>
     <div class="level2"><a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a>.<a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html">RpcScopeProcessorBase</a></div>
     <div class="level3"><span class="xref">RpcProcessor.RpcScopeBase</span></div>
+      <div class="level4"><a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.html">RpcProcessor.RpcScopeInternalsBase</a></div>
   </div>
   <div class="implements">
     <h5>Implements</h5>
@@ -117,18 +118,9 @@
     <div><span class="xref">IDisposableObject</span></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
-    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<span class="xref">DisposableRecordBase</span>&gt;</div>
-    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a>.<a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html">RpcScopeProcessorBase</a>&gt;</div>
-    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a>.<a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html">RpcScopeBase</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_processor">RpcProcessor.RpcScopeProcessorBase.processor</a>
-    </div>
-    <div>
-      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_key">RpcProcessor.RpcScopeProcessorBase.key</a>
-    </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Sync">RpcProcessor.RpcScopeProcessorBase.Sync</a>
     </div>
@@ -136,13 +128,13 @@
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase__RemoteEvents">RpcProcessor.RpcScopeProcessorBase._RemoteEvents</a>
     </div>
     <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Type">RpcProcessor.RpcScopeProcessorBase.Type</a>
+    </div>
+    <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Name">RpcProcessor.RpcScopeProcessorBase.Name</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Key">RpcProcessor.RpcScopeProcessorBase.Key</a>
-    </div>
-    <div>
-      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_IsStored">RpcProcessor.RpcScopeProcessorBase.IsStored</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_IsDiscarded">RpcProcessor.RpcScopeProcessorBase.IsDiscarded</a>
@@ -208,106 +200,97 @@
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_HandleDiscardedAsync_wan24_RPC_Processing_Messages_Scopes_IRpcScopeDiscardedMessage_System_Threading_CancellationToken_">RpcProcessor.RpcScopeProcessorBase.HandleDiscardedAsync(IRpcScopeDiscardedMessage, CancellationToken)</a>
     </div>
     <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_EnsureNotDiscarded">RpcProcessor.RpcScopeProcessorBase.EnsureNotDiscarded()</a>
+    </div>
+    <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_OnRemoteEvent">RpcProcessor.RpcScopeProcessorBase.OnRemoteEvent</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RaiseOnRemoteEvent_wan24_RPC_Processing_Scopes_RpcScopeEvent_wan24_RPC_Processing_Messages_Scopes_IRpcScopeEventMessage_">RpcProcessor.RpcScopeProcessorBase.RaiseOnRemoteEvent(RpcScopeEvent, IRpcScopeEventMessage)</a>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.DisposeSyncObject</span>
+      <span class="xref">DisposableBase.DisposeSyncObject</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.AsyncDisposing</span>
+      <span class="xref">DisposableBase.AsyncDisposing</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.AllowFinalizer</span>
+      <span class="xref">DisposableBase.AllowFinalizer</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.DisposeObjects</span>
+      <span class="xref">DisposableBase.DisposeObjects</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.StackInfo</span>
+      <span class="xref">DisposableBase.StackInfo</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.RegisterForDispose&lt;T&gt;(in T)</span>
+      <span class="xref">DisposableBase.RegisterForDispose&lt;T&gt;(in T)</span>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableRecordBase.LockDisposing(in TimeSpan, in CancellationToken)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">DisposableBase.EnsureUndisposed(in bool, in bool)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableRecordBase.LockDisposingAsync(TimeSpan, CancellationToken)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableBase.LockDisposing(in TimeSpan, in CancellationToken)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableRecordBase.TryLockDisposing(out SemaphoreSyncContext, in TimeSpan, in CancellationToken)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableBase.LockDisposingAsync(TimeSpan, CancellationToken)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableRecordBase.TryLockDisposingAsync(TimeSpan, CancellationToken)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableBase.TryLockDisposing(out SemaphoreSyncContext, in TimeSpan, in CancellationToken)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">DisposableRecordBase.EnsureUndisposed(in bool, in bool)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">DisposableBase.TryLockDisposingAsync(TimeSpan, CancellationToken)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">DisposableRecordBase.IfUndisposed&lt;T&gt;(in T, in bool)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">DisposableBase.IfUndisposed&lt;T&gt;(in T, in bool)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">DisposableRecordBase.IfUndisposed(in Action, in bool)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">DisposableBase.IfUndisposed(in Action, in bool)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">DisposableRecordBase.IfUndisposed&lt;T&gt;(in Func&lt;T&gt;, in bool)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">DisposableBase.IfUndisposed&lt;T&gt;(in Func&lt;T&gt;, in bool)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">DisposableRecordBase.IfUndisposedNullable&lt;T&gt;(in Func&lt;T&gt;, in bool)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">DisposableBase.IfUndisposedNullable&lt;T&gt;(in Func&lt;T&gt;, in bool)</a>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.DisposeAttributes()</span>
+      <span class="xref">DisposableBase.DisposeAttributes()</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.DisposeAttributesAsync()</span>
+      <span class="xref">DisposableBase.DisposeAttributesAsync()</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.Dispose()</span>
+      <span class="xref">DisposableBase.Dispose()</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.DisposeAsync()</span>
+      <span class="xref">DisposableBase.DisposeAsync()</span>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.text.stringbuilder">DisposableRecordBase.PrintMembers(StringBuilder)</a>
+      <span class="xref">DisposableBase.CreateStackInfo</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.GetHashCode()</span>
+      <span class="xref">DisposableBase.DestructorDisposing</span>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">DisposableRecordBase.Equals(object)</a>
+      <span class="xref">DisposableBase.IsDisposing</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.Equals(DisposableRecordBase)</span>
+      <span class="xref">DisposableBase.IsDisposed</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.&lt;Clone&gt;$()</span>
+      <span class="xref">DisposableBase.OnDisposing</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.EqualityContract</span>
+      <span class="xref">DisposableBase.OnDisposed</span>
     </div>
     <div>
-      <span class="xref">DisposableRecordBase.CreateStackInfo</span>
-    </div>
-    <div>
-      <span class="xref">DisposableRecordBase.DestructorDisposing</span>
-    </div>
-    <div>
-      <span class="xref">DisposableRecordBase.IsDisposing</span>
-    </div>
-    <div>
-      <span class="xref">DisposableRecordBase.IsDisposed</span>
-    </div>
-    <div>
-      <span class="xref">DisposableRecordBase.OnDisposing</span>
-    </div>
-    <div>
-      <span class="xref">DisposableRecordBase.OnDisposed</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
@@ -323,7 +306,7 @@
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract record RpcProcessor.RpcScopeBase : RpcProcessor.RpcScopeProcessorBase, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable, IEquatable&lt;DisposableRecordBase&gt;, IEquatable&lt;RpcProcessor.RpcScopeProcessorBase&gt;, IEquatable&lt;RpcProcessor.RpcScopeBase&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class RpcProcessor.RpcScopeBase : RpcProcessor.RpcScopeProcessorBase, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable</code></pre>
   </div>
   <h5 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Constructor</p>
@@ -332,44 +315,10 @@
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ctor_wan24_RPC_Processing_RpcProcessor__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.%23ctor(wan24.RPC.Processing.RpcProcessor%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L34">View Source</a>
-  </span>
-  <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ctor_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.#ctor*"></a>
-  <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ctor_wan24_RPC_Processing_RpcProcessor__" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.#ctor(wan24.RPC.Processing.RpcProcessor@)">RpcScopeBase(in RpcProcessor)</h4>
-  <div class="markdown level1 summary"><p>Constructor</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected RpcScopeBase(in RpcProcessor processor)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a></td>
-        <td><span class="parametername">processor</span></td>
-        <td><p>RPC processor</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ctor_wan24_RPC_Processing_RpcProcessor__System_Int64__System_String__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.%23ctor(wan24.RPC.Processing.RpcProcessor%40%2CSystem.Int64%40%2CSystem.String%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L23">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L25">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ctor_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.#ctor*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ctor_wan24_RPC_Processing_RpcProcessor__System_Int64__System_String__" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.#ctor(wan24.RPC.Processing.RpcProcessor@,System.Int64@,System.String@)">RpcScopeBase(in RpcProcessor, in long, in string?)</h4>
@@ -413,6 +362,46 @@
   <h5 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ctor_wan24_RPC_Processing_RpcProcessor__System_Int64__System_String___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Constructor</p>
 </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ctor_wan24_RPC_Processing_RpcProcessor__System_String__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.%23ctor(wan24.RPC.Processing.RpcProcessor%40%2CSystem.String%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L45">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ctor_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.#ctor*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ctor_wan24_RPC_Processing_RpcProcessor__System_String__" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.#ctor(wan24.RPC.Processing.RpcProcessor@,System.String@)">RpcScopeBase(in RpcProcessor, in string?)</h4>
+  <div class="markdown level1 summary"><p>Constructor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected RpcScopeBase(in RpcProcessor processor, in string? key = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a></td>
+        <td><span class="parametername">processor</span></td>
+        <td><p>RPC processor</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>Key</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="fields">Fields
 </h3>
   <span class="small pull-right mobile-hide">
@@ -420,7 +409,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeValue.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.DisposeValue%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L28">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L30">View Source</a>
   </span>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeValue" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.DisposeValue">DisposeValue</h4>
   <div class="markdown level1 summary"><p>Dispose the <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Value">Value</a> when disposing?</p>
@@ -445,6 +434,66 @@
       </tr>
     </tbody>
   </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase__IsStored.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase._IsStored%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L38">View Source</a>
+  </span>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase__IsStored" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase._IsStored">_IsStored</h4>
+  <div class="markdown level1 summary"><p>If the scope is stored</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool _IsStored</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ScopeParameter.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase._ScopeParameter%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L34">View Source</a>
+  </span>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ScopeParameter" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase._ScopeParameter">_ScopeParameter</h4>
+  <div class="markdown level1 summary"><p>Scope parameter</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly IRpcScopeParameter? _ScopeParameter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Parameters.IRpcScopeParameter.html">IRpcScopeParameter</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
 </h3>
   <span class="small pull-right mobile-hide">
@@ -452,7 +501,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeValueOnError.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.DisposeValueOnError%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L57">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L91">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeValueOnError_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.DisposeValueOnError*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeValueOnError" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.DisposeValueOnError">DisposeValueOnError</h4>
@@ -483,7 +532,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Id.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Id%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L37">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L48">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Id_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Id*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Id" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Id">Id</h4>
@@ -516,7 +565,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_InformConsumerWhenDisposing.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.InformConsumerWhenDisposing%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L67">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L101">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_InformConsumerWhenDisposing_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.InformConsumerWhenDisposing*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_InformConsumerWhenDisposing" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.InformConsumerWhenDisposing">InformConsumerWhenDisposing</h4>
@@ -547,7 +596,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_IsError.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.IsError%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L72">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L106">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_IsError_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.IsError*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_IsError" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.IsError">IsError</h4>
@@ -575,10 +624,43 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_IsStored.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.IsStored%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L51">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_IsStored_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.IsStored*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_IsStored" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.IsStored">IsStored</h4>
+  <div class="markdown level1 summary"><p>If the scope is stored</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool IsStored { get; init; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_IsStored">RpcProcessor.RpcScopeProcessorBase.IsStored</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_LastException.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.LastException%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L77">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L111">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_LastException_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.LastException*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_LastException" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.LastException">LastException</h4>
@@ -609,7 +691,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Method.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Method%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L47">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L81">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Method_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Method*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Method" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Method">Method</h4>
@@ -640,7 +722,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_ScopeParameter.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.ScopeParameter%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L42">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L65">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_ScopeParameter_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.ScopeParameter*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_ScopeParameter" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.ScopeParameter">ScopeParameter</h4>
@@ -671,7 +753,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Value.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Value%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L52">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L86">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Value_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Value*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Value" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Value">Value</h4>
@@ -702,7 +784,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_WillDisposeValue.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.WillDisposeValue%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L62">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L96">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_WillDisposeValue_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.WillDisposeValue*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_WillDisposeValue" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.WillDisposeValue">WillDisposeValue</h4>
@@ -728,23 +810,43 @@
       </tr>
     </tbody>
   </table>
+  <h3 id="methods">Methods
+</h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_id.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.id%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_CreateScopeParameterAsync_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.CreateScopeParameterAsync(System.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L23">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L242">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_id_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.id*"></a>
-  <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_id" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.id">id</h4>
-  <div class="markdown level1 summary"><p>ID</p>
+  <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_CreateScopeParameterAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.CreateScopeParameterAsync*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_CreateScopeParameterAsync_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.CreateScopeParameterAsync(System.Threading.CancellationToken)">CreateScopeParameterAsync(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Create a scope parameter</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public long id { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual Task CreateScopeParameterAsync(CancellationToken cancellationToken)</code></pre>
   </div>
-  <h5 class="propertyValue">Property Value</h5>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>Cancellation token</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-condensed">
     <thead>
       <tr>
@@ -754,19 +856,90 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h3 id="methods">Methods
-</h3>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a></td>
+        <td><p>Not implemented</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DiscardAsync_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.DiscardAsync(System.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L246">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DiscardAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.DiscardAsync*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DiscardAsync_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.DiscardAsync(System.Boolean,System.Threading.CancellationToken)">DiscardAsync(bool, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Discard this scope at the peer, if possible</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Task DiscardAsync(bool sync = true, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><span class="parametername">sync</span></td>
+        <td><p>If to synchronize using <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Sync">Sync</a></p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>Cancellation token</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_DiscardAsync_System_Boolean_System_Threading_CancellationToken_">RpcProcessor.RpcScopeProcessorBase.DiscardAsync(bool, CancellationToken)</a></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Dispose(System.Boolean)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L156">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L266">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Dispose_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Dispose*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Dispose_System_Boolean_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.Dispose(System.Boolean)">Dispose(bool)</h4>
@@ -802,7 +975,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeCore.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.DisposeCore%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L175">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L293">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeCore_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.DisposeCore*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeCore" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.DisposeCore">DisposeCore()</h4>
@@ -835,7 +1008,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_RaiseEventAsync_System_String_System_EventArgs_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.RaiseEventAsync(System.String%2CSystem.EventArgs%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L104">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L186">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_RaiseEventAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.RaiseEventAsync*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_RaiseEventAsync_System_String_System_EventArgs_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.RaiseEventAsync(System.String,System.EventArgs,System.Boolean,System.Threading.CancellationToken)">RaiseEventAsync(string, EventArgs?, bool, CancellationToken)</h4>
@@ -901,10 +1074,59 @@
   <div><a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RaiseEventAsync_System_String_System_EventArgs_System_Boolean_System_Threading_CancellationToken_">RpcProcessor.RpcScopeProcessorBase.RaiseEventAsync(string, EventArgs?, bool, CancellationToken)</a></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_RegisterRemoteAsync_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.RegisterRemoteAsync(System.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L117">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_RegisterRemoteAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.RegisterRemoteAsync*"></a>
+  <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_RegisterRemoteAsync_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.RegisterRemoteAsync(System.Threading.CancellationToken)">RegisterRemoteAsync(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Register this scope as a remote scope at the peer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task RegisterRemoteAsync(CancellationToken cancellationToken = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>Cancellation token</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_SetIsErrorAsync_System_Exception_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.SetIsErrorAsync(System.Exception)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L83">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L165">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_SetIsErrorAsync_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.SetIsErrorAsync*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_SetIsErrorAsync_System_Exception_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.SetIsErrorAsync(System.Exception)">SetIsErrorAsync(Exception)</h4>
@@ -953,7 +1175,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeBase_ToString.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeBase.ToString%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L153">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L235">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_ToString_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.ToString*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeBase_ToString" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.ToString">ToString()</h4>
@@ -981,7 +1203,7 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_ToString">RpcProcessor.RpcScopeProcessorBase.ToString()</a></div>
+  <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <span class="xref">wan24.Core.IWillDispose</span>
@@ -994,15 +1216,6 @@
   </div>
   <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>
-  </div>
-  <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable&lt;T&gt;</a>
-  </div>
-  <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable&lt;T&gt;</a>
-  </div>
-  <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable&lt;T&gt;</a>
   </div>
 
 </article>
