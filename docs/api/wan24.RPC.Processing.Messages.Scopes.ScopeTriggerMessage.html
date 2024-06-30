@@ -120,6 +120,7 @@
     <div><span class="xref">IStreamSerializerVersion</span></div>
     <div><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcRemoteScopeMessage.html">IRpcRemoteScopeMessage</a></div>
     <div><a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeMessage.html">IRpcScopeMessage</a></div>
+    <div><a class="xref" href="wan24.RPC.Processing.Messages.IRpcRequest.html">IRpcRequest</a></div>
     <div><a class="xref" href="wan24.RPC.Processing.Messages.IRpcMessage.html">IRpcMessage</a></div>
     <div><span class="xref">IStreamSerializer</span></div>
   </div>
@@ -205,7 +206,7 @@
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ScopeTriggerMessage : ScopeMessageBase, IObjectValidatable, IValidatableObject, IStreamSerializerVersion, IRpcRemoteScopeMessage, IRpcScopeMessage, IRpcMessage, IStreamSerializer</code></pre>
+    <pre><code class="lang-csharp hljs">public class ScopeTriggerMessage : ScopeMessageBase, IObjectValidatable, IValidatableObject, IStreamSerializerVersion, IRpcRemoteScopeMessage, IRpcScopeMessage, IRpcRequest, IRpcMessage, IStreamSerializer</code></pre>
   </div>
   <h5 id="wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Constructor</p>
@@ -342,7 +343,7 @@ public string? Data { get; set; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override sealed bool RequireId { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public override bool RequireId { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -531,6 +532,9 @@ public string? Data { get; set; }</code></pre>
   </div>
   <div>
       <a class="xref" href="wan24.RPC.Processing.Messages.Scopes.IRpcScopeMessage.html">IRpcScopeMessage</a>
+  </div>
+  <div>
+      <a class="xref" href="wan24.RPC.Processing.Messages.IRpcRequest.html">IRpcRequest</a>
   </div>
   <div>
       <a class="xref" href="wan24.RPC.Processing.Messages.IRpcMessage.html">IRpcMessage</a>
