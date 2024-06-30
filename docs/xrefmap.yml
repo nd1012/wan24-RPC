@@ -10439,12 +10439,12 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleMessageIntAsync
   nameWithType: RpcRemoteScope.HandleMessageIntAsync
-- uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage,System.Threading.CancellationToken)
-  name: HandleTriggerAsync(RemoteScopeTriggerMessage, CancellationToken)
-  href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_HandleTriggerAsync_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage,System.Threading.CancellationToken)
-  fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage, System.Threading.CancellationToken)
-  nameWithType: RpcRemoteScope.HandleTriggerAsync(RemoteScopeTriggerMessage, CancellationToken)
+- uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage,System.Threading.CancellationToken)
+  name: HandleTriggerAsync(ScopeTriggerMessage, CancellationToken)
+  href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_HandleTriggerAsync_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage,System.Threading.CancellationToken)
+  fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage, System.Threading.CancellationToken)
+  nameWithType: RpcRemoteScope.HandleTriggerAsync(ScopeTriggerMessage, CancellationToken)
 - uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleTriggerAsync*
   name: HandleTriggerAsync
   href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_HandleTriggerAsync_
@@ -10458,12 +10458,12 @@ references:
   commentId: E:wan24.RPC.Processing.Scopes.RpcRemoteScope.OnTrigger
   fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.OnTrigger
   nameWithType: RpcRemoteScope.OnTrigger
-- uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage)
-  name: RaiseOnTrigger(RemoteScopeTriggerMessage)
-  href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_RaiseOnTrigger_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_
-  commentId: M:wan24.RPC.Processing.Scopes.RpcRemoteScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage)
-  fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage)
-  nameWithType: RpcRemoteScope.RaiseOnTrigger(RemoteScopeTriggerMessage)
+- uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)
+  name: RaiseOnTrigger(ScopeTriggerMessage)
+  href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_RaiseOnTrigger_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_
+  commentId: M:wan24.RPC.Processing.Scopes.RpcRemoteScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)
+  fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)
+  nameWithType: RpcRemoteScope.RaiseOnTrigger(ScopeTriggerMessage)
 - uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.RaiseOnTrigger*
   name: RaiseOnTrigger
   href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_RaiseOnTrigger_
@@ -10471,15 +10471,15 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.RaiseOnTrigger
   nameWithType: RpcRemoteScope.RaiseOnTrigger
-- uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage,System.Threading.CancellationToken)
-  name: SendTriggerAsync(ScopeTriggerMessage?, CancellationToken)
-  href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_SendTriggerAsync_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage,System.Threading.CancellationToken)
-  name.vb: SendTriggerAsync(ScopeTriggerMessage, CancellationToken)
-  fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage?, System.Threading.CancellationToken)
-  fullName.vb: wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage, System.Threading.CancellationToken)
-  nameWithType: RpcRemoteScope.SendTriggerAsync(ScopeTriggerMessage?, CancellationToken)
-  nameWithType.vb: RpcRemoteScope.SendTriggerAsync(ScopeTriggerMessage, CancellationToken)
+- uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage,System.Threading.CancellationToken)
+  name: SendTriggerAsync(RemoteScopeTriggerMessage?, CancellationToken)
+  href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_SendTriggerAsync_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage,System.Threading.CancellationToken)
+  name.vb: SendTriggerAsync(RemoteScopeTriggerMessage, CancellationToken)
+  fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage?, System.Threading.CancellationToken)
+  fullName.vb: wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage, System.Threading.CancellationToken)
+  nameWithType: RpcRemoteScope.SendTriggerAsync(RemoteScopeTriggerMessage?, CancellationToken)
+  nameWithType.vb: RpcRemoteScope.SendTriggerAsync(RemoteScopeTriggerMessage, CancellationToken)
 - uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync*
   name: SendTriggerAsync
   href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_SendTriggerAsync_
@@ -10493,15 +10493,15 @@ references:
   commentId: T:wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs
   fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs
   nameWithType: RpcRemoteScope.TriggerEventArgs
-- uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.#ctor(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage@)
-  name: TriggerEventArgs(in RemoteScopeTriggerMessage)
-  href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_TriggerEventArgs__ctor_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage__
-  commentId: M:wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.#ctor(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage@)
-  name.vb: New(RemoteScopeTriggerMessage)
-  fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.TriggerEventArgs(in wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage)
-  fullName.vb: wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.New(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage)
-  nameWithType: RpcRemoteScope.TriggerEventArgs.TriggerEventArgs(in RemoteScopeTriggerMessage)
-  nameWithType.vb: RpcRemoteScope.TriggerEventArgs.New(RemoteScopeTriggerMessage)
+- uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.#ctor(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage@)
+  name: TriggerEventArgs(in ScopeTriggerMessage)
+  href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_TriggerEventArgs__ctor_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage__
+  commentId: M:wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.#ctor(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage@)
+  name.vb: New(ScopeTriggerMessage)
+  fullName: wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.TriggerEventArgs(in wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)
+  fullName.vb: wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.New(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)
+  nameWithType: RpcRemoteScope.TriggerEventArgs.TriggerEventArgs(in ScopeTriggerMessage)
+  nameWithType.vb: RpcRemoteScope.TriggerEventArgs.New(ScopeTriggerMessage)
 - uid: wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.#ctor*
   name: TriggerEventArgs
   href: api/wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.html#wan24_RPC_Processing_Scopes_RpcRemoteScope_TriggerEventArgs__ctor_
@@ -10582,12 +10582,12 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.Scopes.RpcScope.HandleMessageIntAsync
   nameWithType: RpcScope.HandleMessageIntAsync
-- uid: wan24.RPC.Processing.Scopes.RpcScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage,System.Threading.CancellationToken)
-  name: HandleTriggerAsync(ScopeTriggerMessage, CancellationToken)
-  href: api/wan24.RPC.Processing.Scopes.RpcScope.html#wan24_RPC_Processing_Scopes_RpcScope_HandleTriggerAsync_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Processing.Scopes.RpcScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage,System.Threading.CancellationToken)
-  fullName: wan24.RPC.Processing.Scopes.RpcScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage, System.Threading.CancellationToken)
-  nameWithType: RpcScope.HandleTriggerAsync(ScopeTriggerMessage, CancellationToken)
+- uid: wan24.RPC.Processing.Scopes.RpcScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage,System.Threading.CancellationToken)
+  name: HandleTriggerAsync(RemoteScopeTriggerMessage, CancellationToken)
+  href: api/wan24.RPC.Processing.Scopes.RpcScope.html#wan24_RPC_Processing_Scopes_RpcScope_HandleTriggerAsync_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Processing.Scopes.RpcScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage,System.Threading.CancellationToken)
+  fullName: wan24.RPC.Processing.Scopes.RpcScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage, System.Threading.CancellationToken)
+  nameWithType: RpcScope.HandleTriggerAsync(RemoteScopeTriggerMessage, CancellationToken)
 - uid: wan24.RPC.Processing.Scopes.RpcScope.HandleTriggerAsync*
   name: HandleTriggerAsync
   href: api/wan24.RPC.Processing.Scopes.RpcScope.html#wan24_RPC_Processing_Scopes_RpcScope_HandleTriggerAsync_
@@ -10601,12 +10601,12 @@ references:
   commentId: E:wan24.RPC.Processing.Scopes.RpcScope.OnTrigger
   fullName: wan24.RPC.Processing.Scopes.RpcScope.OnTrigger
   nameWithType: RpcScope.OnTrigger
-- uid: wan24.RPC.Processing.Scopes.RpcScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)
-  name: RaiseOnTrigger(ScopeTriggerMessage)
-  href: api/wan24.RPC.Processing.Scopes.RpcScope.html#wan24_RPC_Processing_Scopes_RpcScope_RaiseOnTrigger_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_
-  commentId: M:wan24.RPC.Processing.Scopes.RpcScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)
-  fullName: wan24.RPC.Processing.Scopes.RpcScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)
-  nameWithType: RpcScope.RaiseOnTrigger(ScopeTriggerMessage)
+- uid: wan24.RPC.Processing.Scopes.RpcScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage)
+  name: RaiseOnTrigger(RemoteScopeTriggerMessage)
+  href: api/wan24.RPC.Processing.Scopes.RpcScope.html#wan24_RPC_Processing_Scopes_RpcScope_RaiseOnTrigger_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_
+  commentId: M:wan24.RPC.Processing.Scopes.RpcScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage)
+  fullName: wan24.RPC.Processing.Scopes.RpcScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage)
+  nameWithType: RpcScope.RaiseOnTrigger(RemoteScopeTriggerMessage)
 - uid: wan24.RPC.Processing.Scopes.RpcScope.RaiseOnTrigger*
   name: RaiseOnTrigger
   href: api/wan24.RPC.Processing.Scopes.RpcScope.html#wan24_RPC_Processing_Scopes_RpcScope_RaiseOnTrigger_
@@ -10614,15 +10614,15 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.Scopes.RpcScope.RaiseOnTrigger
   nameWithType: RpcScope.RaiseOnTrigger
-- uid: wan24.RPC.Processing.Scopes.RpcScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage,System.Threading.CancellationToken)
-  name: SendTriggerAsync(RemoteScopeTriggerMessage?, CancellationToken)
-  href: api/wan24.RPC.Processing.Scopes.RpcScope.html#wan24_RPC_Processing_Scopes_RpcScope_SendTriggerAsync_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_System_Threading_CancellationToken_
-  commentId: M:wan24.RPC.Processing.Scopes.RpcScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage,System.Threading.CancellationToken)
-  name.vb: SendTriggerAsync(RemoteScopeTriggerMessage, CancellationToken)
-  fullName: wan24.RPC.Processing.Scopes.RpcScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage?, System.Threading.CancellationToken)
-  fullName.vb: wan24.RPC.Processing.Scopes.RpcScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage, System.Threading.CancellationToken)
-  nameWithType: RpcScope.SendTriggerAsync(RemoteScopeTriggerMessage?, CancellationToken)
-  nameWithType.vb: RpcScope.SendTriggerAsync(RemoteScopeTriggerMessage, CancellationToken)
+- uid: wan24.RPC.Processing.Scopes.RpcScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage,System.Threading.CancellationToken)
+  name: SendTriggerAsync(ScopeTriggerMessage?, CancellationToken)
+  href: api/wan24.RPC.Processing.Scopes.RpcScope.html#wan24_RPC_Processing_Scopes_RpcScope_SendTriggerAsync_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_System_Threading_CancellationToken_
+  commentId: M:wan24.RPC.Processing.Scopes.RpcScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage,System.Threading.CancellationToken)
+  name.vb: SendTriggerAsync(ScopeTriggerMessage, CancellationToken)
+  fullName: wan24.RPC.Processing.Scopes.RpcScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage?, System.Threading.CancellationToken)
+  fullName.vb: wan24.RPC.Processing.Scopes.RpcScope.SendTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage, System.Threading.CancellationToken)
+  nameWithType: RpcScope.SendTriggerAsync(ScopeTriggerMessage?, CancellationToken)
+  nameWithType.vb: RpcScope.SendTriggerAsync(ScopeTriggerMessage, CancellationToken)
 - uid: wan24.RPC.Processing.Scopes.RpcScope.SendTriggerAsync*
   name: SendTriggerAsync
   href: api/wan24.RPC.Processing.Scopes.RpcScope.html#wan24_RPC_Processing_Scopes_RpcScope_SendTriggerAsync_
@@ -10636,15 +10636,15 @@ references:
   commentId: T:wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs
   fullName: wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs
   nameWithType: RpcScope.TriggerEventArgs
-- uid: wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.#ctor(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage@)
-  name: TriggerEventArgs(in ScopeTriggerMessage)
-  href: api/wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.html#wan24_RPC_Processing_Scopes_RpcScope_TriggerEventArgs__ctor_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage__
-  commentId: M:wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.#ctor(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage@)
-  name.vb: New(ScopeTriggerMessage)
-  fullName: wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.TriggerEventArgs(in wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)
-  fullName.vb: wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.New(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)
-  nameWithType: RpcScope.TriggerEventArgs.TriggerEventArgs(in ScopeTriggerMessage)
-  nameWithType.vb: RpcScope.TriggerEventArgs.New(ScopeTriggerMessage)
+- uid: wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.#ctor(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage@)
+  name: TriggerEventArgs(in RemoteScopeTriggerMessage)
+  href: api/wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.html#wan24_RPC_Processing_Scopes_RpcScope_TriggerEventArgs__ctor_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage__
+  commentId: M:wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.#ctor(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage@)
+  name.vb: New(RemoteScopeTriggerMessage)
+  fullName: wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.TriggerEventArgs(in wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage)
+  fullName.vb: wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.New(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage)
+  nameWithType: RpcScope.TriggerEventArgs.TriggerEventArgs(in RemoteScopeTriggerMessage)
+  nameWithType.vb: RpcScope.TriggerEventArgs.New(RemoteScopeTriggerMessage)
 - uid: wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.#ctor*
   name: TriggerEventArgs
   href: api/wan24.RPC.Processing.Scopes.RpcScope.TriggerEventArgs.html#wan24_RPC_Processing_Scopes_RpcScope_TriggerEventArgs__ctor_
