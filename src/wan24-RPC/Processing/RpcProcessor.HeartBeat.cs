@@ -96,15 +96,15 @@ namespace wan24.RPC.Processing
             }
             catch (ObjectDisposedException) when (IsDisposing)
             {
-                Logger?.Log(LogLevel.Warning, "{this} handling ping message #{id} canceled due to disposing", ToString(), message.Id);
+                Logger?.Log(LogLevel.Debug, "{this} handling ping message #{id} canceled due to disposing", ToString(), message.Id);
             }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {
-                Logger?.Log(LogLevel.Warning, "{this} handling ping message #{id} canceled", ToString(), message.Id);
+                Logger?.Log(LogLevel.Debug, "{this} handling ping message #{id} canceled", ToString(), message.Id);
             }
             catch (Exception ex)
             {
-                Logger?.Log(LogLevel.Error, "{this} handling ping message #{id} failed (will dispose)", ToString(), message.Id);
+                Logger?.Log(LogLevel.Warning, "{this} handling ping message #{id} failed (will dispose)", ToString(), message.Id);
                 await StopExceptionalAndDisposeAsync(ex).DynamicContext();
             }
         }
@@ -129,15 +129,15 @@ namespace wan24.RPC.Processing
             }
             catch (ObjectDisposedException) when (IsDisposing)
             {
-                Logger?.Log(LogLevel.Warning, "{this} handling pong message #{id} canceled due to disposing", ToString(), message.Id);
+                Logger?.Log(LogLevel.Debug, "{this} handling pong message #{id} canceled due to disposing", ToString(), message.Id);
             }
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {
-                Logger?.Log(LogLevel.Warning, "{this} handling pong message #{id} canceled", ToString(), message.Id);
+                Logger?.Log(LogLevel.Debug, "{this} handling pong message #{id} canceled", ToString(), message.Id);
             }
             catch (Exception ex)
             {
-                Logger?.Log(LogLevel.Error, "{this} handling pong message #{id} failed (will dispose)", ToString(), message.Id);
+                Logger?.Log(LogLevel.Warning, "{this} handling pong message #{id} failed (will dispose)", ToString(), message.Id);
                 await StopExceptionalAndDisposeAsync(ex).DynamicContext();
             }
         }
@@ -161,15 +161,18 @@ namespace wan24.RPC.Processing
             }
             catch (TimeoutException ex)
             {
-                Logger?.Log(LogLevel.Error, "{this} heartbeat timeout - disposing", ToString());
+                Logger?.Log(LogLevel.Information, "{this} heartbeat timeout - disposing", ToString());
                 await StopExceptionalAndDisposeAsync(ex).DynamicContext();
+            }
+            catch (ObjectDisposedException) when (IsDisposing)
+            {
             }
             catch (OperationCanceledException ex) when (Equals(ex.CancellationToken, CancelToken))
             {
             }
             catch (Exception ex)
             {
-                Logger?.Log(LogLevel.Error, "{this} heartbeat timeout handling error (disposing)", ToString());
+                Logger?.Log(LogLevel.Warning, "{this} heartbeat timeout handling error (disposing)", ToString());
                 await StopExceptionalAndDisposeAsync(ex).DynamicContext();
             }
         }
@@ -182,7 +185,7 @@ namespace wan24.RPC.Processing
         protected virtual async void HandlePeerHeartBeatTimeoutAsync(Core.Timeout sender, EventArgs e)
         {
             await Task.Yield();
-            Logger?.Log(LogLevel.Warning, "{this} peer heartbeat timeout - disposing", ToString());
+            Logger?.Log(LogLevel.Information, "{this} peer heartbeat timeout - disposing", ToString());
             try
             {
                 await StopExceptionalAndDisposeAsync(new TimeoutException("Peer heartbeat timeout")).DynamicContext();

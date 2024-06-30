@@ -49,8 +49,13 @@ namespace wan24.RPC.Processing
             foreach (object api in Options.API.Values.Select(a => a.Instance))
                 if (api is IWantRpcProcessorInfo processorInfo)
                     processorInfo.Processor = this;
-            RpcProcessorTable.Processors[GetHashCode()] = this;
+            RpcProcessorTable.Processors[GUID] = this;
         }
+
+        /// <summary>
+        /// GUID
+        /// </summary>
+        public string GUID { get; } = Guid.NewGuid().ToString();
 
         /// <summary>
         /// Options (will be disposed)

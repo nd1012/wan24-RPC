@@ -1,5 +1,8 @@
 ﻿using wan24.Core;
 using wan24.RPC.Processing;
+using wan24.RPC.Processing.Parameters;
+using wan24.RPC.Processing.Scopes;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace wan24_RPC_Tests
 {
@@ -43,8 +46,8 @@ namespace wan24_RPC_Tests
         {
             // Simple client/server echo method calls
             (TestRpcProcessor server, TestRpcProcessor client) = await GetRpcAsync();
-            ServerSdk serverSdk = new(client);
             ClientSdk clientSdk = new(server);
+            ServerSdk serverSdk = new(client);
             try
             {
 
@@ -66,8 +69,8 @@ namespace wan24_RPC_Tests
             }
             finally
             {
-                await serverSdk.DisposeAsync();
                 await clientSdk.DisposeAsync();
+                await serverSdk.DisposeAsync();
                 await DisposeRpcAsync(server, client);
             }
         }
@@ -144,6 +147,154 @@ namespace wan24_RPC_Tests
             }
             finally
             {
+                await DisposeRpcAsync(server, client);
+            }
+        }
+
+        [TestMethod, Timeout(10000)]
+        public async Task Scope_TestsAsync()
+        {
+            // Simple scope functionality
+            (TestRpcProcessor server, TestRpcProcessor client) = await GetRpcAsync();
+            ClientSdk clientSdk = new(server);
+            ServerSdk serverSdk = new(client);
+            try
+            {
+                // Scope factory
+                {
+                    RpcScope scope = (RpcScope)await RpcScopes.Factories[(int)RpcScopeTypes.Scope].Invoke(
+                        client,
+                        new RpcScopeParameter()
+                        {
+                            Key = "test",
+                            StoreScope = true
+                        },
+                        CancellationToken.None
+                        );
+                    await using (scope)
+                    {
+                        scope.InformConsumerWhenDisposing = false;
+                        Assert.AreEqual(1, scope.Id);
+                        Assert.AreEqual(1, client.CurrentScopeId);
+                        Assert.AreEqual("test", scope.Key);
+                        Assert.IsNotNull(client.GetScope("test"));
+                        Assert.IsTrue(client.LocalScopes.ContainsKey(scope.Id));
+                    }
+                }
+                Assert.IsNull(client.GetScope("test"));
+                Assert.IsFalse(client.LocalScopes.ContainsKey(1));
+
+                // Manual scope creation
+                {
+                    RpcScope scope = new(client, "test")
+                    {
+                        IsStored = true,
+                        InformConsumerWhenDisposing = false
+                    };
+                    await using (scope)
+                    {
+                        Assert.AreEqual(2, scope.Id);
+                        Assert.AreEqual(2, client.CurrentScopeId);
+                        Assert.AreEqual("test", scope.Key);
+                        Assert.IsNotNull(client.GetScope("test"));
+                        Assert.IsTrue(client.LocalScopes.ContainsKey(scope.Id));
+                    }
+                }
+                Assert.IsNull(client.GetScope("test"));
+                Assert.IsFalse(client.LocalScopes.ContainsKey(2));
+
+                // Remote scope registration
+                {
+                    RpcScope scope = new(client, "test")
+                    {
+                        ScopeParameter = new RpcScopeParameter()
+                        {
+                            Key = "test"
+                        }
+                    };
+                    await using (scope)
+                    {
+                        // The scope must not be stored yet
+                        Assert.AreEqual(3, scope.Id);
+                        Assert.AreEqual(3, client.CurrentScopeId);
+                        Assert.AreEqual("test", scope.Key);
+                        Assert.IsNull(client.GetScope("test"));
+                        Assert.IsFalse(client.LocalScopes.ContainsKey(scope.Id));
+
+                        // After registration the scope must be stored local and at the peer
+                        await scope.RegisterRemoteAsync();
+                        Assert.IsNotNull(client.GetScope("test"));
+                        Assert.IsTrue(client.LocalScopes.ContainsKey(scope.Id));
+                        RpcProcessor.RpcRemoteScopeBase? remoteScope = server.GetRemoteScope("test");
+                        Assert.IsNotNull(remoteScope);
+                        Assert.IsTrue(server.PeerScopes.ContainsKey(scope.Id));
+
+                        // After the peer disposed the remote scope, the local scope must be disposed, too
+                        await remoteScope.DisposeAsync();
+                        Assert.IsNull(server.GetRemoteScope("test"));
+                        Assert.IsFalse(server.PeerScopes.ContainsKey(scope.Id));
+                        await Task.Delay(200);// Wait for the client to handle the discarded scope message
+                        Assert.IsTrue(scope.IsDisposed);
+                    }
+                }
+
+                // Remote scope discarded when the scope is being disposed
+                {
+                    RpcScope scope = new(client, "test")
+                    {
+                        ScopeParameter = new RpcScopeParameter()
+                        {
+                            Key = "test"
+                        }
+                    };
+                    await using (scope)
+                    {
+                        await scope.RegisterRemoteAsync();
+                        Assert.IsTrue(server.PeerScopes.ContainsKey(scope.Id));
+                        await scope.DisposeAsync().DynamicContext();
+                        await Task.Delay(200);// Wait for the server to handle the discarded scope message
+                        Assert.IsFalse(server.PeerScopes.ContainsKey(scope.Id));
+                    }
+                }
+
+                // Trigger
+                {
+                    RpcScope scope = new(client, "test")
+                    {
+                        ScopeParameter = new RpcScopeParameter()
+                        {
+                            Key = "test"
+                        }
+                    };
+                    await using (scope)
+                    {
+                        await scope.RegisterRemoteAsync();
+                        RpcRemoteScope remoteScope = (RpcRemoteScope)(server.GetRemoteScope("test") ?? throw new InvalidProgramException());
+                        int localTrigger = 0,
+                            remoteTrigger = 0;
+                        scope.OnTrigger += (s, e) => localTrigger++;
+                        remoteScope.OnTrigger += (s, e) => remoteTrigger++;
+
+                        // Trigger at the peer
+                        await scope.SendTriggerAsync();
+                        await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(20), (ct) => Task.FromResult(remoteTrigger > 0));
+                        Assert.AreEqual(0, localTrigger);
+                        Assert.AreEqual(1, remoteTrigger);
+
+                        // Trigger from the remote
+                        await remoteScope.SendTriggerAsync();
+                        await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(20), (ct) => Task.FromResult(localTrigger > 0));
+                        Assert.AreEqual(1, localTrigger);
+                        Assert.AreEqual(1, remoteTrigger);
+                    }
+                }
+
+                //TODO Test events
+            }
+            finally
+            {
+                await clientSdk.DisposeAsync();
+                await serverSdk.DisposeAsync();
                 await DisposeRpcAsync(server, client);
             }
         }

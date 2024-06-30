@@ -23,12 +23,6 @@ namespace wan24.RPC.Processing.Messages.Scopes
         /// </summary>
         protected ErrorResponseMessage.JsonError? _JError = null;
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="scope">Scope</param>
-        public ScopeErrorMessage(in RpcProcessor.RpcScopeBase scope) : this() => ScopeId = scope.Id;
-
         /// <inheritdoc/>
         public override int Type => TYPE_ID;
 

@@ -2,6 +2,7 @@
 using System.Reflection;
 using wan24.Core;
 using wan24.ObjectValidation;
+using wan24.RPC.Processing;
 
 namespace wan24_RPC_Tests
 {
@@ -27,6 +28,7 @@ namespace wan24_RPC_Tests
                 .GetResult();
             Settings.LogLevel = LogLevel.Trace;
             ValidateObject.Logger = (message) => Logging.WriteDebug(message);
+            TypeHelper.Instance.ScanAssemblies(typeof(RpcProcessor).Assembly);
             Logging.WriteInfo("wan24-RPC Tests initialized");
         }
     }

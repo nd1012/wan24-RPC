@@ -10,7 +10,7 @@ namespace wan24.RPC.Processing
         protected override void Dispose(bool disposing)
         {
             Logger?.Log(LogLevel.Trace, "{this} sync disposing", ToString());
-            RpcProcessorTable.Processors.TryRemove(GetHashCode(), out _);
+            RpcProcessorTable.Processors.TryRemove(GUID, out _);
             HeartBeat?.Dispose();
             PeerHeartBeat?.Dispose();
             ObjectDisposedException disposedException = new(GetType().ToString());
@@ -53,7 +53,7 @@ namespace wan24.RPC.Processing
         protected override async Task DisposeCore()
         {
             Logger?.Log(LogLevel.Trace, "{this} async disposing", ToString());
-            RpcProcessorTable.Processors.TryRemove(GetHashCode(), out _);
+            RpcProcessorTable.Processors.TryRemove(GUID, out _);
             if (HeartBeat is not null)
                 await HeartBeat.DisposeAsync().DynamicContext();
             if (PeerHeartBeat is not null)

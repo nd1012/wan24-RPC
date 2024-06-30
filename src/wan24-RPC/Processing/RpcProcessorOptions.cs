@@ -161,7 +161,6 @@ namespace wan24.RPC.Processing
             DefaultContext?.Dispose();
             DefaultServices?.TryDispose();
             API.Values.DisposeAll();
-            API.Clear();
         }
 
         /// <inheritdoc/>
@@ -173,7 +172,6 @@ namespace wan24.RPC.Processing
             if (DefaultServices is not null)
                 await DefaultServices.TryDisposeAsync().DynamicContext();
             await API.Values.DisposeAllAsync().DynamicContext();
-            API.Clear();
         }
     }
 }

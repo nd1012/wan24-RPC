@@ -13,12 +13,7 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Base class for a RPC scope processor
         /// </summary>
-        /// <remarks>
-        /// Constructor
-        /// </remarks>
-        /// <param name="processor">RPC processor</param>
-        /// <param name="key">Key</param>
-        public abstract record class RpcScopeProcessorBase(in RpcProcessor processor, in string? key = null) : DisposableRecordBase()
+        public abstract class RpcScopeProcessorBase : DisposableBase
         {
             /// <summary>
             /// Thread synchronization
@@ -28,6 +23,23 @@ namespace wan24.RPC.Processing
             /// Remote events (key is the event name)
             /// </summary>
             protected readonly ConcurrentDictionary<string, RpcScopeEvent> _RemoteEvents = [];
+
+            /// <summary>
+            /// Constructor
+            /// </summary>
+            /// <param name="processor">RPC processor</param>
+            /// <param name="key">Key</param>
+            protected RpcScopeProcessorBase(in RpcProcessor processor, in string? key = null) : base()
+            {
+                processor.EnsureScopesAreEnabled();
+                Processor = processor;
+                Key = key;
+            }
+
+            /// <summary>
+            /// RPC scope type ID
+            /// </summary>
+            public abstract int Type { get; }
 
             /// <summary>
             /// Name
@@ -42,12 +54,12 @@ namespace wan24.RPC.Processing
             /// <summary>
             /// Scope key
             /// </summary>
-            public string? Key { get; } = key;
+            public string? Key { get; }
 
             /// <summary>
             /// If the scope is stored
             /// </summary>
-            public bool IsStored { get; init; }
+            public virtual bool IsStored { get; init; }
 
             /// <summary>
             /// If the scope was discarded from the peer
@@ -57,7 +69,7 @@ namespace wan24.RPC.Processing
             /// <summary>
             /// RPC processor
             /// </summary>
-            public RpcProcessor Processor { get; } = processor;
+            public RpcProcessor Processor { get; }
 
             /// <summary>
             /// Logger
@@ -140,7 +152,7 @@ namespace wan24.RPC.Processing
             public async Task HandleMessageAsync(IRpcScopeMessage message, CancellationToken cancellationToken)
             {
                 await Task.Yield();
-                Logger?.Log(LogLevel.Debug, "{this} handling message type {type}", ToString(), message.Type);
+                Logger?.Log(LogLevel.Debug, "{this} handling message type {type} ({clrType})", ToString(), message.Type, message.GetType());
                 try
                 {
                     switch (message)
@@ -334,8 +346,26 @@ namespace wan24.RPC.Processing
             /// <param name="cancellationToken">Cancellation token</param>
             protected virtual async Task HandleDiscardedAsync(IRpcScopeDiscardedMessage message, CancellationToken cancellationToken)
             {
-                IsDiscarded = true;
+                using (SemaphoreSyncContext ssc = await Sync.SyncContextAsync(cancellationToken).DynamicContext())
+                    IsDiscarded = true;
                 await DisposeAsync().DynamicContext();
+            }
+
+            /// <summary>
+            /// Discard this scope at the peer, if possible
+            /// </summary>
+            /// <param name="sync">If to synchronize using <see cref="Sync"/></param>
+            /// <param name="cancellationToken">Cancellation token</param>
+            protected abstract Task DiscardAsync(bool sync = true, CancellationToken cancellationToken = default);
+
+            /// <summary>
+            /// Ensure <see cref="IsDiscarded"/> is <see langword="false"/>
+            /// </summary>
+            /// <exception cref="InvalidOperationException">Discarded already</exception>
+            protected virtual void EnsureNotDiscarded()
+            {
+                if (IsDiscarded)
+                    throw new InvalidOperationException("Discarded already");
             }
 
             /// <inheritdoc/>

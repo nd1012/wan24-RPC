@@ -3,6 +3,7 @@ using wan24.Core;
 using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
+using wan24.RPC.Processing.Scopes;
 
 namespace wan24.RPC.Processing
 {
@@ -42,54 +43,61 @@ namespace wan24.RPC.Processing
                     case EventMessage remoteEvent:
                         await HandleEventAsync(remoteEvent).DynamicContext();
                         return;
+                    case ScopeRegistrationMessage scopeRegistration:
+                        await HandleRemoteScopeRegistration(scopeRegistration).DynamicContext();
+                        return;
                     case IRpcRemoteScopeMessage scopeMessage:
-                        if (GetRemoteScope(scopeMessage.ScopeId) is RpcRemoteScopeBase remoteScope)
                         {
-                            await remoteScope.HandleMessageAsync(scopeMessage, CancelToken).DynamicContext();
-                        }
-                        else if (scopeMessage.FailOnScopeNotFound)
-                        {
-                            throw new RpcScopeNotFoundException($"Unknown remote scope #{scopeMessage.ScopeId} in message {scopeMessage.GetType()}")
+                            if (GetRemoteScope(scopeMessage.ScopeId) is RpcRemoteScopeBase remoteScope)
                             {
-                                ScopeMessage = scopeMessage
-                            };
-                        }
-                        else
-                        {
-                            Logger?.Log(
-                                scopeMessage.WarnOnScopeNotFound 
-                                    ? LogLevel.Warning 
-                                    : LogLevel.Debug, 
-                                "{this} received unknown remote scope #{id} in message {type}", 
-                                ToString(), 
-                                scopeMessage.ScopeId, 
-                                scopeMessage.GetType()
-                                );
+                                await remoteScope.HandleMessageAsync(scopeMessage, CancelToken).DynamicContext();
+                            }
+                            else if (scopeMessage.FailOnScopeNotFound)
+                            {
+                                throw new RpcScopeNotFoundException($"Unknown remote scope #{scopeMessage.ScopeId} in message {scopeMessage.GetType()}")
+                                {
+                                    ScopeMessage = scopeMessage
+                                };
+                            }
+                            else
+                            {
+                                Logger?.Log(
+                                    scopeMessage.WarnOnScopeNotFound
+                                        ? LogLevel.Warning
+                                        : LogLevel.Debug,
+                                    "{this} received unknown remote scope #{id} in message {type}",
+                                    ToString(),
+                                    scopeMessage.ScopeId,
+                                    scopeMessage.GetType()
+                                    );
+                            }
                         }
                         return;
                     case IRpcScopeMessage scopeMessage:
-                        if (GetScope(scopeMessage.ScopeId) is RpcScopeBase scope)
                         {
-                            await scope.HandleMessageAsync(scopeMessage, CancelToken).DynamicContext();
-                        }
-                        else if (scopeMessage.FailOnScopeNotFound)
-                        {
-                            throw new RpcScopeNotFoundException($"Unknown local scope #{scopeMessage.ScopeId} in message {scopeMessage.GetType()}")
+                            if (GetScope(scopeMessage.ScopeId) is RpcScopeBase scope)
                             {
-                                ScopeMessage = scopeMessage
-                            };
-                        }
-                        else
-                        {
-                            Logger?.Log(
-                                scopeMessage.WarnOnScopeNotFound 
-                                    ? LogLevel.Warning 
-                                    : LogLevel.Debug, 
-                                "{this} received unknown local scope #{id} in message {type}", 
-                                ToString(), 
-                                scopeMessage.ScopeId, 
-                                scopeMessage.GetType()
-                                );
+                                await scope.HandleMessageAsync(scopeMessage, CancelToken).DynamicContext();
+                            }
+                            else if (scopeMessage.FailOnScopeNotFound)
+                            {
+                                throw new RpcScopeNotFoundException($"Unknown local scope #{scopeMessage.ScopeId} in message {scopeMessage.GetType()}")
+                                {
+                                    ScopeMessage = scopeMessage
+                                };
+                            }
+                            else
+                            {
+                                Logger?.Log(
+                                    scopeMessage.WarnOnScopeNotFound
+                                        ? LogLevel.Warning
+                                        : LogLevel.Debug,
+                                    "{this} received unknown local scope #{id} in message {type}",
+                                    ToString(),
+                                    scopeMessage.ScopeId,
+                                    scopeMessage.GetType()
+                                    );
+                            }
                         }
                         return;
                     case ErrorResponseMessage error:

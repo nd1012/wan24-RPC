@@ -10,11 +10,11 @@ namespace wan24.RPC.Processing.Scopes
     public static class RpcScopes
     {
         /// <summary>
-        /// Registered scope factories (key is the scope type)
+        /// Registered scope factories (key is the scope type ID (see <see cref="RpcScopeTypes"/>))
         /// </summary>
         public static readonly Dictionary<int, ScopeFactory_Delegate> Factories = [];
         /// <summary>
-        /// Registered remote scope factories (key is the scope type)
+        /// Registered remote scope factories (key is the scope type ID (see <see cref="RpcScopeTypes"/>))
         /// </summary>
         public static readonly Dictionary<int, RemoteScopeFactory_Delegate> RemoteFactories = [];
         /// <summary>
@@ -31,7 +31,18 @@ namespace wan24.RPC.Processing.Scopes
         /// </summary>
         static RpcScopes()
         {
-            //TODO Register built-in scope factories
+            // Simple scope
+            Factories[(int)RpcScopeTypes.Scope] = (processor, parameter, ct) =>
+            {
+                if (parameter is not RpcScopeParameter)
+                    throw new InvalidDataException("Invalid parameter type for the requested scope type");
+                return Task.FromResult<RpcProcessor.RpcScopeBase>(new RpcScope(processor, parameter.Key)
+                {
+                    ScopeParameter = parameter
+                });
+            };
+            RemoteFactories[(int)RpcScopeTypes.Scope] = (processor, value, ct) => Task.FromResult<RpcProcessor.RpcRemoteScopeBase>(new RpcRemoteScope(processor, value));
+            //TODO Register more built-in scope factories
         }
 
         /// <summary>
@@ -44,27 +55,32 @@ namespace wan24.RPC.Processing.Scopes
         /// <param name="parameterScopeFactory">Parameter scope factory</param>
         /// <param name="returnType">Return type</param>
         /// <param name="returnScopeFactory">Return scope factory</param>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="ArgumentNullException">Both parameter/return type informations must be given</exception>
+        /// <exception cref="InvalidOperationException">Won't overwrite existing scope registration</exception>
         public static void RegisterScope(
             int scopeType, 
             ScopeFactory_Delegate scopeFactory, 
             RemoteScopeFactory_Delegate remoteScopeFactory,
-            Type parameterType,
-            ParameterScopeFactory_Delegate parameterScopeFactory,
-            Type returnType,
-            ReturnScopeFactory_Delegate returnScopeFactory
+            Type? parameterType = null,
+            ParameterScopeFactory_Delegate? parameterScopeFactory = null,
+            Type? returnType = null,
+            ReturnScopeFactory_Delegate? returnScopeFactory = null
             )
         {
+            if (parameterType is null != parameterScopeFactory is null)
+                throw new ArgumentNullException("Incomplete parameter type scope factory informations", innerException: null);
+            if (returnType is null != returnScopeFactory is null)
+                throw new ArgumentNullException("Incomplete return type scope factory informations", innerException: null);
             if (Factories.ContainsKey(scopeType))
                 throw new InvalidOperationException($"Scope type #{scopeType} exists already");
-            if (ParameterScopeFactories.ContainsKey(parameterType))
+            if (parameterType is not null && ParameterScopeFactories.ContainsKey(parameterType))
                 throw new InvalidOperationException($"Parameter type {parameterType} exists already");
-            if (ReturnScopeFactories.ContainsKey(returnType))
+            if (returnType is not null && ReturnScopeFactories.ContainsKey(returnType))
                 throw new InvalidOperationException($"Return type {returnType} exists already");
             Factories[scopeType] = scopeFactory;
             RemoteFactories[scopeType] = remoteScopeFactory;
-            ParameterScopeFactories[parameterType] = parameterScopeFactory;
-            ReturnScopeFactories[returnType] = returnScopeFactory;
+            if (parameterScopeFactory is not null) ParameterScopeFactories[parameterType!] = parameterScopeFactory;
+            if (returnScopeFactory is not null) ReturnScopeFactories[returnType!] = returnScopeFactory;
         }
 
         /// <summary>

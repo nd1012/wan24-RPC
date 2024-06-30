@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using wan24.Core;
 using wan24.RPC.Api.Reflection;
+using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
 using wan24.RPC.Processing.Values;
 
@@ -14,15 +15,14 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Base class for a RPC remote scope
         /// </summary>
-        public abstract record class RpcRemoteScopeBase : RpcScopeProcessorBase
+        public abstract class RpcRemoteScopeBase : RpcScopeProcessorBase
         {
             /// <summary>
             /// Constructor
             /// </summary>
             /// <param name="processor">RPC processor</param>
             /// <param name="scope">Scope</param>
-            /// <param name="add">Add the sope?</param>
-            protected RpcRemoteScopeBase(in RpcProcessor processor, in RpcScopeValue scope, in bool add) : base(processor, scope.Key)
+            protected RpcRemoteScopeBase(in RpcProcessor processor, in RpcScopeValue scope) : base(processor, scope.Key)
             {
                 ScopeValue = scope;
                 ReplaceExistingScope = scope.ReplaceExistingScope;
@@ -30,8 +30,6 @@ namespace wan24.RPC.Processing
                 DisposeValue = scope.DisposeScopeValue;
                 DisposeValueOnError = scope.DisposeScopeValueOnError;
                 InformMasterWhenDisposing = scope.InformMasterWhenDisposing;
-                if (add)
-                    processor.AddRemoteScopeAsync(this).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -119,7 +117,7 @@ namespace wan24.RPC.Processing
                     Request request = new()
                     {
                         Processor = Processor,
-                        Message = new RemoteScopeEventMessage(this)
+                        Message = new RemoteScopeEventMessage()
                         {
                             ScopeId = Id,
                             PeerRpcVersion = Processor.Options.RpcVersion,
@@ -148,7 +146,7 @@ namespace wan24.RPC.Processing
                 }
                 else
                 {
-                    await SendMessageAsync(new RemoteScopeEventMessage(this)
+                    await SendMessageAsync(new RemoteScopeEventMessage()
                     {
                         ScopeId = Id,
                         PeerRpcVersion = Processor.Options.RpcVersion,
@@ -162,26 +160,82 @@ namespace wan24.RPC.Processing
             public override string ToString() => $"{Processor}: Remote scope #{Id} ({GetType()})";
 
             /// <inheritdoc/>
+            protected override async Task DiscardAsync(bool sync = true, CancellationToken cancellationToken = default)
+            {
+                using (SemaphoreSyncContext? ssc = sync ? await Sync.SyncContextAsync(cancellationToken).DynamicContext() : null)
+                    try
+                    {
+                        if (IsDiscarded || Processor.IsDisposing || CancelToken.IsCancellationRequested)
+                            return;
+                    }
+                    finally
+                    {
+                        IsDiscarded = true;
+                    }
+                await SendMessageAsync(new RemoteScopeDiscardedMessage()
+                {
+                    ScopeId = Id,
+                    PeerRpcVersion = Processor.Options.RpcVersion
+                }, Processor.Options.Priorities.Event, cancellationToken).DynamicContext();
+            }
+
+            /// <inheritdoc/>
             protected override void Dispose(bool disposing)
             {
-                base.Dispose(disposing);
-                //TODO Signal the scope is not used anymore to the master
                 if (IsStored)
                     Processor.RemoveRemoteScope(this);
+                if (InformMasterWhenDisposing)
+                    try
+                    {
+                        DiscardAsync().GetAwaiter().GetResult();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger?.Log(LogLevel.Warning, "{this} failed to discard the scope at the peer: {ex}", ToString(), ex);
+                    }
                 if (WillDisposeValue)
                     Value?.TryDispose();
+                base.Dispose(disposing);
             }
 
             /// <inheritdoc/>
             protected override async Task DisposeCore()
             {
-                await base.DisposeCore().DynamicContext();
-                //TODO Signal the scope is not used anymore to the master
                 if (IsStored)
                     Processor.RemoveRemoteScope(this);
+                if (InformMasterWhenDisposing)
+                    try
+                    {
+                        await DiscardAsync().DynamicContext();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger?.Log(LogLevel.Warning, "{this} failed to discard the scope at the peer: {ex}", ToString(), ex);
+                    }
                 if (WillDisposeValue && Value is object value)
                     await value.TryDisposeAsync().DynamicContext();
+                await base.DisposeCore().DynamicContext();
             }
+        }
+
+        /// <summary>
+        /// Base class for a RPC remote scope wich exports its internals (explicit <see cref="IRpcProcessorInternals"/>)
+        /// </summary>
+        /// <remarks>
+        /// Constructor
+        /// </remarks>
+        /// <param name="processor">RPC processor</param>
+        /// <param name="scope">Scope</param>
+        public abstract class RpcRemoteScopeInternalsBase(in RpcProcessor processor, in RpcScopeValue scope)
+            : RpcRemoteScopeBase(processor, scope), IRpcProcessorInternals
+        {
+            /// <inheritdoc/>
+            Task IRpcProcessorInternals.SendMessageAsync(IRpcMessage message, int priority, CancellationToken cancellationToken)
+                => SendMessageAsync(message, priority, cancellationToken);
+
+            /// <inheritdoc/>
+            Task IRpcProcessorInternals.SendMessageAsync(IRpcMessage message, CancellationToken cancellationToken)
+                => SendMessageAsync(message, cancellationToken);
         }
     }
 }

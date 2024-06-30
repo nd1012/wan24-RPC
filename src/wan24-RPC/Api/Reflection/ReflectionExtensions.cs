@@ -47,7 +47,7 @@ namespace wan24.RPC.Api.Reflection
             if (!type.IsInterface || !type.IsGenericType)
                 return false;
             Type gtd = type.EnsureGenericTypeDefinition();
-            return gtd == typeof(IAsyncEnumerable<>) || !asyncOnly && gtd == typeof(IEnumerable<>);
+            return gtd == typeof(IAsyncEnumerable<>) || (!asyncOnly && gtd == typeof(IEnumerable<>));
         }
     }
 }

@@ -1,5 +1,9 @@
-﻿using System.Collections.Concurrent;
+﻿using Microsoft.Extensions.Logging;
+using System.Collections.Concurrent;
 using wan24.Core;
+using wan24.RPC.Processing.Messages;
+using wan24.RPC.Processing.Messages.Scopes;
+using wan24.RPC.Processing.Scopes;
 
 namespace wan24.RPC.Processing
 {
@@ -219,6 +223,70 @@ namespace wan24.RPC.Processing
                 KeyedRemoteScopes.TryRemove(new KeyValuePair<string, RpcRemoteScopeBase>(res.Key, res));
             RemoteScopes.TryRemove(id, out _);
             return res;
+        }
+
+        /// <summary>
+        /// Handle a remote scope registration (processing will be stopped on handler exception)
+        /// </summary>
+        /// <param name="message">Message</param>
+        protected virtual async Task HandleRemoteScopeRegistration(ScopeRegistrationMessage message)
+        {
+            Logger?.Log(LogLevel.Debug, "{this} registering remote scope #{id} of type #{type}", ToString(), message.Value.Id, message.Value.Type);
+            EnsureScopesAreEnabled();
+            if (!message.Value.IsStored)
+            {
+                Logger?.Log(LogLevel.Warning, "{this} can't register not stored remote scope #{id} of type #{type}", ToString(), message.Value.Id, message.Value.Type);
+                throw new InvalidDataException($"Remote scope registration #{message.Value.Id} wouldn't be stored");
+            }
+            if (!RpcScopes.RemoteFactories.TryGetValue(message.Value.Type, out RpcScopes.RemoteScopeFactory_Delegate? factory))
+            {
+                Logger?.Log(LogLevel.Warning, "{this} can't register remote scope #{id} of unknown type #{type}", ToString(), message.Value.Id, message.Value.Type);
+                throw new InvalidDataException($"No remote scope factory for type #{message.Value.Type} for registering remote scope #{message.Value.Id}");
+            }
+            RpcRemoteScopeBase? remoteScope = null;
+            try
+            {
+                remoteScope = await factory(this, message.Value, CancelToken).DynamicContext();
+                if (!remoteScope.IsStored)
+                {
+                    Logger?.Log(LogLevel.Warning, "{this} can't register remote scope #{id} of type {type} because it wasn't stored", ToString(), message.Value.Id, remoteScope.GetType());
+                    InvalidOperationException exception = new($"Remote scope {remoteScope} (#{message.Value.Id}) can't be registered, because it wasn't stored");
+                    await remoteScope.SetIsErrorAsync(exception).DynamicContext();
+                    await remoteScope.DisposeAsync();
+                    throw exception;
+                }
+                await AddRemoteScopeAsync(remoteScope).DynamicContext();
+                await SendMessageAsync(new ResponseMessage()
+                {
+                    Id = message.Id,
+                    PeerRpcVersion = Options.RpcVersion
+                }, Options.Priorities.Rpc).DynamicContext();
+            }
+            catch (ObjectDisposedException) when (IsDisposing)
+            {
+                Logger?.Log(LogLevel.Debug, "{this} registering remote scope #{id} of type #{type} canceled due to disposing", ToString(), message.Value.Id, message.Value.Type);
+            }
+            catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
+            {
+                Logger?.Log(LogLevel.Debug, "{this} registering remote scope #{id} of type #{type} canceled", ToString(), message.Value.Id, message.Value.Type);
+            }
+            catch (Exception ex)
+            {
+                Logger?.Log(LogLevel.Warning, "{this} remote scope #{id} of type #{type} registration failed exceptional: {ex}", ToString(), message.Value.Id, message.Value.Type, ex.Message);
+                try
+                {
+                    await SendMessageAsync(new ErrorResponseMessage()
+                    {
+                        Id = message.Id,
+                        PeerRpcVersion = Options.RpcVersion,
+                        Error = ex
+                    }, Options.Priorities.Rpc).DynamicContext();
+                }
+                catch
+                {
+                }
+                throw;
+            }
         }
 
         /// <summary>
