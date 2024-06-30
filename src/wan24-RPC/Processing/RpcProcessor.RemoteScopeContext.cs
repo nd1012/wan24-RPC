@@ -121,7 +121,7 @@ namespace wan24.RPC.Processing
                         {
                             ScopeId = Id,
                             PeerRpcVersion = Processor.Options.RpcVersion,
-                            Id = Interlocked.Increment(ref Processor.MessageId),
+                            Id = CreateMessageId(),
                             Name = name,
                             Arguments = e,
                             Waiting = true
@@ -227,14 +227,38 @@ namespace wan24.RPC.Processing
         /// <param name="processor">RPC processor</param>
         /// <param name="scope">Scope</param>
         public abstract class RpcRemoteScopeInternalsBase(in RpcProcessor processor, in RpcScopeValue scope)
-            : RpcRemoteScopeBase(processor, scope), IRpcProcessorInternals
+            : RpcRemoteScopeBase(processor, scope), IRpcScopeInternals
         {
+
             /// <inheritdoc/>
-            Task IRpcProcessorInternals.SendMessageAsync(IRpcMessage message, int priority, CancellationToken cancellationToken)
+            long IRpcScopeInternals.CreateMessageId() => CreateMessageId();
+
+            /// <inheritdoc/>
+            Task<T> IRpcScopeInternals.SendRequestAsync<T>(IRpcRequest message, CancellationToken cancellationToken)
+                => SendRequestAsync<T>(message, cancellationToken);
+
+            /// <inheritdoc/>
+            Task<T?> IRpcScopeInternals.SendRequestNullableAsync<T>(IRpcRequest message, CancellationToken cancellationToken) where T : default
+                => SendRequestNullableAsync<T>(message, cancellationToken);
+
+            /// <inheritdoc/>
+            Task IRpcScopeInternals.SendVoidRequestAsync(IRpcRequest message, CancellationToken cancellationToken)
+                => SendVoidRequestAsync(message, cancellationToken);
+
+            /// <inheritdoc/>
+            Task<object?> IRpcScopeInternals.SendRequestNullableAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken)
+                => SendRequestNullableAsync(message, returnType, cancellationToken);
+
+            /// <inheritdoc/>
+            Task<object> IRpcScopeInternals.SendRequestAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken)
+                => SendRequestAsync(message, returnType, cancellationToken);
+
+            /// <inheritdoc/>
+            Task IRpcScopeInternals.SendMessageAsync(IRpcMessage message, int priority, CancellationToken cancellationToken)
                 => SendMessageAsync(message, priority, cancellationToken);
 
             /// <inheritdoc/>
-            Task IRpcProcessorInternals.SendMessageAsync(IRpcMessage message, CancellationToken cancellationToken)
+            Task IRpcScopeInternals.SendMessageAsync(IRpcMessage message, CancellationToken cancellationToken)
                 => SendMessageAsync(message, cancellationToken);
         }
     }

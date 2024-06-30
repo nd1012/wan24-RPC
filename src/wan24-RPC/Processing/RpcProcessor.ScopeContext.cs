@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using wan24.Core;
 using wan24.RPC.Api.Reflection;
@@ -129,32 +130,12 @@ namespace wan24.RPC.Processing
                     _IsStored = true;
                     Processor.AddScope(this);
                 }
-                Request request = new()
+                await SendVoidRequestAsync(new ScopeRegistrationMessage()
                 {
-                    Processor = Processor,
-                    Message = new ScopeRegistrationMessage()
-                    {
-                        PeerRpcVersion = Processor.Options.RpcVersion,
-                        Id = Interlocked.Increment(ref Processor.MessageId),
-                        Value = ScopeParameter.Value
-                    },
-                    Cancellation = cancellationToken
-                };
-                await using (request.DynamicContext())
-                {
-                    Logger?.Log(LogLevel.Trace, "{this} storing scope #{id} registration request as #{id}", ToString(), Id, request.Id);
-                    if (!Processor.AddPendingRequest(request))
-                        throw new InvalidProgramException($"Failed to store scope #{Id} registration request message #{request.Id} (double message ID)");
-                    try
-                    {
-                        await SendMessageAsync(request.Message, Processor.Options.Priorities.Rpc, cancellationToken).DynamicContext();
-                        await request.ProcessorCompletion.Task.DynamicContext();
-                    }
-                    finally
-                    {
-                        Processor.RemovePendingRequest(request);
-                    }
-                }
+                    PeerRpcVersion = Processor.Options.RpcVersion,
+                    Id = CreateMessageId(),
+                    Value = ScopeParameter.Value
+                }, cancellationToken).DynamicContext();
                 InformConsumerWhenDisposing = true;
             }
 
@@ -196,7 +177,7 @@ namespace wan24.RPC.Processing
                         {
                             ScopeId = Id,
                             PeerRpcVersion = Processor.Options.RpcVersion,
-                            Id = Interlocked.Increment(ref Processor.MessageId),
+                            Id = CreateMessageId(),
                             Name = name,
                             Arguments = e,
                             Waiting = true
@@ -327,7 +308,7 @@ namespace wan24.RPC.Processing
         /// <param name="id">ID</param>
         /// <param name="key">Key</param>
         public abstract class RpcScopeInternalsBase(in RpcProcessor processor, in long id, in string? key = null)
-            : RpcScopeBase(processor, id, key), IRpcProcessorInternals
+            : RpcScopeBase(processor, id, key), IRpcScopeInternals
         {
             /// <summary>
             /// Constructor
@@ -337,11 +318,34 @@ namespace wan24.RPC.Processing
             protected RpcScopeInternalsBase(in RpcProcessor processor, in string? key = null) : this(processor, processor.CreateScopeId(), key) => processor.AddScope(this);
 
             /// <inheritdoc/>
-            Task IRpcProcessorInternals.SendMessageAsync(IRpcMessage message, int priority, CancellationToken cancellationToken)
+            long IRpcScopeInternals.CreateMessageId() => CreateMessageId();
+
+            /// <inheritdoc/>
+            Task<T> IRpcScopeInternals.SendRequestAsync<T>(IRpcRequest message, CancellationToken cancellationToken)
+                => SendRequestAsync<T>(message, cancellationToken);
+
+            /// <inheritdoc/>
+            Task<T?> IRpcScopeInternals.SendRequestNullableAsync<T>(IRpcRequest message, CancellationToken cancellationToken) where T : default
+                => SendRequestNullableAsync<T>(message, cancellationToken);
+
+            /// <inheritdoc/>
+            Task IRpcScopeInternals.SendVoidRequestAsync(IRpcRequest message, CancellationToken cancellationToken)
+                => SendVoidRequestAsync(message, cancellationToken);
+
+            /// <inheritdoc/>
+            Task<object?> IRpcScopeInternals.SendRequestNullableAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken)
+                => SendRequestNullableAsync(message, returnType, cancellationToken);
+
+            /// <inheritdoc/>
+            Task<object> IRpcScopeInternals.SendRequestAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken)
+                => SendRequestAsync(message, returnType, cancellationToken);
+
+            /// <inheritdoc/>
+            Task IRpcScopeInternals.SendMessageAsync(IRpcMessage message, int priority, CancellationToken cancellationToken)
                 => SendMessageAsync(message, priority, cancellationToken);
 
             /// <inheritdoc/>
-            Task IRpcProcessorInternals.SendMessageAsync(IRpcMessage message, CancellationToken cancellationToken)
+            Task IRpcScopeInternals.SendMessageAsync(IRpcMessage message, CancellationToken cancellationToken)
                 => SendMessageAsync(message, cancellationToken);
         }
     }

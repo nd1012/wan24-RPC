@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using wan24.Core;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
@@ -176,6 +177,61 @@ namespace wan24.RPC.Processing
                     Logger?.Log(LogLevel.Warning, "{this} handling message type {type} canceled", ToString(), message.Type);
                 }
             }
+
+            /// <summary>
+            /// Create a message ID
+            /// </summary>
+            /// <returns>Message ID</returns>
+            protected virtual long CreateMessageId() => Processor.CreateMessageId();
+
+            /// <summary>
+            /// Send a request
+            /// </summary>
+            /// <param name="message">Message</param>
+            /// <param name="cancellationToken">Cancellation token</param>
+            protected virtual Task SendVoidRequestAsync(IRpcRequest message, CancellationToken cancellationToken = default)
+                => Processor.SendVoidRequestAsync(message, cancellationToken);
+
+            /// <summary>
+            /// Send a request
+            /// </summary>
+            /// <typeparam name="T">Return value type</typeparam>
+            /// <param name="message">Message</param>
+            /// <param name="cancellationToken">Cancellation token</param>
+            /// <returns>Return value</returns>
+            protected virtual Task<T?> SendRequestNullableAsync<T>(IRpcRequest message, CancellationToken cancellationToken = default)
+                => Processor.SendRequestNullableAsync<T>(message, cancellationToken);
+
+            /// <summary>
+            /// Send a request
+            /// </summary>
+            /// <typeparam name="T">Return value type</typeparam>
+            /// <param name="message">Message</param>
+            /// <param name="cancellationToken">Cancellation token</param>
+            /// <returns>Return value</returns>
+            [return: NotNull]
+            protected virtual Task<T> SendRequestAsync<T>(IRpcRequest message, CancellationToken cancellationToken = default)
+                => SendRequestAsync<T>(message, cancellationToken);
+
+            /// <summary>
+            /// Send a request
+            /// </summary>
+            /// <param name="message">Message</param>
+            /// <param name="returnType">Return value type</param>
+            /// <param name="cancellationToken">Cancellation token</param>
+            /// <returns>Return value</returns>
+            protected virtual Task<object?> SendRequestNullableAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken = default)
+                => SendRequestNullableAsync(message, returnType, cancellationToken);
+
+            /// <summary>
+            /// Send a request
+            /// </summary>
+            /// <param name="message">Message</param>
+            /// <param name="returnType">Return value type</param>
+            /// <param name="cancellationToken">Cancellation token</param>
+            /// <returns>Return value</returns>
+            protected virtual Task<object> SendRequestAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken = default)
+                => SendRequestAsync(message, returnType, cancellationToken);
 
             /// <summary>
             /// Send a RPC message to the peer (using the outgoing message queue)

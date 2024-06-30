@@ -86,7 +86,7 @@ namespace wan24.RPC.Processing
                     Message = new EventMessage()
                     {
                         PeerRpcVersion = Options.RpcVersion,
-                        Id = Interlocked.Increment(ref MessageId),
+                        Id = CreateMessageId(),
                         Name = name,
                         Arguments = e,
                         Waiting = true

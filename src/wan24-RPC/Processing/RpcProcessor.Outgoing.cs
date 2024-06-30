@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 using wan24.Core;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Serialization;
@@ -48,42 +49,16 @@ namespace wan24.RPC.Processing
         {
             EnsureUndisposed();
             Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" method \"{method}\" at the peer ({count} parameters)", ToString(), api, method, parameters.Length);
-            Request request = new()
+            return await SendRequestAsync(new RequestMessage()
             {
-                Processor = this,
-                Message = new RequestMessage()
-                {
-                    PeerRpcVersion = Options.RpcVersion,
-                    Id = Interlocked.Increment(ref MessageId),
-                    Api = api,
-                    Method = method,
-                    Parameters = parameters.Length == 0
-                        ? null
-                        : parameters
-                },
-                ExpectedReturnType = returnValueType,
-                Cancellation = cancellationToken
-            };
-            await using (request.DynamicContext())
-            {
-                if (!AddPendingRequest(request))
-                    throw new InvalidProgramException($"Failed to store pending request #{request.Id} (double ID)");
-                try
-                {
-                    await Requests.EnqueueAsync(request, cancellationToken).DynamicContext();
-                    object? res = await request.RequestCompletion.Task.DynamicContext() ?? throw new InvalidDataException("The RPC method returned NULL");
-                    if (res is not null && !returnValueType.IsAssignableFrom(res.GetType()))
-                    {
-                        await res.TryDisposeAsync().DynamicContext();
-                        throw new InvalidDataException($"Expected return value type {returnValueType}, got {res.GetType()} instead");
-                    }
-                    return res;
-                }
-                finally
-                {
-                    RemovePendingRequest(request);
-                }
-            }
+                PeerRpcVersion = Options.RpcVersion,
+                Id = CreateMessageId(),
+                Api = api,
+                Method = method,
+                Parameters = parameters.Length == 0
+                    ? null
+                    : parameters
+            }, returnValueType, cancellationToken).DynamicContext();
         }
 
         /// <summary>
@@ -109,36 +84,17 @@ namespace wan24.RPC.Processing
         {
             EnsureUndisposed();
             Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" void method \"{method}\" at the peer ({count} parameters)", ToString(), api, method, parameters.Length);
-            Request request = new()
+            await SendVoidRequestAsync(new RequestMessage()
             {
-                Processor = this,
-                Message = new RequestMessage()
-                {
-                    PeerRpcVersion = Options.RpcVersion,
-                    Id = Interlocked.Increment(ref MessageId),
-                    Api = api,
-                    Method = method,
-                    Parameters = parameters.Length == 0
-                        ? null
-                        : parameters,
-                    WantsReturnValue = false
-                },
-                Cancellation = cancellationToken
-            };
-            await using (request.DynamicContext())
-            {
-                if (!AddPendingRequest(request))
-                    throw new InvalidProgramException($"Failed to store pending request #{request.Id} (double ID)");
-                try
-                {
-                    await Requests.EnqueueAsync(request, cancellationToken).DynamicContext();
-                    await request.RequestCompletion.Task.DynamicContext();
-                }
-                finally
-                {
-                    RemovePendingRequest(request);
-                }
-            }
+                PeerRpcVersion = Options.RpcVersion,
+                Id = CreateMessageId(),
+                Api = api,
+                Method = method,
+                Parameters = parameters.Length == 0
+                    ? null
+                    : parameters,
+                WantsReturnValue = false
+            }, cancellationToken).DynamicContext();
         }
 
         /// <summary>
@@ -150,28 +106,187 @@ namespace wan24.RPC.Processing
         {
             EnsureUndisposed();
             Logger?.Log(LogLevel.Debug, "{this} sending ping request", ToString());
+            using CancellationTokenSource cts = new(timeout);
+            List<CancellationToken> token = [cts.Token];
+            if (!cancellationToken.IsEqualTo(default))
+                token.Add(cancellationToken);
+            using Cancellations cancellation = new([.. token]);
+            DateTime now = DateTime.Now;
+            await SendVoidRequestAsync(new PingMessage()
+            {
+                PeerRpcVersion = Options.RpcVersion,
+                Id = CreateMessageId()
+            }, cancellation).DynamicContext();
+            TimeSpan runtime = DateTime.Now - now;
+            MessageLoopDuration = runtime;
+            Logger?.Log(LogLevel.Debug, "{this} got pong response after {runtime}", ToString(), runtime);
+        }
+
+        /// <summary>
+        /// Create a message ID
+        /// </summary>
+        /// <returns>Message ID</returns>
+        protected virtual long CreateMessageId()
+        {
+            EnsureUndisposed();
+            return Interlocked.Increment(ref MessageId);
+        }
+
+        /// <summary>
+        /// Send a request
+        /// </summary>
+        /// <param name="message">Message</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        protected virtual async Task SendVoidRequestAsync(IRpcRequest message, CancellationToken cancellationToken = default)
+        {
             Request request = new()
             {
                 Processor = this,
-                Message = new PingMessage()
-                {
-                    PeerRpcVersion = Options.RpcVersion,
-                    Id = Interlocked.Increment(ref MessageId)
-                },
+                Message = message,
                 Cancellation = cancellationToken
             };
             await using (request.DynamicContext())
             {
+                Logger?.Log(LogLevel.Trace, "{this} storing request #{id}", ToString(), request.Id);
                 if (!AddPendingRequest(request))
-                    throw new InvalidProgramException($"Failed to store ping request #{request.Id} (double ID)");
+                    throw new InvalidProgramException($"Failed to store request #{request.Id} (double message ID)");
                 try
                 {
-                    DateTime now = DateTime.Now;
-                    await SendMessageAsync(request.Message, cancellationToken).DynamicContext();
-                    using CancellationTokenSource cts = new(timeout);
-                    await request.ProcessorCompletion.Task.WaitAsync(cts.Token).DynamicContext();
-                    MessageLoopDuration = DateTime.Now - now;
-                    Logger?.Log(LogLevel.Debug, "{this} got pong response for #{id} after {runtime}", ToString(), request.Id, request.Runtime);
+                    await SendMessageAsync(request.Message, Options.Priorities.Rpc, cancellationToken).DynamicContext();
+                    await request.ProcessorCompletion.Task.DynamicContext();
+                }
+                finally
+                {
+                    RemovePendingRequest(request);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Send a request
+        /// </summary>
+        /// <typeparam name="T">Return value type</typeparam>
+        /// <param name="message">Message</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Return value</returns>
+        protected virtual async Task<T?> SendRequestNullableAsync<T>(IRpcRequest message, CancellationToken cancellationToken = default)
+        {
+            Request request = new()
+            {
+                Processor = this,
+                Message = message,
+                ExpectedReturnType = typeof(T),
+                Cancellation = cancellationToken
+            };
+            await using (request.DynamicContext())
+            {
+                Logger?.Log(LogLevel.Trace, "{this} storing request #{id}", ToString(), request.Id);
+                if (!AddPendingRequest(request))
+                    throw new InvalidProgramException($"Failed to store request #{request.Id} (double message ID)");
+                try
+                {
+                    await SendMessageAsync(request.Message, Options.Priorities.Rpc, cancellationToken).DynamicContext();
+                    return (T?)await request.ProcessorCompletion.Task.DynamicContext();
+                }
+                finally
+                {
+                    RemovePendingRequest(request);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Send a request
+        /// </summary>
+        /// <typeparam name="T">Return value type</typeparam>
+        /// <param name="message">Message</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Return value</returns>
+        [return: NotNull]
+        protected virtual async Task<T> SendRequestAsync<T>(IRpcRequest message, CancellationToken cancellationToken = default)
+        {
+            Request request = new()
+            {
+                Processor = this,
+                Message = message,
+                ExpectedReturnType = typeof(T),
+                Cancellation = cancellationToken
+            };
+            await using (request.DynamicContext())
+            {
+                Logger?.Log(LogLevel.Trace, "{this} storing request #{id}", ToString(), request.Id);
+                if (!AddPendingRequest(request))
+                    throw new InvalidProgramException($"Failed to store request #{request.Id} (double message ID)");
+                try
+                {
+                    await SendMessageAsync(request.Message, Options.Priorities.Rpc, cancellationToken).DynamicContext();
+                    return (T)(await request.ProcessorCompletion.Task.DynamicContext() ?? throw new InvalidDataException("NULL was responded"));
+                }
+                finally
+                {
+                    RemovePendingRequest(request);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Send a request
+        /// </summary>
+        /// <param name="message">Message</param>
+        /// <param name="returnType">Return value type</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Return value</returns>
+        protected virtual async Task<object?> SendRequestNullableAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken = default)
+        {
+            Request request = new()
+            {
+                Processor = this,
+                Message = message,
+                ExpectedReturnType = returnType,
+                Cancellation = cancellationToken
+            };
+            await using (request.DynamicContext())
+            {
+                Logger?.Log(LogLevel.Trace, "{this} storing request #{id}", ToString(), request.Id);
+                if (!AddPendingRequest(request))
+                    throw new InvalidProgramException($"Failed to store request #{request.Id} (double message ID)");
+                try
+                {
+                    await SendMessageAsync(request.Message, Options.Priorities.Rpc, cancellationToken).DynamicContext();
+                    return await request.ProcessorCompletion.Task.DynamicContext();
+                }
+                finally
+                {
+                    RemovePendingRequest(request);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Send a request
+        /// </summary>
+        /// <param name="message">Message</param>
+        /// <param name="returnType">Return value type</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Return value</returns>
+        protected virtual async Task<object> SendRequestAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken = default)
+        {
+            Request request = new()
+            {
+                Processor = this,
+                Message = message,
+                ExpectedReturnType = returnType,
+                Cancellation = cancellationToken
+            };
+            await using (request.DynamicContext())
+            {
+                Logger?.Log(LogLevel.Trace, "{this} storing request #{id}", ToString(), request.Id);
+                if (!AddPendingRequest(request))
+                    throw new InvalidProgramException($"Failed to store request #{request.Id} (double message ID)");
+                try
+                {
+                    await SendMessageAsync(request.Message, Options.Priorities.Rpc, cancellationToken).DynamicContext();
+                    return await request.ProcessorCompletion.Task.DynamicContext() ?? throw new InvalidDataException("NULL was responded");
                 }
                 finally
                 {
@@ -213,7 +328,7 @@ namespace wan24.RPC.Processing
         protected virtual async Task SendMessageAsync(OutgoingQueue.QueuedMessage queuedMessage)
         {
             if (queuedMessage.Message is RpcMessageBase rpcMessage && rpcMessage.RequireId && !rpcMessage.Id.HasValue)
-                rpcMessage.Id = Interlocked.Increment(ref MessageId);
+                rpcMessage.Id = CreateMessageId();
             Logger?.Log(LogLevel.Trace, "{this} sending message type {type} ({clrType}) as #{id} with priority {priority}", ToString(), queuedMessage.Message.Type, queuedMessage.Message.GetType(), queuedMessage.Message.Id, queuedMessage.Priority);
             try
             {
@@ -243,7 +358,7 @@ namespace wan24.RPC.Processing
                 cancellationToken = CancelToken;
             using SemaphoreSyncContext ssc = await WriteSync.SyncContextAsync(cancellationToken).DynamicContext();
             if (message is RpcMessageBase rpcMessage && rpcMessage.RequireId && !rpcMessage.Id.HasValue)
-                rpcMessage.Id = Interlocked.Increment(ref MessageId);
+                rpcMessage.Id = CreateMessageId();
             Logger?.Log(LogLevel.Trace, "{this} sending message type {type} ({clrType}) as #{id}", ToString(), message.Type, message.GetType(), message.Id);
             LastMessageSent = DateTime.Now;
             using (LimitedLengthStream limited = new(Options.Stream, Options.MaxMessageLength, leaveOpen: true))

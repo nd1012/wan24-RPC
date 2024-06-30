@@ -285,7 +285,7 @@ namespace wan24_RPC_Tests
 
                         // Trigger at the peer
                         Logging.WriteInfo("Trigger peer");
-                        await scope.SendTriggerAsync();
+                        await scope.SendVoidTriggerAsync();
                         Logging.WriteInfo("Waiting trigger");
                         await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(20), (ct) => Task.FromResult(remoteTrigger != 0));
                         Assert.AreEqual(0, localTrigger);

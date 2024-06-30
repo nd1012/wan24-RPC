@@ -6,7 +6,7 @@ namespace wan24.RPC.Processing.Messages.Scopes
     /// <summary>
     /// Trigger a RPC scope at the master
     /// </summary>
-    public class RemoteScopeTriggerMessage() : ScopeMessageBase()
+    public class RemoteScopeTriggerMessage() : ScopeMessageBase(), IRpcRequest
     {
         /// <summary>
         /// RPC message type ID
@@ -22,7 +22,7 @@ namespace wan24.RPC.Processing.Messages.Scopes
         public override int Type => TYPE_ID;
 
         /// <inheritdoc/>
-        public sealed override bool RequireId => false;
+        public override bool RequireId => false;
 
         /// <summary>
         /// Data

@@ -1,4 +1,5 @@
-﻿using wan24.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using wan24.Core;
 using wan24.RPC.Processing.Messages.Scopes;
 
 namespace wan24.RPC.Processing.Scopes
@@ -10,18 +11,23 @@ namespace wan24.RPC.Processing.Scopes
     /// <param name="key">Key</param>
     public class RpcScope(in RpcProcessor processor, in string? key = null) : RpcProcessor.RpcScopeInternalsBase(processor, key)
     {
+        /// <summary>
+        /// Value
+        /// </summary>
+        protected object? _Value = null;
+
         /// <inheritdoc/>
         public override int Type => (int)RpcScopeTypes.Scope;
 
         /// <inheritdoc/>
-        public override object? Value => null;
+        public override object? Value => _Value;
 
         /// <summary>
         /// Send a trigger to the peer
         /// </summary>
         /// <param name="trigger">Trigger</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public virtual async Task SendTriggerAsync(ScopeTriggerMessage? trigger = null, CancellationToken cancellationToken = default)
+        public virtual async Task SendVoidTriggerAsync(ScopeTriggerMessage? trigger = null, CancellationToken cancellationToken = default)
         {
             EnsureUndisposed();
             trigger ??= new()
@@ -29,7 +35,63 @@ namespace wan24.RPC.Processing.Scopes
                 ScopeId = Id,
                 PeerRpcVersion = Processor.Options.RpcVersion
             };
-            await SendMessageAsync(trigger, Processor.Options.Priorities.Event, cancellationToken).DynamicContext();
+            if (trigger.Id.HasValue)
+            {
+                await SendVoidRequestAsync(trigger, cancellationToken).DynamicContext();
+            }
+            else
+            {
+                await SendMessageAsync(trigger, Processor.Options.Priorities.Event, cancellationToken).DynamicContext();
+            }
+        }
+
+        /// <summary>
+        /// Send a trigger to the peer
+        /// </summary>
+        /// <param name="trigger">Trigger</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Return value</returns>
+        [return: NotNull]
+        public virtual async Task<T> SendTriggerAsync<T>(ScopeTriggerMessage? trigger = null, CancellationToken cancellationToken = default)
+        {
+            EnsureUndisposed();
+            trigger ??= new()
+            {
+                ScopeId = Id,
+                PeerRpcVersion = Processor.Options.RpcVersion
+            };
+            if (!trigger.Id.HasValue)
+                trigger.Id = CreateMessageId();
+            return await SendRequestAsync<T>(trigger, cancellationToken).DynamicContext();
+        }
+
+        /// <summary>
+        /// Send a trigger to the peer
+        /// </summary>
+        /// <param name="trigger">Trigger</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Return value</returns>
+        public virtual async Task<T?> SendTriggerNullableAsync<T>(ScopeTriggerMessage? trigger = null, CancellationToken cancellationToken = default)
+        {
+            EnsureUndisposed();
+            trigger ??= new()
+            {
+                ScopeId = Id,
+                PeerRpcVersion = Processor.Options.RpcVersion
+            };
+            if (!trigger.Id.HasValue)
+                trigger.Id = CreateMessageId();
+            return await SendRequestNullableAsync<T>(trigger, cancellationToken).DynamicContext();
+        }
+
+        /// <summary>
+        /// Set the <see cref="Value"/>
+        /// </summary>
+        /// <param name="value">Value</param>
+        public virtual void SetValue(in object? value)
+        {
+            EnsureUndisposed();
+            _Value = value;
         }
 
         /// <inheritdoc/>
