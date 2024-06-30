@@ -3,7 +3,6 @@ using wan24.Core;
 using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
-using wan24.RPC.Processing.Scopes;
 
 namespace wan24.RPC.Processing
 {
@@ -108,7 +107,7 @@ namespace wan24.RPC.Processing
                         return;
                 }
                 if(!await HandleIncomingCustomMessageAsync(message).DynamicContext())
-                    throw new InvalidDataException($"Can't handle message type #{message.Id} ({message.GetType()})");
+                    throw new InvalidDataException($"Can't handle message #{message.Id} ({message.GetType()})");
             }
             catch (ObjectDisposedException) when (IsDisposing)
             {

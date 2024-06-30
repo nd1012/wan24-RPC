@@ -2,7 +2,6 @@
 using wan24.RPC.Processing;
 using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Scopes;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace wan24_RPC_Tests
 {
@@ -151,7 +150,7 @@ namespace wan24_RPC_Tests
             }
         }
 
-        [TestMethod, Timeout(10000)]
+        [TestMethod, Timeout(3000)]
         public async Task Scope_TestsAsync()
         {
             // Simple scope functionality
@@ -162,6 +161,7 @@ namespace wan24_RPC_Tests
             {
                 // Scope factory
                 {
+                    Logging.WriteInfo("Scope factory");
                     RpcScope scope = (RpcScope)await RpcScopes.Factories[(int)RpcScopeTypes.Scope].Invoke(
                         client,
                         new RpcScopeParameter()
@@ -186,6 +186,7 @@ namespace wan24_RPC_Tests
 
                 // Manual scope creation
                 {
+                    Logging.WriteInfo("Manual scope creation");
                     RpcScope scope = new(client, "test")
                     {
                         IsStored = true,
@@ -205,6 +206,7 @@ namespace wan24_RPC_Tests
 
                 // Remote scope registration
                 {
+                    Logging.WriteInfo("Remote scope registration");
                     RpcScope scope = new(client, "test")
                     {
                         ScopeParameter = new RpcScopeParameter()
@@ -215,6 +217,7 @@ namespace wan24_RPC_Tests
                     await using (scope)
                     {
                         // The scope must not be stored yet
+                        Logging.WriteInfo("Scope not stored yet");
                         Assert.AreEqual(3, scope.Id);
                         Assert.AreEqual(3, client.CurrentScopeId);
                         Assert.AreEqual("test", scope.Key);
@@ -222,6 +225,7 @@ namespace wan24_RPC_Tests
                         Assert.IsFalse(client.LocalScopes.ContainsKey(scope.Id));
 
                         // After registration the scope must be stored local and at the peer
+                        Logging.WriteInfo("Register scope");
                         await scope.RegisterRemoteAsync();
                         Assert.IsNotNull(client.GetScope("test"));
                         Assert.IsTrue(client.LocalScopes.ContainsKey(scope.Id));
@@ -230,16 +234,18 @@ namespace wan24_RPC_Tests
                         Assert.IsTrue(server.PeerScopes.ContainsKey(scope.Id));
 
                         // After the peer disposed the remote scope, the local scope must be disposed, too
+                        Logging.WriteInfo("Dispose remote scope");
                         await remoteScope.DisposeAsync();
                         Assert.IsNull(server.GetRemoteScope("test"));
                         Assert.IsFalse(server.PeerScopes.ContainsKey(scope.Id));
-                        await Task.Delay(200);// Wait for the client to handle the discarded scope message
-                        Assert.IsTrue(scope.IsDisposed);
+                        Logging.WriteInfo("Waiting scope disposed");
+                        await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(20), (ct) => Task.FromResult(scope.IsDisposed));
                     }
                 }
 
                 // Remote scope discarded when the scope is being disposed
                 {
+                    Logging.WriteInfo("Dispose local scope");
                     RpcScope scope = new(client, "test")
                     {
                         ScopeParameter = new RpcScopeParameter()
@@ -252,18 +258,20 @@ namespace wan24_RPC_Tests
                         await scope.RegisterRemoteAsync();
                         Assert.IsTrue(server.PeerScopes.ContainsKey(scope.Id));
                         await scope.DisposeAsync().DynamicContext();
-                        await Task.Delay(200);// Wait for the server to handle the discarded scope message
-                        Assert.IsFalse(server.PeerScopes.ContainsKey(scope.Id));
+                        Logging.WriteInfo("Waiting remote scope removed");
+                        await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(20), (ct) => Task.FromResult(!server.PeerScopes.ContainsKey(scope.Id)));
                     }
                 }
 
                 // Trigger
                 {
+                    Logging.WriteInfo("Trigger");
                     RpcScope scope = new(client, "test")
                     {
                         ScopeParameter = new RpcScopeParameter()
                         {
-                            Key = "test"
+                            Key = "test",
+                            StoreScope = true
                         }
                     };
                     await using (scope)
@@ -276,20 +284,26 @@ namespace wan24_RPC_Tests
                         remoteScope.OnTrigger += (s, e) => remoteTrigger++;
 
                         // Trigger at the peer
+                        Logging.WriteInfo("Trigger peer");
                         await scope.SendTriggerAsync();
-                        await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(20), (ct) => Task.FromResult(remoteTrigger > 0));
+                        Logging.WriteInfo("Waiting trigger");
+                        await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(20), (ct) => Task.FromResult(remoteTrigger != 0));
                         Assert.AreEqual(0, localTrigger);
                         Assert.AreEqual(1, remoteTrigger);
 
                         // Trigger from the remote
+                        Logging.WriteInfo("Remote trigger");
                         await remoteScope.SendTriggerAsync();
-                        await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(20), (ct) => Task.FromResult(localTrigger > 0));
+                        Logging.WriteInfo("Waiting trigger");
+                        await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(20), (ct) => Task.FromResult(localTrigger != 0));
                         Assert.AreEqual(1, localTrigger);
                         Assert.AreEqual(1, remoteTrigger);
                     }
                 }
 
                 //TODO Test events
+
+                //TODO Test parameter and return value
             }
             finally
             {

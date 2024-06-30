@@ -21,7 +21,7 @@ namespace wan24.RPC.Processing.Scopes
         /// </summary>
         /// <param name="trigger">Trigger</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public virtual async Task SendTriggerAsync(RemoteScopeTriggerMessage? trigger = null, CancellationToken cancellationToken = default)
+        public virtual async Task SendTriggerAsync(ScopeTriggerMessage? trigger = null, CancellationToken cancellationToken = default)
         {
             EnsureUndisposed();
             trigger ??= new()
@@ -37,7 +37,7 @@ namespace wan24.RPC.Processing.Scopes
         {
             switch (message)
             {
-                case ScopeTriggerMessage trigger:
+                case RemoteScopeTriggerMessage trigger:
                     await HandleTriggerAsync(trigger, cancellationToken).DynamicContext();
                     return true;
                 default:
@@ -50,7 +50,7 @@ namespace wan24.RPC.Processing.Scopes
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        protected virtual Task HandleTriggerAsync(ScopeTriggerMessage message, CancellationToken cancellationToken)
+        protected virtual Task HandleTriggerAsync(RemoteScopeTriggerMessage message, CancellationToken cancellationToken)
         {
             RaiseOnTrigger(message);
             return Task.CompletedTask;
@@ -70,18 +70,18 @@ namespace wan24.RPC.Processing.Scopes
         /// Raise the <see cref="OnTrigger"/> event
         /// </summary>
         /// <param name="message">Message</param>
-        protected virtual void RaiseOnTrigger(ScopeTriggerMessage message) => OnTrigger?.Invoke(this, new(message));
+        protected virtual void RaiseOnTrigger(RemoteScopeTriggerMessage message) => OnTrigger?.Invoke(this, new(message));
 
         /// <summary>
         /// <see cref="OnTrigger"/> event arguments
         /// </summary>
         /// <param name="message">Message</param>
-        public class TriggerEventArgs(in ScopeTriggerMessage message) : EventArgs()
+        public class TriggerEventArgs(in RemoteScopeTriggerMessage message) : EventArgs()
         {
             /// <summary>
             /// Message
             /// </summary>
-            public ScopeTriggerMessage Message { get; } = message;
+            public RemoteScopeTriggerMessage Message { get; } = message;
         }
     }
 }
