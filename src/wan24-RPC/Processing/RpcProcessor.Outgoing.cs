@@ -4,11 +4,6 @@ using wan24.Core;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Serialization;
 
-/*
- * Message priorities should be used to keep the RPC message handling workflow smooth. Wrong priorities can cause a dead lock in combination with exhausted buffers. 
- * A message priority may be a negative value also.
- */
-
 namespace wan24.RPC.Processing
 {
     // Outgoing
@@ -29,98 +24,6 @@ namespace wan24.RPC.Processing
         /// Message ID
         /// </summary>
         protected long MessageId = 0;
-
-        /// <summary>
-        /// Call a RPC API method at the peer and wait for the return value
-        /// </summary>
-        /// <param name="api">API name</param>
-        /// <param name="method">Method name</param>
-        /// <param name="returnValueType">Return value type</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <param name="parameters">Parameters (won't be diposed)</param>
-        /// <returns>Return value (should be disposed, if possible)</returns>
-        public virtual async Task<object?> CallValueAsync(
-            string? api, 
-            string method, 
-            Type returnValueType, 
-            CancellationToken cancellationToken = default, 
-            params object?[] parameters
-            )
-        {
-            EnsureUndisposed();
-            Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" method \"{method}\" at the peer ({count} parameters)", ToString(), api, method, parameters.Length);
-            return await SendRequestAsync(new RequestMessage()
-            {
-                PeerRpcVersion = Options.RpcVersion,
-                Id = CreateMessageId(),
-                Api = api,
-                Method = method,
-                Parameters = parameters.Length == 0
-                    ? null
-                    : parameters
-            }, returnValueType, cancellationToken).DynamicContext();
-        }
-
-        /// <summary>
-        /// Call a RPC API method at the peer and wait for the return value
-        /// </summary>
-        /// <typeparam name="T">Return value type</typeparam>
-        /// <param name="api">API name</param>
-        /// <param name="method">Method name</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <param name="parameters">Parameters (won't be diposed)</param>
-        /// <returns>Return value (should be disposed, if possible)</returns>
-        public virtual async Task<T?> CallValueAsync<T>(string? api, string method, CancellationToken cancellationToken = default, params object?[] parameters)
-            => (T?)await CallValueAsync(api, method, typeof(T), cancellationToken, parameters).DynamicContext();
-
-        /// <summary>
-        /// Call a RPC API method at the peer and wait for the return value
-        /// </summary>
-        /// <param name="api">API name</param>
-        /// <param name="method">Method name</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <param name="parameters">Parameters (won't be diposed)</param>
-        public virtual async Task CallVoidAsync(string? api, string method, CancellationToken cancellationToken = default, params object?[] parameters)
-        {
-            EnsureUndisposed();
-            Logger?.Log(LogLevel.Debug, "{this} calling API \"{api}\" void method \"{method}\" at the peer ({count} parameters)", ToString(), api, method, parameters.Length);
-            await SendVoidRequestAsync(new RequestMessage()
-            {
-                PeerRpcVersion = Options.RpcVersion,
-                Id = CreateMessageId(),
-                Api = api,
-                Method = method,
-                Parameters = parameters.Length == 0
-                    ? null
-                    : parameters,
-                WantsReturnValue = false
-            }, cancellationToken).DynamicContext();
-        }
-
-        /// <summary>
-        /// Send a ping message and wait for the pong message
-        /// </summary>
-        /// <param name="timeout">Timeout</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        public virtual async Task PingAsync(TimeSpan timeout, CancellationToken cancellationToken = default)
-        {
-            EnsureUndisposed();
-            Logger?.Log(LogLevel.Debug, "{this} sending ping request", ToString());
-            using CancellationTokenSource cts = new(timeout);
-            List<CancellationToken> token = [cts.Token];
-            if (!cancellationToken.IsEqualTo(default))
-                token.Add(cancellationToken);
-            using Cancellations cancellation = new([.. token]);
-            DateTime now = DateTime.Now;
-            await SendVoidRequestAsync(new PingMessage()
-            {
-                PeerRpcVersion = Options.RpcVersion,
-                Id = CreateMessageId()
-            }, cancellation).DynamicContext();
-            TimeSpan runtime = DateTime.Now - now;
-            MessageLoopDuration = runtime;
-            Logger?.Log(LogLevel.Debug, "{this} got pong response after {runtime}", ToString(), runtime);
-        }
 
         /// <summary>
         /// Create a message ID

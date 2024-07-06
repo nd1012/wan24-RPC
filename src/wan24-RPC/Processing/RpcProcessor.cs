@@ -5,7 +5,6 @@ using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Serialization;
 using wan24.StreamSerializerExtensions;
-using static wan24.Core.TranslationHelper;
 
 namespace wan24.RPC.Processing
 {
@@ -52,73 +51,6 @@ namespace wan24.RPC.Processing
             RpcProcessorTable.Processors[GUID] = this;
         }
 
-        /// <summary>
-        /// GUID
-        /// </summary>
-        public string GUID { get; } = Guid.NewGuid().ToString();
-
-        /// <summary>
-        /// Options (will be disposed)
-        /// </summary>
-        public RpcProcessorOptions Options { get; }
-
-        /// <summary>
-        /// Logger
-        /// </summary>
-        public virtual ILogger? Logger => Options?.Logger;
-
-        /// <summary>
-        /// Registered remote events
-        /// </summary>
-        public IEnumerable<RpcEvent> RemoteEvents => _RemoteEvents.Values;
-
-        /// <inheritdoc/>
-        public virtual IEnumerable<Status> State
-        {
-            get
-            {
-                yield return new(__("Type"), GetType(), __("RPC processor CLR type"));
-                yield return new(__("Name"), Name, __("RPC processor name"));
-                yield return new(__("Running"), IsRunning, __("If the RPC processor is running at present"));
-                yield return new(__("Started"), Started == DateTime.MinValue ? __("(never)") : Started.ToString(), __("Started time"));
-                yield return new(__("Stopped"), Stopped == DateTime.MinValue ? __("(never)") : Stopped.ToString(), __("Stopped time"));
-                yield return new(__("Exception"), LastException?.Message ?? __("(none)"), __("Last exception"));
-                yield return new(__("Scopes"), Scopes.Count, __("Number of RPC scopes"));
-                yield return new(__("Remote scopes"), RemoteScopes.Count, __("Number of RPC remote scopes"));
-                yield return new(__("Calls"), PendingCalls.Count, __("Number of pending RPC calls"));
-                yield return new(__("Requests"), PendingRequests.Count, __("Number of pending RPC requests"));
-                yield return new(__("Events"), _RemoteEvents.Count, __("Number of registered remote event handlers"));
-                foreach (Status status in IncomingMessages.State)
-                    yield return new(
-                        status.Name,
-                        status.State,
-                        status.Description,
-                        $"{__("Incoming message queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}"
-                        );
-                foreach (Status status in Calls.State)
-                    yield return new(
-                        status.Name,
-                        status.State,
-                        status.Description,
-                        $"{__("Incoming calls queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}"
-                        );
-                foreach (Status status in OutgoingMessages.State)
-                    yield return new(
-                        status.Name,
-                        status.State,
-                        status.Description,
-                        $"{__("Outgoing message queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}"
-                        );
-                foreach (Status status in Requests.State)
-                    yield return new(
-                        status.Name,
-                        status.State,
-                        status.Description,
-                        $"{__("Incoming requests queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}"
-                        );
-            }
-        }
-
         /// <inheritdoc/>
         protected override async Task WorkerAsync()
         {
@@ -145,24 +77,41 @@ namespace wan24.RPC.Processing
                         })
                             message = await limited.ReadRpcMessageAsync(Options.SerializerVersion, cancellationToken: CancelToken).DynamicContext();
                         LastMessageReceived = DateTime.Now;
+                        // Handle a close message
+                        if (message is CloseMessage closeMessage)
+                            if (Options.HandleCloseMessage)
+                            {
+                                Logger?.Log(LogLevel.Information, "{this} worker received a close message from the peer", ToString());
+                                await HandleCloseMessageAsync(closeMessage).DynamicContext();
+                                _ = DisposeAsync().AsTask();
+                                return;
+                            }
+                            else
+                            {
+                                Logger?.Log(LogLevel.Warning, "{this} worker received a close message from the peer (close message handling was disabled)", ToString());
+                                throw new InvalidRpcMessageException("Invalid close message received (close message handling was disabled)")
+                                {
+                                    RpcMessage = message
+                                };
+                            }
                         // Allow pre-queue message processing
-                        Logger?.Log(LogLevel.Trace, "{this} worker pre-processing incoming RPC message", ToString());
+                        Logger?.Log(LogLevel.Trace, "{this} worker pre-processing incoming RPC message #{id} ({type})", ToString(), message.Id, message.GetType());
                         try
                         {
                             if (await PreHandleIncomingMessageAsync(message).DynamicContext())
                             {
-                                Logger?.Log(LogLevel.Trace, "{this} worker incoming RPC message pre-processor processed the message", ToString());
+                                Logger?.Log(LogLevel.Trace, "{this} worker incoming RPC message pre-processor processed the message #{id}", ToString(), message.Id);
                                 message = null;
                                 continue;
                             }
                         }
                         catch
                         {
-                            Logger?.Log(LogLevel.Error, "{this} worker failed to pre-process incoming RPC message", ToString());
+                            Logger?.Log(LogLevel.Error, "{this} worker failed to pre-process incoming RPC message #{id}", ToString(), message!.Id);
                             throw;
                         }
                         // Enqueue the incoming message for processing
-                        Logger?.Log(LogLevel.Trace, "{this} worker enqueue incoming RPC message", ToString());
+                        Logger?.Log(LogLevel.Trace, "{this} worker enqueue incoming RPC message #{id}", ToString(), message.Id);
                         try
                         {
                             if (Options.KeepAlive != default)
@@ -178,11 +127,11 @@ namespace wan24.RPC.Processing
                                 await IncomingMessages.ResetSpaceEventAsync().DynamicContext();
                             }
                             await IncomingMessages.EnqueueAsync(message, CancelToken).DynamicContext();
-                            Logger?.Log(LogLevel.Trace, "{this} worker incoming RPC message queued (now {count} messages are queued)", ToString(), IncomingMessages.Count);
+                            Logger?.Log(LogLevel.Trace, "{this} worker incoming RPC message #{id} queued (now {count} messages are queued)", ToString(), message.Id, IncomingMessages.Count);
                         }
                         catch
                         {
-                            Logger?.Log(LogLevel.Error, "{this} worker failed to enqueue incoming RPC message", ToString());
+                            Logger?.Log(LogLevel.Error, "{this} worker failed to enqueue incoming RPC message #{id}", ToString(), message.Id);
                             throw;
                         }
                         message = null;
@@ -206,6 +155,15 @@ namespace wan24.RPC.Processing
             catch (OperationCanceledException) when (CancelToken.IsCancellationRequested)
             {
                 Logger?.Log(LogLevel.Trace, "{this} worker canceled", ToString());
+            }
+            catch (InvalidRpcMessageException ex)
+            {
+                if (ex.RpcMessage is not CloseMessage)
+                    Logger?.Log(LogLevel.Error, "{this} worker catched invalid message exception for message #{id} ({type}): {ex}", ToString(), ex.RpcMessage.Id, ex.RpcMessage.GetType(), ex);
+                StoppedExceptional = true;
+                LastException ??= ex;
+                _ = DisposeAsync().AsTask();
+                throw;
             }
             catch (Exception ex)
             {

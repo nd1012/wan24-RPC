@@ -15,6 +15,13 @@ namespace wan24.RPC.Processing
         protected readonly IncomingQueue IncomingMessages;
 
         /// <summary>
+        /// Handle a close message (should call <see cref="StopExceptionalAndDisposeAsync(Exception)"/> on exception; processor will dispose after returnung from this handler; 
+        /// incoming message receiving is paused during close message handling)
+        /// </summary>
+        /// <param name="message">Message</param>
+        protected virtual Task HandleCloseMessageAsync(CloseMessage message) => Task.CompletedTask;
+
+        /// <summary>
         /// Handle an incoming message (should call <see cref="StopExceptionalAndDisposeAsync(Exception)"/> on exception)
         /// </summary>
         /// <param name="message">Message</param>

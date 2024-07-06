@@ -22,13 +22,15 @@ namespace wan24.RPC.Processing.Messages.Scopes
         /// <inheritdoc/>
         protected override async Task SerializeAsync(Stream stream, CancellationToken cancellationToken)
         {
+            await base.SerializeAsync(stream, cancellationToken).DynamicContext();
             await stream.WriteNumberAsync(ScopeId, cancellationToken).DynamicContext();
         }
 
         /// <inheritdoc/>
         protected override async Task DeserializeAsync(Stream stream, int version, CancellationToken cancellationToken)
         {
-            ScopeId = await stream.ReadNumberAsync<int>(version, cancellationToken: cancellationToken).DynamicContext();
+            await base.DeserializeAsync(stream, version, cancellationToken).DynamicContext();
+            ScopeId = await stream.ReadNumberAsync<long>(version, cancellationToken: cancellationToken).DynamicContext();
         }
     }
 }

@@ -9,6 +9,11 @@ namespace wan24.RPC.Processing.Parameters
     /// </summary>
     public abstract record class RpcScopeParameterBase() : IRpcScopeParameter
     {
+        /// <summary>
+        /// If to store the scope at the peer
+        /// </summary>
+        protected bool _StoreScope = false;
+
         /// <inheritdoc/>
         public RpcProcessor? Processor { get; protected set; }
 
@@ -16,7 +21,11 @@ namespace wan24.RPC.Processing.Parameters
         public RpcScopeValue? Value { get; protected set; }
 
         /// <inheritdoc/>
-        public bool StoreScope { get; init; }
+        public virtual bool StoreScope
+        {
+            get => _StoreScope || Key is not null || ReplaceExistingScope;
+            init => _StoreScope = value;
+        }
 
         /// <inheritdoc/>
         public required int Type { get; init; }

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using wan24.Core;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
+using wan24.RPC.Processing.Options;
 using wan24.RPC.Processing.Scopes;
 
 namespace wan24.RPC.Processing
@@ -60,7 +61,7 @@ namespace wan24.RPC.Processing
             /// <summary>
             /// If the scope is stored
             /// </summary>
-            public virtual bool IsStored { get; init; }
+            public virtual bool IsStored { get; set; }
 
             /// <summary>
             /// If the scope was discarded from the peer
@@ -73,9 +74,14 @@ namespace wan24.RPC.Processing
             public RpcProcessor Processor { get; }
 
             /// <summary>
+            /// RPC message priority options
+            /// </summary>
+            public virtual MessagePriorityOptions Priorities => Processor.Options.Priorities;
+
+            /// <summary>
             /// Logger
             /// </summary>
-            public ILogger? Logger => Processor.Logger;
+            public virtual ILogger? Logger => Processor.Logger;
 
             /// <summary>
             /// RPC processor cancellation token
@@ -153,7 +159,7 @@ namespace wan24.RPC.Processing
             public async Task HandleMessageAsync(IRpcScopeMessage message, CancellationToken cancellationToken)
             {
                 await Task.Yield();
-                Logger?.Log(LogLevel.Debug, "{this} handling message type {type} ({clrType})", ToString(), message.Type, message.GetType());
+                Logger?.Log(LogLevel.Debug, "{this} handling message #{id} type {type} ({clrType})", ToString(), message.Id, message.Type, message.GetType());
                 try
                 {
                     switch (message)
@@ -166,15 +172,15 @@ namespace wan24.RPC.Processing
                             return;
                     }
                     if(!await HandleMessageIntAsync(message, cancellationToken).DynamicContext())
-                        throw new InvalidDataException($"Can't handle message type #{message.Id} ({message.GetType()})");
+                        throw new InvalidDataException($"Can't handle message #{message.Id} type #{message.Type} ({message.GetType()})");
                 }
                 catch (ObjectDisposedException) when (IsDisposing || Processor.IsDisposing)
                 {
-                    Logger?.Log(LogLevel.Warning, "{this} handling message type {type} canceled due to disposing", ToString(), message.Type);
+                    Logger?.Log(LogLevel.Warning, "{this} handling message #{id} type {type} canceled due to disposing", ToString(), message.Id, message.Type);
                 }
                 catch (OperationCanceledException) when (CancelToken.IsCancellationRequested || cancellationToken.IsCancellationRequested)
                 {
-                    Logger?.Log(LogLevel.Warning, "{this} handling message type {type} canceled", ToString(), message.Type);
+                    Logger?.Log(LogLevel.Warning, "{this} handling message #{id} type {type} canceled", ToString(), message.Id, message.Type);
                 }
             }
 
@@ -361,7 +367,7 @@ namespace wan24.RPC.Processing
                         {
                             PeerRpcVersion = Processor.Options.RpcVersion,
                             Id = message.Id
-                        }, Processor.Options.Priorities.Event, cancellationToken).DynamicContext();
+                        }, Priorities.Event, cancellationToken).DynamicContext();
                     }
                 }
                 catch (ObjectDisposedException) when (IsDisposing || Processor.IsDisposing)
@@ -382,7 +388,7 @@ namespace wan24.RPC.Processing
                                 PeerRpcVersion = Processor.Options.RpcVersion,
                                 Id = message.Id,
                                 Error = ex
-                            }, Processor.Options.Priorities.Event, cancellationToken).DynamicContext();
+                            }, Priorities.Event, cancellationToken).DynamicContext();
                         }
                         catch (Exception ex2)
                         {

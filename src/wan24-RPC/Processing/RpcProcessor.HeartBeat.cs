@@ -26,39 +26,6 @@ namespace wan24.RPC.Processing
         protected DateTime _LastMessageSent = DateTime.MinValue;
 
         /// <summary>
-        /// Time when the last message was received
-        /// </summary>
-        public virtual DateTime LastMessageReceived
-        {
-            get => _LastMessageReceived;
-            set
-            {
-                if (!IsDisposing)
-                    PeerHeartBeat?.Reset();
-                _LastMessageReceived = value;
-            }
-        }
-
-        /// <summary>
-        /// Time when the last message was sent
-        /// </summary>
-        public virtual DateTime LastMessageSent
-        {
-            get => _LastMessageSent;
-            set
-            {
-                if (!IsDisposing)
-                    HeartBeat?.Reset();
-                _LastMessageSent = value;
-            }
-        }
-
-        /// <summary>
-        /// Message loop duration (only available if <see cref="RpcProcessorOptions.KeepAlive"/> is used or <see cref="PingAsync(TimeSpan, CancellationToken)"/> was called)
-        /// </summary>
-        public TimeSpan MessageLoopDuration { get; protected set; }
-
-        /// <summary>
         /// Handle a heartbeat message
         /// </summary>
         /// <param name="message">Message</param>

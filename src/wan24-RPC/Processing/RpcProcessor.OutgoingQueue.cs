@@ -1,10 +1,6 @@
-﻿using wan24.Core;
+﻿using Microsoft.Extensions.Logging;
+using wan24.Core;
 using wan24.RPC.Processing.Messages;
-
-/*
- * The number of queued outgoing messages can be adjusted for your needs to protect memory ressources. Use priorities to ensure that important messages are being sent as 
- * soon as possible.
- */
 
 namespace wan24.RPC.Processing
 {
@@ -39,27 +35,37 @@ namespace wan24.RPC.Processing
             /// </summary>
             public RpcProcessor Processor { get; } = processor;
 
+            /// <summary>
+            /// Logger
+            /// </summary>
+            public ILogger? Logger => Processor.Logger;
+
             /// <inheritdoc/>
             protected override async Task ProcessItem(QueuedMessage item, CancellationToken cancellationToken)
             {
                 try
                 {
+                    Logger?.Log(LogLevel.Trace, "{this} processing outgoing message #{id} ({type})", ToString(), item.Message.Id, item.Message.GetType());
                     if (item.CancelToken.IsCancellationRequested || item.IsDone)
                     {
+                        Logger?.Log(LogLevel.Trace, "{this} processing outgoing message #{id} ({type}) was done already or is canceled", ToString(), item.Message.Id, item.Message.GetType());
                         item.Completion.TrySetException(new OperationCanceledException("Canceled before processing"));
                         return;
                     }
                     using (Cancellations cancellation = new(cancellationToken, item.CancelToken))
                         await Processor.SendMessageAsync(item.Message, cancellation).DynamicContext();
+                    Logger?.Log(LogLevel.Trace, "{this} outgoing message #{id} ({type}) processed", ToString(), item.Message.Id, item.Message.GetType());
                     item.Completion.TrySetResult();
                 }
                 catch (Exception ex)
                 {
+                    Logger?.Log(LogLevel.Trace, "{this} outgoing message #{id} ({type}) processing failed", ToString(), item.Message.Id, item.Message.GetType());
                     item.Completion.TrySetException(ex);
                 }
                 finally
                 {
                     item.SetDone();
+                    Logger?.Log(LogLevel.Trace, "{this} processing outgoing message #{id} ({type}) done", ToString(), item.Message.Id, item.Message.GetType());
                 }
             }
 

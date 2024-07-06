@@ -8,14 +8,14 @@
         /// <summary>
         /// If to fail the RPC processor if a message for an unknown scope was received
         /// </summary>
-        public bool FailOnScopeNotFound { get; }
+        bool FailOnScopeNotFound { get; }
         /// <summary>
         /// If to warn if a message for an unknown scope was received
         /// </summary>
-        public bool WarnOnScopeNotFound { get; }
+        bool WarnOnScopeNotFound { get; }
         /// <summary>
         /// Scope ID
         /// </summary>
-        public long ScopeId { get; }
+        long ScopeId { get; }
     }
 }

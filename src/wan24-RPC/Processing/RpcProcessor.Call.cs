@@ -5,23 +5,6 @@ using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Messages;
 
-/*
- * The processing of a call is usually:
- * 
- * 1. The incoming message handler starts handling a request message (a call)
- * 2. A pending call context is being stored and enqueued for processing
- * 3. The call queue creates a RPC context and authorizes the API method call
- * 4. The call queue ensures valid API method parameters
- * 5. The call queue calls the API method and waits for the result
- * 6. The call queue finalizes the return value and sets it (or an error) to the context object
- * 7. The call message handler sends the response to the peer
- * 8. The call message handler removes the pending call context
- * 
- * The called API method doesn't need to dispose any parameter, unless the NoRpcDisposeAttribute has been applied to a specific RPC parameter.
- * 
- * The API methods return value will be disposed after sending it to the peer unless the NoRpcDisposeAttribute has been applied to the method.
- */
-
 namespace wan24.RPC.Processing
 {
     // RPC call processing

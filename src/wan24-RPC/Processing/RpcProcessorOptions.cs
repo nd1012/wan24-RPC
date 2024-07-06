@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using wan24.Core;
 using wan24.RPC.Api.Reflection;
+using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Options;
 using wan24.StreamSerializerExtensions;
 
@@ -150,9 +151,20 @@ namespace wan24.RPC.Processing
         public bool UseScopes { get; init; } = true;
 
         /// <summary>
+        /// Max. number of served scopes (including remote scopes)
+        /// </summary>
+        public int ScopeLimit { get; init; } = byte.MaxValue;
+
+        /// <summary>
         /// Stream options
         /// </summary>
         public StreamScopeOptions? Streams { get; init; }
+
+        /// <summary>
+        /// If a <see cref="CloseMessage"/> will be handled (for closing the connection; the <see cref="RpcProcessor"/> will be disposed, when a close message was received 
+        /// from the peer)
+        /// </summary>
+        public bool HandleCloseMessage { get; init; } = true;
 
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)

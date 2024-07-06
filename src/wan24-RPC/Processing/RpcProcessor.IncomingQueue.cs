@@ -1,11 +1,6 @@
 ﻿using wan24.Core;
 using wan24.RPC.Processing.Messages;
 
-/*
- * The number of queued incoming messages protects memory and CPU ressources and may be adjusted for your needs. Any overflow will stop reading incoming messages until 
- * a queued message was dequeued.
- */
-
 //TODO Use a priority queue here, too?
 
 namespace wan24.RPC.Processing

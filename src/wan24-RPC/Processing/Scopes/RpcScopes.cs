@@ -1,4 +1,5 @@
 ﻿using wan24.Core;
+using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Values;
 
@@ -18,13 +19,17 @@ namespace wan24.RPC.Processing.Scopes
         /// </summary>
         public static readonly Dictionary<int, RemoteScopeFactory_Delegate> RemoteFactories = [];
         /// <summary>
-        /// Registered parameter scope factories (key is the parameter value type)
+        /// Registered request parameter scope factories (key is the parameter value type)
         /// </summary>
         public static readonly Dictionary<Type, ParameterScopeFactory_Delegate> ParameterScopeFactories = [];
         /// <summary>
-        /// Registered return scope factories (key is the return value type)
+        /// Registered call return scope factories (key is the return value type)
         /// </summary>
         public static readonly Dictionary<Type, ReturnScopeFactory_Delegate> ReturnScopeFactories = [];
+        /// <summary>
+        /// Registered scope parameter factories (key is the scope type)
+        /// </summary>
+        public static readonly Dictionary<Type, ScopeParameterFactory_Delegate> ScopeParameterFactories = [];
 
         /// <summary>
         /// Constructor
@@ -32,16 +37,9 @@ namespace wan24.RPC.Processing.Scopes
         static RpcScopes()
         {
             // Simple scope
-            Factories[(int)RpcScopeTypes.Scope] = (processor, parameter, ct) =>
-            {
-                if (parameter is not RpcScopeParameter)
-                    throw new InvalidDataException("Invalid parameter type for the requested scope type");
-                return Task.FromResult<RpcProcessor.RpcScopeBase>(new RpcScope(processor, parameter.Key)
-                {
-                    ScopeParameter = parameter
-                });
-            };
-            RemoteFactories[(int)RpcScopeTypes.Scope] = (processor, value, ct) => Task.FromResult<RpcProcessor.RpcRemoteScopeBase>(new RpcRemoteScope(processor, value));
+            Factories[(int)RpcScopeTypes.Scope] = RpcScope.CreateAsync;
+            RemoteFactories[(int)RpcScopeTypes.Scope] = RpcRemoteScope.CreateAsync;
+            ScopeParameterFactories[typeof(RpcScope)] = RpcScopeParameter.CreateAsync;
             //TODO Register more built-in scope factories
         }
 
@@ -55,6 +53,8 @@ namespace wan24.RPC.Processing.Scopes
         /// <param name="parameterScopeFactory">Parameter scope factory</param>
         /// <param name="returnType">Return type</param>
         /// <param name="returnScopeFactory">Return scope factory</param>
+        /// <param name="scopeClrType">Local scope CLR type</param>
+        /// <param name="scopeParameterFactory">Scope parameter factory</param>
         /// <exception cref="ArgumentNullException">Both parameter/return type informations must be given</exception>
         /// <exception cref="InvalidOperationException">Won't overwrite existing scope registration</exception>
         public static void RegisterScope(
@@ -64,23 +64,35 @@ namespace wan24.RPC.Processing.Scopes
             Type? parameterType = null,
             ParameterScopeFactory_Delegate? parameterScopeFactory = null,
             Type? returnType = null,
-            ReturnScopeFactory_Delegate? returnScopeFactory = null
+            ReturnScopeFactory_Delegate? returnScopeFactory = null,
+            Type? scopeClrType = null,
+            ScopeParameterFactory_Delegate? scopeParameterFactory = null
             )
         {
             if (parameterType is null != parameterScopeFactory is null)
                 throw new ArgumentNullException("Incomplete parameter type scope factory informations", innerException: null);
             if (returnType is null != returnScopeFactory is null)
                 throw new ArgumentNullException("Incomplete return type scope factory informations", innerException: null);
+            if(scopeClrType is null != scopeParameterFactory is null)
+                throw new ArgumentNullException("Incomplete scope parameter factory informations", innerException: null);
             if (Factories.ContainsKey(scopeType))
                 throw new InvalidOperationException($"Scope type #{scopeType} exists already");
             if (parameterType is not null && ParameterScopeFactories.ContainsKey(parameterType))
                 throw new InvalidOperationException($"Parameter type {parameterType} exists already");
             if (returnType is not null && ReturnScopeFactories.ContainsKey(returnType))
                 throw new InvalidOperationException($"Return type {returnType} exists already");
+            if (scopeClrType is not null)
+            {
+                if (!typeof(RpcProcessor.RpcScopeBase).IsAssignableFrom(scopeClrType))
+                    throw new ArgumentException("Invalid local RPC scope type", nameof(scopeClrType));
+                if (ScopeParameterFactories.ContainsKey(scopeClrType))
+                    throw new InvalidOperationException($"Scope parameter factory for local scope type {scopeClrType} exists already");
+            }
             Factories[scopeType] = scopeFactory;
             RemoteFactories[scopeType] = remoteScopeFactory;
             if (parameterScopeFactory is not null) ParameterScopeFactories[parameterType!] = parameterScopeFactory;
             if (returnScopeFactory is not null) ReturnScopeFactories[returnType!] = returnScopeFactory;
+            if (scopeParameterFactory is not null) ScopeParameterFactories[scopeClrType!] = scopeParameterFactory;
         }
 
         /// <summary>
@@ -154,6 +166,21 @@ namespace wan24.RPC.Processing.Scopes
         public delegate Task<RpcProcessor.RpcScopeBase?> ReturnScopeFactory_Delegate(
             RpcProcessor processor, 
             object returnValue, 
+            CancellationToken cancellationToken
+            );
+
+        /// <summary>
+        /// Delegate for a scope parameter factory
+        /// </summary>
+        /// <param name="processor">RPC processor</param>
+        /// <param name="scope">RPC scope</param>
+        /// <param name="apiMethod">RPC API method (if <see langword="null"/>, the scope was used as request parameter)</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>Scope parameter (will be set to <see cref="RpcProcessor.RpcScopeBase.ScopeParameter"/>, also)</returns>
+        public delegate Task<IRpcScopeParameter> ScopeParameterFactory_Delegate(
+            RpcProcessor processor,
+            RpcProcessor.RpcScopeBase scope,
+            RpcApiMethodInfo? apiMethod,
             CancellationToken cancellationToken
             );
     }

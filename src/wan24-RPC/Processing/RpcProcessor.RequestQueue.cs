@@ -5,16 +5,6 @@ using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Scopes;
 using wan24.RPC.Processing.Values;
 
-/*
- * The number of RPC requests is limited in two ways:
- * 
- * 1. Number of parallel executing RPC requests to respect the peers max. number of parallel executed calls plus the max. number of pending calls
- * 2. Number of pending requests to protect memory ressources
- * 
- * The RPC processor has to respect the peers limits, otherwise the peer will disconnect due to a protocol error. You should work work with timeout cancellation tokens 
- * to prevent dead locks on any RPC communication error. To combine them with another cancellation token use wan24.Core.Cancellations.
- */
-
 namespace wan24.RPC.Processing
 {
     // Request queue
@@ -159,36 +149,53 @@ namespace wan24.RPC.Processing
                 CancellationToken cancellationToken
                 )
             {
-                // Scopeable parameter handling
-                if(value is not null)
-                    if(value is IRpcScopeParameter scopeParameter)
+                if (value is not null)
+                {
+                    // Scopeable parameter handling
+                    if (value is RpcScopeValue)
+                        // Nothing to do - just use the given scope value
+                        return value;
+                    if (value is RpcScopeBase scope)
                     {
-                        if(RpcScopes.Factories.TryGetValue(scopeParameter.Type, out RpcScopes.ScopeFactory_Delegate? scopeFactory))
+                        // Use the given scopes value
+                        item.ParameterScopes.Add(scope);
+                        if (scope.ScopeParameter is null)
+                            await scope.CreateScopeParameterAsync(cancellationToken: cancellationToken).DynamicContext();
+                        return scope.ScopeParameter.Value ?? await scope.ScopeParameter.CreateValueAsync(Processor, scope.Id, cancellationToken).DynamicContext();
+                    }
+                    if (value is IRpcScopeParameter scopeParameter)
+                        // Create a new scope from the given scope parameter and use its scope value
+                        if (RpcScopes.Factories.TryGetValue(scopeParameter.Type, out RpcScopes.ScopeFactory_Delegate? scopeFactory))
                         {
-                            RpcScopeBase scope = await scopeFactory.Invoke(Processor, scopeParameter, cancellationToken).DynamicContext();
-                            item.ParameterScopes.Add(scope);
-                            value = scope.ScopeParameter?.Value;
+                            RpcScopeBase scope2 = await scopeFactory.Invoke(Processor, scopeParameter, cancellationToken).DynamicContext();
+                            item.ParameterScopes.Add(scope2);
+                            if (scope2.ScopeParameter is null)
+                                await scope2.CreateScopeParameterAsync(cancellationToken: cancellationToken).DynamicContext();
+                            return scope2.ScopeParameter.Value ?? await scope2.ScopeParameter.CreateValueAsync(Processor, scope2.Id, cancellationToken).DynamicContext();
                         }
                         else
                         {
                             await value.TryDisposeAsync().DynamicContext();
                             throw new ArgumentException($"Failed to get scope type #{scopeParameter.Type} factory for parameter #{index}");
                         }
-                    }
-                    else if(RpcScopes.GetParameterScopeFactory(value.GetType()) is RpcScopes.ParameterScopeFactory_Delegate scopeFactory)
+                    if (RpcScopes.GetParameterScopeFactory(value.GetType()) is RpcScopes.ParameterScopeFactory_Delegate scopeFactory2)
                     {
-                        RpcScopeBase? scope = await scopeFactory.Invoke(Processor, value, cancellationToken).DynamicContext();
-                        if(scope is not null)
+                        // Create a new scope from the given scopeable object and use its scope value
+                        RpcScopeBase? scope2 = await scopeFactory2.Invoke(Processor, value, cancellationToken).DynamicContext();
+                        if (scope2 is not null)
                         {
-                            item.ParameterScopes.Add(scope);
-                            value = scope.Value;
+                            item.ParameterScopes.Add(scope2);
+                            if (scope2.ScopeParameter is null)
+                                await scope2.CreateScopeParameterAsync(cancellationToken: cancellationToken).DynamicContext();
+                            return scope2.ScopeParameter.Value ?? await scope2.ScopeParameter.CreateValueAsync(Processor, scope2.Id, cancellationToken).DynamicContext();
                         }
                         else
                         {
                             await value.TryDisposeAsync().DynamicContext();
-                            value = null;
+                            return null;
                         }
                     }
+                }
                 return value;
             }
 
@@ -210,11 +217,13 @@ namespace wan24.RPC.Processing
                 // Remote scope handling
                 if(returnValue is RpcScopeValue scopeValue)
                 {
+                    if (item.ExpectedReturnType is not null && item.ExpectedReturnType.IsAssignableFrom(scopeValue.GetType()))
+                        return returnValue;
                     if(!RpcScopes.RemoteFactories.TryGetValue(scopeValue.Type, out RpcScopes.RemoteScopeFactory_Delegate? scopeFactory))
                         throw new InvalidDataException($"Failed to find remote scope type #{scopeValue.Type} return value factory");
                     RpcRemoteScopeBase remoteScope = await scopeFactory.Invoke(Processor, scopeValue, cancellationToken).DynamicContext();
                     item.ReturnScope = remoteScope;
-                    returnValue = remoteScope.Value;
+                    return remoteScope.Value;
                 }
                 return returnValue;
             }

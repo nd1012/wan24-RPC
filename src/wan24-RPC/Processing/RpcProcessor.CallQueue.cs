@@ -6,15 +6,6 @@ using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Scopes;
 using wan24.RPC.Processing.Values;
 
-/*
- * The number of RPC calls from the peer is limited in two ways:
- * 
- * 1. The number of parallel executed API methods to protect CPU ressources
- * 2. The number of pending calls to protect memory ressources
- * 
- * The peer needs to know and respect these limits. A pending call queue overflow is a protocol error which disconnects the peer.
- */
-
 namespace wan24.RPC.Processing
 {
     // Call queue
@@ -380,6 +371,8 @@ namespace wan24.RPC.Processing
                 // Scope parameter handling
                 if(value is RpcScopeValue scopeValue)
                 {
+                    if (parameter.Parameter.ParameterType.IsAssignableFrom(scopeValue.GetType()))
+                        return value;
                     if (!RpcScopes.RemoteFactories.TryGetValue(scopeValue.Type, out RpcScopes.RemoteScopeFactory_Delegate? scopeFactory))
                         throw new ArgumentException("Unsupported scope type in parameter value", parameter.Parameter.Name);
                     RpcRemoteScopeBase? remoteScope = null;
@@ -392,7 +385,7 @@ namespace wan24.RPC.Processing
                         throw new ArgumentException("Scope factory failed to create a remote scope from the parameter value", parameter.Parameter.Name, ex);
                     }
                     item.ParameterScopes.Add(remoteScope);
-                    value = remoteScope.Value;
+                    return remoteScope.Value;
                 }
                 return value;
             }
@@ -414,18 +407,32 @@ namespace wan24.RPC.Processing
                 object? returnValue
                 )
             {
-                // Scope handling
-                if (returnValue is not null && RpcScopes.GetReturnScopeFactory(returnValue.GetType()) is RpcScopes.ReturnScopeFactory_Delegate scopeFactory)
-                    if(await scopeFactory.Invoke(Processor, returnValue, CancelToken).DynamicContext() is RpcScopeBase scope)
+                if (returnValue is not null)
+                {
+                    // Scopeable return value handling
+                    if (returnValue is RpcScopeValue)
+                        return returnValue;
+                    if (returnValue is RpcScopeBase scope)
                     {
                         item.ReturnScope = scope;
-                        returnValue = scope.Value;
+                        if (scope.ScopeParameter is null)
+                            await scope.CreateScopeParameterAsync(method, CancelToken).DynamicContext();
+                        return scope.ScopeParameter.Value ?? await scope.ScopeParameter.CreateValueAsync(Processor, scope.Id, CancelToken).DynamicContext();
                     }
-                    else
-                    {
-                        await returnValue.TryDisposeAsync().DynamicContext();
-                        returnValue = null;
-                    }
+                    if (RpcScopes.GetReturnScopeFactory(returnValue.GetType()) is RpcScopes.ReturnScopeFactory_Delegate scopeFactory)
+                        if (await scopeFactory.Invoke(Processor, returnValue, CancelToken).DynamicContext() is RpcScopeBase scope2)
+                        {
+                            item.ReturnScope = scope2;
+                            if (scope2.ScopeParameter is null)
+                                await scope2.CreateScopeParameterAsync(method, CancelToken).DynamicContext();
+                            return scope2.ScopeParameter.Value ?? await scope2.ScopeParameter.CreateValueAsync(Processor, scope2.Id, CancelToken).DynamicContext();
+                        }
+                        else
+                        {
+                            await returnValue.TryDisposeAsync().DynamicContext();
+                            return null;
+                        }
+                }
                 return returnValue;
             }
         }

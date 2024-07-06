@@ -1,4 +1,5 @@
-﻿using wan24.RPC.Sdk;
+﻿using wan24.RPC.Processing.Scopes;
+using wan24.RPC.Sdk;
 
 namespace wan24_RPC_Tests
 {
@@ -24,6 +25,20 @@ namespace wan24_RPC_Tests
         {
             EnsureInitialized();
             await Processor.CallVoidAsync(nameof(ServerApi), nameof(ServerApi.RaiseRemoteEventAsync));
+        }
+
+        public async Task<RpcRemoteScope> ReturnScopeAsync()
+        {
+            EnsureInitialized();
+            return await Processor.CallValueAsync<RpcRemoteScope>(nameof(ServerApi), nameof(ServerApi.ReturnScope))
+                ?? throw new InvalidDataException("NULL return value");
+        }
+
+        public async Task<RpcRemoteScope> ReturnScopeParameterAsync()
+        {
+            EnsureInitialized();
+            return await Processor.CallValueAsync<RpcRemoteScope>(nameof(ServerApi), nameof(ServerApi.ReturnScopeParameter))
+                ?? throw new InvalidDataException("NULL return value");
         }
     }
 }

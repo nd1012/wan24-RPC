@@ -27,7 +27,7 @@ namespace wan24.RPC.Processing.Messages
         /// <summary>
         /// <see cref="Meta"/> property
         /// </summary>
-        private static readonly PropertyInfo MetaProperty;
+        protected static readonly PropertyInfo MetaProperty;
 
         /// <summary>
         /// Static constructor

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using wan24.Core;
+using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
 using wan24.RPC.Processing.Scopes;
@@ -30,30 +31,14 @@ namespace wan24.RPC.Processing
         /// Scope ID
         /// </summary>
         protected long ScopeId = 0;
-
         /// <summary>
-        /// Get a scope
+        /// Number of stored scopes
         /// </summary>
-        /// <param name="key">Key</param>
-        /// <returns>Scope (will be disposed)</returns>
-        public virtual RpcScopeBase? GetScope(in string key)
-        {
-            EnsureUndisposed();
-            EnsureScopesAreEnabled();
-            return KeyedScopes.TryGetValue(key, out RpcScopeBase? res) ? res : null;
-        }
-
+        protected volatile int _StoredScopeCount = 0;
         /// <summary>
-        /// Get a remote scope
+        /// Number of stored remote scopes
         /// </summary>
-        /// <param name="key">Key</param>
-        /// <returns>Remote scope (will be disposed)</returns>
-        public virtual RpcRemoteScopeBase? GetRemoteScope(in string key)
-        {
-            EnsureUndisposed();
-            EnsureScopesAreEnabled();
-            return KeyedRemoteScopes.TryGetValue(key, out RpcRemoteScopeBase? res) ? res : null;
-        }
+        protected volatile int _StoredRemoteScopeCount = 0;
 
         /// <summary>
         /// Create a scope ID
@@ -69,26 +54,31 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Add a scope
         /// </summary>
-        /// <param name="scope">Scope (will be disposed)</param>
-        protected virtual void AddScope(RpcScopeBase scope)
+        /// <param name="scope">Scope (will be disposed, if stored)</param>
+        /// <returns>If stored</returns>
+        protected virtual bool AddScope(RpcScopeBase scope)
         {
             EnsureUndisposed();
             EnsureScopesAreEnabled();
             if (!scope.IsStored)
-                return;
+                return false;
             bool scopeAdded = false;
             try
             {
+                if (_StoredScopeCount > Options.ScopeLimit)
+                    throw new TooManyRpcScopesException();
                 if (!Scopes.TryAdd(scope.Id, scope))
                     throw new InvalidOperationException($"Scope #{scope.Id} added already (double scope ID)");
                 scopeAdded = true;
+                _StoredScopeCount++;
                 if (scope.Key is not null && !KeyedScopes.TryAdd(scope.Key, scope))
                     throw new InvalidOperationException($"Scope #{scope.Id} key exists already");
+                return true;
             }
             catch
             {
-                if (scopeAdded)
-                    Scopes.TryRemove(scope.Id, out _);
+                if (scopeAdded && Scopes.TryRemove(scope.Id, out _))
+                    _StoredScopeCount--;
                 scope.Dispose();
                 throw;
             }
@@ -98,18 +88,22 @@ namespace wan24.RPC.Processing
         /// Add a remote scope
         /// </summary>
         /// <param name="scope">Scope (will be disposed)</param>
-        protected virtual async Task AddRemoteScopeAsync(RpcRemoteScopeBase scope)
+        /// <returns>If stored</returns>
+        protected virtual async Task<bool> AddRemoteScopeAsync(RpcRemoteScopeBase scope)
         {
             EnsureUndisposed();
             EnsureScopesAreEnabled();
             if (!scope.IsStored)
-                return;
+                return false;
             bool scopeAdded = false;
             try
             {
+                if (_StoredRemoteScopeCount > Options.ScopeLimit)
+                    throw new TooManyRpcRemoteScopesException();
                 if (!RemoteScopes.TryAdd(scope.Id, scope))
                     throw new InvalidOperationException($"Remote scope #{scope.Id} added already (double remote scope ID)");
                 scopeAdded = true;
+                _StoredRemoteScopeCount++;
                 if (scope.Key is not null)
                     while (EnsureNotCanceled())
                         if (KeyedRemoteScopes.TryGetValue(scope.Key, out RpcRemoteScopeBase? existing))
@@ -125,11 +119,12 @@ namespace wan24.RPC.Processing
                         {
                             break;
                         }
+                return false;
             }
             catch
             {
-                if (scopeAdded)
-                    RemoteScopes.TryRemove(scope.Id, out _);
+                if (scopeAdded && RemoteScopes.TryRemove(scope.Id, out _))
+                    _StoredRemoteScopeCount--;
                 await scope.DisposeAsync().DynamicContext();
                 throw;
             }
@@ -170,6 +165,7 @@ namespace wan24.RPC.Processing
             EnsureScopesAreEnabled();
             if (!Scopes.TryRemove(scope.Id, out _))
                 return false;
+            _StoredScopeCount--;
             if (scope.Key is not null)
                 KeyedScopes.TryRemove(new KeyValuePair<string, RpcScopeBase>(scope.Key, scope));
             return true;
@@ -186,6 +182,7 @@ namespace wan24.RPC.Processing
             EnsureScopesAreEnabled();
             if (!RemoteScopes.TryRemove(scope.Id, out RpcRemoteScopeBase? removed))
                 return false;
+            _StoredRemoteScopeCount--;
             if (scope.Key is not null)
                 KeyedRemoteScopes.TryRemove(new KeyValuePair<string, RpcRemoteScopeBase>(scope.Key, removed));
             return true;
@@ -202,6 +199,7 @@ namespace wan24.RPC.Processing
             EnsureScopesAreEnabled();
             if (!Scopes.TryGetValue(id, out RpcScopeBase? res))
                 return null;
+            _StoredScopeCount--;
             if (res.Key is not null)
                 KeyedScopes.TryRemove(new KeyValuePair<string, RpcScopeBase>(res.Key, res));
             Scopes.TryRemove(id, out _);
@@ -219,6 +217,7 @@ namespace wan24.RPC.Processing
             EnsureScopesAreEnabled();
             if (!RemoteScopes.TryGetValue(id, out RpcRemoteScopeBase? res))
                 return null;
+            _StoredRemoteScopeCount--;
             if (res.Key is not null)
                 KeyedRemoteScopes.TryRemove(new KeyValuePair<string, RpcRemoteScopeBase>(res.Key, res));
             RemoteScopes.TryRemove(id, out _);

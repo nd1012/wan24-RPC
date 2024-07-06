@@ -1,6 +1,8 @@
 ﻿using wan24.RPC.Api;
 using wan24.RPC.Api.Attributes;
 using wan24.RPC.Processing;
+using wan24.RPC.Processing.Parameters;
+using wan24.RPC.Processing.Scopes;
 
 namespace wan24_RPC_Tests
 {
@@ -28,6 +30,10 @@ namespace wan24_RPC_Tests
         }
 
         public Task RaiseRemoteEventAsync([NoRpc] RpcProcessor processor) => processor.RaiseEventAsync("test", wait: true);
+
+        public RpcScope ReturnScope([NoRpc] RpcProcessor processor) => new(processor);
+
+        public RpcScopeParameter ReturnScopeParameter() => new();
 
         protected override void Dispose(bool disposing) { }
     }

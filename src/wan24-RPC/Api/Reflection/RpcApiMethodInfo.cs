@@ -1,7 +1,9 @@
 ﻿using System.Collections.Frozen;
+using System.Diagnostics.Contracts;
 using System.Reflection;
 using wan24.Core;
 using wan24.RPC.Api.Attributes;
+using wan24.RPC.Processing.Parameters;
 
 namespace wan24.RPC.Api.Reflection
 {
@@ -131,6 +133,21 @@ namespace wan24.RPC.Api.Reflection
         /// Extended RPC attributes
         /// </summary>
         public FrozenSet<RpcAttributeBase> Attributes { get; protected set; } = null!;
+
+        /// <summary>
+        /// Initialize a scope parameter for a return value
+        /// </summary>
+        /// <param name="parameter">Scope parameter</param>
+        public virtual void InitializeScopeParameter(in IRpcScopeParameter parameter)
+        {
+            parameter.DisposeScopeValue = DisposeReturnValue;
+            parameter.DisposeScopeValueOnError = DisposeReturnValueOnError;
+            foreach(RpcScopeAttributeBase? attr in Attributes.Select(a=>a as RpcScopeAttributeBase).Where(a=>a is not null))
+            {
+                Contract.Assume(attr is not null);
+                attr.InitializeScopeParameter(parameter);
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString() => $"{API.Name}->{Name} ({API.Type}.{Method.Name})";

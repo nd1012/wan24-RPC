@@ -3,20 +3,6 @@ using System.Collections.Concurrent;
 using wan24.Core;
 using wan24.RPC.Processing.Messages;
 
-/*
- * The processing of a request is usually:
- * 
- * 1. Call*Async stores a pending request and enqueues the context object
- * 2. The request queue ensures valid request parameters
- * 3. The request queue sends the message to the peer and waits for the response
- * 4. The request queue finalizes the return value and sets it (or an error) to the context object
- * 5. The Call*Async method removes and disposes the context object
- * 6. The Call*Async method returns the result (or throws an exception on error)
- * 
- * The requesting code is required to dispose any disposable return value after use. Asynchronous streamed return values (like streams) will be disconnected automatic, if 
- * the connection to the peer got lost (any attempt to access the ressource in that state will throw).
- */
-
 namespace wan24.RPC.Processing
 {
     // Request

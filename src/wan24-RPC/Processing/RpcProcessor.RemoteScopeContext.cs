@@ -135,7 +135,7 @@ namespace wan24.RPC.Processing
                             throw new InvalidProgramException($"Failed to store event message #{request.Id} (double message ID)");
                         try
                         {
-                            await SendMessageAsync(request.Message, Processor.Options.Priorities.Event, cancellationToken).DynamicContext();
+                            await SendMessageAsync(request.Message, Priorities.Event, cancellationToken).DynamicContext();
                             await request.ProcessorCompletion.Task.DynamicContext();
                         }
                         finally
@@ -152,7 +152,7 @@ namespace wan24.RPC.Processing
                         PeerRpcVersion = Processor.Options.RpcVersion,
                         Name = name,
                         Arguments = e
-                    }, Processor.Options.Priorities.Event, cancellationToken).DynamicContext();
+                    }, Priorities.Event, cancellationToken).DynamicContext();
                 }
             }
 
@@ -176,7 +176,7 @@ namespace wan24.RPC.Processing
                 {
                     ScopeId = Id,
                     PeerRpcVersion = Processor.Options.RpcVersion
-                }, Processor.Options.Priorities.Event, cancellationToken).DynamicContext();
+                }, Priorities.Event, cancellationToken).DynamicContext();
             }
 
             /// <inheritdoc/>

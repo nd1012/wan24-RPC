@@ -28,7 +28,8 @@ namespace wan24.RPC.Processing.Messages
             { RemoteScopeErrorMessage.TYPE_ID, typeof(RemoteScopeErrorMessage) },
             { ScopeEventMessage.TYPE_ID, typeof(ScopeEventMessage) },
             { RemoteScopeEventMessage.TYPE_ID, typeof(RemoteScopeEventMessage) },
-            { ScopeRegistrationMessage.TYPE_ID, typeof(ScopeRegistrationMessage) }
+            { ScopeRegistrationMessage.TYPE_ID, typeof(ScopeRegistrationMessage) },
+            { CloseMessage.TYPE_ID, typeof(CloseMessage) }
         };
 
         /// <summary>

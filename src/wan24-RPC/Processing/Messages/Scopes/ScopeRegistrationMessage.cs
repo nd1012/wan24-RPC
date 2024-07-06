@@ -44,7 +44,7 @@ namespace wan24.RPC.Processing.Messages.Scopes
             Type valueType = TypeHelper.Instance.GetType(valueTypeName)
                 ?? throw new InvalidDataException($"Failed to instance RPC scope value type {valueTypeName.ToQuotedLiteral()}");
             if (!valueType.CanConstruct() || !typeof(RpcScopeValue).IsAssignableFrom(valueType))
-                throw new TypeInitializationException(valueType.FullName, new InvalidCastException($"{valueType} is incmpatible to {typeof(RpcScopeValue)}"));
+                throw new TypeInitializationException(valueType.FullName, new InvalidCastException($"{valueType} is incompatible to {typeof(RpcScopeValue)}"));
             Value = (RpcScopeValue)await stream.ReadSerializedObjectAsync(valueType, version, cancellationToken).DynamicContext();
         }
     }

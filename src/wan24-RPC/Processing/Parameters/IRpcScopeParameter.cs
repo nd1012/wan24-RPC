@@ -36,11 +36,11 @@ namespace wan24.RPC.Processing.Parameters
         /// <summary>
         /// Dispose the scope value (NOT the <see cref="Value"/>!) when disposing?
         /// </summary>
-        bool DisposeScopeValue { get; }
+        bool DisposeScopeValue { get; set; }
         /// <summary>
         /// If to dispose the scope value (NOT the <see cref="Value"/>!) on error
         /// </summary>
-        bool DisposeScopeValueOnError { get; }
+        bool DisposeScopeValueOnError { get; set; }
         /// <summary>
         /// If the scope value (NOT the <see cref="Value"/>!) should be disposed at the current state
         /// </summary>

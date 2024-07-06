@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using System.Runtime.CompilerServices;
-using System.Xml.Linq;
 using wan24.Core;
 using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
 using wan24.RPC.Processing.Parameters;
+using wan24.RPC.Processing.Scopes;
 
 namespace wan24.RPC.Processing
 {
@@ -32,7 +31,7 @@ namespace wan24.RPC.Processing
             /// <summary>
             /// Scope parameter
             /// </summary>
-            protected readonly IRpcScopeParameter? _ScopeParameter = null;
+            protected IRpcScopeParameter? _ScopeParameter = null;
             /// <summary>
             /// If the scope is stored
             /// </summary>
@@ -52,10 +51,15 @@ namespace wan24.RPC.Processing
             public override bool IsStored
             {
                 get => _IsStored;
-                init
+                set
                 {
+                    EnsureUndisposed();
+                    EnsureNotDiscarded();
+                    bool stored = Processor.GetScope(Id) is not null;
+                    if (stored && !value)
+                        throw new InvalidOperationException("Scope was stored, can't be unstored");
                     _IsStored = value;
-                    if (value)
+                    if (value && !stored)
                         Processor.AddScope(this);
                 }
             }
@@ -66,14 +70,7 @@ namespace wan24.RPC.Processing
             public IRpcScopeParameter? ScopeParameter
             {
                 get => _ScopeParameter;
-                init
-                {
-                    _ScopeParameter = value;
-                    if (value is null)
-                        return;
-                    DisposeValueOnError = value.DisposeScopeValueOnError;
-                    IsStored = value.StoreScope;
-                }
+                init => SetScopeParameter(value);
             }
 
             /// <summary>
@@ -112,6 +109,43 @@ namespace wan24.RPC.Processing
             public Exception? LastException { get; protected set; }
 
             /// <summary>
+            /// Create a scope parameter (should use <see cref="SetScopeParameter(in IRpcScopeParameter?)"/> to set the parameter to <see cref="ScopeParameter"/>)
+            /// </summary>
+            /// <param name="apiMethod">RPC API method (if <see langword="null"/>, the scope is being used as request parameter)</param>
+            /// <param name="cancellationToken">Cancellation token</param>
+            /// <exception cref="InvalidOperationException">Not implemented</exception>
+            [MemberNotNull(nameof(ScopeParameter))]
+#pragma warning disable CS8774// Member must not be NULL
+            public virtual async Task CreateScopeParameterAsync(RpcApiMethodInfo? apiMethod = null, CancellationToken cancellationToken = default)
+            {
+                EnsureUndisposed();
+                EnsureNotDiscarded();
+                if (RpcScopes.ScopeParameterFactories.TryGetValue(GetType(), out RpcScopes.ScopeParameterFactory_Delegate? parameterFactory))
+                    SetScopeParameter(await parameterFactory.Invoke(Processor, this, apiMethod, cancellationToken).DynamicContext());
+                if (_ScopeParameter is null)
+                    throw new InvalidOperationException($"{GetType()} failed to create a scope parameter");
+            }
+#pragma warning restore CS8774// Member must not be NULL
+
+            /// <summary>
+            /// Set the <see cref="ScopeParameter"/>
+            /// </summary>
+            /// <param name="parameter">Scope parameter</param>
+            /// <exception cref="InvalidOperationException"><see cref="ScopeParameter"/> was set already</exception>
+            public virtual void SetScopeParameter(in IRpcScopeParameter? parameter)
+            {
+                EnsureUndisposed();
+                EnsureNotDiscarded();
+                if (_ScopeParameter is not null)
+                    throw new InvalidOperationException("Scope parameter was set already");
+                _ScopeParameter = parameter;
+                if (parameter is null)
+                    return;
+                DisposeValueOnError = parameter.DisposeScopeValueOnError;
+                IsStored = parameter.StoreScope;
+            }
+
+            /// <summary>
             /// Register this scope as a remote scope at the peer
             /// </summary>
             /// <param name="cancellationToken">Cancellation token</param>
@@ -120,7 +154,7 @@ namespace wan24.RPC.Processing
                 EnsureUndisposed();
                 EnsureNotDiscarded();
                 if (ScopeParameter is null)
-                    await CreateScopeParameterAsync(cancellationToken).DynamicContext();
+                    await CreateScopeParameterAsync(cancellationToken: cancellationToken).DynamicContext();
                 if (ScopeParameter.Value is null)
                     await ScopeParameter.CreateValueAsync(Processor, Id, cancellationToken).DynamicContext();
                 ScopeParameter.Value.IsStored = true;
@@ -191,7 +225,7 @@ namespace wan24.RPC.Processing
                             throw new InvalidProgramException($"Failed to store event message #{request.Id} (double message ID)");
                         try
                         {
-                            await SendMessageAsync(request.Message, Processor.Options.Priorities.Event, cancellationToken).DynamicContext();
+                            await SendMessageAsync(request.Message, Priorities.Event, cancellationToken).DynamicContext();
                             await request.ProcessorCompletion.Task.DynamicContext();
                         }
                         finally
@@ -208,20 +242,12 @@ namespace wan24.RPC.Processing
                         PeerRpcVersion = Processor.Options.RpcVersion,
                         Name = name,
                         Arguments = e
-                    }, Processor.Options.Priorities.Event, cancellationToken).DynamicContext();
+                    }, Priorities.Event, cancellationToken).DynamicContext();
                 }
             }
 
             /// <inheritdoc/>
             public override string ToString() => $"{Processor}: Scope #{Id} ({GetType()})";
-
-            /// <summary>
-            /// Create a scope parameter
-            /// </summary>
-            /// <param name="cancellationToken">Cancellation token</param>
-            /// <exception cref="InvalidOperationException">Not implemented</exception>
-            [MemberNotNull(nameof(ScopeParameter))]
-            protected virtual Task CreateScopeParameterAsync(CancellationToken cancellationToken) => throw new InvalidOperationException("Can't create scope parameter");
 
             /// <inheritdoc/>
             protected override async Task DiscardAsync(bool sync = true, CancellationToken cancellationToken = default)
@@ -240,7 +266,7 @@ namespace wan24.RPC.Processing
                 {
                     ScopeId = Id,
                     PeerRpcVersion = Processor.Options.RpcVersion
-                }, Processor.Options.Priorities.Event, cancellationToken).DynamicContext();
+                }, Priorities.Event, cancellationToken).DynamicContext();
             }
 
             /// <inheritdoc/>
