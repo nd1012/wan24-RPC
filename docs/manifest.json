@@ -165,6 +165,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Api.Attributes.RpcScopeAttributeBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Api.Attributes.RpcScopeAttributeBase.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.yml",
       "output": {
         ".html": {
@@ -295,6 +305,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Exceptions.InvalidRpcMessageException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Exceptions.InvalidRpcMessageException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Processing.Exceptions.RpcRemoteException.yml",
       "output": {
         ".html": {
@@ -315,20 +335,20 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcCancellationsException.yml",
+      "source_relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcMessagesException.yml",
       "output": {
         ".html": {
-          "relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcCancellationsException.html"
+          "relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcMessagesException.html"
         }
       },
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcMessagesException.yml",
+      "source_relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcRemoteScopesException.yml",
       "output": {
         ".html": {
-          "relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcMessagesException.html"
+          "relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcRemoteScopesException.html"
         }
       },
       "version": ""
@@ -345,10 +365,10 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.yml",
+      "source_relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcScopesException.yml",
       "output": {
         ".html": {
-          "relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcStreamsException.html"
+          "relative_path": "api/wan24.RPC.Processing.Exceptions.TooManyRpcScopesException.html"
         }
       },
       "version": ""
@@ -389,6 +409,16 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.Messages.CancelMessage.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Messages.CloseMessage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Messages.CloseMessage.html"
         }
       },
       "version": ""
@@ -1269,6 +1299,16 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.Scopes.RpcScopes.ScopeFactory_Delegate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.RpcScopes.ScopeParameterFactory_Delegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.RpcScopes.ScopeParameterFactory_Delegate.html"
         }
       },
       "version": ""
