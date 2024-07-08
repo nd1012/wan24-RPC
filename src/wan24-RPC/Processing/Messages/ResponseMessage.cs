@@ -1,5 +1,6 @@
 ﻿using wan24.Core;
 using wan24.RPC.Processing.Options;
+using wan24.RPC.Processing.Scopes;
 using wan24.StreamSerializerExtensions;
 
 namespace wan24.RPC.Processing.Messages
@@ -43,7 +44,7 @@ namespace wan24.RPC.Processing.Messages
             if (_ReturnValue is null)
                 throw new InvalidOperationException();
             using MemoryStream ms = new(_ReturnValue);
-            ReturnValue = await DeserializeObjectAsync(ms, type, cancellationToken).DynamicContext();
+            ReturnValue = await DeserializeObjectAsync(ms, RpcScopes.GetAllowedSerializedType(type), cancellationToken).DynamicContext();
             _ReturnValue = null;
         }
 

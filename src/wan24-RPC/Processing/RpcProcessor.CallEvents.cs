@@ -71,6 +71,7 @@ namespace wan24.RPC.Processing
                 if (returnValue is not null && (call.Context?.Method?.DisposeReturnValue ?? call.Context?.Method?.DisposeReturnValueOnError ?? true))
                     await HandleValueOnErrorAsync(returnValue, outgoing: true, error).DynamicContext();
                 // Handle remote scopes
+                //TODO Set the error to the call context and dispose scopes there
                 foreach (RpcRemoteScopeBase remoteScope in call.ParameterScopes)
                     if (remoteScope.Parameter?.DisposeParameterValue ?? remoteScope.Parameter?.DisposeParameterValueOnError ?? true)
                     {

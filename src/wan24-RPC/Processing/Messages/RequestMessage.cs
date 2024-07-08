@@ -3,6 +3,7 @@ using wan24.Core;
 using wan24.ObjectValidation;
 using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Options;
+using wan24.RPC.Processing.Scopes;
 using wan24.StreamSerializerExtensions;
 
 namespace wan24.RPC.Processing.Messages
@@ -28,10 +29,6 @@ namespace wan24.RPC.Processing.Messages
         /// Serialized parameters
         /// </summary>
         protected byte[]? _Parameters = null;
-        /// <summary>
-        /// If the parameters are disposed
-        /// </summary>
-        protected bool ParametersDisposed = false;
 
         /// <inheritdoc/>
         public override int Type => TYPE_ID;
@@ -72,7 +69,12 @@ namespace wan24.RPC.Processing.Messages
             if (_Parameters is null)
                 throw new InvalidOperationException();
             using MemoryStream ms = new(_Parameters);
-            Parameters = await DeserializeObjectListAsync(ms, [.. method.RpcParameters.Select(p => p.Parameter.ParameterType)], cancellationToken).DynamicContext();
+            Parameters = await DeserializeObjectListAsync(
+                ms, 
+                [.. method.RpcParameters.Select(p => RpcScopes.GetAllowedSerializedType(p.Parameter.ParameterType))], 
+                cancellationToken
+                )
+                .DynamicContext();
             _Parameters = null;
         }
 

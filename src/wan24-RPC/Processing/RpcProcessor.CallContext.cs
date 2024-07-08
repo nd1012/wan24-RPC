@@ -101,21 +101,25 @@ namespace wan24.RPC.Processing
             /// <inheritdoc/>
             protected override void Dispose(bool disposing)
             {
+                Processor.Logger?.Log(LogLevel.Trace, "{processor} call context #{id} disposing", Processor.ToString(), Id);
                 if (!Completion.Task.IsCompleted)
                     Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
                 Cancellation.Cancel();
                 Cancellation.Dispose();
                 SetDone();
+                //TODO Dispose scopes depending on the error state
             }
 
             /// <inheritdoc/>
             protected override async Task DisposeCore()
             {
+                Processor.Logger?.Log(LogLevel.Trace, "{processor} call context #{id} disposing", Processor.ToString(), Id);
                 if (!Completion.Task.IsCompleted)
                     Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
                 await Cancellation.CancelAsync().DynamicContext();
                 Cancellation.Dispose();
                 SetDone();
+                //TODO Dispose scopes depending on the error state
             }
         }
     }

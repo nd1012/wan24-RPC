@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using wan24.Core;
+using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Values;
 
 namespace wan24.RPC.Processing.Parameters
@@ -10,7 +11,7 @@ namespace wan24.RPC.Processing.Parameters
     public abstract record class RpcScopeParameterBase() : IRpcScopeParameter
     {
         /// <summary>
-        /// If to store the scope at the peer
+        /// If to store the scope
         /// </summary>
         protected bool _StoreScope = false;
 
@@ -49,7 +50,7 @@ namespace wan24.RPC.Processing.Parameters
         public bool IsError { get; protected set; }
 
         /// <inheritdoc/>
-        public bool InformMasterWhenDisposing { get; set; } = true;
+        public bool InformMasterWhenDisposing { get; set; }
 
         /// <inheritdoc/>
         [MemberNotNull(nameof(Processor), nameof(Value))]

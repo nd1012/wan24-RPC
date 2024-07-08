@@ -72,7 +72,8 @@ namespace wan24.RPC.Processing.Messages.Serialization
         {
             if (await stream.ReadStringNullableAsync(cancellationToken: cancellationToken).DynamicContext() is not string typeName)
                 return null;
-            Type serializedType = TypeHelper.Instance.GetType(typeName, throwOnError: true)!;
+            Type serializedType = TypeHelper.Instance.GetType(typeName)
+                ?? throw new InvalidDataException($"Unknown serialized type {typeName.ToQuotedLiteral()}");
             if (!CanSerialize(serializedType))
                 throw new InvalidDataException($"Serialized type {serializedType} is not serializable");
             if (!type.IsAssignableFrom(serializedType) && !RpcSerializer.RaiseOnTypeValidation(type, serializedType))

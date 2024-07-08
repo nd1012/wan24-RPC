@@ -3,6 +3,7 @@ using System.Reflection;
 using wan24.Core;
 using wan24.ObjectValidation;
 using wan24.RPC.Processing;
+using wan24.RPC.Processing.Scopes;
 
 namespace wan24_RPC_Tests
 {
@@ -29,6 +30,19 @@ namespace wan24_RPC_Tests
             Settings.LogLevel = LogLevel.Trace;
             ValidateObject.Logger = (message) => Logging.WriteDebug(message);
             TypeHelper.Instance.ScanAssemblies(typeof(RpcProcessor).Assembly);
+            RpcScopes.RegisterScope(new()
+            {
+                Type = TestScope.HL_TYPE,
+                LocalScopeType = typeof(TestScope),
+                RemoteScopeType = typeof(TestRemoteScope),
+                LocalScopeFactory = TestScope.CreateAsync,
+                RemoteScopeFactory = TestRemoteScope.CreateAsync,
+                LocalScopeParameterFactory = TestScopeParameter.CreateAsync,
+                LocalScopeObjectType = typeof(TestDisposable),
+                ParameterLocalScopeFactory = (proc, value, ct) => Task.FromResult<RpcProcessor.RpcScopeBase?>(new TestScope((TestRpcProcessor)proc) { ScopeParameter = new TestScopeParameter() { ScopeObject = value } }),
+                RemoteScopeObjectType = typeof(TestDisposable),
+                ReturnLocalScopeFactory = (proc, method, value, ct) => Task.FromResult<RpcProcessor.RpcScopeBase?>(new TestScope((TestRpcProcessor)proc) { ScopeParameter = new TestScopeParameter() { ScopeObject = value } })
+            });
             Logging.WriteInfo("wan24-RPC Tests initialized");
         }
     }

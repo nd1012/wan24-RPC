@@ -24,13 +24,10 @@ namespace wan24.RPC.Api.Reflection
             Index = index;
             RPC = pi.GetCustomAttributeCached<NoRpcAttribute>() is null;
             Nullable = pi.IsNullable(nic);
-            Enumerable = pi.ParameterType.IsEnumerable(strict: true, asyncOnly: true);
             DisposeParameterValue = pi.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
             DisposeParameterValueOnError = DisposeParameterValue || pi.GetCustomAttributeCached<RpcDisposeOnErrorAttribute>() is not null;
             Scope = pi.GetCustomAttributeCached<RpcScopeKeyAttribute>();
             RemoteScope = pi.GetCustomAttributeCached<RpcRemoteScopeKeyAttribute>();
-            Stream = pi.GetCustomAttributeCached<RpcStreamAttribute>();
-            Cancellation = pi.GetCustomAttributeCached<RpcCancellationAttribute>();
             Attributes = pi.GetCustomAttributesCached<RpcAttributeBase>().ToFrozenSet();
             foreach (RpcAttributeBase attr in Attributes)
                 attr.HandleAssignedApiMethodParameter(this);
@@ -72,11 +69,6 @@ namespace wan24.RPC.Api.Reflection
         public bool Nullable { get; protected set; }
 
         /// <summary>
-        /// If the parameter value may be transported as RPC enumerable
-        /// </summary>
-        public bool Enumerable { get; protected set; }
-
-        /// <summary>
         /// If to dispose the parameter value after processing
         /// </summary>
         public bool DisposeParameterValue { get; protected set; } = true;
@@ -95,16 +87,6 @@ namespace wan24.RPC.Api.Reflection
         /// Remote scope key settings
         /// </summary>
         public RpcRemoteScopeKeyAttribute? RemoteScope { get; protected set; }
-
-        /// <summary>
-        /// Stream configuration
-        /// </summary>
-        public RpcStreamAttribute? Stream { get; protected set; }
-
-        /// <summary>
-        /// Cancellation configuration
-        /// </summary>
-        public RpcCancellationAttribute? Cancellation { get; protected set; }
 
         /// <summary>
         /// Extended RPC attributes

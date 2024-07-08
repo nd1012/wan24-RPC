@@ -108,13 +108,12 @@ namespace wan24.RPC.Processing
                 {
                     RequestCompletion.TrySetException(exception);
                     ProcessorCompletion.TrySetException(exception);
+                    foreach (RpcScopeBase scope in ParameterScopes)
+                        await scope.SetIsErrorAsync(exception).DynamicContext();
                     if (ReturnScope is not null)
-                    {
                         await ReturnScope.SetIsErrorAsync(exception).DynamicContext();
-                        await ReturnScope.DisposeAsync().DynamicContext();
-                    }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Processor.Logger?.Log(LogLevel.Warning, "Request context #{id} failed to handle processing error: {ex}", Id, ex);
                 }
@@ -123,6 +122,7 @@ namespace wan24.RPC.Processing
             /// <inheritdoc/>
             protected override void Dispose(bool disposing)
             {
+                Processor.Logger?.Log(LogLevel.Trace, "{processor} request context #{id} disposing", Processor.ToString(), Id);
                 SetDone();
                 if (!RequestCompletion.Task.IsCompleted || !ProcessorCompletion.Task.IsCompleted)
                 {
@@ -130,12 +130,23 @@ namespace wan24.RPC.Processing
                     RequestCompletion.TrySetException(exception);
                     ProcessorCompletion.TrySetException(exception);
                 }
-                ParameterScopes.Where(s => !s.IsDisposing && (s.ScopeParameter?.ShouldDisposeScopeValue ?? true)).DisposeAll();
+                if (RequestCompletion.Task.IsFaulted)
+                {
+                    ParameterScopes.DisposeAll();
+                    ReturnScope?.Dispose();
+                }
+                else
+                {
+                    ParameterScopes.Where(s => !s.IsStored).DisposeAll();
+                    if (!(ReturnScope?.IsStored ?? true))
+                        ReturnScope?.Dispose();
+                }
             }
 
             /// <inheritdoc/>
             protected override async Task DisposeCore()
             {
+                Processor.Logger?.Log(LogLevel.Trace, "{processor} request context #{id} disposing", Processor.ToString(), Id);
                 SetDone();
                 if (!RequestCompletion.Task.IsCompleted || !ProcessorCompletion.Task.IsCompleted)
                 {
@@ -143,7 +154,18 @@ namespace wan24.RPC.Processing
                     RequestCompletion.TrySetException(exception);
                     ProcessorCompletion.TrySetException(exception);
                 }
-                await ParameterScopes.Where(s => !s.IsDisposing && (s.ScopeParameter?.ShouldDisposeScopeValue ?? true)).DisposeAllAsync().DynamicContext();
+                if (RequestCompletion.Task.IsFaulted)
+                {
+                    await ParameterScopes.DisposeAllAsync().DynamicContext();
+                    if (ReturnScope is not null)
+                        await ReturnScope.DisposeAsync().DynamicContext();
+                }
+                else
+                {
+                    await ParameterScopes.Where(s => !s.IsStored).DisposeAllAsync().DynamicContext();
+                    if (!(ReturnScope?.IsStored ?? true))
+                        await ReturnScope.DisposeAsync().DynamicContext();
+                }
             }
         }
     }

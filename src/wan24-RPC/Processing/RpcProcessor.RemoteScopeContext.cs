@@ -5,6 +5,7 @@ using wan24.Core;
 using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
+using wan24.RPC.Processing.Scopes;
 using wan24.RPC.Processing.Values;
 
 namespace wan24.RPC.Processing
@@ -15,7 +16,7 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Base class for a RPC remote scope
         /// </summary>
-        public abstract class RpcRemoteScopeBase : RpcScopeProcessorBase
+        public abstract class RpcRemoteScopeBase : RpcScopeProcessorBase, IRpcRemoteScope
         {
             /// <summary>
             /// Constructor
@@ -32,37 +33,25 @@ namespace wan24.RPC.Processing
                 InformMasterWhenDisposing = scope.InformMasterWhenDisposing;
             }
 
-            /// <summary>
-            /// Received RPC scope value
-            /// </summary>
+            /// <inheritdoc/>
             public RpcScopeValue ScopeValue { get; }
 
-            /// <summary>
-            /// RPC method parameter which got the scope
-            /// </summary>
+            /// <inheritdoc/>
             public RpcApiMethodParameterInfo? Parameter { get; set; }
 
             /// <inheritdoc/>
             public sealed override long Id => ScopeValue.Id;
 
-            /// <summary>
-            /// If to replace the existing keyed remote scope
-            /// </summary>
+            /// <inheritdoc/>
             public bool ReplaceExistingScope { get; }
 
-            /// <summary>
-            /// Value
-            /// </summary>
+            /// <inheritdoc/>
             public virtual object? Value { get; }
 
-            /// <summary>
-            /// Dispose the <see cref="Value"/> when disposing?
-            /// </summary>
+            /// <inheritdoc/>
             public bool DisposeValue { get; set; }
 
-            /// <summary>
-            /// If to dispose the <see cref="Value"/> on error
-            /// </summary>
+            /// <inheritdoc/>
             public bool DisposeValueOnError { get; protected set; }
 
             /// <summary>
@@ -70,25 +59,16 @@ namespace wan24.RPC.Processing
             /// </summary>
             public virtual bool WillDisposeValue => DisposeValue || (DisposeValueOnError && IsError);
 
-            /// <summary>
-            /// If there was an error
-            /// </summary>
+            /// <inheritdoc/>
             public bool IsError { get; protected set; }
 
-            /// <summary>
-            /// If to inform the scope master when disposing
-            /// </summary>
+            /// <inheritdoc/>
             public bool InformMasterWhenDisposing { get; set; }
 
-            /// <summary>
-            /// Last exception
-            /// </summary>
+            /// <inheritdoc/>
             public Exception? LastException { get; protected set; }
 
-            /// <summary>
-            /// Set the value of <see cref="IsError"/> to <see langword="true"/> and perform required actions
-            /// </summary>
-            /// <param name="ex">Exception</param>
+            /// <inheritdoc/>
             [MemberNotNull(nameof(LastException))]
             public virtual async Task SetIsErrorAsync(Exception ex)
             {
@@ -234,24 +214,24 @@ namespace wan24.RPC.Processing
             long IRpcScopeInternals.CreateMessageId() => CreateMessageId();
 
             /// <inheritdoc/>
-            Task<T> IRpcScopeInternals.SendRequestAsync<T>(IRpcRequest message, CancellationToken cancellationToken)
-                => SendRequestAsync<T>(message, cancellationToken);
+            Task<T> IRpcScopeInternals.SendRequestAsync<T>(IRpcRequest message, bool useQueue, CancellationToken cancellationToken)
+                => SendRequestAsync<T>(message, useQueue, cancellationToken);
 
             /// <inheritdoc/>
-            Task<T?> IRpcScopeInternals.SendRequestNullableAsync<T>(IRpcRequest message, CancellationToken cancellationToken) where T : default
-                => SendRequestNullableAsync<T>(message, cancellationToken);
+            Task<T?> IRpcScopeInternals.SendRequestNullableAsync<T>(IRpcRequest message, bool useQueue, CancellationToken cancellationToken) where T : default
+                => SendRequestNullableAsync<T>(message, useQueue, cancellationToken);
 
             /// <inheritdoc/>
-            Task IRpcScopeInternals.SendVoidRequestAsync(IRpcRequest message, CancellationToken cancellationToken)
-                => SendVoidRequestAsync(message, cancellationToken);
+            Task IRpcScopeInternals.SendVoidRequestAsync(IRpcRequest message, bool useQueue, CancellationToken cancellationToken)
+                => SendVoidRequestAsync(message, useQueue, cancellationToken);
 
             /// <inheritdoc/>
-            Task<object?> IRpcScopeInternals.SendRequestNullableAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken)
-                => SendRequestNullableAsync(message, returnType, cancellationToken);
+            Task<object?> IRpcScopeInternals.SendRequestNullableAsync(IRpcRequest message, Type returnType, bool useQueue, CancellationToken cancellationToken)
+                => SendRequestNullableAsync(message, returnType, useQueue, cancellationToken);
 
             /// <inheritdoc/>
-            Task<object> IRpcScopeInternals.SendRequestAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken)
-                => SendRequestAsync(message, returnType, cancellationToken);
+            Task<object> IRpcScopeInternals.SendRequestAsync(IRpcRequest message, Type returnType, bool useQueue, CancellationToken cancellationToken)
+                => SendRequestAsync(message, returnType, useQueue, cancellationToken);
 
             /// <inheritdoc/>
             Task IRpcScopeInternals.SendMessageAsync(IRpcMessage message, int priority, CancellationToken cancellationToken)

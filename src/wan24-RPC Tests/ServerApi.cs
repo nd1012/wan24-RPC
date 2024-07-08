@@ -1,14 +1,15 @@
 ﻿using wan24.RPC.Api;
 using wan24.RPC.Api.Attributes;
 using wan24.RPC.Processing;
-using wan24.RPC.Processing.Parameters;
-using wan24.RPC.Processing.Scopes;
 
 namespace wan24_RPC_Tests
 {
     [NoRpcDispose]
     public sealed class ServerApi() : DisposableRpcApiBase(asyncDisposing: false), IWantRpcProcessorInfo
     {
+        public TestDisposable? ClientObj = null;
+        public TestDisposable? ServerObj = null;
+
         public RpcProcessor? Processor { get; set; }
 
         public CancellationToken ProcessorCancellation { get; set; }
@@ -31,10 +32,20 @@ namespace wan24_RPC_Tests
 
         public Task RaiseRemoteEventAsync([NoRpc] RpcProcessor processor) => processor.RaiseEventAsync("test", wait: true);
 
-        public RpcScope ReturnScope([NoRpc] RpcProcessor processor) => new(processor);
+        public TestDisposable Scopes(TestDisposable obj)
+        {
+            ClientObj = obj;
+            ServerObj = new()
+            {
+                Name = "Server"
+            };
+            return ServerObj;
+        }
 
-        public RpcScopeParameter ReturnScopeParameter() => new();
-
-        protected override void Dispose(bool disposing) { }
+        protected override void Dispose(bool disposing)
+        {
+            ClientObj?.Dispose();
+            ServerObj?.Dispose();
+        }
     }
 }

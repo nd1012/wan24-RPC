@@ -3,11 +3,10 @@
     /// <summary>
     /// Attribute for
     /// <list type="bullet">
-    /// <item>A type which is not allowed to be deserialized</item>
+    /// <item>A type which is not allowed to be deserialized (opt-out)</item>
     /// <item>A public non-RPC method of an API type</item>
-    /// <item>A no-RPC servable RPC API method parameter</item>
+    /// <item>A non-RPC servable RPC API method parameter, which must be given (by DI or from its default value)</item>
     /// </list>
-    /// (opt-out)
     /// </summary>
     /// <remarks>
     /// Constructor

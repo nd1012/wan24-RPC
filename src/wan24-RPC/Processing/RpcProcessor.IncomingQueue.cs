@@ -1,4 +1,5 @@
-﻿using wan24.Core;
+﻿using Microsoft.Extensions.Logging;
+using wan24.Core;
 using wan24.RPC.Processing.Messages;
 
 //TODO Use a priority queue here, too?
@@ -35,6 +36,11 @@ namespace wan24.RPC.Processing
             public RpcProcessor Processor { get; } = processor;
 
             /// <summary>
+            /// Logger
+            /// </summary>
+            public ILogger? Logger => Processor.Logger;
+
+            /// <summary>
             /// If the queue has space
             /// </summary>
             public bool HasSpace => SpaceEvent.IsSet;
@@ -60,8 +66,12 @@ namespace wan24.RPC.Processing
             /// <inheritdoc/>
             protected override async Task ProcessItem(IRpcMessage item, CancellationToken cancellationToken)
             {
-                if (Queued < Processor.Options.IncomingMessageQueue.Capacity)
+                if (!SpaceEvent.IsSet && Queued < Processor.Options.IncomingMessageQueue.Capacity)
+                {
+                    Logger?.Log(LogLevel.Debug, "{this} signal having space for incoming messages", ToString());
                     await SpaceEvent.SetAsync(cancellationToken).DynamicContext();
+                }
+                Logger?.Log(LogLevel.Debug, "{this} processing incoming message type #{type} with ID #{id} ({message})", ToString(), item.Type, item.Id, item.GetType());
                 await Processor.HandleIncomingMessageAsync(item).DynamicContext();
             }
 

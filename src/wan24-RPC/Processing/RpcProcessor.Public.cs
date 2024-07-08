@@ -146,7 +146,7 @@ namespace wan24.RPC.Processing
                 Parameters = parameters.Length == 0
                     ? null
                     : parameters
-            }, returnValueType, cancellationToken).DynamicContext();
+            }, returnValueType, cancellationToken: cancellationToken).DynamicContext();
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace wan24.RPC.Processing
                     ? null
                     : parameters,
                 WantsReturnValue = false
-            }, cancellationToken).DynamicContext();
+            }, cancellationToken: cancellationToken).DynamicContext();
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace wan24.RPC.Processing
             {
                 PeerRpcVersion = Options.RpcVersion,
                 Id = CreateMessageId()
-            }, cancellation).DynamicContext();
+            }, useQueue: false, cancellation).DynamicContext();
             TimeSpan runtime = DateTime.Now - now;
             MessageLoopDuration = runtime;
             Logger?.Log(LogLevel.Debug, "{this} got pong response after {runtime}", ToString(), runtime);
@@ -374,6 +374,30 @@ namespace wan24.RPC.Processing
             EnsureUndisposed();
             EnsureScopesAreEnabled();
             return KeyedRemoteScopes.TryGetValue(key, out RpcRemoteScopeBase? res) ? res : null;
+        }
+
+        /// <summary>
+        /// Get the stored scope of a value
+        /// </summary>
+        /// <param name="value">Value</param>
+        /// <returns>Scope (will be disposed)</returns>
+        public virtual RpcScopeBase? GetScopeOf(object value)
+        {
+            EnsureUndisposed();
+            EnsureScopesAreEnabled();
+            return Scopes.Values.FirstOrDefault(s => s.Value?.Equals(value) ?? false);
+        }
+
+        /// <summary>
+        /// Get the stored remote scope of a value
+        /// </summary>
+        /// <param name="value">Value</param>
+        /// <returns>Remote scope (will be disposed)</returns>
+        public virtual RpcRemoteScopeBase? GetRemoteScopeOf(object value)
+        {
+            EnsureUndisposed();
+            EnsureScopesAreEnabled();
+            return RemoteScopes.Values.FirstOrDefault(s => s.Value?.Equals(value) ?? false);
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Frozen;
-using System.Diagnostics.Contracts;
 using System.Reflection;
 using wan24.Core;
 using wan24.RPC.Api.Attributes;
 using wan24.RPC.Processing.Parameters;
+using wan24.RPC.Processing.Values;
 
 namespace wan24.RPC.Api.Reflection
 {
@@ -26,9 +26,6 @@ namespace wan24.RPC.Api.Reflection
             Alias = method.GetCustomAttributeCached<RpcAliasAttribute>();
             Authorization = method.GetCustomAttributesCached<RpcAuthorizationAttributeBase>().ToFrozenSet();
             Authorize = method.GetCustomAttribute<RpcAuthorizedAttribute>() is not null;
-            EnumerateReturnValue = method.ReturnType.IsEnumerable() && method.GetCustomAttributeCached<NoRpcEnumerableAttribute>() is null;
-            Stream = method.GetCustomAttributeCached<RpcStreamAttribute>();
-            Cancellation = method.GetCustomAttributeCached<RpcCancellationAttribute>();
             Version = method.GetCustomAttributeCached<RpcVersionAttribute>();
             DisposeReturnValue = method.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
             DisposeReturnValueOnError = DisposeReturnValue || method.GetCustomAttributeCached<RpcDisposeOnErrorAttribute>() is not null;
@@ -85,11 +82,6 @@ namespace wan24.RPC.Api.Reflection
         public bool Authorize { get; protected set; }
 
         /// <summary>
-        /// If to enumerate the return value, if applicable
-        /// </summary>
-        public bool EnumerateReturnValue { get; protected set; } = true;
-
-        /// <summary>
         /// If to dispose the return value after sending
         /// </summary>
         public bool DisposeReturnValue { get; protected set; } = true;
@@ -103,16 +95,6 @@ namespace wan24.RPC.Api.Reflection
         /// If to disconnect on execution error
         /// </summary>
         public bool DisconnectOnError { get; protected set; }
-
-        /// <summary>
-        /// Stream configuration
-        /// </summary>
-        public RpcStreamAttribute? Stream { get; protected set; }
-
-        /// <summary>
-        /// Cancellation configuration
-        /// </summary>
-        public RpcCancellationAttribute? Cancellation { get; protected set; }
 
         /// <summary>
         /// Version
@@ -133,21 +115,6 @@ namespace wan24.RPC.Api.Reflection
         /// Extended RPC attributes
         /// </summary>
         public FrozenSet<RpcAttributeBase> Attributes { get; protected set; } = null!;
-
-        /// <summary>
-        /// Initialize a scope parameter for a return value
-        /// </summary>
-        /// <param name="parameter">Scope parameter</param>
-        public virtual void InitializeScopeParameter(in IRpcScopeParameter parameter)
-        {
-            parameter.DisposeScopeValue = DisposeReturnValue;
-            parameter.DisposeScopeValueOnError = DisposeReturnValueOnError;
-            foreach(RpcScopeAttributeBase? attr in Attributes.Select(a=>a as RpcScopeAttributeBase).Where(a=>a is not null))
-            {
-                Contract.Assume(attr is not null);
-                attr.InitializeScopeParameter(parameter);
-            }
-        }
 
         /// <inheritdoc/>
         public override string ToString() => $"{API.Name}->{Name} ({API.Type}.{Method.Name})";

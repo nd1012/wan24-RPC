@@ -106,13 +106,13 @@ namespace wan24_RPC_Tests
                 Logging.WriteInfo("Client event registration");
                 RpcEvent e = client.RegisterEvent("test", (e, m, ct) =>
                 {
-                    Logging.WriteInfo("Server executed registered event handler");
+                    Logging.WriteInfo("\tServer executed registered event handler");
                     eventHandlerCall++;
                     return Task.CompletedTask;
                 });
                 client.OnRemoteEvent += (s, e) =>
                 {
-                    Logging.WriteInfo("Server raised event");
+                    Logging.WriteInfo("\tServer raised event");
                     eventRaised++;
                 };
                 Logging.WriteInfo("Client raises event");
@@ -174,13 +174,19 @@ namespace wan24_RPC_Tests
         {
             // Simple scope functionality
             (TestRpcProcessor server, TestRpcProcessor client) = await GetRpcAsync();
+            ServerApi? serverApi = null;
             ServerSdk serverSdk = new(client);
             try
             {
+                serverApi = server.Options.API.Values.First().Instance as ServerApi;
+                Assert.IsNotNull(serverApi);
+
                 // Scope factory
                 {
                     Logging.WriteInfo("Scope factory");
-                    RpcScope scope = (RpcScope)await RpcScopes.Factories[(int)RpcScopeTypes.Scope].Invoke(
+                    RpcScopes.ScopeFactory_Delegate? factory = RpcScopes.GetLocalScopeFactory(RpcScope.TYPE);
+                    Assert.IsNotNull(factory);
+                    RpcScope scope = (RpcScope)await factory.Invoke(
                         client,
                         new RpcScopeParameter()
                         {
@@ -342,13 +348,13 @@ namespace wan24_RPC_Tests
                             remoteEvent = 0;
                         scope.RegisterEvent("local", (e,m,ct) =>
                         {
-                            Logging.WriteInfo("Local event raised");
+                            Logging.WriteInfo("\tLocal event raised");
                             localEvent++;
                             return Task.CompletedTask;
                         });
                         remoteScope.RegisterEvent("remote", (e, m, ct) =>
                         {
-                            Logging.WriteInfo("Remote event raised");
+                            Logging.WriteInfo("\tRemote event raised");
                             remoteEvent++;
                             return Task.CompletedTask;
                         });
@@ -368,13 +374,31 @@ namespace wan24_RPC_Tests
                 }
 
                 // Parameter and return value
-                try
+                Logging.WriteInfo("Parameter and return value");
+                using (TestDisposable clientObj = new()
                 {
-                    //TODO Write tests
-                }
-                finally
+                    Name = "Client"
+                })
                 {
-
+                    Logging.WriteInfo("No disposing options");
+                    using (TestDisposable serverObj = await serverSdk.ScopesAsync(clientObj))
+                    {
+                        Assert.IsNull(client.GetRemoteScopeOf(serverObj));// Remote scope was disposed when returning the value
+                        await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(50), (ct) => Task.FromResult(server.StoredScopeCount < 1));
+                        Assert.IsNotNull(serverApi.ClientObj);
+                        Assert.IsNotNull(serverApi.ServerObj);
+                        Assert.AreNotEqual(serverApi.ClientObj, clientObj);
+                        Assert.AreNotEqual(serverApi.ServerObj, serverObj);
+                        Assert.IsTrue(clientObj.IsDisposing);// Local scope wasn't configured to leave the value undisposed
+                        Assert.IsTrue(serverObj.IsDisposing);// Remote scope wasn't configured to leave the value undisposed
+                        Assert.IsTrue(serverApi.ClientObj.IsDisposing);// Remote scope wasn't configured to leave the value undisposed
+                        Assert.IsTrue(serverApi.ServerObj.IsDisposing);// Local scope wasn't configured to leave the value undisposed
+                        Assert.AreEqual(0, client.StoredScopeCount);
+                        Assert.AreEqual(0, client.StoredRemoteScopeCount);
+                        Assert.AreEqual(0, server.StoredRemoteScopeCount);
+                        serverApi.ClientObj = null;
+                        serverApi.ServerObj = null;
+                    }
                 }
             }
             finally

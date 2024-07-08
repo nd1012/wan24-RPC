@@ -86,27 +86,7 @@ namespace wan24.RPC.Processing.Values
         /// <summary>
         /// Inform the scope master when disposing the scope value
         /// </summary>
-        public bool InformMasterWhenDisposing { get; set; } = true;
-
-        /// <summary>
-        /// Apply settings from a method parameter
-        /// </summary>
-        /// <param name="pi">Parameter</param>
-        public virtual void ApplySettings(RpcApiMethodParameterInfo pi)
-        {
-            DisposeScopeValue &= pi.DisposeParameterValue;
-            DisposeScopeValueOnError |= pi.DisposeParameterValueOnError;
-        }
-
-        /// <summary>
-        /// Apply settings from a method return value
-        /// </summary>
-        /// <param name="mi">Method</param>
-        public virtual void ApplySettings(RpcApiMethodInfo mi)
-        {
-            DisposeScopeValue &= mi.DisposeReturnValue;
-            DisposeScopeValueOnError |= mi.DisposeReturnValueOnError;
-        }
+        public bool InformMasterWhenDisposing { get; set; }
 
         /// <inheritdoc/>
         protected sealed override void Serialize(Stream stream) => throw new NotSupportedException();

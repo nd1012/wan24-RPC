@@ -7,6 +7,8 @@ using wan24.RPC.Processing.Messages.Scopes;
 using wan24.RPC.Processing.Options;
 using wan24.RPC.Processing.Scopes;
 
+//TODO A scope should provide its status
+
 namespace wan24.RPC.Processing
 {
     // Scope context base
@@ -15,7 +17,7 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Base class for a RPC scope processor
         /// </summary>
-        public abstract class RpcScopeProcessorBase : DisposableBase
+        public abstract class RpcScopeProcessorBase : DisposableBase, IRpcScope
         {
             /// <summary>
             /// Thread synchronization
@@ -38,39 +40,25 @@ namespace wan24.RPC.Processing
                 Key = key;
             }
 
-            /// <summary>
-            /// RPC scope type ID
-            /// </summary>
+            /// <inheritdoc/>
             public abstract int Type { get; }
 
-            /// <summary>
-            /// Name
-            /// </summary>
+            /// <inheritdoc/>
             public string? Name { get; set; }
 
-            /// <summary>
-            /// Scope ID
-            /// </summary>
+            /// <inheritdoc/>
             public abstract long Id { get; }
 
-            /// <summary>
-            /// Scope key
-            /// </summary>
+            /// <inheritdoc/>
             public string? Key { get; }
 
-            /// <summary>
-            /// If the scope is stored
-            /// </summary>
+            /// <inheritdoc/>
             public virtual bool IsStored { get; set; }
 
-            /// <summary>
-            /// If the scope was discarded from the peer
-            /// </summary>
+            /// <inheritdoc/>
             public bool IsDiscarded { get; protected set; }
 
-            /// <summary>
-            /// RPC processor
-            /// </summary>
+            /// <inheritdoc/>
             public RpcProcessor Processor { get; }
 
             /// <summary>
@@ -88,18 +76,10 @@ namespace wan24.RPC.Processing
             /// </summary>
             public CancellationToken CancelToken => Processor.CancelToken;
 
-            /// <summary>
-            /// Registered remote events
-            /// </summary>
+            /// <inheritdoc/>
             public IEnumerable<RpcScopeEvent> RemoteEvents => _RemoteEvents.Values;
 
-            /// <summary>
-            /// Register a remote event handler
-            /// </summary>
-            /// <param name="name">Event name</param>
-            /// <param name="arguments">Event arguments type (must be an <see cref="EventArgs"/>)</param>
-            /// <param name="handler">Event handler</param>
-            /// <returns>Event</returns>
+            /// <inheritdoc/>
             public virtual RpcScopeEvent RegisterEvent(in string name, in Type arguments, in RpcScopeEvent.EventHandler_Delegate handler)
             {
                 EnsureUndisposed();
@@ -114,22 +94,11 @@ namespace wan24.RPC.Processing
                 return e;
             }
 
-            /// <summary>
-            /// Register a remote event handler
-            /// </summary>
-            /// <typeparam name="T">Event arguments type</typeparam>
-            /// <param name="name">Event name</param>
-            /// <param name="handler">Event handler</param>
-            /// <returns>Event</returns>
+            /// <inheritdoc/>
             public RpcScopeEvent RegisterEvent<T>(in string name, in RpcScopeEvent.EventHandler_Delegate handler) where T : EventArgs
                 => RegisterEvent(name, typeof(T), handler);
 
-            /// <summary>
-            /// Register a remote event handler
-            /// </summary>
-            /// <param name="name">Event name</param>
-            /// <param name="handler">Event handler</param>
-            /// <returns>Event</returns>
+            /// <inheritdoc/>
             public virtual RpcScopeEvent RegisterEvent(in string name, in RpcScopeEvent.EventHandler_Delegate handler)
             {
                 EnsureUndisposed();
@@ -142,13 +111,7 @@ namespace wan24.RPC.Processing
                 return e;
             }
 
-            /// <summary>
-            /// Raise an event at the peer
-            /// </summary>
-            /// <param name="name">Event name</param>
-            /// <param name="e">Event arguments</param>
-            /// <param name="wait">Wait for remote event handlers to finish?</param>
-            /// <param name="cancellationToken">Cancellation token</param>
+            /// <inheritdoc/>
             public abstract Task RaiseEventAsync(string name, EventArgs? e = null, bool wait = false, CancellationToken cancellationToken = default);
 
             /// <summary>
@@ -194,50 +157,60 @@ namespace wan24.RPC.Processing
             /// Send a request
             /// </summary>
             /// <param name="message">Message</param>
+            /// <param name="useQueue">If to use the request queue</param>
             /// <param name="cancellationToken">Cancellation token</param>
-            protected virtual Task SendVoidRequestAsync(IRpcRequest message, CancellationToken cancellationToken = default)
-                => Processor.SendVoidRequestAsync(message, cancellationToken);
+            protected virtual Task SendVoidRequestAsync(IRpcRequest message, bool useQueue = true, CancellationToken cancellationToken = default)
+                => Processor.SendVoidRequestAsync(message, useQueue, cancellationToken);
 
             /// <summary>
             /// Send a request
             /// </summary>
             /// <typeparam name="T">Return value type</typeparam>
             /// <param name="message">Message</param>
+            /// <param name="useQueue">If to use the request queue</param>
             /// <param name="cancellationToken">Cancellation token</param>
             /// <returns>Return value</returns>
-            protected virtual Task<T?> SendRequestNullableAsync<T>(IRpcRequest message, CancellationToken cancellationToken = default)
-                => Processor.SendRequestNullableAsync<T>(message, cancellationToken);
+            protected virtual Task<T?> SendRequestNullableAsync<T>(IRpcRequest message, bool useQueue = true, CancellationToken cancellationToken = default)
+                => Processor.SendRequestNullableAsync<T>(message, useQueue, cancellationToken);
 
             /// <summary>
             /// Send a request
             /// </summary>
             /// <typeparam name="T">Return value type</typeparam>
             /// <param name="message">Message</param>
+            /// <param name="useQueue">If to use the request queue</param>
             /// <param name="cancellationToken">Cancellation token</param>
             /// <returns>Return value</returns>
             [return: NotNull]
-            protected virtual Task<T> SendRequestAsync<T>(IRpcRequest message, CancellationToken cancellationToken = default)
-                => SendRequestAsync<T>(message, cancellationToken);
+            protected virtual Task<T> SendRequestAsync<T>(IRpcRequest message, bool useQueue = true, CancellationToken cancellationToken = default)
+                => SendRequestAsync<T>(message, useQueue, cancellationToken);
 
             /// <summary>
             /// Send a request
             /// </summary>
             /// <param name="message">Message</param>
             /// <param name="returnType">Return value type</param>
+            /// <param name="useQueue">If to use the request queue</param>
             /// <param name="cancellationToken">Cancellation token</param>
             /// <returns>Return value</returns>
-            protected virtual Task<object?> SendRequestNullableAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken = default)
-                => SendRequestNullableAsync(message, returnType, cancellationToken);
+            protected virtual Task<object?> SendRequestNullableAsync(
+                IRpcRequest message, 
+                Type returnType, 
+                bool useQueue = true, 
+                CancellationToken cancellationToken = default
+                )
+                => SendRequestNullableAsync(message, returnType, useQueue, cancellationToken);
 
             /// <summary>
             /// Send a request
             /// </summary>
             /// <param name="message">Message</param>
             /// <param name="returnType">Return value type</param>
+            /// <param name="useQueue">If to use the request queue</param>
             /// <param name="cancellationToken">Cancellation token</param>
             /// <returns>Return value</returns>
-            protected virtual Task<object> SendRequestAsync(IRpcRequest message, Type returnType, CancellationToken cancellationToken = default)
-                => SendRequestAsync(message, returnType, cancellationToken);
+            protected virtual Task<object> SendRequestAsync(IRpcRequest message, Type returnType, bool useQueue = true, CancellationToken cancellationToken = default)
+                => SendRequestAsync(message, returnType, useQueue, cancellationToken);
 
             /// <summary>
             /// Send a RPC message to the peer (using the outgoing message queue)
@@ -433,55 +406,27 @@ namespace wan24.RPC.Processing
             /// <inheritdoc/>
             protected override void Dispose(bool disposing)
             {
-                // Remove events
+                Processor.Logger?.Log(LogLevel.Trace, "{this} disposing", ToString());
                 _RemoteEvents.Clear();
-                // Others
                 Sync.Dispose();
             }
 
             /// <inheritdoc/>
             protected override async Task DisposeCore()
             {
-                // Remove events
+                Processor.Logger?.Log(LogLevel.Trace, "{this} disposing", ToString());
                 _RemoteEvents.Clear();
-                // Others
                 await Sync.DisposeAsync().DynamicContext();
             }
 
-            /// <summary>
-            /// Delegate for a remote event handler
-            /// </summary>
-            /// <param name="scope">RPC processor</param>
-            /// <param name="message">Event message</param>
-            public delegate void RemoteEventHandler_Delegate(RpcScopeProcessorBase scope, RemoteEventArgs message);
-            /// <summary>
-            /// Raised on remote event
-            /// </summary>
-            public event RemoteEventHandler_Delegate? OnRemoteEvent;
+            /// <inheritdoc/>
+            public event IRpcScope.RemoteEventHandler_Delegate? OnRemoteEvent;
             /// <summary>
             /// Raise the <see cref="OnRemoteEvent"/>
             /// </summary>
             /// <param name="handler">Event handler</param>
             /// <param name="message">Event RPC message</param>
             protected virtual void RaiseOnRemoteEvent(RpcScopeEvent? handler, IRpcScopeEventMessage message) => OnRemoteEvent?.Invoke(this, new(handler, message));
-
-            /// <summary>
-            /// Remote event arguments
-            /// </summary>
-            /// <param name="e">Event handler</param>
-            /// <param name="message">Event RPC message</param>
-            public class RemoteEventArgs(in RpcScopeEvent? e, in IRpcScopeEventMessage message) : EventArgs()
-            {
-                /// <summary>
-                /// Event handler
-                /// </summary>
-                public RpcScopeEvent? EventHandler { get; } = e;
-
-                /// <summary>
-                /// Event RPC message
-                /// </summary>
-                public IRpcScopeEventMessage Message { get; } = message;
-            }
         }
     }
 }

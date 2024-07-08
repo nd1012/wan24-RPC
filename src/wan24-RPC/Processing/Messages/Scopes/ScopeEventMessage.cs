@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using wan24.Core;
 using wan24.RPC.Processing.Options;
+using wan24.RPC.Processing.Scopes;
 using wan24.StreamSerializerExtensions;
 
 namespace wan24.RPC.Processing.Messages.Scopes

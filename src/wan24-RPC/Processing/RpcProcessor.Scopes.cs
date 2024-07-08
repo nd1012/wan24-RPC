@@ -237,7 +237,7 @@ namespace wan24.RPC.Processing
                 Logger?.Log(LogLevel.Warning, "{this} can't register not stored remote scope #{id} of type #{type}", ToString(), message.Value.Id, message.Value.Type);
                 throw new InvalidDataException($"Remote scope registration #{message.Value.Id} wouldn't be stored");
             }
-            if (!RpcScopes.RemoteFactories.TryGetValue(message.Value.Type, out RpcScopes.RemoteScopeFactory_Delegate? factory))
+            if (RpcScopes.GetRemoteScopeFactory(message.Value.Type) is not RpcScopes.RemoteScopeFactory_Delegate factory)
             {
                 Logger?.Log(LogLevel.Warning, "{this} can't register remote scope #{id} of unknown type #{type}", ToString(), message.Value.Id, message.Value.Type);
                 throw new InvalidDataException($"No remote scope factory for type #{message.Value.Type} for registering remote scope #{message.Value.Id}");

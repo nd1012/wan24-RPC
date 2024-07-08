@@ -1,7 +1,7 @@
 ﻿namespace wan24.RPC.Api.Attributes
 {
     /// <summary>
-    /// Attribute for a RPC API (method) which uses an alias name
+    /// Attribute for a RPC API (method) which is being exported using an alias name
     /// </summary>
     /// <remarks>
     /// Constructor

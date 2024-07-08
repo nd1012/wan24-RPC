@@ -8,18 +8,25 @@ namespace wan24.RPC.Processing.Parameters
     /// <summary>
     /// <see cref="RpcScope"/> parameter
     /// </summary>
-    public sealed record class RpcScopeParameter : RpcScopeParameterBase
+    public record class RpcScopeParameter : RpcScopeParameterBase
     {
         /// <summary>
         /// Constructor
         /// </summary>
         [SetsRequiredMembers]
-        public RpcScopeParameter() : base() => Type = (int)RpcScopeTypes.Scope;
+        public RpcScopeParameter() : this((int)RpcScopeTypes.Scope) { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="type">RPC scope type (see <see cref="RpcScopeTypes"/>)</param>
+        [SetsRequiredMembers]
+        protected RpcScopeParameter(in int type) : base() => Type = type;
 
         /// <summary>
         /// Scope object (will be disposed)
         /// </summary>
-        public object? ScopeObject { get; set; }
+        public virtual object? ScopeObject { get; set; }
 
         /// <inheritdoc/>
         public override async Task DisposeScopeValueAsync()
@@ -43,10 +50,9 @@ namespace wan24.RPC.Processing.Parameters
             RpcApiMethodInfo? apiMethod = null, 
             CancellationToken cancellationToken = default
             )
-        {
-            RpcScopeParameter parameter = new();
-            apiMethod?.InitializeScopeParameter(parameter);
-            return Task.FromResult<IRpcScopeParameter>(parameter);
-        }
+            => Task.FromResult<IRpcScopeParameter>(new RpcScopeParameter()
+            {
+                Processor = processor
+            });
     }
 }

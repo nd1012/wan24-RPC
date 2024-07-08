@@ -82,7 +82,8 @@ namespace wan24.RPC.Processing.Messages.Serialization
             using (RentedArrayStructSimple<byte> buffer = new(typeNameLen, clean: false))
             {
                 await stream.ReadExactlyAsync(buffer.Memory, cancellationToken).DynamicContext();
-                serializedType = TypeHelper.Instance.GetType(buffer.Span.ToUtf8String(), throwOnError: true)!;
+                serializedType = TypeHelper.Instance.GetType(buffer.Span.ToUtf8String())
+                    ?? throw new InvalidDataException($"Unknown serialized type {buffer.Span.ToUtf8String().ToQuotedLiteral()}");
             }
             if (!CanSerialize(serializedType))
                 throw new InvalidDataException($"Serialized type {serializedType} is not serializable");

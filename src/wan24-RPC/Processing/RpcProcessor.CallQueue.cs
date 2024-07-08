@@ -371,10 +371,9 @@ namespace wan24.RPC.Processing
                 // Scope parameter handling
                 if(value is RpcScopeValue scopeValue)
                 {
-                    if (parameter.Parameter.ParameterType.IsAssignableFrom(scopeValue.GetType()))
-                        return value;
-                    if (!RpcScopes.RemoteFactories.TryGetValue(scopeValue.Type, out RpcScopes.RemoteScopeFactory_Delegate? scopeFactory))
-                        throw new ArgumentException("Unsupported scope type in parameter value", parameter.Parameter.Name);
+                    Logger?.Log(LogLevel.Trace, "{this} creating a new remote scope type #{id} from value {value} for parameter {param}", ToString(), scopeValue.Type, scopeValue.GetType(), parameter.Parameter.Name);
+                    if (RpcScopes.GetRemoteScopeFactory(scopeValue.Type) is not RpcScopes.RemoteScopeFactory_Delegate scopeFactory)
+                        throw new ArgumentException($"Unsupported scope type ID {scopeValue.Type} in parameter value", parameter.Parameter.Name);
                     RpcRemoteScopeBase? remoteScope = null;
                     try
                     {
@@ -384,8 +383,13 @@ namespace wan24.RPC.Processing
                     {
                         throw new ArgumentException("Scope factory failed to create a remote scope from the parameter value", parameter.Parameter.Name, ex);
                     }
+                    Logger?.Log(LogLevel.Trace, "{this} created a new remote scope ({scope}) from value {value} for parameter {param}", ToString(), remoteScope, scopeValue.GetType(), parameter.Parameter.Name);
                     item.ParameterScopes.Add(remoteScope);
-                    return remoteScope.Value;
+                    if (!parameter.Parameter.ParameterType.IsAssignableFrom(typeof(RpcScopeValue)))
+                        value = parameter.Parameter.ParameterType.IsAssignableFrom(remoteScope.GetType())
+                            ? remoteScope
+                            : remoteScope.Value;
+                    return value;
                 }
                 return value;
             }
@@ -410,28 +414,37 @@ namespace wan24.RPC.Processing
                 if (returnValue is not null)
                 {
                     // Scopeable return value handling
-                    if (returnValue is RpcScopeValue)
+                    if (returnValue is RpcScopeValue scopeValue)
                         return returnValue;
                     if (returnValue is RpcScopeBase scope)
                     {
+                        Logger?.Log(LogLevel.Trace, "{this} using returned scope ({scope}) value", ToString(), scope);
                         item.ReturnScope = scope;
                         if (scope.ScopeParameter is null)
                             await scope.CreateScopeParameterAsync(method, CancelToken).DynamicContext();
-                        return scope.ScopeParameter.Value ?? await scope.ScopeParameter.CreateValueAsync(Processor, scope.Id, CancelToken).DynamicContext();
+                        return scope.ScopeParameter.Value 
+                            ?? await scope.ScopeParameter.CreateValueAsync(Processor, scope.Id, CancelToken).DynamicContext();
                     }
                     if (RpcScopes.GetReturnScopeFactory(returnValue.GetType()) is RpcScopes.ReturnScopeFactory_Delegate scopeFactory)
-                        if (await scopeFactory.Invoke(Processor, returnValue, CancelToken).DynamicContext() is RpcScopeBase scope2)
+                    {
+                        Logger?.Log(LogLevel.Trace, "{this} creating a new local scope from return value type {type}", ToString(), returnValue.GetType());
+                        RpcScopeBase? scope2 = await scopeFactory.Invoke(Processor, method, returnValue, CancelToken).DynamicContext();
+                        if (scope2 is not null)
                         {
+                            Logger?.Log(LogLevel.Trace, "{this} created a new local scope ({scope}) from return value type {type}", ToString(), scope2, returnValue.GetType());
                             item.ReturnScope = scope2;
                             if (scope2.ScopeParameter is null)
                                 await scope2.CreateScopeParameterAsync(method, CancelToken).DynamicContext();
-                            return scope2.ScopeParameter.Value ?? await scope2.ScopeParameter.CreateValueAsync(Processor, scope2.Id, CancelToken).DynamicContext();
+                            return scope2.ScopeParameter.Value 
+                                ?? await scope2.ScopeParameter.CreateValueAsync(Processor, scope2.Id, CancelToken).DynamicContext();
                         }
                         else
                         {
+                            Logger?.Log(LogLevel.Trace, "{this} can't create new local scope from return value type {type} (no responsible scope registration found)", ToString(), returnValue.GetType());
                             await returnValue.TryDisposeAsync().DynamicContext();
                             return null;
                         }
+                    }
                 }
                 return returnValue;
             }

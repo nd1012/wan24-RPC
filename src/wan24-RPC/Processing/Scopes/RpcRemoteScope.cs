@@ -16,6 +16,11 @@ namespace wan24.RPC.Processing.Scopes
     public class RpcRemoteScope(in RpcProcessor processor, in RpcScopeValue value) : RpcProcessor.RpcRemoteScopeInternalsBase(processor, value)
     {
         /// <summary>
+        /// RPC scope type ID (see <see cref="RpcScopeTypes"/>)
+        /// </summary>
+        public const int TYPE = (int)RpcScopeTypes.Scope;
+
+        /// <summary>
         /// Maximum count of <see cref="Meta"/> entries (zero for no limit)
         /// </summary>
         public static int DefaultMaxMetaLength { get; set; } = byte.MaxValue;
@@ -58,12 +63,12 @@ namespace wan24.RPC.Processing.Scopes
             if (trigger.Id.HasValue)
             {
                 Logger?.Log(LogLevel.Debug, "{this} sending void trigger as #{id}", ToString(), trigger.Id);
-                await SendVoidRequestAsync(trigger, cancellationToken).DynamicContext();
+                await SendVoidRequestAsync(trigger, useQueue: false, cancellationToken: cancellationToken).DynamicContext();
             }
             else
             {
                 Logger?.Log(LogLevel.Debug, "{this} sending void trigger", ToString());
-                await SendMessageAsync(trigger, Priorities.Event, cancellationToken).DynamicContext();
+                await SendMessageAsync(trigger, Priorities.Event, cancellationToken: cancellationToken).DynamicContext();
             }
         }
 
@@ -85,7 +90,7 @@ namespace wan24.RPC.Processing.Scopes
             if (!trigger.Id.HasValue)
                 trigger.Id = CreateMessageId();
             Logger?.Log(LogLevel.Debug, "{this} sending void trigger as #{id} (expect {type} return value)", ToString(), trigger.Id, typeof(T));
-            return await SendRequestAsync<T>(trigger, cancellationToken).DynamicContext();
+            return await SendRequestAsync<T>(trigger, useQueue: false, cancellationToken: cancellationToken).DynamicContext();
         }
 
         /// <summary>
@@ -105,7 +110,7 @@ namespace wan24.RPC.Processing.Scopes
             if (!trigger.Id.HasValue)
                 trigger.Id = CreateMessageId();
             Logger?.Log(LogLevel.Debug, "{this} sending void trigger as #{id} (expect nullable {type} return value)", ToString(), trigger.Id, typeof(T));
-            return await SendRequestNullableAsync<T>(trigger, cancellationToken).DynamicContext();
+            return await SendRequestNullableAsync<T>(trigger, useQueue: false, cancellationToken: cancellationToken).DynamicContext();
         }
 
         /// <inheritdoc/>
