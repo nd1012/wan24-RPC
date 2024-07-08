@@ -65,16 +65,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Api.Attributes.NoRpcEnumerableAttribute.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/wan24.RPC.Api.Attributes.NoRpcEnumerableAttribute.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Api.Attributes.RpcAliasAttribute.yml",
       "output": {
         ".html": {
@@ -125,16 +115,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Api.Attributes.RpcCancellationAttribute.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/wan24.RPC.Api.Attributes.RpcCancellationAttribute.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Api.Attributes.RpcDisconnectOnErrorAttribute.yml",
       "output": {
         ".html": {
@@ -165,30 +145,10 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Api.Attributes.RpcScopeAttributeBase.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/wan24.RPC.Api.Attributes.RpcScopeAttributeBase.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.yml",
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Api.Attributes.RpcStreamAttribute.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/wan24.RPC.Api.Attributes.RpcStreamAttribute.html"
         }
       },
       "version": ""
@@ -389,16 +349,6 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.IRpcProcessorInternals.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Processing.IRpcScopeInternals.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/wan24.RPC.Processing.IRpcScopeInternals.html"
         }
       },
       "version": ""
@@ -1115,26 +1065,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventArgs.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventHandler_Delegate.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.RemoteEventHandler_Delegate.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.yml",
       "output": {
         ".html": {
@@ -1169,6 +1099,66 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.RpcProcessorTable.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.IRpcLocalScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.IRpcLocalScope.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.IRpcRemoteScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.IRpcRemoteScope.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.IRpcScope.RemoteEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.IRpcScope.RemoteEventArgs.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.IRpcScope.RemoteEventHandler_Delegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.IRpcScope.RemoteEventHandler_Delegate.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.IRpcScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.IRpcScope.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.IRpcScopeInternals.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.IRpcScopeInternals.html"
         }
       },
       "version": ""
@@ -1249,6 +1239,16 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.Scopes.RpcScopeEvent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.RpcScopeRegistration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.RpcScopeRegistration.html"
         }
       },
       "version": ""

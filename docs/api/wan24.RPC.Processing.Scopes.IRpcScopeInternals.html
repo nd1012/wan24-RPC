@@ -5,9 +5,9 @@
     <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>Interface IRpcProcessorInternals | wan24-RPC </title>
+      <title>Interface IRpcScopeInternals | wan24-RPC </title>
       <meta name="viewport" content="width=device-width">
-      <meta name="title" content="Interface IRpcProcessorInternals | wan24-RPC ">
+      <meta name="title" content="Interface IRpcScopeInternals | wan24-RPC ">
       <meta name="generator" content="docfx ">
   
       <link rel="shortcut icon" href="../favicon.ico">
@@ -93,34 +93,97 @@
                         </div>
 
                          <div id="contribution">
-                               <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_IRpcProcessorInternals.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.IRpcProcessorInternals%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                               <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScopeInternals.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScopeInternals%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
                          </div>
 
-                    <article class="content wrap" id="_content" data-uid="wan24.RPC.Processing.IRpcProcessorInternals">
+                    <article class="content wrap" id="_content" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals">
 
 
 
-  <h1 id="wan24_RPC_Processing_IRpcProcessorInternals" data-uid="wan24.RPC.Processing.IRpcProcessorInternals" class="text-break">Interface IRpcProcessorInternals</h1>
-  <div class="markdown level0 summary"><p>Interface for a RPC processor which exports its internals</p>
+  <h1 id="wan24_RPC_Processing_Scopes_IRpcScopeInternals" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals" class="text-break">Interface IRpcScopeInternals</h1>
+  <div class="markdown level0 summary"><p>Interface for a RPC scope which exports its internals</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="wan24.html">wan24</a>.<a class="xref" href="wan24.RPC.html">RPC</a>.<a class="xref" href="wan24.RPC.Processing.html">Processing</a></h6>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Type">IRpcScope.Type</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Name">IRpcScope.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Id">IRpcScope.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Key">IRpcScope.Key</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_IsStored">IRpcScope.IsStored</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_IsDiscarded">IRpcScope.IsDiscarded</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Processor">IRpcScope.Processor</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_RemoteEvents">IRpcScope.RemoteEvents</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent_System_String__System_Type__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__">IRpcScope.RegisterEvent(in string, in Type, in RpcScopeEvent.EventHandler_Delegate)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent__1_System_String__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__">IRpcScope.RegisterEvent&lt;T&gt;(in string, in RpcScopeEvent.EventHandler_Delegate)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent_System_String__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__">IRpcScope.RegisterEvent(in string, in RpcScopeEvent.EventHandler_Delegate)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_RaiseEventAsync_System_String_System_EventArgs_System_Boolean_System_Threading_CancellationToken_">IRpcScope.RaiseEventAsync(string, EventArgs, bool, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_OnRemoteEvent">IRpcScope.OnRemoteEvent</a>
+    </div>
+    <div>
+      <span class="xref">IWillDispose.RegisterForDispose&lt;T&gt;(in T)</span>
+    </div>
+    <div>
+      <span class="xref">IDisposableObject.IsDisposing</span>
+    </div>
+    <div>
+      <span class="xref">IDisposableObject.IsDisposed</span>
+    </div>
+    <div>
+      <span class="xref">IDisposableObject.OnDisposing</span>
+    </div>
+    <div>
+      <span class="xref">IDisposableObject.OnDisposed</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable.dispose">IDisposable.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable.disposeasync">IAsyncDisposable.DisposeAsync()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="wan24.html">wan24</a>.<a class="xref" href="wan24.RPC.html">RPC</a>.<a class="xref" href="wan24.RPC.Processing.html">Processing</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.html">Scopes</a></h6>
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
-  <h5 id="wan24_RPC_Processing_IRpcProcessorInternals_syntax">Syntax</h5>
+  <h5 id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IRpcProcessorInternals</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IRpcScopeInternals : IRpcScope, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable</code></pre>
   </div>
   <h3 id="methods">Methods
 </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_IRpcProcessorInternals_CreateMessageId.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.IRpcProcessorInternals.CreateMessageId%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScopeInternals_CreateMessageId.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScopeInternals.CreateMessageId%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/IRpcProcessorInternals.cs/#L15">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScopeInternals.cs/#L15">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_IRpcProcessorInternals_CreateMessageId_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.CreateMessageId*"></a>
-  <h4 id="wan24_RPC_Processing_IRpcProcessorInternals_CreateMessageId" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.CreateMessageId">CreateMessageId()</h4>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_CreateMessageId_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.CreateMessageId*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_CreateMessageId" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.CreateMessageId">CreateMessageId()</h4>
   <div class="markdown level1 summary"><p>Create a message ID</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -146,13 +209,13 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_IRpcProcessorInternals_SendMessageAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Int32_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.IRpcProcessorInternals.SendMessageAsync(wan24.RPC.Processing.Messages.IRpcMessage%2CSystem.Int32%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendMessageAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Int32_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendMessageAsync(wan24.RPC.Processing.Messages.IRpcMessage%2CSystem.Int32%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/IRpcProcessorInternals.cs/#L66">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScopeInternals.cs/#L66">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_IRpcProcessorInternals_SendMessageAsync_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendMessageAsync*"></a>
-  <h4 id="wan24_RPC_Processing_IRpcProcessorInternals_SendMessageAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Int32_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendMessageAsync(wan24.RPC.Processing.Messages.IRpcMessage,System.Int32,System.Threading.CancellationToken)">SendMessageAsync(IRpcMessage, int, CancellationToken)</h4>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendMessageAsync_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendMessageAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendMessageAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Int32_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendMessageAsync(wan24.RPC.Processing.Messages.IRpcMessage,System.Int32,System.Threading.CancellationToken)">SendMessageAsync(IRpcMessage, int, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Send a RPC message to the peer</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -207,13 +270,13 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_IRpcProcessorInternals_SendMessageAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.IRpcProcessorInternals.SendMessageAsync(wan24.RPC.Processing.Messages.IRpcMessage%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendMessageAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendMessageAsync(wan24.RPC.Processing.Messages.IRpcMessage%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/IRpcProcessorInternals.cs/#L72">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScopeInternals.cs/#L72">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_IRpcProcessorInternals_SendMessageAsync_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendMessageAsync*"></a>
-  <h4 id="wan24_RPC_Processing_IRpcProcessorInternals_SendMessageAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendMessageAsync(wan24.RPC.Processing.Messages.IRpcMessage,System.Threading.CancellationToken)">SendMessageAsync(IRpcMessage, CancellationToken)</h4>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendMessageAsync_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendMessageAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendMessageAsync_wan24_RPC_Processing_Messages_IRpcMessage_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendMessageAsync(wan24.RPC.Processing.Messages.IRpcMessage,System.Threading.CancellationToken)">SendMessageAsync(IRpcMessage, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Send a RPC message to the peer</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -262,13 +325,13 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_IRpcProcessorInternals_SendRequestAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Type_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.IRpcProcessorInternals.SendRequestAsync(wan24.RPC.Processing.Messages.IRpcRequest%2CSystem.Type%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Type_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestAsync(wan24.RPC.Processing.Messages.IRpcRequest%2CSystem.Type%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/IRpcProcessorInternals.cs/#L59">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScopeInternals.cs/#L59">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_IRpcProcessorInternals_SendRequestAsync_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendRequestAsync*"></a>
-  <h4 id="wan24_RPC_Processing_IRpcProcessorInternals_SendRequestAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Type_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendRequestAsync(wan24.RPC.Processing.Messages.IRpcRequest,System.Type,System.Boolean,System.Threading.CancellationToken)">SendRequestAsync(IRpcRequest, Type, bool, CancellationToken)</h4>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestAsync_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Type_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestAsync(wan24.RPC.Processing.Messages.IRpcRequest,System.Type,System.Boolean,System.Threading.CancellationToken)">SendRequestAsync(IRpcRequest, Type, bool, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Send a request</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -330,13 +393,13 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_IRpcProcessorInternals_SendRequestAsync__1_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.IRpcProcessorInternals.SendRequestAsync%60%601(wan24.RPC.Processing.Messages.IRpcRequest%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestAsync__1_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestAsync%60%601(wan24.RPC.Processing.Messages.IRpcRequest%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/IRpcProcessorInternals.cs/#L40">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScopeInternals.cs/#L40">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_IRpcProcessorInternals_SendRequestAsync_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendRequestAsync*"></a>
-  <h4 id="wan24_RPC_Processing_IRpcProcessorInternals_SendRequestAsync__1_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendRequestAsync``1(wan24.RPC.Processing.Messages.IRpcRequest,System.Boolean,System.Threading.CancellationToken)">SendRequestAsync&lt;T&gt;(IRpcRequest, bool, CancellationToken)</h4>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestAsync_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestAsync__1_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestAsync``1(wan24.RPC.Processing.Messages.IRpcRequest,System.Boolean,System.Threading.CancellationToken)">SendRequestAsync&lt;T&gt;(IRpcRequest, bool, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Send a request</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -408,13 +471,13 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_IRpcProcessorInternals_SendRequestNullableAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Type_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.IRpcProcessorInternals.SendRequestNullableAsync(wan24.RPC.Processing.Messages.IRpcRequest%2CSystem.Type%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestNullableAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Type_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestNullableAsync(wan24.RPC.Processing.Messages.IRpcRequest%2CSystem.Type%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/IRpcProcessorInternals.cs/#L50">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScopeInternals.cs/#L50">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_IRpcProcessorInternals_SendRequestNullableAsync_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendRequestNullableAsync*"></a>
-  <h4 id="wan24_RPC_Processing_IRpcProcessorInternals_SendRequestNullableAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Type_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendRequestNullableAsync(wan24.RPC.Processing.Messages.IRpcRequest,System.Type,System.Boolean,System.Threading.CancellationToken)">SendRequestNullableAsync(IRpcRequest, Type, bool, CancellationToken)</h4>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestNullableAsync_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestNullableAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestNullableAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Type_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestNullableAsync(wan24.RPC.Processing.Messages.IRpcRequest,System.Type,System.Boolean,System.Threading.CancellationToken)">SendRequestNullableAsync(IRpcRequest, Type, bool, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Send a request</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -476,13 +539,13 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_IRpcProcessorInternals_SendRequestNullableAsync__1_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.IRpcProcessorInternals.SendRequestNullableAsync%60%601(wan24.RPC.Processing.Messages.IRpcRequest%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestNullableAsync__1_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestNullableAsync%60%601(wan24.RPC.Processing.Messages.IRpcRequest%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/IRpcProcessorInternals.cs/#L31">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScopeInternals.cs/#L31">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_IRpcProcessorInternals_SendRequestNullableAsync_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendRequestNullableAsync*"></a>
-  <h4 id="wan24_RPC_Processing_IRpcProcessorInternals_SendRequestNullableAsync__1_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendRequestNullableAsync``1(wan24.RPC.Processing.Messages.IRpcRequest,System.Boolean,System.Threading.CancellationToken)">SendRequestNullableAsync&lt;T&gt;(IRpcRequest, bool, CancellationToken)</h4>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestNullableAsync_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestNullableAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendRequestNullableAsync__1_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendRequestNullableAsync``1(wan24.RPC.Processing.Messages.IRpcRequest,System.Boolean,System.Threading.CancellationToken)">SendRequestNullableAsync&lt;T&gt;(IRpcRequest, bool, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Send a request</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -554,13 +617,13 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_IRpcProcessorInternals_SendVoidRequestAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.IRpcProcessorInternals.SendVoidRequestAsync(wan24.RPC.Processing.Messages.IRpcRequest%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendVoidRequestAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendVoidRequestAsync(wan24.RPC.Processing.Messages.IRpcRequest%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/IRpcProcessorInternals.cs/#L22">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScopeInternals.cs/#L22">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_IRpcProcessorInternals_SendVoidRequestAsync_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendVoidRequestAsync*"></a>
-  <h4 id="wan24_RPC_Processing_IRpcProcessorInternals_SendVoidRequestAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.IRpcProcessorInternals.SendVoidRequestAsync(wan24.RPC.Processing.Messages.IRpcRequest,System.Boolean,System.Threading.CancellationToken)">SendVoidRequestAsync(IRpcRequest, bool, CancellationToken)</h4>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendVoidRequestAsync_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendVoidRequestAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScopeInternals_SendVoidRequestAsync_wan24_RPC_Processing_Messages_IRpcRequest_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.IRpcScopeInternals.SendVoidRequestAsync(wan24.RPC.Processing.Messages.IRpcRequest,System.Boolean,System.Threading.CancellationToken)">SendVoidRequestAsync(IRpcRequest, bool, CancellationToken)</h4>
   <div class="markdown level1 summary"><p>Send a request</p>
 </div>
   <div class="markdown level1 conceptual"></div>

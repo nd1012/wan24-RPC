@@ -1,0 +1,700 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Interface IRpcScope | wan24-RPC </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Interface IRpcScope | wan24-RPC ">
+      <meta name="generator" content="docfx ">
+  
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" integrity="sha384-EvBWSlnoFgZlXJvpzS+MAUEjvN7+gcCwH+qh7GRFOGgZO0PuwOFro7qPOJnLfe7l" crossorigin="anonymous">
+      <link rel="stylesheet" href="../styles/config.css">
+      <link rel="stylesheet" href="../styles/singulink.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+    </head>
+    <body>
+        <!-- Header required for docfx anchor scroll to work -->
+        <header id="head"></header>
+        <div class="top-navbar">
+            <a class="burger-icon" onclick="toggleMenu()">
+                <svg name="Hamburger" style="vertical-align: middle;" width="34" height="34" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M20 6H4V9H20V6ZM4 10.999H20V13.999H4V10.999ZM4 15.999H20V18.999H4V15.999Z"></path></svg>
+            </a>
+
+
+            <a class="brand" href="../index.html">
+              <img src="../logo.svg" alt="" class="logomark">
+              <span class="brand-title"></span>
+            </a>        </div>
+
+        <div class="body-content">
+            <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
+
+            <nav id="sidebar" role="navigation">
+                <div class="sidebar">
+
+                    <div>
+                      <div class="mobile-hide">
+
+                        <a class="brand" href="../index.html">
+                          <img src="../logo.svg" alt="" class="logomark">
+                          <span class="brand-title"></span>
+                        </a>                      </div>
+
+                      <div class="sidesearch">
+                        <form id="search" role="search" class="search">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" id="search-query" placeholder="Search" autocomplete="off">
+                        </form>
+                      </div>
+
+                      <div id="navbar">
+                      </div>
+                    </div>                    <div class="sidebar-item-separator"></div>
+
+                        <div id="sidetoggle">
+                          <div id="sidetoc"></div>
+                        </div>
+                </div>
+                <div class="footer">
+  (c) 2024 Andreas Zimmermann, wan24.de
+  
+                </div>            </nav>
+
+            <main class="main-panel">
+
+                <div id="search-results" style="display: none;">
+                  <h1 class="search-list">Search Results for <span></span></h1>
+                  <div class="sr-items">
+                    <p><i class="bi bi-hourglass-split index-loading"></i></p>
+                  </div>
+                  <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+                </div>
+ 
+
+                <div role="main" class="hide-when-search">
+
+                        <div class="subnav navbar navbar-default">
+                          <div class="container hide-when-search" id="breadcrumb">
+                            <ul class="breadcrumb">
+                              <li></li>
+                            </ul>
+                          </div>
+                        </div>
+
+                         <div id="contribution">
+                               <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                         </div>
+
+                    <article class="content wrap" id="_content" data-uid="wan24.RPC.Processing.Scopes.IRpcScope">
+
+
+
+  <h1 id="wan24_RPC_Processing_Scopes_IRpcScope" data-uid="wan24.RPC.Processing.Scopes.IRpcScope" class="text-break">Interface IRpcScope</h1>
+  <div class="markdown level0 summary"><p>Interface for a RPC scope (see <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html">RpcProcessor.RpcScopeProcessorBase</a>)</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">IWillDispose.RegisterForDispose&lt;T&gt;(in T)</span>
+    </div>
+    <div>
+      <span class="xref">IDisposableObject.IsDisposing</span>
+    </div>
+    <div>
+      <span class="xref">IDisposableObject.IsDisposed</span>
+    </div>
+    <div>
+      <span class="xref">IDisposableObject.OnDisposing</span>
+    </div>
+    <div>
+      <span class="xref">IDisposableObject.OnDisposed</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable.dispose">IDisposable.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable.disposeasync">IAsyncDisposable.DisposeAsync()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="wan24.html">wan24</a>.<a class="xref" href="wan24.RPC.html">RPC</a>.<a class="xref" href="wan24.RPC.Processing.html">Processing</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.html">Scopes</a></h6>
+  <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
+  <h5 id="wan24_RPC_Processing_Scopes_IRpcScope_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IRpcScope : IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_Id.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.Id%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L23">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_Id_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.Id*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_Id" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.Id">Id</h4>
+  <div class="markdown level1 summary"><p>Scope ID</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">long Id { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">long</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_IsDiscarded.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.IsDiscarded%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L35">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_IsDiscarded_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.IsDiscarded*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_IsDiscarded" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.IsDiscarded">IsDiscarded</h4>
+  <div class="markdown level1 summary"><p>If the scope was discarded from the peer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsDiscarded { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_IsStored.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.IsStored%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L31">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_IsStored_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.IsStored*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_IsStored" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.IsStored">IsStored</h4>
+  <div class="markdown level1 summary"><p>If the scope is stored</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsStored { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_Key.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.Key%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L27">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_Key_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.Key*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_Key" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.Key">Key</h4>
+  <div class="markdown level1 summary"><p>Scope key</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string? Key { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_Name.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.Name%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L19">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_Name_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.Name*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_Name" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Name</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string? Name { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_Processor.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.Processor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L39">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_Processor_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.Processor*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_Processor" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.Processor">Processor</h4>
+  <div class="markdown level1 summary"><p>RPC processor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">RpcProcessor Processor { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.RpcProcessor.html">RpcProcessor</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_RemoteEvents.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.RemoteEvents%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L43">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_RemoteEvents_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.RemoteEvents*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_RemoteEvents" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.RemoteEvents">RemoteEvents</h4>
+  <div class="markdown level1 summary"><p>Registered remote events</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;RpcScopeEvent&gt; RemoteEvents { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeEvent.html">RpcScopeEvent</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_Type.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.Type%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L15">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_Type_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.Type*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_Type" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.Type">Type</h4>
+  <div class="markdown level1 summary"><p>RPC scope type ID</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int Type { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_RaiseEventAsync_System_String_System_EventArgs_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.RaiseEventAsync(System.String%2CSystem.EventArgs%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L74">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_RaiseEventAsync_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.RaiseEventAsync*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_RaiseEventAsync_System_String_System_EventArgs_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.RaiseEventAsync(System.String,System.EventArgs,System.Boolean,System.Threading.CancellationToken)">RaiseEventAsync(string, EventArgs?, bool, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Raise an event at the peer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task RaiseEventAsync(string name, EventArgs? e = null, bool wait = false, CancellationToken cancellationToken = default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Event name</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.eventargs">EventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>Event arguments</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><span class="parametername">wait</span></td>
+        <td><p>Wait for remote event handlers to finish?</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken">CancellationToken</a></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>Cancellation token</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent_System_String__System_Type__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.RegisterEvent(System.String%40%2CSystem.Type%40%2Cwan24.RPC.Processing.Scopes.RpcScopeEvent.EventHandler_Delegate%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L51">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.RegisterEvent*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent_System_String__System_Type__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.RegisterEvent(System.String@,System.Type@,wan24.RPC.Processing.Scopes.RpcScopeEvent.EventHandler_Delegate@)">RegisterEvent(in string, in Type, in EventHandler_Delegate)</h4>
+  <div class="markdown level1 summary"><p>Register a remote event handler</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">RpcScopeEvent RegisterEvent(in string name, in Type arguments, in RpcScopeEvent.EventHandler_Delegate handler)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Event name</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">arguments</span></td>
+        <td><p>Event arguments type (must be an <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.eventargs">EventArgs</a>)</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeEvent.html">RpcScopeEvent</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeEvent.EventHandler_Delegate.html">EventHandler_Delegate</a></td>
+        <td><span class="parametername">handler</span></td>
+        <td><p>Event handler</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeEvent.html">RpcScopeEvent</a></td>
+        <td><p>Event</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent_System_String__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.RegisterEvent(System.String%40%2Cwan24.RPC.Processing.Scopes.RpcScopeEvent.EventHandler_Delegate%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L66">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.RegisterEvent*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent_System_String__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.RegisterEvent(System.String@,wan24.RPC.Processing.Scopes.RpcScopeEvent.EventHandler_Delegate@)">RegisterEvent(in string, in EventHandler_Delegate)</h4>
+  <div class="markdown level1 summary"><p>Register a remote event handler</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">RpcScopeEvent RegisterEvent(in string name, in RpcScopeEvent.EventHandler_Delegate handler)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Event name</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeEvent.html">RpcScopeEvent</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeEvent.EventHandler_Delegate.html">EventHandler_Delegate</a></td>
+        <td><span class="parametername">handler</span></td>
+        <td><p>Event handler</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeEvent.html">RpcScopeEvent</a></td>
+        <td><p>Event</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent__1_System_String__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.RegisterEvent%60%601(System.String%40%2Cwan24.RPC.Processing.Scopes.RpcScopeEvent.EventHandler_Delegate%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L59">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent_" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.RegisterEvent*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_RegisterEvent__1_System_String__wan24_RPC_Processing_Scopes_RpcScopeEvent_EventHandler_Delegate__" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.RegisterEvent``1(System.String@,wan24.RPC.Processing.Scopes.RpcScopeEvent.EventHandler_Delegate@)">RegisterEvent&lt;T&gt;(in string, in EventHandler_Delegate)</h4>
+  <div class="markdown level1 summary"><p>Register a remote event handler</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">RpcScopeEvent RegisterEvent&lt;T&gt;(in string name, in RpcScopeEvent.EventHandler_Delegate handler) where T : EventArgs</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Event name</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeEvent.html">RpcScopeEvent</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeEvent.EventHandler_Delegate.html">EventHandler_Delegate</a></td>
+        <td><span class="parametername">handler</span></td>
+        <td><p>Event handler</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeEvent.html">RpcScopeEvent</a></td>
+        <td><p>Event</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Event arguments type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcScope_OnRemoteEvent.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcScope.OnRemoteEvent%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcScope.cs/#L84">View Source</a>
+  </span>
+  <h4 id="wan24_RPC_Processing_Scopes_IRpcScope_OnRemoteEvent" data-uid="wan24.RPC.Processing.Scopes.IRpcScope.OnRemoteEvent">OnRemoteEvent</h4>
+  <div class="markdown level1 summary"><p>Raised on remote event</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event IRpcScope.RemoteEventHandler_Delegate? OnRemoteEvent</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html">IRpcScope</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.RemoteEventHandler_Delegate.html">RemoteEventHandler_Delegate</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+</article>
+                </div>
+
+                <div class="copyright-footer">
+                    <span>(c) 2024 Andreas Zimmermann, wan24.de</span>
+                </div>
+            </main>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script type="text/javascript" src="../styles/jquery.twbsPagination.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"></script>
+        <script type="text/javascript" src="../styles/url.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anchor-js@5.0.0/anchor.min.js"></script>
+        <script type="text/javascript" src="../styles/docfx.js"></script>
+        <script type="text/javascript" src="../styles/main.js"></script>
+        <script type="text/javascript" src="../styles/singulink.js"></script>    </body>
+</html>

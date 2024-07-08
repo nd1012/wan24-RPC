@@ -102,7 +102,11 @@
 
   <h1 id="wan24_RPC_Api_Attributes_NoRpcDisposeAttribute" data-uid="wan24.RPC.Api.Attributes.NoRpcDisposeAttribute" class="text-break">Class NoRpcDisposeAttribute</h1>
   <div class="markdown level0 summary"><p>Attribute for</p>
-<ul><li>A disposable RPC API method parameter which shouldn't be disposed after the method returned regular</li><li>A disposable RPC API method return value which shouldn't be disposed after the response was sent to the peer</li><li>A disposable RPC API type which shouldn't be disposed when the RPC processor is disposing</li></ul>
+<ul><li>A disposable RPC API method parameter which shouldn't be disposed after the method returned regular (NOTE: A scope value may still be disposed by its remote 
+scope, if it wasn't configured to keep the value undisposed (see <a class="xref" href="wan24.RPC.Processing.Values.RpcScopeValue.html">RpcScopeValue</a>; the scope may require the value to be consumed when the API method 
+returns)!)</li><li>A disposable RPC API method return value which shouldn't be disposed after the response was sent to the peer (NOTE: A scope value may still be disposed after 
+the response was sent, if the scope wasn't configured to keep the value undisposed (use <a class="xref" href="wan24.RPC.Processing.Parameters.RpcScopeParameterBase.html">RpcScopeParameterBase</a>/
+<a class="xref" href="wan24.RPC.Processing.Parameters.DisposableRpcScopeParameterBase.html">DisposableRpcScopeParameterBase</a> for configuration, if required)!)</li><li>A disposable RPC API type which shouldn't be disposed when the RPC processor is disposing</li></ul>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -257,12 +261,16 @@ public class NoRpcDisposeAttribute : Attribute</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_NoRpcDisposeAttribute__ctor.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.NoRpcDisposeAttribute.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/NoRpcDisposeAttribute.cs/#L14">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/NoRpcDisposeAttribute.cs/#L21">View Source</a>
   </span>
   <a id="wan24_RPC_Api_Attributes_NoRpcDisposeAttribute__ctor_" data-uid="wan24.RPC.Api.Attributes.NoRpcDisposeAttribute.#ctor*"></a>
   <h4 id="wan24_RPC_Api_Attributes_NoRpcDisposeAttribute__ctor" data-uid="wan24.RPC.Api.Attributes.NoRpcDisposeAttribute.#ctor">NoRpcDisposeAttribute()</h4>
   <div class="markdown level1 summary"><p>Attribute for</p>
-<ul><li>A disposable RPC API method parameter which shouldn't be disposed after the method returned regular</li><li>A disposable RPC API method return value which shouldn't be disposed after the response was sent to the peer</li><li>A disposable RPC API type which shouldn't be disposed when the RPC processor is disposing</li></ul>
+<ul><li>A disposable RPC API method parameter which shouldn't be disposed after the method returned regular (NOTE: A scope value may still be disposed by its remote 
+scope, if it wasn't configured to keep the value undisposed (see <a class="xref" href="wan24.RPC.Processing.Values.RpcScopeValue.html">RpcScopeValue</a>; the scope may require the value to be consumed when the API method 
+returns)!)</li><li>A disposable RPC API method return value which shouldn't be disposed after the response was sent to the peer (NOTE: A scope value may still be disposed after 
+the response was sent, if the scope wasn't configured to keep the value undisposed (use <a class="xref" href="wan24.RPC.Processing.Parameters.RpcScopeParameterBase.html">RpcScopeParameterBase</a>/
+<a class="xref" href="wan24.RPC.Processing.Parameters.DisposableRpcScopeParameterBase.html">DisposableRpcScopeParameterBase</a> for configuration, if required)!)</li><li>A disposable RPC API type which shouldn't be disposed when the RPC processor is disposing</li></ul>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>

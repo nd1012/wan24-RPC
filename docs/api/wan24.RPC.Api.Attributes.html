@@ -109,18 +109,18 @@ Classes
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.NoRpcAttribute.html">NoRpcAttribute</a></h5>
       <section><p>Attribute for</p>
-<ul><li>A type which is not allowed to be deserialized</li><li>A public non-RPC method of an API type</li><li>A no-RPC servable RPC API method parameter</li></ul>
-(opt-out)
+<ul><li>A type which is not allowed to be deserialized (opt-out)</li><li>A public non-RPC method of an API type</li><li>A non-RPC servable RPC API method parameter, which must be given (by DI or from its default value)</li></ul>
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.NoRpcDisposeAttribute.html">NoRpcDisposeAttribute</a></h5>
       <section><p>Attribute for</p>
-<ul><li>A disposable RPC API method parameter which shouldn't be disposed after the method returned regular</li><li>A disposable RPC API method return value which shouldn't be disposed after the response was sent to the peer</li><li>A disposable RPC API type which shouldn't be disposed when the RPC processor is disposing</li></ul>
-</section>
-      <h5><a class="xref" href="wan24.RPC.Api.Attributes.NoRpcEnumerableAttribute.html">NoRpcEnumerableAttribute</a></h5>
-      <section><p>Attribute for an enumerable RPC API method return value which shouldn't be RPC enumerated (will be transported as an array instead)</p>
+<ul><li>A disposable RPC API method parameter which shouldn't be disposed after the method returned regular (NOTE: A scope value may still be disposed by its remote 
+scope, if it wasn't configured to keep the value undisposed (see <a class="xref" href="wan24.RPC.Processing.Values.RpcScopeValue.html">RpcScopeValue</a>; the scope may require the value to be consumed when the API method 
+returns)!)</li><li>A disposable RPC API method return value which shouldn't be disposed after the response was sent to the peer (NOTE: A scope value may still be disposed after 
+the response was sent, if the scope wasn't configured to keep the value undisposed (use <a class="xref" href="wan24.RPC.Processing.Parameters.RpcScopeParameterBase.html">RpcScopeParameterBase</a>/
+<a class="xref" href="wan24.RPC.Processing.Parameters.DisposableRpcScopeParameterBase.html">DisposableRpcScopeParameterBase</a> for configuration, if required)!)</li><li>A disposable RPC API type which shouldn't be disposed when the RPC processor is disposing</li></ul>
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcAliasAttribute.html">RpcAliasAttribute</a></h5>
-      <section><p>Attribute for a RPC API (method) which uses an alias name</p>
+      <section><p>Attribute for a RPC API (method) which is being exported using an alias name</p>
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcAttribute.html">RpcAttribute</a></h5>
       <section><p>Attribute for a RPC type which is allowed to be deserialized (opt-in)</p>
@@ -132,10 +132,7 @@ Classes
       <section><p>Base type for a RPC API and/or method authorization attribue</p>
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcAuthorizedAttribute.html">RpcAuthorizedAttribute</a></h5>
-      <section><p>Attribute for RPC API methods which doesn't require any authorization</p>
-</section>
-      <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcCancellationAttribute.html">RpcCancellationAttribute</a></h5>
-      <section><p>Attribute for a RPC API method cancellation parameter or return value configuration</p>
+      <section><p>Attribute for RPC API methods which doesn't require any authorization (while the RPC API type has a general <a class="xref" href="wan24.RPC.Api.Attributes.RpcAuthorizationAttributeBase.html">RpcAuthorizationAttributeBase</a>)</p>
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcDisconnectOnErrorAttribute.html">RpcDisconnectOnErrorAttribute</a></h5>
       <section><p>Attribute for APIs or API methods which need the RPC processor to disconnect on any API method execution error</p>
@@ -145,16 +142,10 @@ Classes
 <ul><li>A disposable RPC API method parameter which should be disposed on error</li><li>A disposable RPC API method return value which should be disposed on error</li></ul>
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcRemoteScopeKeyAttribute.html">RpcRemoteScopeKeyAttribute</a></h5>
-      <section><p>RPC remote scope key attribute</p>
-</section>
-      <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcScopeAttributeBase.html">RpcScopeAttributeBase</a></h5>
-      <section><p>Base class for an attribute which configures a RPC scope</p>
+      <section><p>RPC remote scope key attribute tells the call processor to get the RPR API method parameter value from a remote scope which was stored using the specified key</p>
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.html">RpcScopeKeyAttribute</a></h5>
-      <section><p>RPC scope key attribute</p>
-</section>
-      <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcStreamAttribute.html">RpcStreamAttribute</a></h5>
-      <section><p>Attribute for a RPC API method stream parameter or return value transport configuration</p>
+      <section><p>RPC scope key attribute to tell the call processor to get the RPC API method parameter value from a local scope which was stored using the specified key</p>
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcVersionAttribute.html">RpcVersionAttribute</a></h5>
       <section><p>Attribute for an API version restricted RPC API method</p>

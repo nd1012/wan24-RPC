@@ -108,7 +108,7 @@
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Processing_Scopes_RpcScopes_ReturnScopeFactory_Delegate_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public delegate Task&lt;RpcProcessor.RpcScopeBase?&gt; RpcScopes.ReturnScopeFactory_Delegate(RpcProcessor processor, object returnValue, CancellationToken cancellationToken)</code></pre>
+    <pre><code class="lang-csharp hljs">public delegate Task&lt;RpcProcessor.RpcScopeBase?&gt; RpcScopes.ReturnScopeFactory_Delegate(RpcProcessor processor, RpcApiMethodInfo method, object returnValue, CancellationToken cancellationToken)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-condensed">
@@ -127,9 +127,15 @@
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="wan24.RPC.Api.Reflection.RpcApiMethodInfo.html">RpcApiMethodInfo</a></td>
+        <td><span class="parametername">method</span></td>
+        <td><p>RPC API method which returned the value</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></td>
         <td><span class="parametername">returnValue</span></td>
-        <td><p>RPC method return value</p>
+        <td><p>RPC API method return value</p>
 </td>
       </tr>
       <tr>
