@@ -27,7 +27,7 @@ namespace wan24.RPC.Api.Reflection
             Authorization = method.GetCustomAttributesCached<RpcAuthorizationAttributeBase>().ToFrozenSet();
             Authorize = method.GetCustomAttribute<RpcAuthorizedAttribute>() is not null;
             Version = method.GetCustomAttributeCached<RpcVersionAttribute>();
-            DisposeReturnValue = method.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
+            DisposeReturnValue = !method.GetCustomAttributesCached<Attribute>().Any(a => a is INoRpcDisposeAttribute);
             DisposeReturnValueOnError = DisposeReturnValue || method.GetCustomAttributeCached<RpcDisposeOnErrorAttribute>() is not null;
             DisconnectOnError = api.DisconnectOnError || method.GetCustomAttributeCached<RpcDisconnectOnErrorAttribute>() is not null;
             int index = -1;

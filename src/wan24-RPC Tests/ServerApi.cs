@@ -34,12 +34,14 @@ namespace wan24_RPC_Tests
 
         public TestDisposable Scopes(TestDisposable obj)
         {
-            ClientObj = obj;
+            Assert.IsNotNull(obj);
+            obj.Name ??= "Remote client";
+            ClientObj = obj;// Disposed after the method returned
             ServerObj = new()
             {
                 Name = "Server"
             };
-            return ServerObj;
+            return ServerObj;// Disposed after the return value was sent to the peer
         }
 
         protected override void Dispose(bool disposing)

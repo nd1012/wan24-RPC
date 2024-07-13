@@ -24,7 +24,7 @@ namespace wan24.RPC.Api.Reflection
             Index = index;
             RPC = pi.GetCustomAttributeCached<NoRpcAttribute>() is null;
             Nullable = pi.IsNullable(nic);
-            DisposeParameterValue = pi.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
+            DisposeParameterValue = !pi.GetCustomAttributesCached<Attribute>().Any(a => a is INoRpcDisposeAttribute);
             DisposeParameterValueOnError = DisposeParameterValue || pi.GetCustomAttributeCached<RpcDisposeOnErrorAttribute>() is not null;
             Scope = pi.GetCustomAttributeCached<RpcScopeKeyAttribute>();
             RemoteScope = pi.GetCustomAttributeCached<RpcRemoteScopeKeyAttribute>();

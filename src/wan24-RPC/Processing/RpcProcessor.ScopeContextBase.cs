@@ -379,11 +379,18 @@ namespace wan24.RPC.Processing
             /// </summary>
             /// <param name="message">Message</param>
             /// <param name="cancellationToken">Cancellation token</param>
-            protected virtual async Task HandleDiscardedAsync(IRpcScopeDiscardedMessage message, CancellationToken cancellationToken)
+            /// <returns>If handled</returns>
+            protected virtual async Task<bool> HandleDiscardedAsync(IRpcScopeDiscardedMessage message, CancellationToken cancellationToken)
             {
+                Logger?.Log(LogLevel.Debug, "{this} handling discarded message (code #{code}, \"{info}\")", ToString(), message.Code, message.Info);
                 using (SemaphoreSyncContext ssc = await Sync.SyncContextAsync(cancellationToken).DynamicContext())
+                {
+                    if (IsDiscarded)
+                        return false;
                     IsDiscarded = true;
+                }
                 await DisposeAsync().DynamicContext();
+                return true;
             }
 
             /// <summary>

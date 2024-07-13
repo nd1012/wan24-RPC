@@ -5,5 +5,13 @@
     /// </summary>
     public interface IRpcScopeDiscardedMessage : IRpcScopeMessage
     {
+        /// <summary>
+        /// Discarded reason code
+        /// </summary>
+        int Code { get; }
+        /// <summary>
+        /// Discarded reason information
+        /// </summary>
+        string? Info { get; }
     }
 }

@@ -374,31 +374,30 @@ namespace wan24_RPC_Tests
                 }
 
                 // Parameter and return value
-                Logging.WriteInfo("Parameter and return value");
+                Logging.WriteInfo("Parameter and return value without disposing options");
                 using (TestDisposable clientObj = new()
                 {
                     Name = "Client"
                 })
                 {
-                    Logging.WriteInfo("No disposing options");
-                    using (TestDisposable serverObj = await serverSdk.ScopesAsync(clientObj))
-                    {
-                        Assert.IsNull(client.GetRemoteScopeOf(serverObj));// Remote scope was disposed when returning the value
-                        await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(50), (ct) => Task.FromResult(server.StoredScopeCount < 1));
-                        Assert.IsNotNull(serverApi.ClientObj);
-                        Assert.IsNotNull(serverApi.ServerObj);
-                        Assert.AreNotEqual(serverApi.ClientObj, clientObj);
-                        Assert.AreNotEqual(serverApi.ServerObj, serverObj);
-                        Assert.IsTrue(clientObj.IsDisposing);// Local scope wasn't configured to leave the value undisposed
-                        Assert.IsTrue(serverObj.IsDisposing);// Remote scope wasn't configured to leave the value undisposed
-                        Assert.IsTrue(serverApi.ClientObj.IsDisposing);// Remote scope wasn't configured to leave the value undisposed
-                        Assert.IsTrue(serverApi.ServerObj.IsDisposing);// Local scope wasn't configured to leave the value undisposed
-                        Assert.AreEqual(0, client.StoredScopeCount);
-                        Assert.AreEqual(0, client.StoredRemoteScopeCount);
-                        Assert.AreEqual(0, server.StoredRemoteScopeCount);
-                        serverApi.ClientObj = null;
-                        serverApi.ServerObj = null;
-                    }
+                    using TestDisposable serverObj = await serverSdk.ScopesAsync(clientObj);
+                    serverObj.Name ??= "Remote server";
+                    Assert.IsNull(client.GetRemoteScopeOf(serverObj));// Remote scope was disposed when returning the value
+                    await Task.Delay(200);// Wait for server call cleanup
+                    Assert.IsNotNull(serverApi.ClientObj);
+                    Assert.IsNotNull(serverApi.ServerObj);
+                    Assert.AreNotEqual(serverApi.ClientObj, clientObj);
+                    Assert.AreNotEqual(serverApi.ServerObj, serverObj);
+                    Assert.IsTrue(clientObj.IsDisposing);// Local scope wasn't configured to leave the value undisposed
+                    Assert.IsTrue(serverObj.IsDisposing);// Remote scope wasn't configured to leave the value undisposed
+                    Assert.IsTrue(serverApi.ClientObj.IsDisposing);// Remote scope wasn't configured to leave the value undisposed
+                    Assert.IsTrue(serverApi.ServerObj.IsDisposing);// Local scope wasn't configured to leave the value undisposed
+                    Assert.AreEqual(0, client.StoredScopeCount);
+                    Assert.AreEqual(0, server.StoredScopeCount);
+                    Assert.AreEqual(0, client.StoredRemoteScopeCount);
+                    Assert.AreEqual(0, server.StoredRemoteScopeCount);
+                    serverApi.ClientObj = null;
+                    serverApi.ServerObj = null;
                 }
             }
             finally

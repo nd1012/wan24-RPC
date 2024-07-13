@@ -8,6 +8,7 @@ namespace wan24_RPC_Tests
 
         public async Task<string> EchoAsync(string message)
         {
+            EnsureUndisposed();
             EnsureInitialized();
             return await Processor.CallValueAsync<string>(nameof(ClientApi), nameof(ClientApi.EchoAsync), parameters: [message])
                 ?? throw new InvalidDataException("NULL return value");
@@ -15,6 +16,7 @@ namespace wan24_RPC_Tests
 
         public async Task<string> EchoSyncAsync(string message)
         {
+            EnsureUndisposed();
             EnsureInitialized();
             return await Processor.CallValueAsync<string>(nameof(ClientApi), nameof(ClientApi.Echo), parameters: [message])
                 ?? throw new InvalidDataException("NULL return value");

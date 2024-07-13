@@ -31,7 +31,7 @@ namespace wan24.RPC.Processing.Scopes
                 RemoteScopeFactory = RpcRemoteScope.CreateAsync,
                 LocalScopeParameterFactory = RpcScopeParameter.CreateAsync
             });
-            //TODO Register more built-in scope factories
+            //TODO Register more built-in scopes
         }
 
         /// <summary>
@@ -55,15 +55,15 @@ namespace wan24.RPC.Processing.Scopes
             if (Registered.Values.FirstOrDefault(r => r.RemoteScopeType == registration.RemoteScopeType) is RpcScopeRegistration remoteScope)
                 throw new InvalidOperationException($"RPC scope type #{remoteScope.Type} uses the remote scope type {registration.RemoteScopeType} already");
             if (
-                registration.LocalScopeObjectType is not null && 
-                Registered.Values.FirstOrDefault(r => r.LocalScopeObjectType == registration.LocalScopeObjectType) is RpcScopeRegistration localValue
+                registration.LocalScopeObjectTypes is not null && 
+                Registered.Values.FirstOrDefault(r => r.LocalScopeObjectTypes == registration.LocalScopeObjectTypes) is RpcScopeRegistration localValue
                 )
-                throw new InvalidOperationException($"RPC scope type #{localValue.Type} uses the parameter type {registration.LocalScopeObjectType} already");
+                throw new InvalidOperationException($"RPC scope type #{localValue.Type} uses one of the the parameter types already");
             if (
-                registration.RemoteScopeObjectType is not null && 
-                Registered.Values.FirstOrDefault(r => r.RemoteScopeObjectType == registration.RemoteScopeObjectType) is RpcScopeRegistration remoteValue
+                registration.RemoteScopeObjectTypes is not null && 
+                Registered.Values.FirstOrDefault(r => r.RemoteScopeObjectTypes == registration.RemoteScopeObjectTypes) is RpcScopeRegistration remoteValue
                 )
-                throw new InvalidOperationException($"RPC scope type #{remoteValue.Type} uses the return type {registration.RemoteScopeObjectType} already");
+                throw new InvalidOperationException($"RPC scope type #{remoteValue.Type} uses one of the return types already");
             Registered[registration.Type] = registration;
         }
 
@@ -103,11 +103,12 @@ namespace wan24.RPC.Processing.Scopes
         /// <param name="type">Parameter value type</param>
         /// <returns>Parameter scope factory</returns>
         public static ParameterScopeFactory_Delegate? GetParameterScopeFactory(Type type)
-            => Registered.Values.Where(r => r.ParameterLocalScopeFactory is not null)
-                .Select(r => r.LocalScopeObjectType)
-                .WhereNotNull()
-                .GetClosestType(type) is Type objectType
-                ? Registered.Values.First(r => r.LocalScopeObjectType == objectType).ParameterLocalScopeFactory
+            => (from r in Registered.Values
+                where r.ParameterLocalScopeFactory is not null
+                from t in r.LocalScopeObjectTypes ?? throw new InvalidProgramException($"Missing local scope object types in scope #{r.Type} registration")
+                select t)
+                   .GetClosestType(type) is Type objectType
+                ? Registered.Values.First(r => r.LocalScopeObjectTypes?.Contains(objectType) ?? false).ParameterLocalScopeFactory
                 : null;
 
         /// <summary>
@@ -116,11 +117,12 @@ namespace wan24.RPC.Processing.Scopes
         /// <param name="type">Return value type</param>
         /// <returns>Return scope factory</returns>
         public static ReturnScopeFactory_Delegate? GetReturnScopeFactory(Type type)
-            => Registered.Values.Where(r => r.ReturnLocalScopeFactory is not null)
-                .Select(r => r.LocalScopeObjectType)
-                .WhereNotNull()
-                .GetClosestType(type) is Type objectType
-                ? Registered.Values.First(r => r.LocalScopeObjectType == objectType).ReturnLocalScopeFactory
+            => (from r in Registered.Values
+                where r.ReturnLocalScopeFactory is not null
+                from t in r.LocalScopeObjectTypes ?? throw new InvalidProgramException($"Missing local scope object types in scope #{r.Type} registration")
+                select t)
+                   .GetClosestType(type) is Type objectType
+                ? Registered.Values.First(r => r.LocalScopeObjectTypes?.Contains(objectType) ?? false).ReturnLocalScopeFactory
                 : null;
 
         /// <summary>
@@ -129,8 +131,12 @@ namespace wan24.RPC.Processing.Scopes
         /// <param name="type">Type</param>
         /// <returns>If the type is scoped</returns>
         public static bool IsScopedType(in Type type)
-            => Registered.Values.Select(r => r.LocalScopeObjectType).WhereNotNull().GetClosestType(type) is not null ||
-                Registered.Values.Select(r => r.RemoteScopeObjectType).WhereNotNull().GetClosestType(type) is not null;
+        {
+            foreach (RpcScopeRegistration r in Registered.Values)
+                if (r.LocalScopeObjectTypes?.GetClosestType(type) is not null || r.RemoteScopeObjectTypes?.GetClosestType(type) is not null)
+                    return true;
+            return false;
+        }
 
         /// <summary>
         /// Determine if a type is a scope element type (a parameter, value or scope)
@@ -170,13 +176,18 @@ namespace wan24.RPC.Processing.Scopes
                         return scopeRegistration.RemoteScopeValueType;
                 }
             // If there's a local scope which serves the given type, the serialized value type must be its scope value
-            if (!isRemote && Registered.Values.FirstOrDefault(r => r.LocalScopeObjectType?.IsAssignableFrom(type) ?? false) is RpcScopeRegistration scopeRegistration2)
+            if (
+                !isRemote && 
+                Registered.Values.FirstOrDefault(r => r.LocalScopeObjectTypes?.Any(t => t.IsAssignableFrom(type)) ?? false) is RpcScopeRegistration scopeRegistration2
+                )
                 return scopeRegistration2.LocalScopeValueType;
             // If there's a remote scope which serves the given type, the serialized value type must be its scope value
             if (
-                isRemote && 
+                isRemote &&
                 Registered.Values
-                    .FirstOrDefault(r => r.RemoteScopeObjectType is not null && type.IsAssignableFrom(r.RemoteScopeObjectType)) is RpcScopeRegistration scopeRegistration3
+                    .FirstOrDefault(
+                        r => r.RemoteScopeObjectTypes is not null && r.RemoteScopeObjectTypes.Any(t => type.IsAssignableFrom(t))
+                        ) is RpcScopeRegistration scopeRegistration3
                 )
                 return scopeRegistration3.RemoteScopeValueType;
             return type;
@@ -241,7 +252,7 @@ namespace wan24.RPC.Processing.Scopes
         /// </summary>
         /// <param name="processor">RPC processor</param>
         /// <param name="scope">RPC scope</param>
-        /// <param name="apiMethod">RPC API method (for a return value; if <see langword="null"/>, the scope was used as request parameter)</param>
+        /// <param name="apiMethod">RPC API method</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Scope parameter (will be set to <see cref="RpcProcessor.RpcScopeBase.ScopeParameter"/>, also)</returns>
         public delegate Task<IRpcScopeParameter> ScopeParameterFactory_Delegate(

@@ -28,7 +28,7 @@ namespace wan24.RPC.Api.Reflection
             Authorization = Type.GetCustomAttributesCached<RpcAuthorizationAttributeBase>().ToFrozenSet();
             Authorize = Type.GetCustomAttribute<RpcAuthorizedAttribute>() is not null;
             Version = Type.GetCustomAttributeCached<RpcVersionAttribute>();
-            DisposeInstance = Type.GetCustomAttributeCached<NoRpcDisposeAttribute>() is null;
+            DisposeInstance = !Type.GetCustomAttributesCached<Attribute>().Any(a => a is INoRpcDisposeAttribute);
             DisconnectOnError = Type.GetCustomAttributeCached<RpcDisconnectOnErrorAttribute>() is not null;
             Methods = new Dictionary<string, RpcApiMethodInfo>(
                 from mi in Type.GetMethodsCached(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)

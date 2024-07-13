@@ -33,10 +33,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ObjectValidation" Version="2.5.0" Condition="'$(Configuration)' != 'Trunk'" />
-    <PackageReference Include="Stream-Serializer-Extensions" Version="3.8.0" Condition="'$(Configuration)' != 'Trunk'" />
-    <PackageReference Include="wan24-Compression" Version="2.9.0" Condition="'$(Configuration)' != 'Trunk'" />
-    <PackageReference Include="wan24-Core" Version="2.31.0" Condition="'$(Configuration)' != 'Trunk'" />
+    <PackageReference Include="ObjectValidation" Version="2.6.0" Condition="'$(Configuration)' != 'Trunk'" />
+    <PackageReference Include="Stream-Serializer-Extensions" Version="3.8.1" Condition="'$(Configuration)' != 'Trunk'" />
+    <PackageReference Include="wan24-Compression" Version="2.9.1" Condition="'$(Configuration)' != 'Trunk'" />
+    <PackageReference Include="wan24-Core" Version="2.32.0" Condition="'$(Configuration)' != 'Trunk'" />
     <PackageReference Include="wan24-Core-Validation" Version="1.2.0" Condition="'$(Configuration)' != 'Trunk'" />
   </ItemGroup>
 
@@ -120,6 +120,9 @@
   <ItemGroup>
     <Folder Include="Processing\Messages\Cancellation\" />
     <Folder Include="Processing\Messages\Enumeration\" />
+    <Folder Include="Processing\Messages\QuicTunnel\" />
+    <Folder Include="Processing\Messages\UdpTunnel\" />
+    <Folder Include="Processing\Messages\TcpTunnel\" />
     <Folder Include="Processing\Messages\Streaming\" />
   </ItemGroup>
 

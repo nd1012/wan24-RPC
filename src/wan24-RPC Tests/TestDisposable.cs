@@ -6,6 +6,6 @@ namespace wan24_RPC_Tests
     {
         public string? Name = null;
 
-        protected override void Dispose(bool disposing) { }
+        protected override void Dispose(bool disposing) => Logging.WriteInfo($"{typeof(TestDisposable)} \"{Name ?? "(Unknown)"}\" disposing");
     }
 }

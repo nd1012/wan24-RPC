@@ -41,7 +41,7 @@ namespace wan24.RPC.Processing.Parameters
         /// </summary>
         /// <param name="processor">RPC processor</param>
         /// <param name="scope">RPC scope</param>
-        /// <param name="apiMethod">RPC API method (if <see langword="null"/>, the scope was used as request parameter)</param>
+        /// <param name="apiMethod">RPC API method</param>
         /// <param name="cancellationToken">Cancelation token</param>
         /// <returns>Scope parameter</returns>
         public static Task<IRpcScopeParameter> CreateAsync(

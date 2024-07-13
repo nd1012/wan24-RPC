@@ -43,10 +43,16 @@ namespace wan24.RPC.Processing.Scopes
         public required RpcScopes.RemoteScopeFactory_Delegate RemoteScopeFactory { get; init; }
 
         /// <summary>
-        /// Object type which needs to be scoped using a local scope (request parameters or call return values)
+        /// Object types which needs to be scoped using a local scope (request parameters or call return values)
         /// </summary>
-        [RequiredIf(nameof(ParameterLocalScopeFactory))]
-        public Type? LocalScopeObjectType { get; init; }
+        [RequiredIf(nameof(ParameterLocalScopeFactory)), RequiredIf(nameof(ReturnLocalScopeFactory)), CountLimit(1, int.MaxValue)]
+        public IReadOnlyList<Type>? LocalScopeObjectTypes { get; init; }
+
+        /// <summary>
+        /// Object types which needs to be scoped using a remote scope (request return values or call parameters)
+        /// </summary>
+        [RequiredIf(nameof(ReturnLocalScopeFactory)), CountLimit(1, int.MaxValue)]
+        public IReadOnlyList<Type>? RemoteScopeObjectTypes { get; init; }
 
         /// <summary>
         /// Parameter value scope factory (create a local scope instance for a request parameter value)
@@ -54,14 +60,9 @@ namespace wan24.RPC.Processing.Scopes
         public RpcScopes.ParameterScopeFactory_Delegate? ParameterLocalScopeFactory { get; init; }
 
         /// <summary>
-        /// Object type which needs to be scoped using a remote scope (request return values or call parameters)
-        /// </summary>
-        [RequiredIf(nameof(ReturnLocalScopeFactory))]
-        public Type? RemoteScopeObjectType { get; init; }
-
-        /// <summary>
         /// Return value scope factory (create a local scope instance for a call return value)
         /// </summary>
+        [RequiredIf(nameof(LocalScopeObjectTypes)), RequiredIf(nameof(RemoteScopeObjectTypes))]
         public RpcScopes.ReturnScopeFactory_Delegate? ReturnLocalScopeFactory { get; init; }
 
         /// <summary>

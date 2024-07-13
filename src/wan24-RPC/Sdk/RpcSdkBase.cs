@@ -2,8 +2,6 @@
 using wan24.Core;
 using wan24.RPC.Processing;
 
-//TODO Implement cancellation
-
 namespace wan24.RPC.Sdk
 {
     /// <summary>
@@ -70,6 +68,20 @@ namespace wan24.RPC.Sdk
                 if (value is not null)
                     value.OnDisposing += HandleProcessorDisposing;
             }
+        }
+
+        /// <summary>
+        /// Close and dispose
+        /// </summary>
+        /// <param name="code">Close reason code</param>
+        /// <param name="info">Close reason information</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        public virtual async Task CloseAndDisposeAsync(int code = 0, string? info = null, CancellationToken cancellationToken = default)
+        {
+            EnsureUndisposed();
+            EnsureInitialized();
+            await Processor.CloseAsync(code, info, cancellationToken).DynamicContext();
+            await DisposeAsync().DynamicContext();
         }
 
         /// <summary>

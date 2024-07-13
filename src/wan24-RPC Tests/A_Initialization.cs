@@ -38,9 +38,9 @@ namespace wan24_RPC_Tests
                 LocalScopeFactory = TestScope.CreateAsync,
                 RemoteScopeFactory = TestRemoteScope.CreateAsync,
                 LocalScopeParameterFactory = TestScopeParameter.CreateAsync,
-                LocalScopeObjectType = typeof(TestDisposable),
+                LocalScopeObjectTypes = [typeof(TestDisposable)],
                 ParameterLocalScopeFactory = (proc, value, ct) => Task.FromResult<RpcProcessor.RpcScopeBase?>(new TestScope((TestRpcProcessor)proc) { ScopeParameter = new TestScopeParameter() { ScopeObject = value } }),
-                RemoteScopeObjectType = typeof(TestDisposable),
+                RemoteScopeObjectTypes = [typeof(TestDisposable)],
                 ReturnLocalScopeFactory = (proc, method, value, ct) => Task.FromResult<RpcProcessor.RpcScopeBase?>(new TestScope((TestRpcProcessor)proc) { ScopeParameter = new TestScopeParameter() { ScopeObject = value } })
             });
             Logging.WriteInfo("wan24-RPC Tests initialized");

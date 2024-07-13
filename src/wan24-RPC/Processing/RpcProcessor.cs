@@ -81,14 +81,14 @@ namespace wan24.RPC.Processing
                         if (message is CloseMessage closeMessage)
                             if (Options.HandleCloseMessage)
                             {
-                                Logger?.Log(LogLevel.Information, "{this} worker received a close message from the peer", ToString());
+                                Logger?.Log(LogLevel.Information, "{this} worker received a close message (code #{code}, \"{info}\") from the peer", ToString(), closeMessage.Code, closeMessage.Info);
                                 await HandleCloseMessageAsync(closeMessage).DynamicContext();
                                 _ = DisposeAsync().AsTask();
                                 return;
                             }
                             else
                             {
-                                Logger?.Log(LogLevel.Warning, "{this} worker received a close message from the peer (close message handling was disabled)", ToString());
+                                Logger?.Log(LogLevel.Warning, "{this} worker received a close (code #{code}, \"{info}\") message from the peer (close message handling was disabled)", ToString(), closeMessage.Code, closeMessage.Info);
                                 throw new InvalidRpcMessageException("Invalid close message received (close message handling was disabled)")
                                 {
                                     RpcMessage = message

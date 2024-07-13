@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.ComponentModel;
 using wan24.Core;
 using wan24.RPC.Processing.Messages;
 using static wan24.Core.TranslationHelper;
@@ -190,6 +191,7 @@ namespace wan24.RPC.Processing
         /// </summary>
         /// <param name="timeout">Timeout</param>
         /// <param name="cancellationToken">Cancellation token</param>
+        [UserAction(), DisplayText("Ping"), Description("Send a ping message and wait for the pong response message")]
         public virtual async Task PingAsync(TimeSpan timeout, CancellationToken cancellationToken = default)
         {
             EnsureUndisposed();
@@ -213,8 +215,11 @@ namespace wan24.RPC.Processing
         /// <summary>
         /// Send a close message to the peer and dispose
         /// </summary>
+        /// <param name="code">Close reason code</param>
+        /// <param name="info">Close reason information</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
+        [UserAction(MultiAction = true), DisplayText("Close"), Description("Close the connection and dispose")]
+        public virtual async Task CloseAsync(int code = 0, string? info = null, CancellationToken cancellationToken = default)
         {
             EnsureUndisposed();
             Logger?.Log(LogLevel.Debug, "{this} stopping background services", ToString());
@@ -230,7 +235,9 @@ namespace wan24.RPC.Processing
                 Logger?.Log(LogLevel.Debug, "{this} sending close message", ToString());
                 await SendMessageAsync(new CloseMessage()
                 {
-                    PeerRpcVersion = Options.RpcVersion
+                    PeerRpcVersion = Options.RpcVersion,
+                    Code = code,
+                    Info = info
                 }, cancellationToken).DynamicContext();
                 sent = true;
                 Logger?.Log(LogLevel.Debug, "{this} disposing after close message has been sent", ToString());
@@ -306,6 +313,7 @@ namespace wan24.RPC.Processing
         /// <param name="e">Event arguments</param>
         /// <param name="wait">Wait for remote event handlers to finish?</param>
         /// <param name="cancellationToken">Cancellation token</param>
+        [UserAction(MultiAction = true), DisplayText("Raise event"), Description("Raise an event at the peer")]
         public virtual async Task RaiseEventAsync(string name, EventArgs? e = null, bool wait = false, CancellationToken cancellationToken = default)
         {
             EnsureUndisposed();

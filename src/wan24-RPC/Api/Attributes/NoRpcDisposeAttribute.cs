@@ -19,7 +19,7 @@ namespace wan24.RPC.Api.Attributes
     /// Constructor
     /// </remarks>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Parameter)]
-    public class NoRpcDisposeAttribute() : Attribute()
+    public class NoRpcDisposeAttribute() : Attribute(), INoRpcDisposeAttribute
     {
     }
 }
