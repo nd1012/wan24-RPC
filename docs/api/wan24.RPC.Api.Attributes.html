@@ -142,13 +142,21 @@ the response was sent, if the scope wasn't configured to keep the value undispos
 <ul><li>A disposable RPC API method parameter which should be disposed on error</li><li>A disposable RPC API method return value which should be disposed on error</li></ul>
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcRemoteScopeKeyAttribute.html">RpcRemoteScopeKeyAttribute</a></h5>
-      <section><p>RPC remote scope key attribute tells the call processor to get the RPR API method parameter value from a remote scope which was stored using the specified key</p>
+      <section><p>RPC remote scope key attribute tells the call processor to get the RPC API method parameter value from a remote scope which was stored using the specified key
+(the scope won't be disposed)</p>
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.html">RpcScopeKeyAttribute</a></h5>
-      <section><p>RPC scope key attribute to tell the call processor to get the RPC API method parameter value from a local scope which was stored using the specified key</p>
+      <section><p>RPC scope key attribute to tell the call processor to get the RPC API method parameter value from a local scope which was stored using the specified key
+(the scope won't be disposed)</p>
 </section>
       <h5><a class="xref" href="wan24.RPC.Api.Attributes.RpcVersionAttribute.html">RpcVersionAttribute</a></h5>
       <section><p>Attribute for an API version restricted RPC API method</p>
+</section>
+    <h3 id="interfaces">
+Interfaces
+</h3>
+      <h5><a class="xref" href="wan24.RPC.Api.Attributes.INoRpcDisposeAttribute.html">INoRpcDisposeAttribute</a></h5>
+      <section><p>Interface for a RPC attribute which does deny disposing a parameter or return value</p>
 </section>
 
 

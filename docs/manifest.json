@@ -24,11 +24,11 @@
       "type": "Toc",
       "source_relative_path": "api/toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "api/toc.json"
-        },
         ".html": {
           "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
         }
       },
       "version": ""
@@ -39,6 +39,16 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Api.Attributes.AttributeExtensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Api.Attributes.INoRpcDisposeAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Api.Attributes.INoRpcDisposeAttribute.html"
         }
       },
       "version": ""
@@ -259,6 +269,16 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Api.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Bootstrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Bootstrapper.html"
         }
       },
       "version": ""
@@ -865,6 +885,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Parameters.RpcCancellationScopeParameter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Parameters.RpcCancellationScopeParameter.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Processing.Parameters.RpcScopeParameter.yml",
       "output": {
         ".html": {
@@ -1165,6 +1195,26 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.RpcCancellationRemoteScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.RpcCancellationRemoteScope.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Scopes.RpcCancellationScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Scopes.RpcCancellationScope.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Processing.Scopes.RpcRemoteScope.TriggerEventArgs.yml",
       "output": {
         ".html": {
@@ -1335,6 +1385,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.Processing.Values.RpcCancellationScopeValue.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.Processing.Values.RpcCancellationScopeValue.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/wan24.RPC.Processing.Values.RpcScopeValue.yml",
       "output": {
         ".html": {
@@ -1359,6 +1419,16 @@
       "output": {
         ".html": {
           "relative_path": "api/wan24.RPC.Processing.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.RpcAppConfig.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.RpcAppConfig.html"
         }
       },
       "version": ""
@@ -1414,6 +1484,16 @@
       "version": ""
     },
     {
+      "type": "ManagedReference",
+      "source_relative_path": "api/wan24.RPC.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/wan24.RPC.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "articles/intro.md",
       "output": {
@@ -1427,11 +1507,11 @@
       "type": "Toc",
       "source_relative_path": "articles/toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "articles/toc.json"
-        },
         ".html": {
           "relative_path": "articles/toc.html"
+        },
+        ".json": {
+          "relative_path": "articles/toc.json"
         }
       },
       "version": ""
@@ -1450,11 +1530,11 @@
       "type": "Toc",
       "source_relative_path": "toc.yml",
       "output": {
-        ".json": {
-          "relative_path": "toc.json"
-        },
         ".html": {
           "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
         }
       },
       "version": ""

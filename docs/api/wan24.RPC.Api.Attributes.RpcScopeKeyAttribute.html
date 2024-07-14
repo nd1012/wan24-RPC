@@ -101,7 +101,8 @@
 
 
   <h1 id="wan24_RPC_Api_Attributes_RpcScopeKeyAttribute" data-uid="wan24.RPC.Api.Attributes.RpcScopeKeyAttribute" class="text-break">Class RpcScopeKeyAttribute</h1>
-  <div class="markdown level0 summary"><p>RPC scope key attribute to tell the call processor to get the RPC API method parameter value from a local scope which was stored using the specified key</p>
+  <div class="markdown level0 summary"><p>RPC scope key attribute to tell the call processor to get the RPC API method parameter value from a local scope which was stored using the specified key
+(the scope won't be disposed)</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -109,6 +110,10 @@
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
     <div class="level1"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.attribute">Attribute</a></div>
     <div class="level2"><span class="xref">RpcScopeKeyAttribute</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="wan24.RPC.Api.Attributes.INoRpcDisposeAttribute.html">INoRpcDisposeAttribute</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -244,7 +249,7 @@
   <h5 id="wan24_RPC_Api_Attributes_RpcScopeKeyAttribute_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Parameter)]
-public class RpcScopeKeyAttribute : Attribute</code></pre>
+public class RpcScopeKeyAttribute : Attribute, INoRpcDisposeAttribute</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -253,11 +258,12 @@ public class RpcScopeKeyAttribute : Attribute</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_RpcScopeKeyAttribute__ctor_System_String_.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.%23ctor(System.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcScopeKeyAttribute.cs/#L7">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcScopeKeyAttribute.cs/#L8">View Source</a>
   </span>
   <a id="wan24_RPC_Api_Attributes_RpcScopeKeyAttribute__ctor_" data-uid="wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.#ctor*"></a>
   <h4 id="wan24_RPC_Api_Attributes_RpcScopeKeyAttribute__ctor_System_String_" data-uid="wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.#ctor(System.String)">RpcScopeKeyAttribute(string)</h4>
-  <div class="markdown level1 summary"><p>RPC scope key attribute to tell the call processor to get the RPC API method parameter value from a local scope which was stored using the specified key</p>
+  <div class="markdown level1 summary"><p>RPC scope key attribute to tell the call processor to get the RPC API method parameter value from a local scope which was stored using the specified key
+(the scope won't be disposed)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -289,7 +295,7 @@ public class RpcScopeKeyAttribute : Attribute</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_RpcScopeKeyAttribute_Key.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.Key%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcScopeKeyAttribute.cs/#L13">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcScopeKeyAttribute.cs/#L14">View Source</a>
   </span>
   <a id="wan24_RPC_Api_Attributes_RpcScopeKeyAttribute_Key_" data-uid="wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.Key*"></a>
   <h4 id="wan24_RPC_Api_Attributes_RpcScopeKeyAttribute_Key" data-uid="wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.Key">Key</h4>
@@ -320,7 +326,7 @@ public class RpcScopeKeyAttribute : Attribute</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_RpcScopeKeyAttribute_ThrowOnMissingScope.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.ThrowOnMissingScope%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcScopeKeyAttribute.cs/#L18">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcScopeKeyAttribute.cs/#L19">View Source</a>
   </span>
   <a id="wan24_RPC_Api_Attributes_RpcScopeKeyAttribute_ThrowOnMissingScope_" data-uid="wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.ThrowOnMissingScope*"></a>
   <h4 id="wan24_RPC_Api_Attributes_RpcScopeKeyAttribute_ThrowOnMissingScope" data-uid="wan24.RPC.Api.Attributes.RpcScopeKeyAttribute.ThrowOnMissingScope">ThrowOnMissingScope</h4>
@@ -346,6 +352,10 @@ public class RpcScopeKeyAttribute : Attribute</code></pre>
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="wan24.RPC.Api.Attributes.INoRpcDisposeAttribute.html">INoRpcDisposeAttribute</a>
+  </div>
 
 </article>
                 </div>

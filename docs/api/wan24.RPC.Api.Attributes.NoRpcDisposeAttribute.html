@@ -115,6 +115,10 @@ the response was sent, if the scope wasn't configured to keep the value undispos
     <div class="level1"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.attribute">Attribute</a></div>
     <div class="level2"><span class="xref">NoRpcDisposeAttribute</span></div>
   </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="wan24.RPC.Api.Attributes.INoRpcDisposeAttribute.html">INoRpcDisposeAttribute</a></div>
+  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
@@ -249,7 +253,7 @@ the response was sent, if the scope wasn't configured to keep the value undispos
   <h5 id="wan24_RPC_Api_Attributes_NoRpcDisposeAttribute_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Class|AttributeTargets.Method|AttributeTargets.Parameter)]
-public class NoRpcDisposeAttribute : Attribute</code></pre>
+public class NoRpcDisposeAttribute : Attribute, INoRpcDisposeAttribute</code></pre>
   </div>
   <h5 id="wan24_RPC_Api_Attributes_NoRpcDisposeAttribute_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Constructor</p>
@@ -280,6 +284,10 @@ the response was sent, if the scope wasn't configured to keep the value undispos
   <h5 id="wan24_RPC_Api_Attributes_NoRpcDisposeAttribute__ctor_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Constructor</p>
 </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="wan24.RPC.Api.Attributes.INoRpcDisposeAttribute.html">INoRpcDisposeAttribute</a>
+  </div>
 
 </article>
                 </div>

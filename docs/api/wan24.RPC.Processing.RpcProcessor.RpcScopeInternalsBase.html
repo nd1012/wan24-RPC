@@ -122,12 +122,10 @@
     <div><span class="xref">IDisposableObject</span></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
+    <div><span class="xref">IStatusProvider</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeValue">RpcProcessor.RpcScopeBase.DisposeValue</a>
-    </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase__ScopeParameter">RpcProcessor.RpcScopeBase._ScopeParameter</a>
     </div>
@@ -141,13 +139,13 @@
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_IsStored">RpcProcessor.RpcScopeBase.IsStored</a>
     </div>
     <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_State">RpcProcessor.RpcScopeBase.State</a>
+    </div>
+    <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_ScopeParameter">RpcProcessor.RpcScopeBase.ScopeParameter</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Method">RpcProcessor.RpcScopeBase.Method</a>
-    </div>
-    <div>
-      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Value">RpcProcessor.RpcScopeBase.Value</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeValueOnError">RpcProcessor.RpcScopeBase.DisposeValueOnError</a>
@@ -186,6 +184,9 @@
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DiscardAsync_System_Boolean_System_Threading_CancellationToken_">RpcProcessor.RpcScopeBase.DiscardAsync(bool, CancellationToken)</a>
     </div>
     <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_DisposeValueAsync">RpcProcessor.RpcScopeBase.DisposeValueAsync()</a>
+    </div>
+    <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeBase_Dispose_System_Boolean_">RpcProcessor.RpcScopeBase.Dispose(bool)</a>
     </div>
     <div>
@@ -196,6 +197,18 @@
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase__RemoteEvents">RpcProcessor.RpcScopeProcessorBase._RemoteEvents</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase__IsDiscarded">RpcProcessor.RpcScopeProcessorBase._IsDiscarded</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase__DisposeValue">RpcProcessor.RpcScopeProcessorBase._DisposeValue</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Created">RpcProcessor.RpcScopeProcessorBase.Created</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Discarded">RpcProcessor.RpcScopeProcessorBase.Discarded</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Type">RpcProcessor.RpcScopeProcessorBase.Type</a>
@@ -220,6 +233,9 @@
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_CancelToken">RpcProcessor.RpcScopeProcessorBase.CancelToken</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Value">RpcProcessor.RpcScopeProcessorBase.Value</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_RemoteEvents">RpcProcessor.RpcScopeProcessorBase.RemoteEvents</a>
@@ -397,7 +413,7 @@
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class RpcProcessor.RpcScopeInternalsBase : RpcProcessor.RpcScopeBase, IRpcLocalScope, IRpcScopeInternals, IRpcScope, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class RpcProcessor.RpcScopeInternalsBase : RpcProcessor.RpcScopeBase, IRpcLocalScope, IRpcScopeInternals, IRpcScope, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable, IStatusProvider</code></pre>
   </div>
   <h5 id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Constructor</p>
@@ -409,7 +425,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_wan24_RPC_Processing_RpcProcessor__System_Int64__System_String__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.%23ctor(wan24.RPC.Processing.RpcProcessor%40%2CSystem.Int64%40%2CSystem.String%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L310">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L335">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.#ctor*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_wan24_RPC_Processing_RpcProcessor__System_Int64__System_String__" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.#ctor(wan24.RPC.Processing.RpcProcessor@,System.Int64@,System.String@)">RpcScopeInternalsBase(in RpcProcessor, in long, in string?)</h4>
@@ -458,7 +474,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_wan24_RPC_Processing_RpcProcessor__System_String__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.%23ctor(wan24.RPC.Processing.RpcProcessor%40%2CSystem.String%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L318">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/RpcProcessor.ScopeContext.cs/#L343">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.#ctor*"></a>
   <h4 id="wan24_RPC_Processing_RpcProcessor_RpcScopeInternalsBase__ctor_wan24_RPC_Processing_RpcProcessor__System_String__" data-uid="wan24.RPC.Processing.RpcProcessor.RpcScopeInternalsBase.#ctor(wan24.RPC.Processing.RpcProcessor@,System.String@)">RpcScopeInternalsBase(in RpcProcessor, in string?)</h4>
@@ -514,6 +530,9 @@
   </div>
   <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>
+  </div>
+  <div>
+      <span class="xref">wan24.Core.IStatusProvider</span>
   </div>
 
 </article>

@@ -122,9 +122,16 @@
     <div><span class="xref">IDisposableObject</span></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
+    <div><span class="xref">IStatusProvider</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcRemoteScopeBase_HandleCreation">RpcProcessor.RpcRemoteScopeBase.HandleCreation</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcRemoteScopeBase_CreationHandled">RpcProcessor.RpcRemoteScopeBase.CreationHandled</a>
+    </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcRemoteScopeBase_ScopeValue">RpcProcessor.RpcRemoteScopeBase.ScopeValue</a>
     </div>
@@ -165,7 +172,13 @@
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcRemoteScopeBase_RaiseEventAsync_System_String_System_EventArgs_System_Boolean_System_Threading_CancellationToken_">RpcProcessor.RpcRemoteScopeBase.RaiseEventAsync(string, EventArgs, bool, CancellationToken)</a>
     </div>
     <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcRemoteScopeBase_OnScopeCreated_System_Threading_CancellationToken_">RpcProcessor.RpcRemoteScopeBase.OnScopeCreated(CancellationToken)</a>
+    </div>
+    <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcRemoteScopeBase_ToString">RpcProcessor.RpcRemoteScopeBase.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcRemoteScopeBase_StoreScopeAsync">RpcProcessor.RpcRemoteScopeBase.StoreScopeAsync()</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcRemoteScopeBase_DiscardAsync_System_Boolean_System_Threading_CancellationToken_">RpcProcessor.RpcRemoteScopeBase.DiscardAsync(bool, CancellationToken)</a>
@@ -175,6 +188,18 @@
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase__RemoteEvents">RpcProcessor.RpcScopeProcessorBase._RemoteEvents</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase__IsDiscarded">RpcProcessor.RpcScopeProcessorBase._IsDiscarded</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase__DisposeValue">RpcProcessor.RpcScopeProcessorBase._DisposeValue</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Created">RpcProcessor.RpcScopeProcessorBase.Created</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Discarded">RpcProcessor.RpcScopeProcessorBase.Discarded</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_Name">RpcProcessor.RpcScopeProcessorBase.Name</a>
@@ -268,6 +293,9 @@
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_EnsureNotDiscarded">RpcProcessor.RpcScopeProcessorBase.EnsureNotDiscarded()</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_DisposeValueAsync">RpcProcessor.RpcScopeProcessorBase.DisposeValueAsync()</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcScopeProcessorBase.html#wan24_RPC_Processing_RpcProcessor_RpcScopeProcessorBase_OnRemoteEvent">RpcProcessor.RpcScopeProcessorBase.OnRemoteEvent</a>
@@ -373,7 +401,7 @@
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RpcRemoteScope : RpcProcessor.RpcRemoteScopeInternalsBase, IRpcRemoteScope, IRpcScopeInternals, IRpcScope, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class RpcRemoteScope : RpcProcessor.RpcRemoteScopeInternalsBase, IRpcRemoteScope, IRpcScopeInternals, IRpcScope, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable, IStatusProvider</code></pre>
   </div>
   <h3 id="constructors">Constructors
 </h3>
@@ -382,7 +410,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope__ctor_wan24_RPC_Processing_RpcProcessor__wan24_RPC_Processing_Values_RpcScopeValue__.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.%23ctor(wan24.RPC.Processing.RpcProcessor%40%2Cwan24.RPC.Processing.Values.RpcScopeValue%40)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L16">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L17">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope__ctor_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.#ctor*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope__ctor_wan24_RPC_Processing_RpcProcessor__wan24_RPC_Processing_Values_RpcScopeValue__" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.#ctor(wan24.RPC.Processing.RpcProcessor@,wan24.RPC.Processing.Values.RpcScopeValue@)">RpcRemoteScope(in RpcProcessor, in RpcScopeValue)</h4>
@@ -424,7 +452,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_TYPE.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.TYPE%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L21">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L22">View Source</a>
   </span>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_TYPE" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.TYPE">TYPE</h4>
   <div class="markdown level1 summary"><p>RPC scope type ID (see <a class="xref" href="wan24.RPC.Processing.Scopes.RpcScopeTypes.html">RpcScopeTypes</a>)</p>
@@ -456,7 +484,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_DefaultMaxMetaLength.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.DefaultMaxMetaLength%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L26">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L27">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_DefaultMaxMetaLength_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.DefaultMaxMetaLength*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_DefaultMaxMetaLength" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.DefaultMaxMetaLength">DefaultMaxMetaLength</h4>
@@ -487,7 +515,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_MaxMetaLength.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.MaxMetaLength%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L34">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L50">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_MaxMetaLength_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.MaxMetaLength*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_MaxMetaLength" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.MaxMetaLength">MaxMetaLength</h4>
@@ -518,7 +546,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_Meta.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.Meta%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L39">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L55">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_Meta_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.Meta*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_Meta" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.Meta">Meta</h4>
@@ -546,10 +574,43 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_State.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.State%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L30">View Source</a>
+  </span>
+  <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_State_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.State*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_State" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.State">State</h4>
+  <div class="markdown level1 summary"><p>Status information</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override IEnumerable&lt;Status&gt; State { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<span class="xref">Status</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="wan24.RPC.Processing.RpcProcessor.RpcRemoteScopeBase.html#wan24_RPC_Processing_RpcProcessor_RpcRemoteScopeBase_State">RpcProcessor.RpcRemoteScopeBase.State</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_Type.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.Type%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L29">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L45">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_Type_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.Type*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_Type" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.Type">Type</h4>
@@ -582,7 +643,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_UseTriggerMetaData.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.UseTriggerMetaData%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L44">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L60">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_UseTriggerMetaData_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.UseTriggerMetaData*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_UseTriggerMetaData" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.UseTriggerMetaData">UseTriggerMetaData</h4>
@@ -615,7 +676,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_CreateAsync_wan24_RPC_Processing_RpcProcessor_wan24_RPC_Processing_Values_RpcScopeValue_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.CreateAsync(wan24.RPC.Processing.RpcProcessor%2Cwan24.RPC.Processing.Values.RpcScopeValue%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L215">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L231">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_CreateAsync_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.CreateAsync*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_CreateAsync_wan24_RPC_Processing_RpcProcessor_wan24_RPC_Processing_Values_RpcScopeValue_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.CreateAsync(wan24.RPC.Processing.RpcProcessor,wan24.RPC.Processing.Values.RpcScopeValue,System.Threading.CancellationToken)">CreateAsync(RpcProcessor, RpcScopeValue, CancellationToken)</h4>
@@ -677,7 +738,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.Dispose(System.Boolean)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L173">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L189">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_Dispose_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.Dispose*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_Dispose_System_Boolean_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.Dispose(System.Boolean)">Dispose(bool)</h4>
@@ -713,7 +774,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_DisposeCore.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.DisposeCore%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L180">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L196">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_DisposeCore_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.DisposeCore*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_DisposeCore" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.DisposeCore">DisposeCore()</h4>
@@ -746,7 +807,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_HandleMessageIntAsync_wan24_RPC_Processing_Messages_Scopes_IRpcScopeMessage_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleMessageIntAsync(wan24.RPC.Processing.Messages.Scopes.IRpcScopeMessage%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L117">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L133">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_HandleMessageIntAsync_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleMessageIntAsync*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_HandleMessageIntAsync_wan24_RPC_Processing_Messages_Scopes_IRpcScopeMessage_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleMessageIntAsync(wan24.RPC.Processing.Messages.Scopes.IRpcScopeMessage,System.Threading.CancellationToken)">HandleMessageIntAsync(IRpcScopeMessage, CancellationToken)</h4>
@@ -804,7 +865,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_HandleTriggerAsync_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L137">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L153">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_HandleTriggerAsync_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleTriggerAsync*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_HandleTriggerAsync_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.HandleTriggerAsync(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage,System.Threading.CancellationToken)">HandleTriggerAsync(ScopeTriggerMessage, CancellationToken)</h4>
@@ -859,7 +920,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_RaiseOnTrigger_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L201">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L217">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_RaiseOnTrigger_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.RaiseOnTrigger*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_RaiseOnTrigger_wan24_RPC_Processing_Messages_Scopes_ScopeTriggerMessage_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.RaiseOnTrigger(wan24.RPC.Processing.Messages.Scopes.ScopeTriggerMessage)">RaiseOnTrigger(ScopeTriggerMessage)</h4>
@@ -909,7 +970,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_SendTriggerAsync__1_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync%60%601(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L81">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L97">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_SendTriggerAsync_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_SendTriggerAsync__1_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerAsync``1(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage,System.Threading.CancellationToken)">SendTriggerAsync&lt;T&gt;(RemoteScopeTriggerMessage?, CancellationToken)</h4>
@@ -980,7 +1041,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_SendTriggerNullableAsync__1_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerNullableAsync%60%601(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L102">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L118">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_SendTriggerNullableAsync_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerNullableAsync*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_SendTriggerNullableAsync__1_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.SendTriggerNullableAsync``1(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage,System.Threading.CancellationToken)">SendTriggerNullableAsync&lt;T&gt;(RemoteScopeTriggerMessage?, CancellationToken)</h4>
@@ -1051,7 +1112,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_SendVoidTriggerAsync_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_System_Boolean_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.SendVoidTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage%2CSystem.Boolean%2CSystem.Threading.CancellationToken)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L53">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L69">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcRemoteScope_SendVoidTriggerAsync_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.SendVoidTriggerAsync*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_SendVoidTriggerAsync_wan24_RPC_Processing_Messages_Scopes_RemoteScopeTriggerMessage_System_Boolean_System_Threading_CancellationToken_" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.SendVoidTriggerAsync(wan24.RPC.Processing.Messages.Scopes.RemoteScopeTriggerMessage,System.Boolean,System.Threading.CancellationToken)">SendVoidTriggerAsync(RemoteScopeTriggerMessage?, bool, CancellationToken)</h4>
@@ -1115,7 +1176,7 @@ an ID)</p>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcRemoteScope_OnTrigger.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcRemoteScope.OnTrigger%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L195">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcRemoteScope.cs/#L211">View Source</a>
   </span>
   <h4 id="wan24_RPC_Processing_Scopes_RpcRemoteScope_OnTrigger" data-uid="wan24.RPC.Processing.Scopes.RpcRemoteScope.OnTrigger">OnTrigger</h4>
   <div class="markdown level1 summary"><p>Raised when a trigger message from the peer was received</p>
@@ -1161,6 +1222,9 @@ an ID)</p>
   </div>
   <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a>
+  </div>
+  <div>
+      <span class="xref">wan24.Core.IStatusProvider</span>
   </div>
 
 </article>

@@ -221,20 +221,22 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopeRegistration_LocalScopeObjectType.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopeRegistration.LocalScopeObjectType%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopeRegistration_LocalScopeObjectTypes.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopeRegistration.LocalScopeObjectTypes%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopeRegistration.cs/#L48">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_LocalScopeObjectType_" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.LocalScopeObjectType*"></a>
-  <h4 id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_LocalScopeObjectType" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.LocalScopeObjectType">LocalScopeObjectType</h4>
-  <div class="markdown level1 summary"><p>Object type which needs to be scoped using a local scope (request parameters or call return values)</p>
+  <a id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_LocalScopeObjectTypes_" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.LocalScopeObjectTypes*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_LocalScopeObjectTypes" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.LocalScopeObjectTypes">LocalScopeObjectTypes</h4>
+  <div class="markdown level1 summary"><p>Object types which needs to be scoped using a local scope (request parameters or call return values)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[RequiredIf(&quot;ParameterLocalScopeFactory&quot;, new object?[] { })]
-public Type? LocalScopeObjectType { get; init; }</code></pre>
+[RequiredIf(&quot;ReturnLocalScopeFactory&quot;, new object?[] { })]
+[CountLimit(1, 2147483647)]
+public IReadOnlyList&lt;Type&gt;? LocalScopeObjectTypes { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -246,7 +248,7 @@ public Type? LocalScopeObjectType { get; init; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -318,7 +320,7 @@ public Type? LocalScopeObjectType { get; init; }</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopeRegistration_LocalScopeValueType.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopeRegistration.LocalScopeValueType%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopeRegistration.cs/#L70">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopeRegistration.cs/#L71">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_LocalScopeValueType_" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.LocalScopeValueType*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_LocalScopeValueType" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.LocalScopeValueType">LocalScopeValueType</h4>
@@ -349,7 +351,7 @@ public Type? LocalScopeObjectType { get; init; }</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopeRegistration_ParameterLocalScopeFactory.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopeRegistration.ParameterLocalScopeFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopeRegistration.cs/#L54">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopeRegistration.cs/#L60">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_ParameterLocalScopeFactory_" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.ParameterLocalScopeFactory*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_ParameterLocalScopeFactory" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.ParameterLocalScopeFactory">ParameterLocalScopeFactory</h4>
@@ -408,20 +410,21 @@ public Type? LocalScopeObjectType { get; init; }</code></pre>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopeRegistration_RemoteScopeObjectType.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopeRegistration.RemoteScopeObjectType%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopeRegistration_RemoteScopeObjectTypes.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopeRegistration.RemoteScopeObjectTypes%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopeRegistration.cs/#L59">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopeRegistration.cs/#L54">View Source</a>
   </span>
-  <a id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_RemoteScopeObjectType_" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.RemoteScopeObjectType*"></a>
-  <h4 id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_RemoteScopeObjectType" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.RemoteScopeObjectType">RemoteScopeObjectType</h4>
-  <div class="markdown level1 summary"><p>Object type which needs to be scoped using a remote scope (request return values or call parameters)</p>
+  <a id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_RemoteScopeObjectTypes_" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.RemoteScopeObjectTypes*"></a>
+  <h4 id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_RemoteScopeObjectTypes" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.RemoteScopeObjectTypes">RemoteScopeObjectTypes</h4>
+  <div class="markdown level1 summary"><p>Object types which needs to be scoped using a remote scope (request return values or call parameters)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[RequiredIf(&quot;ReturnLocalScopeFactory&quot;, new object?[] { })]
-public Type? RemoteScopeObjectType { get; init; }</code></pre>
+[CountLimit(1, 2147483647)]
+public IReadOnlyList&lt;Type&gt;? RemoteScopeObjectTypes { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -433,7 +436,7 @@ public Type? RemoteScopeObjectType { get; init; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -474,7 +477,7 @@ public Type? RemoteScopeObjectType { get; init; }</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopeRegistration_RemoteScopeValueType.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopeRegistration.RemoteScopeValueType%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopeRegistration.cs/#L75">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopeRegistration.cs/#L76">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_RemoteScopeValueType_" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.RemoteScopeValueType*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_RemoteScopeValueType" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.RemoteScopeValueType">RemoteScopeValueType</h4>
@@ -514,7 +517,9 @@ public Type? RemoteScopeObjectType { get; init; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RpcScopes.ReturnScopeFactory_Delegate? ReturnLocalScopeFactory { get; init; }</code></pre>
+    <pre><code class="lang-csharp hljs">[RequiredIf(&quot;LocalScopeObjectTypes&quot;, new object?[] { })]
+[RequiredIf(&quot;RemoteScopeObjectTypes&quot;, new object?[] { })]
+public RpcScopes.ReturnScopeFactory_Delegate? ReturnLocalScopeFactory { get; init; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-condensed">
@@ -569,7 +574,7 @@ public Type? RemoteScopeObjectType { get; init; }</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_RpcScopeRegistration_Validate_System_ComponentModel_DataAnnotations_ValidationContext_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.RpcScopeRegistration.Validate(System.ComponentModel.DataAnnotations.ValidationContext)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopeRegistration.cs/#L78">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/RpcScopeRegistration.cs/#L79">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_Validate_" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.Validate*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_RpcScopeRegistration_Validate_System_ComponentModel_DataAnnotations_ValidationContext_" data-uid="wan24.RPC.Processing.Scopes.RpcScopeRegistration.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">Validate(ValidationContext)</h4>

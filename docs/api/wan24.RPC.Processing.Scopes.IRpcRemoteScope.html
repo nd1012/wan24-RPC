@@ -107,6 +107,12 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Created">IRpcScope.Created</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Discarded">IRpcScope.Discarded</a>
+    </div>
+    <div>
       <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Type">IRpcScope.Type</a>
     </div>
     <div>
@@ -126,6 +132,9 @@
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Processor">IRpcScope.Processor</a>
+    </div>
+    <div>
+      <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Value">IRpcScope.Value</a>
     </div>
     <div>
       <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_RemoteEvents">IRpcScope.RemoteEvents</a>
@@ -166,12 +175,15 @@
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable.disposeasync">IAsyncDisposable.DisposeAsync()</a>
     </div>
+    <div>
+      <span class="xref">IStatusProvider.State</span>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="wan24.html">wan24</a>.<a class="xref" href="wan24.RPC.html">RPC</a>.<a class="xref" href="wan24.RPC.Processing.html">Processing</a>.<a class="xref" href="wan24.RPC.Processing.Scopes.html">Scopes</a></h6>
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IRpcRemoteScope : IRpcScope, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IRpcRemoteScope : IRpcScope, IWillDispose, IDisposableObject, IDisposable, IAsyncDisposable, IStatusProvider</code></pre>
   </div>
   <h3 id="properties">Properties
 </h3>
@@ -180,11 +192,11 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcRemoteScope_DisposeValue.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcRemoteScope.DisposeValue%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L31">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L27">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_DisposeValue_" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.DisposeValue*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_DisposeValue" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.DisposeValue">DisposeValue</h4>
-  <div class="markdown level1 summary"><p>Dispose the <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcRemoteScope.html#wan24_RPC_Processing_Scopes_IRpcRemoteScope_Value">Value</a> when disposing?</p>
+  <div class="markdown level1 summary"><p>Dispose the <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Value">Value</a> when disposing?</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -211,11 +223,11 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcRemoteScope_DisposeValueOnError.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcRemoteScope.DisposeValueOnError%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L35">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L31">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_DisposeValueOnError_" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.DisposeValueOnError*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_DisposeValueOnError" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.DisposeValueOnError">DisposeValueOnError</h4>
-  <div class="markdown level1 summary"><p>If to dispose the <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcRemoteScope.html#wan24_RPC_Processing_Scopes_IRpcRemoteScope_Value">Value</a> on error</p>
+  <div class="markdown level1 summary"><p>If to dispose the <a class="xref" href="wan24.RPC.Processing.Scopes.IRpcScope.html#wan24_RPC_Processing_Scopes_IRpcScope_Value">Value</a> on error</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
@@ -242,7 +254,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcRemoteScope_InformMasterWhenDisposing.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcRemoteScope.InformMasterWhenDisposing%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L43">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L39">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_InformMasterWhenDisposing_" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.InformMasterWhenDisposing*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_InformMasterWhenDisposing" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.InformMasterWhenDisposing">InformMasterWhenDisposing</h4>
@@ -273,7 +285,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcRemoteScope_IsError.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcRemoteScope.IsError%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L39">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L35">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_IsError_" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.IsError*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_IsError" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.IsError">IsError</h4>
@@ -304,7 +316,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcRemoteScope_LastException.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcRemoteScope.LastException%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L47">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L43">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_LastException_" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.LastException*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_LastException" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.LastException">LastException</h4>
@@ -423,37 +435,6 @@
       </tr>
     </tbody>
   </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcRemoteScope_Value.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcRemoteScope.Value%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L27">View Source</a>
-  </span>
-  <a id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_Value_" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.Value*"></a>
-  <h4 id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_Value" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.Value">Value</h4>
-  <div class="markdown level1 summary"><p>Value</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="declaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">object? Value { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
 </h3>
   <span class="small pull-right mobile-hide">
@@ -461,7 +442,7 @@
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Processing_Scopes_IRpcRemoteScope_SetIsErrorAsync_System_Exception_.md&amp;value=---%0Auid%3A%20wan24.RPC.Processing.Scopes.IRpcRemoteScope.SetIsErrorAsync(System.Exception)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L52">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Processing/Scopes/IRpcRemoteScope.cs/#L48">View Source</a>
   </span>
   <a id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_SetIsErrorAsync_" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.SetIsErrorAsync*"></a>
   <h4 id="wan24_RPC_Processing_Scopes_IRpcRemoteScope_SetIsErrorAsync_System_Exception_" data-uid="wan24.RPC.Processing.Scopes.IRpcRemoteScope.SetIsErrorAsync(System.Exception)">SetIsErrorAsync(Exception)</h4>
