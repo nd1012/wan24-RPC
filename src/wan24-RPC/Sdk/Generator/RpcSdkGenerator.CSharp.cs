@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿#if !RELEASE //TODO Enable when fully implemented
+using System.Text;
 using System.Web;
 
 namespace wan24.RPC.Sdk.Generator
@@ -113,3 +114,4 @@ namespace wan24.RPC.Sdk.Generator
         }
     }
 }
+#endif
