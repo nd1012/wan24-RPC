@@ -39,6 +39,9 @@ namespace wan24.RPC.Processing.Scopes
         public override int Type => TYPE;
 
         /// <inheritdoc/>
+        public override object? Value => Token;
+
+        /// <inheritdoc/>
         public override IEnumerable<Status> State
         {
             get

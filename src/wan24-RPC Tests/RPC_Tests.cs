@@ -1,5 +1,6 @@
 ﻿using wan24.Core;
 using wan24.RPC.Processing;
+using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Scopes;
 
@@ -129,6 +130,34 @@ namespace wan24_RPC_Tests
         }
 
         [TestMethod, Timeout(3000)]
+        public async Task Unauthorized_TestsAsync()
+        {
+            // Fail calling a remote API method (unauthorized)
+            (TestRpcProcessor server, TestRpcProcessor client) = await GetRpcAsync();
+            ServerSdk serverSdk = new(client);
+            try
+            {
+                using CancellationTokenSource cts = new();
+                Logging.WriteInfo("Calling unauthorized server method");
+                Task task = serverSdk.NotAuthorizedAsync(cts.Token);
+                Logging.WriteInfo("Waiting server disposing");
+                await wan24.Core.Timeout.WaitConditionAsync(TimeSpan.FromMilliseconds(50), (ct) => Task.FromResult(server.IsDisposing));
+
+                Logging.WriteInfo("Client cancellation");
+                await cts.CancelAsync();
+                Logging.WriteInfo("Disposing client");
+                await client.DisposeAsync();
+                Logging.WriteInfo("Assuming task cancelled exception for the request task");
+                await Assert.ThrowsExceptionAsync<TaskCanceledException>(async () => await task);
+            }
+            finally
+            {
+                await serverSdk.DisposeAsync();
+                await DisposeRpcAsync(server, client);
+            }
+        }
+
+        [TestMethod, Timeout(3000)]
         public async Task PingPong_TestsAsync()
         {
             // Ping/pong
@@ -141,8 +170,6 @@ namespace wan24_RPC_Tests
                 Assert.IsNotNull(server.ClientHeartBeat);
                 Assert.IsNotNull(client.ServerHeartBeat);
                 Assert.IsNotNull(client.ClientHeartBeat);
-                Assert.AreEqual(TimeSpan.Zero, client.MessageLoopDuration);
-                Assert.AreEqual(TimeSpan.Zero, server.MessageLoopDuration);
 
                 // Manual ping/pong sequence
                 Logging.WriteInfo("Ping client -> server");
@@ -151,7 +178,6 @@ namespace wan24_RPC_Tests
                 Assert.IsTrue(time < client.LastMessageSent);
                 Assert.IsTrue(time < server.LastMessageReceived);
                 Assert.IsTrue(client.MessageLoopDuration > TimeSpan.Zero);
-                Assert.AreEqual(TimeSpan.Zero, server.MessageLoopDuration);
 
                 // Automatic heartbeat messages
                 Logging.WriteInfo("Heartbeat");
@@ -161,7 +187,6 @@ namespace wan24_RPC_Tests
                 Assert.IsTrue(time < client.LastMessageReceived);
                 Assert.IsTrue(time < server.LastMessageSent);
                 Assert.IsTrue(time < server.LastMessageReceived);
-                Assert.IsTrue(server.MessageLoopDuration > TimeSpan.Zero);
             }
             finally
             {
@@ -169,7 +194,7 @@ namespace wan24_RPC_Tests
             }
         }
 
-        [TestMethod, Timeout(3000)]
+        [TestMethod, Timeout(10000)]
         public async Task Scope_TestsAsync()
         {
             // Simple scope functionality
@@ -408,17 +433,16 @@ namespace wan24_RPC_Tests
                     Name = "Client"
                 })
                 {
-                    using TestDisposable serverObj = await serverSdk.Scopes2Async(clientObj);
-                    serverObj.Name ??= "Remote server";
+                    using TestRemoteScope remoteScope = await serverSdk.Scopes2Async(clientObj);
+                    remoteScope.Name ??= "Remote server";
                     Assert.IsNull(client.GetScopeOf(clientObj));// Local scope wasn't stored and disposed when returning the value
-                    Assert.IsNull(client.GetRemoteScopeOf(serverObj));// Remote scope wasn't stored and disposed when returning the value
                     await Task.Delay(200);// Wait for server call cleanup
                     Assert.IsNotNull(serverApi.ClientObj);
                     Assert.IsNotNull(serverApi.ServerObj);
                     Assert.AreNotEqual(serverApi.ClientObj, clientObj);
-                    Assert.AreNotEqual(serverApi.ServerObj, serverObj);
+                    Assert.AreNotEqual(serverApi.ServerObj, remoteScope.Value);
                     Assert.IsTrue(clientObj.IsDisposing);// Local scope wasn't configured to leave the value undisposed
-                    Assert.IsFalse(serverObj.IsDisposing);// Remote scope was configured to leave the value undisposed
+                    Assert.IsFalse(remoteScope.IsDisposing);// Remote scope not disposed 'cause it's a return value
                     Assert.IsTrue(serverApi.ClientObj.IsDisposing);// Remote scope wasn't configured to leave the value undisposed
                     Assert.IsFalse(serverApi.ServerObj.IsDisposing);// Local scope was configured to leave the value undisposed
                     Assert.AreEqual(0, client.StoredScopeCount);

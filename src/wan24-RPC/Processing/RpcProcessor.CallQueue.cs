@@ -79,6 +79,7 @@ namespace wan24.RPC.Processing
                         if (!await AuthorizeContextAsync(item, request, method, context).DynamicContext())
                         {
                             await Processor.OnCallErrorAsync(item, new UnauthorizedAccessException("Not authorized"), parameters, returnValue).DynamicContext();
+                            _ = Processor.StopExceptionalAndDisposeAsync(new UnauthorizedAccessException("Not authorized"));
                             return;
                         }
                         // Prepare DI
@@ -126,7 +127,7 @@ namespace wan24.RPC.Processing
                         returnValue = method.Method.Invoke(method.Method.IsStatic ? null : method.API.Instance, [.. parameters]);
                         while (returnValue is Task task)
                         {
-                            await task.DynamicContext();
+                            await task.WaitAsync(cancellation).DynamicContext();
                             returnValue = task.GetType().IsGenericType
                                 ? task.GetResultNullable<object?>()
                                 : null;
@@ -387,6 +388,8 @@ namespace wan24.RPC.Processing
                     }
                     Logger?.Log(LogLevel.Trace, "{this} created a new remote scope ({scope}) from value {value} for parameter {param}", ToString(), remoteScope, scopeValue.GetType(), parameter.Parameter.Name);
                     item.ParameterScopes.Add(remoteScope);
+                    await Processor.AddRemoteScopeAsync(remoteScope).DynamicContext();
+                    await remoteScope.OnScopeCreated(CancelToken).DynamicContext();
                     if (!parameter.Parameter.ParameterType.IsAssignableFrom(typeof(RpcScopeValue)))
                         value = parameter.Parameter.ParameterType.IsAssignableFrom(remoteScope.GetType())
                             ? remoteScope

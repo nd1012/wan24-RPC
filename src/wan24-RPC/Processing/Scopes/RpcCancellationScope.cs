@@ -50,7 +50,8 @@ namespace wan24.RPC.Processing.Scopes
         /// <param name="processor">RPC processor</param>
         /// <param name="parameter">Parameter</param>
         /// <param name="key">RPC scope key</param>
-        public RpcCancellationScope(in RpcProcessor processor, in RpcCancellationScopeParameter parameter, in string? key = null) : this(processor, key, parameter.Token)
+        public RpcCancellationScope(in RpcProcessor processor, in RpcCancellationScopeParameter parameter, in string? key = null)
+            : this(processor, key, parameter.Token)
             => SetScopeParameter(parameter);
 
         /// <inheritdoc/>
@@ -126,8 +127,9 @@ namespace wan24.RPC.Processing.Scopes
             if (_ScopeParameter is not null)
                 throw new InvalidOperationException("Scope parameter was set already");
             _ScopeParameter = parameter;
-            if (cancellationParameter is not null)
-                cancellationParameter.Scope ??= this;
+            if (cancellationParameter is null)
+                return;
+            cancellationParameter.Scope ??= this;
         }
 
         /// <summary>

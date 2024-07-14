@@ -1,4 +1,5 @@
-﻿using wan24.RPC.Api;
+﻿using wan24.Core;
+using wan24.RPC.Api;
 using wan24.RPC.Api.Attributes;
 using wan24.RPC.Processing;
 
@@ -9,6 +10,7 @@ namespace wan24_RPC_Tests
     {
         public TestDisposable? ClientObj = null;
         public TestDisposable? ServerObj = null;
+        public CancellationTokenSource? Cancellation = null;
 
         public RpcProcessor? Processor { get; set; }
 
@@ -31,6 +33,9 @@ namespace wan24_RPC_Tests
         }
 
         public Task RaiseRemoteEventAsync([NoRpc] RpcProcessor processor) => processor.RaiseEventAsync("test", wait: true);
+
+        [TestUnauthorized]
+        public void NotAuthorized() { }
 
         public TestDisposable Scopes(TestDisposable obj)
         {
@@ -78,10 +83,21 @@ namespace wan24_RPC_Tests
             };// ServerObj won't be disposed
         }
 
+        public async Task CancellationParameterAsync([Rpc] CancellationToken cancellationToken)
+            => await cancellationToken.WaitHandle.WaitAsync(ProcessorCancellation);
+
+        [NoRpcDispose]// Required for not disposing the created scope for the return value
+        public CancellationToken CancellationReturn()
+        {
+            Cancellation = new();
+            return Cancellation.Token;
+        }
+
         protected override void Dispose(bool disposing)
         {
             ClientObj?.Dispose();
             ServerObj?.Dispose();
+            Cancellation?.Dispose();
         }
     }
 }

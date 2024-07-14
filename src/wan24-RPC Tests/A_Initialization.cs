@@ -16,8 +16,8 @@ namespace wan24_RPC_Tests
         public static void Init(TestContext tc)
         {
             TypeHelper.Instance.ScanAssemblies(typeof(A_Initialization).Assembly);
-            //DisposableBase.CreateStackInfo = true;
-            //DisposableRecordBase.CreateStackInfo = true;
+            DisposableBase.CreateStackInfo = true;
+            DisposableRecordBase.CreateStackInfo = true;
             Bootstrap.Async().GetAwaiter().GetResult();
             LoggerFactory = Microsoft.Extensions.Logging.LoggerFactory.Create(b => b.AddConsole());
             Logging.Logger = FileLogger.CreateAsync(
@@ -29,6 +29,16 @@ namespace wan24_RPC_Tests
                 .GetResult();
             Settings.LogLevel = LogLevel.Trace;
             ValidateObject.Logger = (message) => Logging.WriteDebug(message);
+            ErrorHandling.ErrorHandler = (error) =>
+            {
+                Logging.WriteError(error.Exception.ToString());
+                if (error.Exception is StackInfoException ex)
+                {
+                    Logging.WriteInfo(ex.StackInfo.Stack);
+                    if (error.Tag is TestDisposable disposable)
+                        Logging.WriteInfo($"TestDisposable \"{disposable.Name}\"");
+                }
+            };
             TypeHelper.Instance.ScanAssemblies(typeof(RpcProcessor).Assembly);
             RpcScopes.RegisterScope(new()
             {

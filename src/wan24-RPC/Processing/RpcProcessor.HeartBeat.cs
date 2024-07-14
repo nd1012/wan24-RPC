@@ -123,8 +123,9 @@ namespace wan24.RPC.Processing
                 Contract.Assert(Options.KeepAlive is not null);
                 DateTime now = DateTime.Now;
                 await PingAsync(Options.KeepAlive.PeerTimeout, CancelToken).DynamicContext();
-                MessageLoopDuration = DateTime.Now - now;
-                Logger?.Log(LogLevel.Trace, "{this} got peer heartbeat", ToString());
+                TimeSpan runtime = DateTime.Now - now;
+                MessageLoopDuration = runtime;
+                Logger?.Log(LogLevel.Trace, "{this} got peer heartbeat after {runtime}", ToString(), runtime);
             }
             catch (TimeoutException ex)
             {

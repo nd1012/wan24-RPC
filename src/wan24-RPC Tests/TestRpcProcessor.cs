@@ -11,6 +11,8 @@ namespace wan24_RPC_Tests
 
         public long CurrentScopeId => ScopeId;
 
+        public int CallCount => Calls.Count;
+
         public ConcurrentDictionary<long, RpcScopeBase> LocalScopes => Scopes;
 
         public ConcurrentDictionary<long, RpcRemoteScopeBase> PeerScopes => RemoteScopes;

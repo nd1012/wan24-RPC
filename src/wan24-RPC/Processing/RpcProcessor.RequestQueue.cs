@@ -80,7 +80,7 @@ namespace wan24.RPC.Processing
                     // Send the RPC request and wait for the response
                     await Processor.SendMessageAsync(request, Processor.Options.Priorities.Rpc, cancellation).DynamicContext();
                     item.WasProcessing = true;
-                    returnValue = await item.ProcessorCompletion.Task.DynamicContext();
+                    returnValue = await item.ProcessorCompletion.Task.WaitAsync(cancellation).DynamicContext();
                     didReturn = true;
                     // Handle the response
                     if (returnValue is not null)
@@ -239,6 +239,8 @@ namespace wan24.RPC.Processing
                         throw new InvalidDataException($"Failed to find remote scope type #{scopeValue.Type} return value factory");
                     RpcRemoteScopeBase remoteScope = await scopeFactory.Invoke(Processor, scopeValue, cancellationToken).DynamicContext();
                     Logger?.Log(LogLevel.Trace, "{this} created new remote scope ({scope}) from return value {value}", ToString(), remoteScope, scopeValue.GetType());
+                    await Processor.AddRemoteScopeAsync(remoteScope).DynamicContext();
+                    await remoteScope.OnScopeCreated(cancellationToken).DynamicContext();
                     if (item.ExpectedReturnType is not null)
                         if (item.ExpectedReturnType.IsAssignableFrom(typeof(RpcScopeValue)))
                         {
