@@ -11886,6 +11886,19 @@ references:
   isSpec: "True"
   fullName: wan24.RPC.Processing.Scopes.RpcCancellationRemoteScope.Type
   nameWithType: RpcCancellationRemoteScope.Type
+- uid: wan24.RPC.Processing.Scopes.RpcCancellationRemoteScope.Value
+  name: Value
+  href: api/wan24.RPC.Processing.Scopes.RpcCancellationRemoteScope.html#wan24_RPC_Processing_Scopes_RpcCancellationRemoteScope_Value
+  commentId: P:wan24.RPC.Processing.Scopes.RpcCancellationRemoteScope.Value
+  fullName: wan24.RPC.Processing.Scopes.RpcCancellationRemoteScope.Value
+  nameWithType: RpcCancellationRemoteScope.Value
+- uid: wan24.RPC.Processing.Scopes.RpcCancellationRemoteScope.Value*
+  name: Value
+  href: api/wan24.RPC.Processing.Scopes.RpcCancellationRemoteScope.html#wan24_RPC_Processing_Scopes_RpcCancellationRemoteScope_Value_
+  commentId: Overload:wan24.RPC.Processing.Scopes.RpcCancellationRemoteScope.Value
+  isSpec: "True"
+  fullName: wan24.RPC.Processing.Scopes.RpcCancellationRemoteScope.Value
+  nameWithType: RpcCancellationRemoteScope.Value
 - uid: wan24.RPC.Processing.Scopes.RpcCancellationScope
   name: RpcCancellationScope
   href: api/wan24.RPC.Processing.Scopes.RpcCancellationScope.html

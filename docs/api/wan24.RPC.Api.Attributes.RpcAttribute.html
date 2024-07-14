@@ -102,6 +102,7 @@
 
   <h1 id="wan24_RPC_Api_Attributes_RpcAttribute" data-uid="wan24.RPC.Api.Attributes.RpcAttribute" class="text-break">Class RpcAttribute</h1>
   <div class="markdown level0 summary"><p>Attribute for a RPC type which is allowed to be deserialized (opt-in)</p>
+<ul><li>a RPC type which is allowed to be deserialized (opt-in)</li><li>a RPC API method parameter which is required to be given from the requesting peer</li></ul>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -243,7 +244,7 @@
   <h6><strong>Assembly</strong>: wan24RPC.dll</h6>
   <h5 id="wan24_RPC_Api_Attributes_RpcAttribute_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Class)]
+    <pre><code class="lang-csharp hljs">[AttributeUsage(AttributeTargets.Class|AttributeTargets.Parameter)]
 public class RpcAttribute : Attribute</code></pre>
   </div>
   <h5 id="wan24_RPC_Api_Attributes_RpcAttribute_remarks"><strong>Remarks</strong></h5>
@@ -256,11 +257,12 @@ public class RpcAttribute : Attribute</code></pre>
     <a href="https://github.com/nd1012/wan24-RPC/new/main/apiSpec/new?filename=wan24_RPC_Api_Attributes_RpcAttribute__ctor.md&amp;value=---%0Auid%3A%20wan24.RPC.Api.Attributes.RpcAttribute.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcAttribute.cs/#L9">View Source</a>
+    <a href="https://github.com/nd1012/wan24-RPC/blob/main/src/wan24-RPC/Api/Attributes/RpcAttribute.cs/#L13">View Source</a>
   </span>
   <a id="wan24_RPC_Api_Attributes_RpcAttribute__ctor_" data-uid="wan24.RPC.Api.Attributes.RpcAttribute.#ctor*"></a>
   <h4 id="wan24_RPC_Api_Attributes_RpcAttribute__ctor" data-uid="wan24.RPC.Api.Attributes.RpcAttribute.#ctor">RpcAttribute()</h4>
   <div class="markdown level1 summary"><p>Attribute for a RPC type which is allowed to be deserialized (opt-in)</p>
+<ul><li>a RPC type which is allowed to be deserialized (opt-in)</li><li>a RPC API method parameter which is required to be given from the requesting peer</li></ul>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="declaration">Declaration</h5>
