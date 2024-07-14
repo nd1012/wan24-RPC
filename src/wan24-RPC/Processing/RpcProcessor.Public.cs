@@ -78,6 +78,7 @@ namespace wan24.RPC.Processing
             get
             {
                 yield return new(__("Type"), GetType(), __("RPC processor CLR type"));
+                yield return new(__("GUID"), GUID, __("RPC processor GUID"));
                 yield return new(__("Name"), Name, __("RPC processor name"));
                 yield return new(__("Running"), IsRunning, __("If the RPC processor is running at present"));
                 yield return new(__("Started"), Started == DateTime.MinValue ? __("(never)") : Started.ToString(), __("Started time"));
@@ -93,29 +94,42 @@ namespace wan24.RPC.Processing
                         status.Name,
                         status.State,
                         status.Description,
-                        $"{__("Incoming message queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}"
+                        __("Incoming message queue").NormalizeStatusGroupName().CombineStatusGroupNames(status.Group)
                         );
                 foreach (Status status in Calls.State)
                     yield return new(
                         status.Name,
                         status.State,
                         status.Description,
-                        $"{__("Incoming calls queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}"
+                        __("Incoming calls queue").NormalizeStatusGroupName().CombineStatusGroupNames(status.Group)
                         );
                 foreach (Status status in OutgoingMessages.State)
                     yield return new(
                         status.Name,
                         status.State,
                         status.Description,
-                        $"{__("Outgoing message queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}"
+                        __("Outgoing message queue").NormalizeStatusGroupName().CombineStatusGroupNames(status.Group)
                         );
                 foreach (Status status in Requests.State)
                     yield return new(
                         status.Name,
                         status.State,
                         status.Description,
-                        $"{__("Incoming requests queue")}{(status.Group is null ? string.Empty : $"\\{status.Group}")}"
+                        __("Incoming requests queue").NormalizeStatusGroupName().CombineStatusGroupNames(status.Group)
                         );
+                string group;
+                foreach (RpcScopeBase scope in Scopes.Values)
+                {
+                    group = $"{__("Local scopes").NormalizeStatusGroupName()}\\{scope.ToString().NormalizeStatusGroupName()}";
+                    foreach (Status status in scope.State)
+                        yield return new(status.Name, status.State, status.Description, group.CombineStatusGroupNames(status.Group));
+                }
+                foreach (RpcRemoteScopeBase scope in RemoteScopes.Values)
+                {
+                    group = $"{__("Remote scopes").NormalizeStatusGroupName()}\\{scope.ToString().NormalizeStatusGroupName()}";
+                    foreach (Status status in scope.State)
+                        yield return new(status.Name, status.State, status.Description, group.CombineStatusGroupNames(status.Group));
+                }
             }
         }
 

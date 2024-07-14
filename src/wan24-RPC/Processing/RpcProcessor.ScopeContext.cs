@@ -7,6 +7,7 @@ using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
 using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Scopes;
+using static wan24.Core.TranslationHelper;
 
 namespace wan24.RPC.Processing
 {
@@ -24,10 +25,6 @@ namespace wan24.RPC.Processing
         /// <param name="key">Key</param>
         public abstract class RpcScopeBase(in RpcProcessor processor, in long id, in string? key = null) : RpcScopeProcessorBase(processor, key), IRpcLocalScope
         {
-            /// <summary>
-            /// Dispose the <see cref="Value"/> when disposing?
-            /// </summary>
-            protected bool DisposeValue = true;
             /// <summary>
             /// Scope parameter
             /// </summary>
@@ -55,12 +52,37 @@ namespace wan24.RPC.Processing
                 {
                     EnsureUndisposed();
                     EnsureNotDiscarded();
+                    if (value == _IsStored)
+                        return;
                     bool stored = Processor.GetScope(Id) is not null;
                     if (stored && !value)
                         throw new InvalidOperationException("Scope was stored, can't be unstored");
                     _IsStored = value;
-                    if (value && !stored)
+                    if (value)
+                    {
                         Processor.AddScope(this);
+                    }
+                    else if (stored)
+                    {
+                        Processor.RemoveScope(Id);
+                    }
+                }
+            }
+
+            /// <inheritdoc/>
+            public override IEnumerable<Status> State
+            {
+                get
+                {
+                    foreach (Status status in base.State)
+                        yield return status;
+                    yield return new(__("Parameter"), ScopeParameter?.GetType(), __("The scope parameter CLR type, if any"));
+                    yield return new(__("Method"), Method?.ToString(), __("The RPC API method which returned the scope"));
+                    yield return new(__("Dispose on error"), DisposeValueOnError, __("If the hosted scope value should be disposed on error"));
+                    yield return new(__("Error"), IsError, __("If there was an error"));
+                    yield return new(__("Exception"), LastException, __("The last exception"));
+                    yield return new(__("Will dispose"), WillDisposeValue, __("If the hosted scope value will be disposed"));
+                    yield return new(__("Inform"), InformConsumerWhenDisposing, __("If the scope consumer should be informed when this scope is being discarded or disposed"));
                 }
             }
 
@@ -75,15 +97,12 @@ namespace wan24.RPC.Processing
             public RpcApiMethodInfo? Method { get; set; }
 
             /// <inheritdoc/>
-            public abstract object? Value { get; }
-
-            /// <inheritdoc/>
             public bool DisposeValueOnError { get; protected set; } = true;
 
             /// <summary>
-            /// If the <see cref="Value"/> will be disposed when disposing
+            /// If the <see cref="RpcScopeProcessorBase.Value"/> will be disposed when disposing
             /// </summary>
-            public virtual bool WillDisposeValue => DisposeValue || (DisposeValueOnError && IsError);
+            public virtual bool WillDisposeValue => _DisposeValue || (DisposeValueOnError && IsError);
 
             /// <inheritdoc/>
             public bool InformConsumerWhenDisposing { get; set; } = true;
@@ -128,18 +147,13 @@ namespace wan24.RPC.Processing
                 EnsureUndisposed();
                 EnsureNotDiscarded();
                 Logger?.Log(LogLevel.Debug, "{this} registering at the peer", ToString());
+                IsStored = true;
                 if (ScopeParameter is null)
                     await CreateScopeParameterAsync(cancellationToken: cancellationToken).DynamicContext();
                 if (ScopeParameter.Value is null)
                     await ScopeParameter.CreateValueAsync(Processor, Id, cancellationToken).DynamicContext();
                 ScopeParameter.Value.IsStored = true;
                 ScopeParameter.Value.InformMasterWhenDisposing = true;
-                if(!_IsStored)
-                {
-                    Logger?.Log(LogLevel.Trace, "{this} storing", ToString());
-                    _IsStored = true;
-                    Processor.AddScope(this);
-                }
                 await SendVoidRequestAsync(new ScopeRegistrationMessage()
                 {
                     PeerRpcVersion = Processor.Options.RpcVersion,
@@ -234,8 +248,10 @@ namespace wan24.RPC.Processing
                     }
                     finally
                     {
-                        IsDiscarded = true;
+                        if (!IsDiscarded)
+                            IsDiscarded = true;
                     }
+                await DisposeValueAsync().DynamicContext();
                 await SendMessageAsync(new ScopeDiscardedMessage()
                 {
                     ScopeId = Id,
@@ -244,19 +260,28 @@ namespace wan24.RPC.Processing
             }
 
             /// <inheritdoc/>
+            protected override async Task DisposeValueAsync()
+            {
+                if (WillDisposeValue && Value is object value)
+                    await value.TryDisposeAsync().DynamicContext();
+            }
+
+            /// <inheritdoc/>
             protected override void Dispose(bool disposing)
             {
                 if (IsStored)
+                {
                     Processor.RemoveScope(this);
-                if (InformConsumerWhenDisposing)
-                    try
-                    {
-                        DiscardAsync().GetAwaiter().GetResult();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger?.Log(LogLevel.Warning, "{this} failed to discard the scope at the peer: {ex}", ToString(), ex);
-                    }
+                    if (InformConsumerWhenDisposing)
+                        try
+                        {
+                            DiscardAsync().GetAwaiter().GetResult();
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger?.Log(LogLevel.Warning, "{this} failed to discard the scope at the peer: {ex}", ToString(), ex);
+                        }
+                }
                 if (ScopeParameter is IDisposableObject disposable)
                 {
                     disposable.Dispose();
@@ -265,8 +290,7 @@ namespace wan24.RPC.Processing
                 {
                     ScopeParameter.DisposeScopeValueAsync().GetAwaiter().GetResult();
                 }
-                if (WillDisposeValue)
-                    Value?.TryDispose();
+                DisposeValueAsync().GetAwaiter().GetResult();
                 base.Dispose(disposing);
             }
 
@@ -274,16 +298,18 @@ namespace wan24.RPC.Processing
             protected override async Task DisposeCore()
             {
                 if (IsStored)
+                {
                     Processor.RemoveScope(this);
-                if (InformConsumerWhenDisposing)
-                    try
-                    {
-                        await DiscardAsync().DynamicContext();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger?.Log(LogLevel.Warning, "{this} failed to discard the scope at the peer: {ex}", ToString(), ex);
-                    }
+                    if (InformConsumerWhenDisposing)
+                        try
+                        {
+                            await DiscardAsync().DynamicContext();
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger?.Log(LogLevel.Warning, "{this} failed to discard the scope at the peer: {ex}", ToString(), ex);
+                        }
+                }
                 if (ScopeParameter is IDisposableObject disposable)
                 {
                     await disposable.DisposeAsync().DynamicContext();
@@ -292,8 +318,7 @@ namespace wan24.RPC.Processing
                 {
                     await ScopeParameter.DisposeScopeValueAsync().DynamicContext();
                 }
-                if (WillDisposeValue && Value is object value)
-                    await value.TryDisposeAsync().DynamicContext();
+                await DisposeValueAsync().DynamicContext();
                 await base.DisposeCore().DynamicContext();
             }
         }

@@ -18,11 +18,7 @@ namespace wan24.RPC.Processing.Scopes
         /// </summary>
         RpcApiMethodInfo? Method { get; }
         /// <summary>
-        /// Value
-        /// </summary>
-        object? Value { get; }
-        /// <summary>
-        /// If to dispose the <see cref="Value"/> on error
+        /// If to dispose the <see cref="IRpcScope.Value"/> on error
         /// </summary>
         bool DisposeValueOnError { get; }
         /// <summary>

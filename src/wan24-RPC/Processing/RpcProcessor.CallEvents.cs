@@ -18,6 +18,7 @@ namespace wan24.RPC.Processing
         /// <param name="returnValue">Return value</param>
         protected virtual async Task OnCallErrorAsync(Call call, Exception error, List<object?>? parameters, object? returnValue)
         {
+            call.Completion.TrySetException(error);
             RequestMessage message = (RequestMessage)call.Message;
             async Task DisposeOnlyAsync()
             {
@@ -71,7 +72,6 @@ namespace wan24.RPC.Processing
                 if (returnValue is not null && (call.Context?.Method?.DisposeReturnValue ?? call.Context?.Method?.DisposeReturnValueOnError ?? true))
                     await HandleValueOnErrorAsync(returnValue, outgoing: true, error).DynamicContext();
                 // Handle remote scopes
-                //TODO Set the error to the call context and dispose scopes there
                 foreach (RpcRemoteScopeBase remoteScope in call.ParameterScopes)
                     if (remoteScope.Parameter?.DisposeParameterValue ?? remoteScope.Parameter?.DisposeParameterValueOnError ?? true)
                     {
@@ -136,12 +136,13 @@ namespace wan24.RPC.Processing
         /// </summary>
         /// <param name="call">RPC call</param>
         /// <param name="returnValue">Return value</param>
-        protected virtual async Task OnCallRespondedAsync(Call call, object? returnValue)
+        /// <param name="isError">If there was an error during call processing</param>
+        protected virtual async Task OnCallRespondedAsync(Call call, object? returnValue, bool isError)
         {
             if (returnValue is null)
                 return;
             Contract.Assume(call.Context?.Method is not null);
-            if (!call.Context.Method.DisposeReturnValue)
+            if (!call.Context.Method.DisposeReturnValue && (!isError || !call.Context.Method.DisposeReturnValueOnError))
                 return;
             await returnValue.TryDisposeAsync().DynamicContext();
         }

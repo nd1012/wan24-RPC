@@ -21,16 +21,8 @@ namespace wan24.RPC.Processing.Scopes
         /// </summary>
         static RpcScopes()
         {
-            // Simple scope
-            RegisterScope(new()
-            {
-                Type = (int)RpcScopeTypes.Scope,
-                LocalScopeType = typeof(RpcScope),
-                RemoteScopeType = typeof(RpcRemoteScope),
-                LocalScopeFactory = RpcScope.CreateAsync,
-                RemoteScopeFactory = RpcRemoteScope.CreateAsync,
-                LocalScopeParameterFactory = RpcScopeParameter.CreateAsync
-            });
+            RpcScope.Register();
+            RpcCancellationScope.Register();
             //TODO Register more built-in scopes
         }
 

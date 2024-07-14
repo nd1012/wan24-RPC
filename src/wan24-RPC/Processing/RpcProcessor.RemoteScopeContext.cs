@@ -7,6 +7,7 @@ using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
 using wan24.RPC.Processing.Scopes;
 using wan24.RPC.Processing.Values;
+using static wan24.Core.TranslationHelper;
 
 namespace wan24.RPC.Processing
 {
@@ -18,6 +19,15 @@ namespace wan24.RPC.Processing
         /// </summary>
         public abstract class RpcRemoteScopeBase : RpcScopeProcessorBase, IRpcRemoteScope
         {
+            /// <summary>
+            /// If <see cref="OnScopeCreated(CancellationToken)"/> should send a trigger message to the master scope after this scope was created
+            /// </summary>
+            protected bool HandleCreation = false;
+            /// <summary>
+            /// If <see cref="OnScopeCreated(CancellationToken)"/> has been called already
+            /// </summary>
+            protected bool CreationHandled = false;
+
             /// <summary>
             /// Constructor
             /// </summary>
@@ -34,6 +44,23 @@ namespace wan24.RPC.Processing
             }
 
             /// <inheritdoc/>
+            public override IEnumerable<Status> State
+            {
+                get
+                {
+                    foreach (Status status in base.State)
+                        yield return status;
+                    yield return new(__("Scope value"), ScopeValue.GetType(), __("The CLR type of the scope value from which this remote scope was created"));
+                    yield return new(__("Parameter"), Parameter?.ToString(), __("The RPC API method parameter for which this remote scope was created"));
+                    yield return new(__("Replace"), ReplaceExistingScope, __("If an existing named scope should be replaced by this scope"));
+                    yield return new(__("Error"), IsError, __("If there was an error"));
+                    yield return new(__("Exception"), LastException, __("The last exception"));
+                    yield return new(__("Will dispose"), WillDisposeValue, __("If the hosted scope value will be disposed"));
+                    yield return new(__("Inform"), InformMasterWhenDisposing, __("If the scope master should be informed when this scope is being discarded or disposed"));
+                }
+            }
+
+            /// <inheritdoc/>
             public RpcScopeValue ScopeValue { get; }
 
             /// <inheritdoc/>
@@ -46,16 +73,20 @@ namespace wan24.RPC.Processing
             public bool ReplaceExistingScope { get; }
 
             /// <inheritdoc/>
-            public virtual object? Value { get; }
+            public override object? Value { get; }
 
             /// <inheritdoc/>
-            public bool DisposeValue { get; set; }
+            public virtual bool DisposeValue
+            {
+                get => _DisposeValue;
+                set => _DisposeValue = value;
+            }
 
             /// <inheritdoc/>
             public bool DisposeValueOnError { get; protected set; }
 
             /// <summary>
-            /// If the <see cref="Value"/> will be disposed when disposing
+            /// If the <see cref="RpcScopeProcessorBase.Value"/> will be disposed when disposing
             /// </summary>
             public virtual bool WillDisposeValue => DisposeValue || (DisposeValueOnError && IsError);
 
@@ -136,8 +167,33 @@ namespace wan24.RPC.Processing
                 }
             }
 
+            /// <summary>
+            /// Handle scope created (and possibly stored)
+            /// </summary>
+            /// <param name="cancellationToken">Cancellation token</param>
+            public virtual async Task OnScopeCreated(CancellationToken cancellationToken = default)
+            {
+                EnsureUndisposed();
+                EnsureNotDiscarded();
+                if (CreationHandled)
+                    throw new InvalidOperationException();
+                CreationHandled = true;
+                if (HandleCreation)
+                    await SendMessageAsync(new RemoteScopeTriggerMessage()
+                    {
+                        PeerRpcVersion = Processor.Options.RpcVersion,
+                        ScopeId = Id
+                    }, Priorities.Event, cancellationToken).DynamicContext();
+            }
+
             /// <inheritdoc/>
             public override string ToString() => $"{Processor}: Remote scope #{Id} ({GetType()})";
+
+            /// <summary>
+            /// Store the scope
+            /// </summary>
+            /// <returns>If stored</returns>
+            protected virtual Task<bool> StoreScopeAsync() => Processor.AddRemoteScopeAsync(this);
 
             /// <inheritdoc/>
             protected override async Task DiscardAsync(bool sync = true, CancellationToken cancellationToken = default)
@@ -150,8 +206,10 @@ namespace wan24.RPC.Processing
                     }
                     finally
                     {
-                        IsDiscarded = true;
+                        if (!IsDiscarded)
+                            IsDiscarded = true;
                     }
+                await DisposeValueAsync().DynamicContext();
                 await SendMessageAsync(new RemoteScopeDiscardedMessage()
                 {
                     ScopeId = Id,
@@ -163,18 +221,19 @@ namespace wan24.RPC.Processing
             protected override void Dispose(bool disposing)
             {
                 if (IsStored)
+                {
                     Processor.RemoveRemoteScope(this);
-                if (InformMasterWhenDisposing)
-                    try
-                    {
-                        DiscardAsync().GetAwaiter().GetResult();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger?.Log(LogLevel.Warning, "{this} failed to discard the scope at the peer: {ex}", ToString(), ex);
-                    }
-                if (WillDisposeValue)
-                    Value?.TryDispose();
+                    if (InformMasterWhenDisposing)
+                        try
+                        {
+                            DiscardAsync().GetAwaiter().GetResult();
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger?.Log(LogLevel.Warning, "{this} failed to discard the scope at the peer: {ex}", ToString(), ex);
+                        }
+                }
+                DisposeValueAsync().GetAwaiter().GetResult();
                 base.Dispose(disposing);
             }
 
@@ -182,18 +241,19 @@ namespace wan24.RPC.Processing
             protected override async Task DisposeCore()
             {
                 if (IsStored)
+                {
                     Processor.RemoveRemoteScope(this);
-                if (InformMasterWhenDisposing)
-                    try
-                    {
-                        await DiscardAsync().DynamicContext();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger?.Log(LogLevel.Warning, "{this} failed to discard the scope at the peer: {ex}", ToString(), ex);
-                    }
-                if (WillDisposeValue && Value is object value)
-                    await value.TryDisposeAsync().DynamicContext();
+                    if (InformMasterWhenDisposing)
+                        try
+                        {
+                            await DiscardAsync().DynamicContext();
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger?.Log(LogLevel.Warning, "{this} failed to discard the scope at the peer: {ex}", ToString(), ex);
+                        }
+                }
+                await DisposeValueAsync().DynamicContext();
                 await base.DisposeCore().DynamicContext();
             }
         }

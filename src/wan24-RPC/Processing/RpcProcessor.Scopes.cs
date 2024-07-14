@@ -5,6 +5,7 @@ using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
 using wan24.RPC.Processing.Scopes;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace wan24.RPC.Processing
 {
@@ -60,8 +61,12 @@ namespace wan24.RPC.Processing
         {
             EnsureUndisposed();
             EnsureScopesAreEnabled();
+            Logger?.Log(LogLevel.Trace, "{this} storing scope \"{scope}\" (using key \"{key}\")", ToString(), scope.ToString(), scope.Key);
             if (!scope.IsStored)
+            {
+                Logger?.Log(LogLevel.Trace, "{this} won't store scope #{scope}", ToString(), scope.Id);
                 return false;
+            }
             bool scopeAdded = false;
             try
             {
@@ -71,6 +76,7 @@ namespace wan24.RPC.Processing
                     throw new InvalidOperationException($"Scope #{scope.Id} added already (double scope ID)");
                 scopeAdded = true;
                 _StoredScopeCount++;
+                Logger?.Log(LogLevel.Trace, "{this} scope #{scope} stored (now storing {count} scopes)", ToString(), scope.Id, _StoredScopeCount);
                 if (scope.Key is not null && !KeyedScopes.TryAdd(scope.Key, scope))
                     throw new InvalidOperationException($"Scope #{scope.Id} key exists already");
                 return true;
@@ -93,8 +99,12 @@ namespace wan24.RPC.Processing
         {
             EnsureUndisposed();
             EnsureScopesAreEnabled();
+            Logger?.Log(LogLevel.Trace, "{this} storing scope \"{scope}\" (using key \"{key}\")", ToString(), scope.ToString(), scope.Key);
             if (!scope.IsStored)
+            {
+                Logger?.Log(LogLevel.Trace, "{this} won't store scope #{scope}", ToString(), scope.Id);
                 return false;
+            }
             bool scopeAdded = false;
             try
             {
@@ -104,6 +114,7 @@ namespace wan24.RPC.Processing
                     throw new InvalidOperationException($"Remote scope #{scope.Id} added already (double remote scope ID)");
                 scopeAdded = true;
                 _StoredRemoteScopeCount++;
+                Logger?.Log(LogLevel.Trace, "{this} scope #{scope} stored (now storing {count} scopes)", ToString(), scope.Id, _StoredRemoteScopeCount);
                 if (scope.Key is not null)
                     while (EnsureNotCanceled())
                         if (KeyedRemoteScopes.TryGetValue(scope.Key, out RpcRemoteScopeBase? existing))
@@ -119,7 +130,7 @@ namespace wan24.RPC.Processing
                         {
                             break;
                         }
-                return false;
+                return true;
             }
             catch
             {
@@ -168,6 +179,7 @@ namespace wan24.RPC.Processing
             _StoredScopeCount--;
             if (scope.Key is not null)
                 KeyedScopes.TryRemove(new KeyValuePair<string, RpcScopeBase>(scope.Key, scope));
+            Logger?.Log(LogLevel.Trace, "{this} removed \"{scope}\"", ToString(), scope.ToString());
             return true;
         }
 
@@ -185,6 +197,7 @@ namespace wan24.RPC.Processing
             _StoredRemoteScopeCount--;
             if (scope.Key is not null)
                 KeyedRemoteScopes.TryRemove(new KeyValuePair<string, RpcRemoteScopeBase>(scope.Key, removed));
+            Logger?.Log(LogLevel.Trace, "{this} removed \"{scope}\"", ToString(), scope.ToString());
             return true;
         }
 
@@ -203,6 +216,7 @@ namespace wan24.RPC.Processing
             if (res.Key is not null)
                 KeyedScopes.TryRemove(new KeyValuePair<string, RpcScopeBase>(res.Key, res));
             Scopes.TryRemove(id, out _);
+            Logger?.Log(LogLevel.Trace, "{this} removed \"{scope}\"", ToString(), res.ToString());
             return res;
         }
 
@@ -221,6 +235,7 @@ namespace wan24.RPC.Processing
             if (res.Key is not null)
                 KeyedRemoteScopes.TryRemove(new KeyValuePair<string, RpcRemoteScopeBase>(res.Key, res));
             RemoteScopes.TryRemove(id, out _);
+            Logger?.Log(LogLevel.Trace, "{this} removed \"{scope}\"", ToString(), res.ToString());
             return res;
         }
 
@@ -255,6 +270,7 @@ namespace wan24.RPC.Processing
                     throw exception;
                 }
                 await AddRemoteScopeAsync(remoteScope).DynamicContext();
+                await remoteScope.OnScopeCreated(CancelToken).DynamicContext();
                 await SendMessageAsync(new ResponseMessage()
                 {
                     Id = message.Id,

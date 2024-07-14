@@ -16,12 +16,16 @@ namespace wan24_RPC_Tests
             Logging.WriteInfo($"Create local scope");
             Logging.WriteInfo($"\tKey {parameter.Key}");
             Logging.WriteInfo($"\tReplace existing {parameter.ReplaceExistingScope}");
+            Logging.WriteInfo($"\tStore {parameter.StoreScope}");
             Logging.WriteInfo($"\tDispose value {parameter.DisposeScopeValue}");
             Logging.WriteInfo($"\tDispose value on error {parameter.DisposeScopeValueOnError}");
             Logging.WriteInfo($"\tInform master {parameter.InformMasterWhenDisposing}");
             return Task.FromResult<RpcProcessor.RpcScopeBase>(new TestScope((TestRpcProcessor)processor, parameter.Key)
             {
-                ScopeParameter = parameter
+                ScopeParameter = parameter,
+                DisposeValue = parameter.DisposeScopeValue,
+                DisposeValueOnError = parameter.DisposeScopeValue,
+                InformConsumerWhenDisposing = parameter.StoreScope
             });
         }
     }

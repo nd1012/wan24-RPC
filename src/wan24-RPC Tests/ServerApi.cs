@@ -44,6 +44,40 @@ namespace wan24_RPC_Tests
             return ServerObj;// Disposed after the return value was sent to the peer
         }
 
+        public TestScopeParameter Scopes2(TestDisposable obj)
+        {
+            Assert.IsNotNull(obj);
+            obj.Name ??= "Remote client";
+            ClientObj = obj;// Disposed after the method returned
+            ServerObj = new()
+            {
+                Name = "Server"
+            };
+            return new()
+            {
+                ScopeObject = ServerObj,
+                DisposeScopeValue = false,
+                DisposeScopeValueOnError = true
+            };// ServerObj won't be disposed
+        }
+
+        public TestScopeParameter Scopes3([NoRpcDispose] TestDisposable obj)
+        {
+            Assert.IsNotNull(obj);
+            obj.Name ??= "Remote client";
+            ClientObj = obj;
+            ServerObj = new()
+            {
+                Name = "Server"
+            };
+            return new()
+            {
+                ScopeObject = ServerObj,
+                DisposeScopeValue = false,
+                DisposeScopeValueOnError = true
+            };// ServerObj won't be disposed
+        }
+
         protected override void Dispose(bool disposing)
         {
             ClientObj?.Dispose();

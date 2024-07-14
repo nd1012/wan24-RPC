@@ -6,8 +6,7 @@ using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
 using wan24.RPC.Processing.Options;
 using wan24.RPC.Processing.Scopes;
-
-//TODO A scope should provide its status
+using static wan24.Core.TranslationHelper;
 
 namespace wan24.RPC.Processing
 {
@@ -27,6 +26,14 @@ namespace wan24.RPC.Processing
             /// Remote events (key is the event name)
             /// </summary>
             protected readonly ConcurrentDictionary<string, RpcScopeEvent> _RemoteEvents = [];
+            /// <summary>
+            /// If the scope was discarded at the peer
+            /// </summary>
+            protected bool _IsDiscarded = false;
+            /// <summary>
+            /// Dispose the <see cref="Value"/> when disposing?
+            /// </summary>
+            protected bool _DisposeValue = true;
 
             /// <summary>
             /// Constructor
@@ -39,6 +46,12 @@ namespace wan24.RPC.Processing
                 Processor = processor;
                 Key = key;
             }
+
+            /// <inheritdoc/>
+            public DateTime Created { get; } = DateTime.Now;
+
+            /// <inheritdoc/>
+            public DateTime Discarded { get; protected set; } = DateTime.MinValue;
 
             /// <inheritdoc/>
             public abstract int Type { get; }
@@ -56,7 +69,17 @@ namespace wan24.RPC.Processing
             public virtual bool IsStored { get; set; }
 
             /// <inheritdoc/>
-            public bool IsDiscarded { get; protected set; }
+            public bool IsDiscarded
+            {
+                get => _IsDiscarded;
+                set
+                {
+                    if (_IsDiscarded || !value)
+                        throw new InvalidOperationException();
+                    _IsDiscarded = true;
+                    Discarded = DateTime.Now;
+                }
+            }
 
             /// <inheritdoc/>
             public RpcProcessor Processor { get; }
@@ -77,7 +100,31 @@ namespace wan24.RPC.Processing
             public CancellationToken CancelToken => Processor.CancelToken;
 
             /// <inheritdoc/>
+            public abstract object? Value { get; }
+
+            /// <inheritdoc/>
             public IEnumerable<RpcScopeEvent> RemoteEvents => _RemoteEvents.Values;
+
+            /// <inheritdoc/>
+            public virtual IEnumerable<Status> State
+            {
+                get
+                {
+                    yield return new(__("Type"), GetType(), __("Scope CLR type"));
+                    yield return new(__("Extended"), this is IRpcScopeInternals, __("If this is an extended scope which exports its internals"));
+                    yield return new(__("Created"), Created.ToString(), __("Scope created time"));
+                    yield return new(__("Disposing"), IsDisposing, __("If the scope instance is disposing"));
+                    yield return new(__("Disposed"), IsDisposed, __("If the scope instance was disposed"));
+                    yield return new(__("Scope"), Type, __("Scope type ID"));
+                    yield return new(__("Key"), Key, __("Scope key"));
+                    yield return new(__("ID"), Id, __("Scope ID"));
+                    yield return new(__("Stored"), IsStored, __("If the scope was stored for long term use"));
+                    yield return new(__("Discarded"), IsDiscarded ? Discarded.ToString() : __("No"), __("Scope discarded time (or if the scope was discarded)"));
+                    yield return new(__("Value"), Value?.GetType(), __("Hosted scope value CLR type"));
+                    yield return new(__("Dispose"), _DisposeValue, __("If the hosted scope value will be disposed"));
+                    yield return new(__("Events"), _RemoteEvents.Count, __("Number of registered remote event handlers"));
+                }
+            }
 
             /// <inheritdoc/>
             public virtual RpcScopeEvent RegisterEvent(in string name, in Type arguments, in RpcScopeEvent.EventHandler_Delegate handler)
@@ -375,7 +422,7 @@ namespace wan24.RPC.Processing
             }
 
             /// <summary>
-            /// Handle discarded from the peer (should set <see cref="IsDiscarded"/> to <see langword="true"/> and dispose)
+            /// Handle discarded from the peer (should set <see cref="IsDiscarded"/> to <see langword="true"/>, dispose the value and dispose this instance)
             /// </summary>
             /// <param name="message">Message</param>
             /// <param name="cancellationToken">Cancellation token</param>
@@ -389,12 +436,13 @@ namespace wan24.RPC.Processing
                         return false;
                     IsDiscarded = true;
                 }
+                await DisposeValueAsync().DynamicContext();
                 await DisposeAsync().DynamicContext();
                 return true;
             }
 
             /// <summary>
-            /// Discard this scope at the peer, if possible
+            /// Discard this scope at the peer, if possible (should dispose the value, too)
             /// </summary>
             /// <param name="sync">If to synchronize using <see cref="Sync"/></param>
             /// <param name="cancellationToken">Cancellation token</param>
@@ -408,6 +456,15 @@ namespace wan24.RPC.Processing
             {
                 if (IsDiscarded)
                     throw new InvalidOperationException("Discarded already");
+            }
+
+            /// <summary>
+            /// Dispose the <see cref="Value"/>, if it should be disposed (see <see cref="_DisposeValue"/>)
+            /// </summary>
+            protected virtual async Task DisposeValueAsync()
+            {
+                if (_DisposeValue && Value is object value)
+                    await value.TryDisposeAsync().DynamicContext();
             }
 
             /// <inheritdoc/>

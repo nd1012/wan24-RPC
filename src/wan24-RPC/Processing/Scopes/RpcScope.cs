@@ -5,6 +5,8 @@ using wan24.Core;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
 using wan24.RPC.Processing.Parameters;
+using static wan24.Core.TranslationHelper;
+using static wan24.RPC.Processing.RpcProcessor;
 
 namespace wan24.RPC.Processing.Scopes
 {
@@ -31,10 +33,34 @@ namespace wan24.RPC.Processing.Scopes
         public static int DefaultMaxMetaLength { get; set; } = byte.MaxValue;
 
         /// <inheritdoc/>
+        public override IEnumerable<Status> State
+        {
+            get
+            {
+                foreach (Status status in base.State)
+                    yield return status;
+                yield return new(__("Trigger meta"), UseTriggerMetaData, __("If to store received meta data from trigger messages"));
+                yield return new(__("Max. meta"), MaxMetaLength, __("Maximum number of stored meta data entries"));
+                yield return new(__("Meta"), Meta, __("Current number of stored meta data entries"));
+                foreach (KeyValuePair<string, object?> kvp in Meta)
+                    yield return new(kvp.Key, kvp.Value?.GetType(), __("CLR type of the stored meta data value for this key"), __("Meta data"));
+            }
+        }
+
+        /// <inheritdoc/>
         public override int Type => (int)RpcScopeTypes.Scope;
 
         /// <inheritdoc/>
         public override object? Value => _Value;
+
+        /// <summary>
+        /// If to dispose the <see cref="RpcScopeProcessorBase.Value"/> when discarding/disposing
+        /// </summary>
+        public virtual bool DisposeValue
+        {
+            get => _DisposeValue;
+            set => _DisposeValue = value;
+        }
 
         /// <summary>
         /// Maximum count of <see cref="Meta"/> entries (zero for no limit)
@@ -236,6 +262,19 @@ namespace wan24.RPC.Processing.Scopes
             OnTrigger?.Invoke(this, e);
             return e.ReturnValue;
         }
+
+        /// <summary>
+        /// Register this scope to <see cref="RpcScopes"/>
+        /// </summary>
+        public static void Register() => RpcScopes.RegisterScope(new()
+        {
+            Type = TYPE,
+            LocalScopeType = typeof(RpcScope),
+            RemoteScopeType = typeof(RpcRemoteScope),
+            LocalScopeFactory = CreateAsync,
+            RemoteScopeFactory = RpcRemoteScope.CreateAsync,
+            LocalScopeParameterFactory = RpcScopeParameter.CreateAsync
+        });
 
         /// <summary>
         /// Create

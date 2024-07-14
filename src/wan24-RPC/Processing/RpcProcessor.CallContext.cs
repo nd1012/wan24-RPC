@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using wan24.Core;
+using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Messages;
 
 namespace wan24.RPC.Processing
@@ -63,6 +64,11 @@ namespace wan24.RPC.Processing
             public TaskCompletionSource<object?> Completion { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
             /// <summary>
+            /// RPC API method which was executed
+            /// </summary>
+            public RpcApiMethodInfo? Method { get; set; }
+
+            /// <summary>
             /// Context
             /// </summary>
             public RpcContext? Context { get; set; }
@@ -106,8 +112,24 @@ namespace wan24.RPC.Processing
                     Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
                 Cancellation.Cancel();
                 Cancellation.Dispose();
+                if (
+                    ReturnScope is not null && 
+                    (
+                        !ReturnScope.IsStored || 
+                        (
+                            Method is not null && 
+                            (
+                                Method.DisposeReturnValue || 
+                                (
+                                    ReturnScope.IsError && 
+                                    Method.DisposeReturnValueOnError
+                                )
+                            )
+                        )
+                    )
+                    )
+                    ReturnScope.Dispose();
                 SetDone();
-                //TODO Dispose scopes depending on the error state
             }
 
             /// <inheritdoc/>
@@ -118,8 +140,24 @@ namespace wan24.RPC.Processing
                     Completion.TrySetException(new ObjectDisposedException(GetType().ToString()));
                 await Cancellation.CancelAsync().DynamicContext();
                 Cancellation.Dispose();
+                if (
+                    ReturnScope is not null &&
+                    (
+                        !ReturnScope.IsStored ||
+                        (
+                            Method is not null &&
+                            (
+                                Method.DisposeReturnValue ||
+                                (
+                                    ReturnScope.IsError &&
+                                    Method.DisposeReturnValueOnError
+                                )
+                            )
+                        )
+                    )
+                    )
+                    await ReturnScope.DisposeAsync().DynamicContext();
                 SetDone();
-                //TODO Dispose scopes depending on the error state
             }
         }
     }

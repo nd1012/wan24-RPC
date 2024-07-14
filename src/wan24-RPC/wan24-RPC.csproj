@@ -118,7 +118,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Processing\Messages\Cancellation\" />
     <Folder Include="Processing\Messages\Enumeration\" />
     <Folder Include="Processing\Messages\QuicTunnel\" />
     <Folder Include="Processing\Messages\UdpTunnel\" />

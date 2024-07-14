@@ -14,7 +14,7 @@ namespace wan24.RPC.Processing.Parameters
         /// Constructor
         /// </summary>
         [SetsRequiredMembers]
-        public RpcScopeParameter() : this((int)RpcScopeTypes.Scope) { }
+        public RpcScopeParameter() : this(RpcScope.TYPE) { }
 
         /// <summary>
         /// Constructor

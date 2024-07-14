@@ -3,6 +3,7 @@ using wan24.Core;
 using wan24.RPC.Api.Attributes;
 using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Messages;
+using wan24.RPC.Processing.Parameters;
 using wan24.RPC.Processing.Scopes;
 using wan24.RPC.Processing.Values;
 
@@ -67,6 +68,7 @@ namespace wan24.RPC.Processing
                         await Processor.OnCallErrorAsync(item, new InvalidDataException("API or method not found"), parameters, returnValue).DynamicContext();
                         return;
                     }
+                    item.Method = method;
                     // Create a context
                     using Cancellations cancellation = new(cancellationToken, Processor.CancelToken, item.Cancellation.Token);
                     RpcContext context = Processor.CreateCallContext(request, method, cancellation);
@@ -416,6 +418,13 @@ namespace wan24.RPC.Processing
                     // Scopeable return value handling
                     if (returnValue is RpcScopeValue scopeValue)
                         return returnValue;
+                    if(returnValue is IRpcScopeParameter scopeParameter)
+                    {
+                        Logger?.Log(LogLevel.Trace, "{this} using returned scope parameter {parameter} to create a local sope", ToString(), scopeParameter);
+                        if (RpcScopes.GetLocalScopeFactory(scopeParameter.Type) is not RpcScopes.ScopeFactory_Delegate scopeFactory)
+                            throw new InvalidProgramException($"Missing local scope factory for sope type ID #{scopeParameter.Type}");
+                        returnValue = await scopeFactory.Invoke(Processor, scopeParameter, CancelToken).DynamicContext();
+                    }
                     if (returnValue is RpcScopeBase scope)
                     {
                         Logger?.Log(LogLevel.Trace, "{this} using returned scope ({scope}) value", ToString(), scope);
@@ -425,10 +434,10 @@ namespace wan24.RPC.Processing
                         return scope.ScopeParameter.Value 
                             ?? await scope.ScopeParameter.CreateValueAsync(Processor, scope.Id, CancelToken).DynamicContext();
                     }
-                    if (RpcScopes.GetReturnScopeFactory(returnValue.GetType()) is RpcScopes.ReturnScopeFactory_Delegate scopeFactory)
+                    if (RpcScopes.GetReturnScopeFactory(returnValue.GetType()) is RpcScopes.ReturnScopeFactory_Delegate scopeFactory2)
                     {
                         Logger?.Log(LogLevel.Trace, "{this} creating a new local scope from return value type {type}", ToString(), returnValue.GetType());
-                        RpcScopeBase? scope2 = await scopeFactory.Invoke(Processor, method, returnValue, CancelToken).DynamicContext();
+                        RpcScopeBase? scope2 = await scopeFactory2.Invoke(Processor, method, returnValue, CancelToken).DynamicContext();
                         if (scope2 is not null)
                         {
                             Logger?.Log(LogLevel.Trace, "{this} created a new local scope ({scope}) from return value type {type}", ToString(), scope2, returnValue.GetType());

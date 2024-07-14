@@ -5,6 +5,7 @@ using wan24.Core;
 using wan24.RPC.Processing.Messages;
 using wan24.RPC.Processing.Messages.Scopes;
 using wan24.RPC.Processing.Values;
+using static wan24.Core.TranslationHelper;
 
 namespace wan24.RPC.Processing.Scopes
 {
@@ -24,6 +25,21 @@ namespace wan24.RPC.Processing.Scopes
         /// Maximum count of <see cref="Meta"/> entries (zero for no limit)
         /// </summary>
         public static int DefaultMaxMetaLength { get; set; } = byte.MaxValue;
+
+        /// <inheritdoc/>
+        public override IEnumerable<Status> State
+        {
+            get
+            {
+                foreach (Status status in base.State)
+                    yield return status;
+                yield return new(__("Trigger meta"), UseTriggerMetaData, __("If to store received meta data from trigger messages"));
+                yield return new(__("Max. meta"), MaxMetaLength, __("Maximum number of stored meta data entries"));
+                yield return new(__("Meta"), Meta, __("Current number of stored meta data entries"));
+                foreach (KeyValuePair<string, object?> kvp in Meta)
+                    yield return new(kvp.Key, kvp.Value?.GetType(), __("CLR type of the stored meta data value for this key"), __("Meta data"));
+            }
+        }
 
         /// <inheritdoc/>
         public override int Type => (int)RpcScopeTypes.Scope;

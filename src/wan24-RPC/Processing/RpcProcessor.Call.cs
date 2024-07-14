@@ -4,6 +4,7 @@ using wan24.Core;
 using wan24.RPC.Api.Reflection;
 using wan24.RPC.Processing.Exceptions;
 using wan24.RPC.Processing.Messages;
+using wan24.RPC.Processing.Values;
 
 namespace wan24.RPC.Processing
 {
@@ -172,7 +173,8 @@ namespace wan24.RPC.Processing
                     Logger?.Log(LogLevel.Warning, "{this} call #{id} doesn't want the return value", ToString(), message.Id);
                 }
                 await SendResponseAsync(message, message.WantsReturnValue ? returnValue : null).DynamicContext();
-                await OnCallRespondedAsync(call, returnValue).DynamicContext();
+                call.SetDone();
+                await OnCallRespondedAsync(call, returnValue, isError: false).DynamicContext();
             }
             catch (ObjectDisposedException ex) when (IsDisposing)
             {
@@ -207,14 +209,13 @@ namespace wan24.RPC.Processing
                     if (!processingError)
                         await OnCallErrorAsync(call, error, parameters: null, returnValue).DynamicContext();
                     await SendCallErrorResponseAsync(message, error).DynamicContext();
+                    call.SetDone();
+                    await OnCallRespondedAsync(call, returnValue, isError: true).DynamicContext();
                 }
-                else if (message.Parameters is not null)
+                else
                 {
-                    foreach (object? parameter in message.Parameters)
-                        if (parameter is not null)
-                            await parameter.TryDisposeAsync().DynamicContext();
+                    call.SetDone();
                 }
-                call.SetDone();
                 await call.DisposeAsync().DynamicContext();
             }
         }

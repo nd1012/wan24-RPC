@@ -36,5 +36,26 @@ namespace wan24_RPC_Tests
             return await Processor.CallValueAsync<TestDisposable>(nameof(ServerApi), nameof(ServerApi.Scopes), default, obj)
                 ?? throw new InvalidDataException("NULL return value");
         }
+
+        public async Task<TestDisposable> Scopes2Async(TestDisposable obj)
+        {
+            EnsureUndisposed();
+            EnsureInitialized();
+            return await Processor.CallValueAsync<TestDisposable>(nameof(ServerApi), nameof(ServerApi.Scopes2), default, obj)
+                ?? throw new InvalidDataException("NULL return value");
+        }
+
+        public async Task<TestRemoteScope> Scopes3Async(TestDisposable obj)
+        {
+            EnsureUndisposed();
+            EnsureInitialized();
+            return await Processor.CallValueAsync<TestRemoteScope>(nameof(ServerApi), nameof(ServerApi.Scopes3), default, new TestScopeParameter()
+            {
+                ScopeObject = obj,
+                DisposeScopeValue = false,
+                DisposeScopeValueOnError = true
+            })
+                ?? throw new InvalidDataException("NULL return value");
+        }
     }
 }

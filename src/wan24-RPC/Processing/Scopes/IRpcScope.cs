@@ -7,8 +7,16 @@ namespace wan24.RPC.Processing.Scopes
     /// <summary>
     /// Interface for a RPC scope (see <see cref="RpcProcessor.RpcScopeProcessorBase"/>)
     /// </summary>
-    public interface IRpcScope : IWillDispose
+    public interface IRpcScope : IWillDispose, IStatusProvider
     {
+        /// <summary>
+        /// Created time
+        /// </summary>
+        DateTime Created { get; }
+        /// <summary>
+        /// Created time
+        /// </summary>
+        DateTime Discarded { get; }
         /// <summary>
         /// RPC scope type ID
         /// </summary>
@@ -30,13 +38,17 @@ namespace wan24.RPC.Processing.Scopes
         /// </summary>
         bool IsStored { get; }
         /// <summary>
-        /// If the scope was discarded from the peer
+        /// If the scope was discarded at the peer
         /// </summary>
         bool IsDiscarded { get; }
         /// <summary>
         /// RPC processor
         /// </summary>
         RpcProcessor Processor { get; }
+        /// <summary>
+        /// Value
+        /// </summary>
+        object? Value { get; }
         /// <summary>
         /// Registered remote events
         /// </summary>

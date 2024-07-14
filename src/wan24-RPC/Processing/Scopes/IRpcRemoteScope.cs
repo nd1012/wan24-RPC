@@ -22,15 +22,11 @@ namespace wan24.RPC.Processing.Scopes
         /// </summary>
         bool ReplaceExistingScope { get; }
         /// <summary>
-        /// Value
-        /// </summary>
-        object? Value { get; }
-        /// <summary>
-        /// Dispose the <see cref="Value"/> when disposing?
+        /// Dispose the <see cref="IRpcScope.Value"/> when disposing?
         /// </summary>
         bool DisposeValue { get; set; }
         /// <summary>
-        /// If to dispose the <see cref="Value"/> on error
+        /// If to dispose the <see cref="IRpcScope.Value"/> on error
         /// </summary>
         bool DisposeValueOnError { get; }
         /// <summary>
